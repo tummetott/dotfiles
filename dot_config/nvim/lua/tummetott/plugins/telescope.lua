@@ -137,7 +137,7 @@ table.insert(M, {
             '<Leader>fd',
             function()
                 require 'telescope.builtin'.find_files({
-                    cwd = '~/.dotfiles',
+                    cwd = '~/.local/share/chezmoi/',
                     prompt_title = 'Find Dotfiles',
                 })
             end,
