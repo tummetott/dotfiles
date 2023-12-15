@@ -1,9 +1,11 @@
+# vim: set ft=yaml:
+
 env:
-    # Set terminfo to alacritty with true color support (RBG). If this setting is ommited,
-    # alacritty will check the local terminfo database and use 'alacritty' if it is
-    # available, otherwise 'xterm-256color' is used.
-    # TERM: "alacritty-direct"
-    TERM: "alacritty"
+  # Set terminfo to alacritty with true color support (RBG). If this setting is ommited,
+  # alacritty will check the local terminfo database and use 'alacritty' if it is
+  # available, otherwise 'xterm-256color' is used.
+  # TERM: "alacritty-direct"
+  TERM: "alacritty"
 
 # Window configuration
 window:
@@ -31,18 +33,18 @@ scrolling:
 # See: https://github.com/romkatv/powerlevel10k
 font:
   normal:
-    family: "MesloLGS NF"
+    family: "FiraCode Nerd Font Mono"
     style: Regular
   bold:
-    family: "MesloLGS NF"
+    family: "FiraCode Nerd Font Mono"
     style: Bold
   italic:
-    family: "MesloLGS NF"
+    family: "FiraCode Nerd Font Mono"
     style: Italic
   bold_italic:
-    family: "MesloLGS NF"
+    family: "FiraCode Nerd Font Mono"
     style: Bold Italic
-  size: 13.0
+  size: {{ .alacritty.fontsize }}
 
 # Color configuration
 schemes:
@@ -117,6 +119,6 @@ schemes:
       magenta: '#6c71c4' # violet
       cyan:    '#93a1a1' # base1
       white:   '#fdf6e3' # base3
-  
+
 # Set color scheme
 colors: *solarized_light

@@ -1,11 +1,17 @@
+# vim: set ft=ini:
+
 [user]
-	name = Tummetott
-	email = 19708025+Tummetott@users.noreply.github.com
+    name = Tummetott
+    email = 19708025+Tummetott@users.noreply.github.com
+
 [pull]
     rebase = false
+
 [color]
-	ui = auto
+    ui = auto
+
 [diff]
     tool = nvimdiff
+
 [merge]
     tool = nvimdiff2

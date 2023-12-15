@@ -1,0 +1,62 @@
+#!/usr/bin/env sh
+# vim: set ft=bash:
+
+{{- if and (eq .chezmoi.os "linux") (or
+    (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "pop")) }}
+
+alias fd='fdfind'
+
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+
+alias pwdf='finder-path'
+alias cdf='cd "$(finder-path)"'
+alias sudoedit='sudo -e'
+
+{{- end }}
+
+if [ -x "$(command -v exa)" ]; then
+    alias ls='exa --icons'
+    alias ll='ls -l'
+    alias la='ls -la'
+fi
+
+# Also expand aliases when running a sudo command. When you use an alias with a
+# trailing space in its definition, it tells the shell to try to expand the next
+# word as an alias too
+alias sudo='sudo '
+
+# Since 'xterm-kitty' or 'alacritty' terminfo is most likley not installed on
+# remote servers we use the very common xterm-256color for ssh
+alias ssh='env TERM=xterm-256color ssh'
+
+# git aliases
+alias ga='git add'
+alias gcm='git commit -m'
+alias gst='git status'
+alias gd='git diff'
+alias gp='git push'
+
+# tmux aliases
+alias ta='tmux attach -t'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tks='tmux kill-server'
+alias td='tmux kill-session -t'
+
+alias theme='cycle_base16'
+
+alias cm='chezmoi'
+
+{{- if eq .chezmoi.hostname "Void" }}
+
+# Useful to compare with my own nvim config. Must be installed manually before
+alias chad='NVIM_APPNAME=chad nvim'
+alias astro='NVIM_APPNAME=astro nvim'
+alias lazy='NVIM_APPNAME=lazyvim nvim'
+
+# HACK: path to latest neovim version
+alias nvim='~/.local/bin/nvim-macos/bin/nvim'
+
+{{- end }}
