@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 # Interactive login shells should run bashrc, this is why we source it in
-# bash_profile. However, we don't want non-interactive login shells to run
+# 'bash_profile'. However, we don't want non-interactive login shells to run
 # bashrc. Thats why we get out of here if non-interactive
 [[ -z "$PS1" ]] && return
 
@@ -16,39 +18,34 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # XDG path for bash history file
 export HISTFILE="$XDG_STATE_HOME"/bash/history
 
-# use extended globs
+# Use extended globs.
 shopt -s extglob
 
-# append to the history file, don't overwrite it
+# Append to the history file, don't overwrite it.
 shopt -s histappend
 
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
 # Increase bash history
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Check the window size after each command and, if necessary, update the values
+# of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Nice prompt
+# Nice prompt.
 eval "$(starship init bash)"
 
-# Base16 Shell
+# BASE16 colors.
 [ -n "$PS1" ] && [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
     source "$BASE16_SHELL_PATH/profile_helper.sh"
 
-# Initialize conda. Since 'conda init' produces a code snipped for zshrc and
-# bashrc which is not portable between ubuntu and macos, I save it externally
-# and source it.
-[ -f ~/.config/conda/condainit ] && source ~/.config/conda/condainit
-
-# Activate fzf
+# Activate FZF.
 [ -f "$XDG_CONFIG_HOME/fzf/fzf.bash" ] && source "$XDG_CONFIG_HOME/fzf/fzf.bash"
 
-# Load custom shell functions
+# Load custom shell functions.
 if [ -d "$DOTFILES/functions" ]; then
     for file in $DOTFILES/functions/*; do
         source "$file"

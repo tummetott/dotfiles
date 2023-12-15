@@ -1,5 +1,1 @@
 **/.DS_Store
-
-# Don't apply my bash configs
-.bash_profile
-.bashrc

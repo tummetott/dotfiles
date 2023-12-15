@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+{{- if hasPrefix .chezmoi.hostname "gruenau" }}
+
+# Given that I don't have the permission to change the default shell to zsh on
+# gruenau, zsh is executed manually as a workaround.
+zsh
+exit 0
+
+{{- end }}
+
+# Manually sourcing bashrc, as it's not automatically read by login shells.
+[ -f ~/.bashrc ] && source ~/.bashrc

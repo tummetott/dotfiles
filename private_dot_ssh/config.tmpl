@@ -1,3 +1,5 @@
+# vim: set ft=sshconfig:
+
 Host gruenau8
     HostName gruenau8.informatik.hu-berlin.de
     RemoteForward 52698 localhost:52698
@@ -39,8 +41,12 @@ Host pi
    HostName 192.168.178.70
    User pi
 
-# Only for OsX
+{{- if eq .chezmoi.os "darwin" }}
+
+# TODO: Check if this is needed
 #Host *
 #    UseKeychain yes
 #    AddKeysToAgent yes
 #    IdentityFile ~/.ssh/id_rsa
+
+{{- end }}
