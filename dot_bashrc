@@ -14,7 +14,7 @@
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # XDG path for bash history file
-export HISTFILE="$XDG_CACHE_HOME"/bash/history
+export HISTFILE="$XDG_STATE_HOME"/bash/history
 
 # use extended globs
 shopt -s extglob
