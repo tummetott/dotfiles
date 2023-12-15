@@ -1,0 +1,27 @@
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=110
+
+# Show line numbers
+--line-number
+
+# Show hidden files
+--hidden
+
+# Follow symlinks
+#--follow
+
+# Enable smart case. Case is ignored except an uppercase letter is typed
+--smart-case
+
+# Exclude files while searching
+--glob=!.git/*
+--glob=!.viminfo
+--glob=!.zsh_history
+--glob=!.bash_history
+--glob=!.vim/undodir
+--glob=!*.pyc
+--glob=!*.class
+
+# Set colours. The 256 colours are defined by alacritty
+--colors=path:fg:cyan
+--colors=line:fg:yellow

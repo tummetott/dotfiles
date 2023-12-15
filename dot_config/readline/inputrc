@@ -1,0 +1,13 @@
+# Settings in this file affect all programs that use the GNU readline library.
+# This includes  bash
+
+# use vim keybindings
+set editing-mode vi
+
+# Enable additional emacs keybindings
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-f": forward-char
+"\C-b": backward-char

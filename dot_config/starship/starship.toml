@@ -1,0 +1,129 @@
+# Don't print a new line after each command
+add_newline = false
+
+format = """
+${custom.home}\
+${custom.directory}\
+$all
+"""
+
+right_format = """
+$status\
+$battery\
+$cmd_duration\
+$jobs\
+$username\
+$hostname\
+$python\
+$conda\
+$golang\
+$nodejs\
+$ruby\
+$lua\
+$java\
+$perl\
+$php\
+$rust\
+$time\
+"""
+
+[line_break]
+disabled = true
+
+[directory]
+truncation_length = 5
+format = '[$read_only]($style)[$path]($style) '
+read_only = ' '
+style = 'blue'
+# truncate_to_repo = false
+
+[custom.home]
+symbol = ' '
+when = '[ "$HOME" = "$PWD" ]'
+style = 'blue'
+
+[custom.directory]
+symbol = ' '
+when = '[ -w "$PWD" ] && [ "$HOME" != "$PWD" ]'
+style = 'blue'
+
+[time]
+disabled = false
+format = 'at [ $time]($style)'
+style = 'cyan'
+
+[git_branch]
+symbol = ' '
+style = 'green'
+
+[git_status]
+style = 'yellow'
+format = '[($conflicted )($stashed )($deleted )($renamed )($modified )($staged )($untracked )($ahead_behind )]($style)'
+conflicted = '=$count'
+ahead = '⇡$count'
+behind = '⇣$count'
+diverged = '⇕$count'
+untracked = '?$count'
+stashed = '$$count'
+modified = '!$count'
+staged = '+$count'
+renamed = '»$count'
+deleted = '✘$count'
+
+[cmd_duration]
+format = "took [ $duration]($style) "
+
+[status]
+disabled = false
+format = '[$symbol $status]($style) '
+symbol = '󰩈'
+map_symbol = true
+not_executable_symbol = ''
+sigint_symbol = ''
+signal_symbol = ''
+success_symbol = ''
+not_found_symbol = '󰍉'
+
+[username]
+format = "[$user]($style) "
+style_user = 'yellow'
+
+[hostname]
+format =  "on [$hostname]($style) "
+style = 'green'
+
+[python]
+symbol = ' '
+style = 'cyan'
+
+[conda]
+ignore_base = false
+style = 'cyan'
+
+[ruby]
+symbol = ' '
+style = 'cyan'
+
+[golang]
+symbol = ' '
+style = 'cyan'
+
+[lua]
+symbol = ' '
+style = 'cyan'
+
+[java]
+symbol = ' '
+style = 'cyan'
+
+[perl]
+symbol = ' '
+style = 'cyan'
+
+[php]
+symbol = ' '
+style = 'cyan'
+
+[rust]
+symbol = ' '
+style = 'cyan'

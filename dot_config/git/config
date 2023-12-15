@@ -1,0 +1,11 @@
+[user]
+	name = Tummetott
+	email = 19708025+Tummetott@users.noreply.github.com
+[pull]
+    rebase = false
+[color]
+	ui = auto
+[diff]
+    tool = nvimdiff
+[merge]
+    tool = nvimdiff2
