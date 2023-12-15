@@ -1,0 +1,11 @@
+# Source my shell independent enviroment variables
+[ -f ~/.config/shell/env ] && source ~/.config/shell/env
+
+# Hostname up to the first '.'
+export SHORT_HOST=${SHORT_HOST:-${(%):-%m}}
+
+# Define new compdump location. The zsh directory must be created manually
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
+# remove duplicates in paths
+typeset -gU cdpath fpath mailpath path

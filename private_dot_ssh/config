@@ -1,0 +1,46 @@
+Host gruenau8
+    HostName gruenau8.informatik.hu-berlin.de
+    RemoteForward 52698 localhost:52698
+    User panizzaj
+
+Host gruenau6
+    HostName gruenau6.informatik.hu-berlin.de
+    User panizzaj
+
+Host gruenau5
+    HostName gruenau5.informatik.hu-berlin.de
+    User panizzaj
+
+Host gruenau4
+    HostName gruenau4.informatik.hu-berlin.de
+    User panizzaj
+
+Host gruenau3
+    HostName gruenau3.informatik.hu-berlin.de
+    User panizzaj
+
+Host gruenau2
+    HostName gruenau2.informatik.hu-berlin.de
+    User panizzaj
+
+Host gruenau1
+    HostName gruenau1.informatik.hu-berlin.de
+    User panizzaj
+
+Host rabe
+    HostName rabe.informatik.hu-berlin.de
+    User panizzaj
+
+Host star
+    HostName star.informatik.hu-berlin.de
+    User panizzaj
+
+Host pi
+   HostName 192.168.178.70
+   User pi
+
+# Only for OsX
+#Host *
+#    UseKeychain yes
+#    AddKeysToAgent yes
+#    IdentityFile ~/.ssh/id_rsa

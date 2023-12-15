@@ -1,0 +1,82 @@
+#!/usr/bin/env sh
+
+# This is a POSIX compliant file which defines shell-independent environment
+# variables
+
+# Define XDG paths
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# Fix config paths
+export IPYTHONDIR="$XDG_CONFIG_HOME/jupyter"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export BASE16_CONFIG_PATH="$XDG_CONFIG_HOME/tinted-theming"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+
+# Fix data paths
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export CONDA_HOME="$XDG_DATA_HOME/miniconda3"
+export GOPATH="$XDG_DATA_HOME/go"
+export ZGEN_DIR="$XDG_DATA_HOME/zgen"
+export BASE16_SHELL_PATH="$ZGEN_DIR/tinted-theming/base16-shell-main"
+# This env is deprecated and not longer used by base16-shell, however the
+# base16-shell-preview needs that env in order to work
+export BASE16_SHELL="$BASE16_SHELL_PATH"
+export BASE16_FZF_PATH="$ZGEN_DIR/tinted-theming/base16-fzf-main"
+export FZF_BASE="$ZGEN_DIR/junegunn/fzf-master"
+
+# Fix cache paths
+export PYLINTHOME="$XDG_CACHE_HOME/pylint"
+
+# Disable less history file
+export LESSHISTFILE=-
+
+# Use BASE16 colors for bat
+export BAT_THEME='base16'
+
+# When bootstrapping a new machine, the default base16-theme will be used
+export BASE16_THEME_DEFAULT='gruvbox-dark-medium'
+
+# My default editor
+export EDITOR='nvim'
+
+# My default place where my dotfiles reside
+export DOTFILES="$HOME/.dotfiles"
+
+# Place for my custom compiled packages
+export PATH="$HOME/.local/bin:$PATH"
+
+# Add my custom script directory to PATH
+if test -d "$DOTFILES/scripts"; then
+    export PATH="$PATH:$DOTFILES/scripts"
+fi
+
+if test -d "$CARGO_HOME/bin"; then
+    export PATH="$PATH:$CARGO_HOME/bin"
+fi
+
+if test -d "$GOPATH/bin"; then
+    export PATH="$PATH:$GOPATH/bin"
+fi
+
+if test -d "$HOME/Library/Python/3.9/bin"; then
+    export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+fi
+
+if test -d "$XDG_DATA_HOME/nvim/mason/bin/"; then
+    export PATH="$PATH:$XDG_DATA_HOME/nvim/mason/bin/"
+fi
+
+# Export environment variables for homebrew
+if test -x '/opt/homebrew/bin/brew'; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi

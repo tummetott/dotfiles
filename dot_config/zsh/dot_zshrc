@@ -1,0 +1,185 @@
+# Enable Powerlevel10k instant prompt only when tmux is running or it's an
+# active SSH connection. This block should stay close to the top of the zshrc
+if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" \
+    && ( -n "$TMUX" || -n "$SSH_TTY" ) ]]; then
+  source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Show no duplicates in history
+setopt HIST_FIND_NO_DUPS
+
+# When pressing ESC, use a minimal timeout of 1 ms
+export KEYTIMEOUT=1
+
+# While I typically define my other environment variables in zshenv, this
+# particular setting cannot be established there, as macOS's native /etc/zshenv
+# takes precedence and overwrites it.
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+
+# Oh-my-zsh settings. Must be defined before oh-my-zsh is loaded
+HYPHEN_INSENSITIVE='true' # Treat '-' and '_' the same for completion purposes
+DISABLE_AUTO_TITLE='true' # Disable auto-setting terminal title
+COMPLETION_WAITING_DOTS='true' # Show red dots while waiting for completion
+
+# Load custom shell functions. This must be loaded before oh-my-zsh calls
+# compinit
+fpath=( $DOTFILES/functions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+
+# Load custom completions. This must be loaded before oh-my-zsh calls
+# compinit
+# HINT: Delete compiled completions and recompile them with:
+# 'rm -f $ZDOTDIR/.zcompdump; compinit'
+fpath=( $DOTFILES/configs/zsh/completions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+
+# Update the highlight color of ZVM. Must be defined before ZVM is loaded
+function zvm_config() {
+    ZVM_VI_HIGHLIGHT_BACKGROUND=8
+    ZVM_VI_HIGHLIGHT_FOREGROUND=0
+}
+
+# To ensure that FZF's keybindings take precedence, we need to source FZF after
+# ZVM, as both have some default keybindings that overlap. Must be defined
+# before ZVM is loaded
+function zvm_after_init() {
+    if [ -f "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]; then
+        source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
+        # FZF default mapping is CTRL-t. I want to keep the transpose-char feature and
+        # remap it to CTRL-g
+        bindkey '^G' fzf-file-widget
+        bindkey '^T' transpose-chars
+    fi
+}
+
+# load plugin manager zgen
+[ -f "$DOTFILES/submodules/zgen/zgen.zsh" ] && source "$DOTFILES/submodules/zgen/zgen.zsh"
+
+# 'zgen' creates a static init script consisting of source statements for plugins
+# and pmodload statements for prezto modules. When ZSH starts up, zgen will
+# source the init script directly without parsing its dialect every time, which
+# also means you need to regenerate the init script after updating your zshrc.
+# Remove the init script with: 'zgen reset'
+if ! zgen saved; then
+
+    # Add additional completions for zsh. The completions must be loaded before
+    # oh-my-zsh in order to be included into the 'compinit' call
+    zgen load esc/conda-zsh-completion
+    zgen load zsh-users/zsh-completions
+
+    # Use the base components of oh-my-zsh. Load this framework at the very
+    # beginning (after the completions).
+    zgen oh-my-zsh
+
+    # Load the awesome prompt theme 'powerlevel10k'.
+    zgen load romkatv/powerlevel10k powerlevel10k
+
+    # Zgen should only source the 'profile_helper.sh' script
+    zgen load tinted-theming/base16-shell profile_helper.sh main
+
+    # As you type commands, you will see a completion offered after the cursor
+    # in a muted gray color
+    zgen load zsh-users/zsh-autosuggestions
+
+    # This plugin provides syntax highlighting for the shell zsh. It enables
+    # highlighting of commands whilst they are typed.
+    zgen load zsh-users/zsh-syntax-highlighting
+
+    # This plugin provides the real vim experience in zsh. It offers mode
+    # sensitive cursor styling and all vim keybindings
+    zgen load jeffreytse/zsh-vi-mode
+
+    # Fuzzy finder fzf, installed from a git repository instead of package
+    # manager. This approach provides a platform-independent installation method
+    # that is self-contained within my configuration setup.
+    zgen load junegunn/fzf
+
+    # The installation scrip of fzf downloads the executable and generates a
+    # script in $XDG_CONFIG_HOME/fzf/fzf.zsh for keybindings and completion.
+    if [[ ! -x "$FZF_BASE/bin/fzf" ]]; then
+        "$FZF_BASE/install" --key-bindings --completion --no-update-rc --xdg
+    fi
+
+    # Add BASE16 color schemes for 'fzf'
+    zgen load tinted-theming/base16-fzf . main
+
+    # generate the init script from plugins above
+    zgen save
+fi
+
+# oh-my-zsh enables shared-history. I don't want that
+unsetopt share_history
+
+# zsh wants you to verify history expansion. I want to type 'sudo !!' without
+# further verification
+unsetopt HIST_VERIFY
+
+# Source the 'powerlevel10k' config
+[ -f ${ZDOTDIR}/.p10k.zsh ] && source ${ZDOTDIR}/.p10k.zsh
+
+# Initialize starship and use a transient prompt
+# eval "$(starship init zsh)"
+# [ -f "$XDG_CONFIG_HOME/starship/init-transient.zsh" ] &&
+#     source "$XDG_CONFIG_HOME/starship/init-transient.zsh"
+
+# With 'base16-shell', the default 'zsh-autosuggestions' color (color8) closely
+# matches the terminal foreground color, making it hard to distinguish
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
+
+# Scroll history with CTRL-n and CTRL-p
+bindkey '^p' up-line-or-search
+bindkey '^n' down-line-or-search
+
+# Because of VIM-TMUX Navigator, I can't kill lines with CTRL-k. I remap this
+# to CTRL-x
+bindkey '^X' kill-line
+
+# Check if the programm silver searcher 'fd' exists
+if (( $+commands[fd] )); then
+    # Use fd instead of the default find command for listing path & directory
+    # candidates (e.g. for cd **) We could use ripgrep here. However, it does
+    # not support finding directories.
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" --exclude . "$1"
+    }
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+fi
+
+# The plugin 'syntax-highlighting' adds undercores to paths. Let's turn that off
+(( ${+ZSH_HIGHLIGHT_STYLES}  )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+ZSH_HIGHLIGHT_STYLES[autodirectory]=none
+ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
+
+# Source lf icons file
+[ -f ~/.config/lf/lficons ] && source ~/.config/lf/lficons
+
+# Bind my custom 'lfcd' function to ctrl-o
+# bindkey -s '^o' 'lfcd\n'
+
+# Source my aliases file
+[ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
+
+# Initialize conda environment
+__conda_setup="$($CONDA_HOME/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
+        . "$CONDA_HOME/etc/profile.d/conda.sh"
+    else
+        export PATH="$CONDA_HOME/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+# Autostart tmux
+if (( $+commands[tmux] )); then
+    autostart-tmux
+fi
+
+# Return with exit code 0
+true

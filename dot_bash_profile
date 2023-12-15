@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# On gruenauX, it's not possible to change the default shell with 'chsh'. Thats
+# why I parse the hostname and run zsh manually
+if [ "${HOST%?}" = 'gruenau' ]; then
+  zsh
+  exit 0
+fi
+
+# Because login shells don't read bashrc, we source it manually.
+[ -f ~/.bashrc ] && source ~/.bashrc

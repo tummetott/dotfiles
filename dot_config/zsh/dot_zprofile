@@ -1,0 +1,12 @@
+# I source my environment in ~/.zshenv because ~/.zshenv is executed for login
+# and non-login shells. However, kali linux overwrites my PATH in /etc/zprofile
+# which is sourced after ~/.zshenv. This results in tmux not picking up my
+# correct PATH. That's why I source my environment again in ~/.zprofile and
+# remove duplicates in PATH
+# TODO: make this platform dependent for kali linux
+
+# Source my shell independent enviroment variables
+source ~/.environment
+
+# remove duplicates in paths
+typeset -gU cdpath fpath mailpath path
