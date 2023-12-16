@@ -46,8 +46,10 @@ eval "$(starship init bash)"
 [ -f "$XDG_CONFIG_HOME/fzf/fzf.bash" ] && source "$XDG_CONFIG_HOME/fzf/fzf.bash"
 
 # Load custom shell functions.
-if [ -d "$DOTFILES/functions" ]; then
-    for file in $DOTFILES/functions/*; do
-        source "$file"
+if [ -d "$XDG_CONFIG_HOME/shell/functions" ]; then
+    for file in "$XDG_CONFIG_HOME/shell/functions"/*; do
+        # Ensure that the file is readable and a regular file (not a directory)
+        # before attempting to source it
+        [ -r "$file" ] && [ -f "$file" ] && source "$file"
     done
 fi

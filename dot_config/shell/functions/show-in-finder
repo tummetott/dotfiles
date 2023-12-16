@@ -1,0 +1,18 @@
+# vim: set ft=bash:
+
+# Open the current directory in finder's column view
+
+function show-in-finder {
+  osascript >/dev/null <<EOT
+    set cwd to do shell script "pwd"
+    tell application "Finder"
+      if (${1-1} <= (count Finder windows)) then
+        set the target of window ${1-1} to (POSIX file cwd) as string
+        set the current view of the front Finder window to column view
+      else
+        open (POSIX file cwd) as string
+        set the current view of the front Finder window to column view
+      end if
+    end tell
+EOT
+}

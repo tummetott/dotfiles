@@ -2,3 +2,11 @@
 
 .config/zsh/p10k-nerdfonts.zsh
 .config/zsh/p10k-no-nerdfonts.zsh
+
+{{- if ne .chezmoi.os "darwin" }}
+
+.config/shell/functions/clean-clipboard
+.config/shell/functions/finder-path
+.config/shell/functions/show-in-finder
+
+{{- end }}

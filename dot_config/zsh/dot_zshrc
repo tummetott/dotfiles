@@ -19,7 +19,7 @@ COMPLETION_WAITING_DOTS='true' # Show red dots while waiting for completion
 
 # Load custom shell functions. This must be loaded before oh-my-zsh calls
 # compinit
-fpath=( $DOTFILES/functions "${fpath[@]}" )
+fpath=( $XDG_CONFIG_HOME/shell/functions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
 # Load custom completions. This must be loaded before oh-my-zsh calls

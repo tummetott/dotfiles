@@ -1,0 +1,17 @@
+# vim: set ft=bash:
+
+# This function can be called from zshrc or bashrc in order to autostart tmux at
+# startup. When an old tmux session exists, it will be attached
+
+function autostart-tmux {
+    # When no tmux running, not inside vim and no ssh connection
+    if [[ -z "$TMUX" && -z "$VIM" && -z "$SSH_TTY" ]]; then
+        if tmux has-session 2> /dev/null; then
+            # If old tmux session exists, attach to it
+            tmux attach-session -d
+        else
+            # If no session exists, create new session
+            tmux new-session
+        fi
+    fi
+}
