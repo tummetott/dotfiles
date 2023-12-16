@@ -1,1 +1,4 @@
 **/.DS_Store
+
+.config/zsh/p10k-nerdfonts.zsh
+.config/zsh/p10k-no-nerdfonts.zsh
