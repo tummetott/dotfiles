@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+# vim: set ft=zsh:
+
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+
+# In Kali Linux, PATH is overwritten in /etc/zprofile after loading ~/.zshenv.
+# To restore my PATH, I reload my environment settings again and clean up
+# duplicates.
+[ -f ~/.config/shell/env ] && source ~/.config/shell/env
+typeset -gU cdpath fpath mailpath path
+
+{{- end }}
+
+# Let's see what I will add here ..

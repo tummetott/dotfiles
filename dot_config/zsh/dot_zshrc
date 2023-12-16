@@ -12,7 +12,7 @@ setopt HIST_FIND_NO_DUPS
 export KEYTIMEOUT=1
 
 # While I typically define my other environment variables in zshenv, this
-# particular setting cannot be established there, as macOS's native /etc/zshenv
+# particular setting cannot be established there, as macOS's native /etc/zshrc
 # takes precedence and overwrites it.
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 
@@ -155,7 +155,7 @@ ZSH_HIGHLIGHT_STYLES[autodirectory]=none
 ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
 
 # Source lf icons file
-[ -f ~/.config/lf/lficons ] && source ~/.config/lf/lficons
+# [ -f ~/.config/lf/lficons ] && source ~/.config/lf/lficons
 
 # Bind my custom 'lfcd' function to ctrl-o
 # bindkey -s '^o' 'lfcd\n'

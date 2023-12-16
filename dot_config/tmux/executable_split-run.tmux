@@ -6,7 +6,7 @@ win=split-run
 if tmux list-windows | grep -q "$win"; then
     pane_pids=$(tmux list-panes -t "$win" -F '#{pane_pid}' | tr '\n' ' ')
     read -r pid1 pid2 <<< "$pane_pids"
-    
+
     if pgrep -P "$pid1" > /dev/null; then
         tmux send-keys -t "$win.1" C-c
     fi
