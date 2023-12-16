@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# vim: set ft=bash:
 
 theme=$(cat "$BASE16_CONFIG_PATH/theme_name")
 
@@ -45,6 +46,8 @@ tmux set -g pane-active-border-style fg='colour19',bg='colour0'
 # Set default colors for the line
 tmux set -g status-style "fg=${text},bg=colour0"
 
+{{- if .nerdfonts }}
+
 # All window tabs but the current
 tmux setw -g window-status-format "#[\
     bg=colour0,fg=${surface}]#[\
@@ -64,3 +67,19 @@ tmux set -g status-right "#[\
     bg=colour0,fg=${surface}]#[\
     bg=${surface},fg=${text}]  #W   #h   %H:%M  󰄷 #S #[\
     bg=colour0,fg=${surface}]"
+
+{{- else }}
+
+# All window tabs but the current
+tmux setw -g window-status-format "#[bg=${surface},fg=${text2},bold]  #I  ";
+
+# Current window tab
+tmux setw -g window-status-current-format "#[bg=${surface},fg=colour4,bold]  #I  ";
+
+# Right side shows the executed command, the hostname, the time and the session
+tmux set -g status-right "#[\
+    bg=colour0,fg=colour1]#{?#{!=:#{selection_present},}, Vim COPY MODE ,}#[\
+    bg=colour0,fg=colour6]#{?window_zoomed_flag, ZOOM ENABLED ,}#[\
+    bg=${surface},fg=${text}]  CMD: #W  HOST: #h  TIME: %H:%M  SESSION: #S  ";
+
+{{- end }}
