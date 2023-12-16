@@ -2,7 +2,8 @@
 
 # This function cycles through my favourite dark or light BASE16 colorschemes,
 # depending on the argument. If no argument is given, if shows the existing
-# colorscheme
+# colorscheme. I can't convert this to a script because the underlying base16
+# set_theme function is only meant for interactive shells.
 
 function cycle_base16 {
 
