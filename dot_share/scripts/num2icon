@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+# This script takes a number between 0-9 as argument and returns the
+# corresponding number icon.
+
+declare -A numbers
+
+if [[ "$1" =~ '^[0-9]$' ]]; then
+
+    numbers[0]='０'
+    numbers[1]='１'
+    numbers[2]='２'
+    numbers[3]='３'
+    numbers[4]='４'
+    numbers[5]='５'
+    numbers[6]='６'
+    numbers[7]='７'
+    numbers[8]='８'
+    numbers[9]='９'
+
+    echo -n "${numbers[$1]}"
+
+elif [[ "$1" =~ '^[0-9]*$' ]]; then
+    echo -n '９+'
+fi

@@ -9,4 +9,11 @@
 .config/shell/functions/finder-path
 .config/shell/functions/show-in-finder
 
+.local/share/scripts/disable-ftp-server
+.local/share/scripts/disable-network-ds-store-files
+.local/share/scripts/disable-ssh-server
+.local/share/scripts/enable-ftp-server
+.local/share/scripts/enable-network-ds-store-files
+.local/share/scripts/enable-ssh-server
+
 {{- end }}

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# This script looks for mp3 files in the current directory and concatenates
+# them. It is usefull to create one track audiobooks. Note that the Xing-Header
+# must be repaired afterwards with a program like 'MP3 Scan+Repair'. Otherwise,
+# fast forwarding will not work.
+
+MAX_CONCAT=100
+files=(*.mp3)
+num_files=${#files[@]}
+cnt=0
+part_nr=1
+batch=()
+
+if ((num_files == 0)); then
+    echo "There are no MP3s in the current directory"
+    exit 1
+fi
+
+# Iterate over all files
+for file in "${files[@]}"; do
+
+	((cnt += 1))
+    # Add MAX_CONCAT files to the batch
+	batch+=("$file")
+
+    # When the batch is fill or no more files are available, concat them
+    if ! ((cnt % MAX_CONCAT)) || ((num_files == cnt)); then
+		cat "${batch[@]}" > "Part${part_nr}.mp3"
+		batch=()
+		((part_nr+=1))
+	fi
+done

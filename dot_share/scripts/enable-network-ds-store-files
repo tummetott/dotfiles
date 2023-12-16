@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Enable writing .DS_Store to network shares
+
+set -o pipefail
+exec defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool FALSE

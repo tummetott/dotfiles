@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Enable the SSH server on macOS and configure it to start every boot
+
+set -o pipefail
+exec sudo -s launchctl load -w /System/Library/LaunchDaemons/ssh.plist

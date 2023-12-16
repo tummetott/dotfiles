@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Disable the SSH server on macOS
+
+set -o pipefail
+exec sudo -s launchctl unload -w /System/Library/LaunchDaemons/ssh.plist

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Start the FTP Server on macOS and configure it to restart every boot
+
+set -o pipefail
+exec sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
