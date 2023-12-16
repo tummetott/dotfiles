@@ -8,7 +8,6 @@
 .config/shell/functions/clean-clipboard
 .config/shell/functions/finder-path
 .config/shell/functions/show-in-finder
-
 .local/share/scripts/disable-ftp-server
 .local/share/scripts/disable-network-ds-store-files
 .local/share/scripts/disable-ssh-server

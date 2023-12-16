@@ -1,0 +1,119 @@
+# A 'cat' clone with syntax highlighting and git integration. It is used as a
+# pager for 'git' and 'fzf'.
+brew "bat"
+
+# Graphical process/system monitor with a customizable interface and a multitude
+# of features. It is used as a replacement for 'top' and 'htop'.
+brew "bottom"
+
+# Cross-platform, open-source build system.
+brew "cmake"
+
+# Modern replacement for 'ls'.
+brew "exa"
+
+# Fast alternative to 'find'. Used for 'fzf' search.
+brew "fd"
+
+# Terminal file manager written in go.
+brew "lf"
+
+# Command-line interface for the Mac App Store.
+brew "mas"
+
+# Command-line system information tool.
+brew "neofetch"
+
+# My favourite text editor.
+brew "neovim"
+
+# Utility for network discovery and security auditing.
+brew "nmap"
+
+# Node and it's packet manager npm are used for 'neovims' copilot.
+brew "node"
+
+# Alternative to 'grep', used for infile search in 'fzf'.
+brew "ripgrep"
+
+# Modern replacement for 'sed'.
+brew "sd"
+
+# Shellcheck gives warnings and suggestions for 'bash' and 'sh' shell scripts
+brew "shellcheck"
+
+# Minimalistic, fast and customizable prompt for any shell.
+brew "starship"
+
+# Collection of help pages, that are simpler to read than man pages.
+brew "tealdeer"
+
+# Terminal multiplexer.
+brew "tmux"
+
+# The 'tree' utility prints out a directory structure in a tree-like display.
+brew "tree"
+
+# Used for downloading files. Alternative to 'curl'.
+brew "wget"
+
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+
+# My favourite fonts
+cask "font-fira-code-nerd-font"
+cask "font-meslo-lg-nerd-font"
+
+{{- if .brew.cask }}
+
+# Terminal emulator
+cask "iterm2"
+cask "kitty"
+cask "alacritty"
+
+# Flashcards
+cask "anki"
+
+# Thoroughly uninstall unwanted apps
+cask "appcleaner"
+
+cask "discord"
+
+# Virtualization software
+cask "docker"
+
+# Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
+
+# Browser
+cask "firefox"
+cask "google-chrome"
+
+# Torrent client
+cask "transmission"
+
+# File archiver
+cask "keka"
+
+# Firewall
+cask "lulu"
+
+# Best messenger on earth
+cask "signal"
+
+# Markdown editor
+cask "typora"
+
+# Lossless audio decoder
+cask "xld"
+
+# Media file tag editor
+cask "yate"
+
+# Keeps your Mac awake
+mas "Amphetamine", id: 937984704
+
+# Window manager for Mac
+mas "Magnet", id: 441258766
+
+{{- end }}
