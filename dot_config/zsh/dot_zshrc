@@ -1,3 +1,15 @@
+# vim: set ft=zsh:
+
+# Exit if necessary environment variables are not set
+required_envs=('XDG_CONFIG_HOME' 'XDG_DATA_HOME' 'XDG_STATE_HOME' \
+    'XDG_CACHE_HOME' 'ZGEN_DIR' 'ZDOTDIR' 'CONDA_HOME')
+for env in "${required_envs[@]}"; do
+    if [[ -z "${(P)env}" ]]; then
+        echo "Error: $env is not set"
+        return 1
+    fi
+done
+
 # Enable Powerlevel10k instant prompt only when tmux is running or it's an
 # active SSH connection. This block should stay close to the top of the zshrc
 if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" \
@@ -48,8 +60,13 @@ function zvm_after_init() {
     fi
 }
 
-# Load plugin manager zgen
-[ -f "$DOTFILES/submodules/zgen/zgen.zsh" ] && source "$DOTFILES/submodules/zgen/zgen.zsh"
+# Bootstrap plugin manager
+if [[ ! -f "$ZGEN_DIR/zgen/zgen.zsh" ]]; then
+    git clone 'https://github.com/tarjoilija/zgen.git' "$ZGEN_DIR/zgen"
+fi
+
+# Load plugin manager
+source "$ZGEN_DIR/zgen/zgen.zsh"
 
 # 'zgen' creates a static init script consisting of source statements for plugins
 # and pmodload statements for prezto modules. When ZSH starts up, zgen will
