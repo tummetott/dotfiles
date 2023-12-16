@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+source ~/.config/shell/env
+source "$XDG_DATA_HOME/chezmoi/.script_helper"
+
+if has brew; then
+    info 'Update homebrew'
+    brew update
+else
+    info 'Install homebrew'
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
+
+info 'Install formulas from Brewfile'
+brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"

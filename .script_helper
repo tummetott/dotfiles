@@ -1,0 +1,60 @@
+# vim: set ft=bash:
+
+# This file defines a set of colors, print functions and other helper
+# functions. In order to use the functions, you must source this file in
+# another bash script
+
+# Define color palette for colored output
+BOLD="$(tput bold 2>/dev/null || echo '')"
+RED="$(tput setaf 1 2>/dev/null || echo '')"
+GREEN="$(tput setaf 2 2>/dev/null || echo '')"
+YELLOW="$(tput setaf 3 2>/dev/null || echo '')"
+BLUE="$(tput setaf 4 2>/dev/null || echo '')"
+NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
+
+info() {
+    printf "%s\n" "${BOLD}${BLUE}> $*${NO_COLOR}"
+}
+
+warn() {
+    printf "%s\n" "${BOLD}${YELLOW}! $*${NO_COLOR}"
+}
+
+error() {
+    printf "%s\n" "${BOLD}${RED}x $*${NO_COLOR}"
+    false
+}
+
+compl() {
+    printf "%s\n" "${BOLD}${GREEN}✓ $*${NO_COLOR}"
+}
+
+has() {
+    command -v "$1" 1>/dev/null 2>&1
+}
+
+download() {
+    url="$1"
+    file="$2"
+
+    if has curl; then
+        cmd="curl --fail --silent --location --output $file $url"
+    elif has wget; then
+        cmd="wget --quiet --output-document=$file $url"
+    elif has fetch; then
+        cmd="fetch --quiet --output=$file $url"
+    else
+        error "No HTTP download program (curl, wget, fetch) found"
+        return 1
+    fi
+    $cmd # This does not work in zsh
+}
+
+get_latest_from_github() {
+    repo="$1"
+    release="$2"
+    curl -Ls "https://api.github.com/repos/${repo}/releases/latest" \
+        | grep "\"browser_download_url\": .*${release}.*" \
+        | cut -d '"' -f 4 \
+        | xargs -n 1 curl -sSLO
+}
