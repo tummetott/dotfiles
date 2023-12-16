@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# Interactive login shells should run bashrc, this is why we source it in
-# 'bash_profile'. However, we don't want non-interactive login shells to run
-# bashrc. Thats why we get out of here if non-interactive
-[[ -z "$PS1" ]] && return
+# Source environment variables. They are also usefull for non-interactive shells
+[ -f ~/.config/shell/env ] && source ~/.config/shell/env
 
-# Source environment file. Not the best place to do since non-interactive shells
-# don't run bashrc. But there is no perfect place in bash...
-[ -f "$XDG_CONFIG_HOME/shell/env" ] && source "$XDG_CONFIG_HOME/shell/env"
+# Ensure only interactive login shells source bashrc. Non-interactive shells
+# (like those running scripts) should not perform the interactive configurations
+# typically found in bashrc. We check for an interactive shell by testing if PS1
+# is set.
+[[ -z "$PS1" ]] && return
 
 # Source alias file
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
@@ -38,8 +38,9 @@ shopt -s checkwinsize
 # Nice prompt.
 eval "$(starship init bash)"
 
-# BASE16 colors.
-[ -n "$PS1" ] && [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
+# BASE16 colors. NOTE: Base16-shell is configured and initalized in zshrc. Bash
+# simply executes the theme when zsh initialized it before.
+[ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
     source "$BASE16_SHELL_PATH/profile_helper.sh"
 
 # Activate FZF.
