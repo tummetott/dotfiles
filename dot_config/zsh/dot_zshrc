@@ -8,12 +8,8 @@ fi
 # Show no duplicates in history
 setopt HIST_FIND_NO_DUPS
 
-# When pressing ESC, use a minimal timeout of 1 ms
-export KEYTIMEOUT=1
-
-# While I typically define my other environment variables in zshenv, this
-# particular setting cannot be established there, as macOS's native /etc/zshrc
-# takes precedence and overwrites it.
+# macOS's native /etc/zshrc overwrites my HISTFILE. That's why I have to define
+# this env in zshrc
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 
 # Oh-my-zsh settings. Must be defined before oh-my-zsh is loaded
@@ -29,8 +25,8 @@ autoload -Uz $fpath[1]/*(.:t)
 # Load custom completions. This must be loaded before oh-my-zsh calls
 # compinit
 # HINT: Delete compiled completions and recompile them with:
-# 'rm -f $ZDOTDIR/.zcompdump; compinit'
-fpath=( $DOTFILES/configs/zsh/completions "${fpath[@]}" )
+# 'rm -f $ZSH_COMPDUMP; compinit -d "$ZSH_COMPDUMP"'
+fpath=( $XDG_CONFIG_HOME/zsh/completions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 
 # Update the highlight color of ZVM. Must be defined before ZVM is loaded
@@ -52,7 +48,7 @@ function zvm_after_init() {
     fi
 }
 
-# load plugin manager zgen
+# Load plugin manager zgen
 [ -f "$DOTFILES/submodules/zgen/zgen.zsh" ] && source "$DOTFILES/submodules/zgen/zgen.zsh"
 
 # 'zgen' creates a static init script consisting of source statements for plugins
@@ -115,7 +111,7 @@ unsetopt share_history
 unsetopt HIST_VERIFY
 
 # Source the 'powerlevel10k' config
-[ -f ${ZDOTDIR}/.p10k.zsh ] && source ${ZDOTDIR}/.p10k.zsh
+[ -f ${ZDOTDIR}/p10k.zsh ] && source ${ZDOTDIR}/p10k.zsh
 
 # Initialize starship and use a transient prompt
 # eval "$(starship init zsh)"
