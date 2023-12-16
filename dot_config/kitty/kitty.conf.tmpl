@@ -22,8 +22,8 @@ listen_on unix:/tmp/kitty
 
 # Create an alias for the kitten
 action_alias scrollback_nvim kitten
-    \ {{ .xdg.data_home }}/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
-    \ --nvim-args -u {{ .xdg.config_home }}/nvim/lua/tummetott/plugins/kitty-scrollback/scrollback-conf.lua
+    \ ~/.local/share/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
+    \ --nvim-args -u ~/.config/nvim/lua/tummetott/plugins/kitty-scrollback/scrollback-conf.lua
 
 # Keymap to browse the whole scrollback buffer
 map kitty_mod+enter scrollback_nvim
