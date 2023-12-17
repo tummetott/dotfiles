@@ -1,0 +1,14 @@
+# vim: set ft=toml:
+
+[data.xdg]
+config_home = "{{ .chezmoi.homeDir }}/.config"
+data_home = "{{ .chezmoi.homeDir }}/.local/share"
+cache_home = "{{ .chezmoi.homeDir }}/.cache"
+state_home = "{{ .chezmoi.homeDir }}/.local/state"
+
+[data.install]
+rust = false
+miniconda = false
+{{- if eq .chezmoi.os "darwin" }}
+cask = false
+{{- end }}

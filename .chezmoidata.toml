@@ -5,6 +5,3 @@ fontsize = 17.0
 
 [alacritty]
 fontsize = 15.0
-
-[brew]
-cask = false

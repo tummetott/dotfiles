@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+set -euo pipefail
+source ~/.local/share/chezmoi/.script_helper
+source ~/.config/shell/env
+
+if has brew; then
+    info 'Update homebrew'
+    brew update
+else
+    info 'Install homebrew'
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+    # Add brew to path so we can use it
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+info 'Install formulas from Brewfile'
+brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
+
+# Delete the chezmoi binary installed by the 'curl | sh' script, since we
+# already have it installed via homebrew.
+if [ -f "$HOME/.local/bin/chezmoi" ]; then
+    rm "$HOME/.local/bin/chezmoi"
+fi
+
+# Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
+# be obsolete when macOS updates 'ncurses' to version 6.3 or higher
+if infocmp tmux-256color > /dev/null; then
+    info 'The "tmux-256color" terminfo is already available'
+else
+    info 'Create terminfo entry for tmux'
+    tempdir="$(mktemp -d)"
+    git clone https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/ "$tempdir"
+    pushd "$tempdir"
+    tic -x tmux-256color
+    popd && rm -rf "$tempdir"
+fi
+
+{{- if .install.rust }}
+
+if has rustup; then
+    info 'Update rust'
+    rustup update
+else
+    info 'Install rust and cargo'
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- --no-modify-path -y
+    source "$CARGO_HOME/env"
+fi
+
+{{- end }}
