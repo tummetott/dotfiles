@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+{{- if eq .chezmoi.os "darwin" }}
+{{-   template "configure-macos.tmpl" . -}}
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+# TODO
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
+# TODO
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
+# TODO
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+# TODO
+{{- end }}
