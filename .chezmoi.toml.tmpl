@@ -1,5 +1,11 @@
 # vim: set ft=toml:
 
+[scriptEnv]
+XDG_CONFIG_HOME = "{{ .chezmoi.homeDir }}/.config"
+XDG_DATA_HOME = "{{ .chezmoi.homeDir }}/.local/share"
+XDG_STATE_HOME = "{{ .chezmoi.homeDir }}/.local/state"
+XDG_CACHE_HOME = "{{ .chezmoi.homeDir }}/.cache"
+
 [data.xdg]
 config_home = "{{ .chezmoi.homeDir }}/.config"
 data_home = "{{ .chezmoi.homeDir }}/.local/share"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# This script provides a solution for re-executing Chezmoi installation scripts 
+# whenever the ~/.config/chezmoi/chezmoi.toml file is modified. The common method 
+# to trigger re-execution in Chezmoi is to use the 'onchange_' prefix in script names 
+# and include a hash of the monitored file within the script itself. When the file's 
+# content changes, its hash changes, leading to a change in the script, and thus 
+# triggering its re-execution.
+
+# However, directly generating a hash of a target space file within a Chezmoi template 
+# requires specifying an absolute path, which compromises portability. To maintain 
+# portability, this script calculates the hash of ~/.config/chezmoi/chezmoi.toml and 
+# writes it to a file in the source space. This hashed value can then be used in 
+# Chezmoi templates with the 'include' directive, allowing the script to detect 
+# changes in chezmoi.toml and re-execute as needed.
+
+shasum "$XDG_CONFIG_HOME/chezmoi/chezmoi.toml" | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.hash"

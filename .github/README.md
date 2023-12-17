@@ -10,3 +10,16 @@
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply tummetott
 ```
+
+### Usage
+
+Pull updates from the repository
+```sh
+chezmoi update
+```
+
+Configure `~/.config/chezmoi/chezmoi.toml` to your needs, then apply the changes
+with
+```sh
+chezmoi apply
+```
