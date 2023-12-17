@@ -16,13 +16,7 @@ else
 fi
 
 info 'Install formulas from Brewfile'
-# brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
-
-# Delete the chezmoi binary installed by the 'curl | sh' script, since we
-# already have it installed via homebrew.
-# if [ -f "$HOME/.local/bin/chezmoi" ]; then
-#     rm "$HOME/.local/bin/chezmoi"
-# fi
+brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 {{- if .install.rust }}
 
