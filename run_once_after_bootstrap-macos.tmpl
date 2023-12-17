@@ -27,7 +27,7 @@ fi
 
 # Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
 # be obsolete when macOS updates 'ncurses' to version 6.3 or higher
-if infocmp tmux-256color > /dev/null; then
+if infocmp tmux-256color &> /dev/null; then
     info 'The "tmux-256color" terminfo is already available'
 else
     info 'Create terminfo entry for tmux'

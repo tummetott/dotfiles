@@ -1,124 +1,224 @@
 # vim: set ft=conf:
 
-# A 'cat' clone with syntax highlighting and git integration. It is used as a
-# pager for 'git' and 'fzf'.
-brew "bat"
-
-# Graphical process/system monitor with a customizable interface and a multitude
-# of features. It is used as a replacement for 'top' and 'htop'.
-brew "bottom"
-
-# Dotfile manager, that is used to manage this dotfiles repository.
-brew "chezmoi"
-
-# Cross-platform, open-source build system.
-brew "cmake"
-
-# Modern replacement for 'ls'.
-brew "exa"
-
-# Fast alternative to 'find'. Used for 'fzf' search.
-brew "fd"
-
-# Terminal file manager written in go.
-brew "lf"
-
-# Command-line interface for the Mac App Store.
-brew "mas"
-
-# Command-line system information tool.
-brew "neofetch"
-
-# My favourite text editor.
-brew "neovim"
-
-# Utility for network discovery and security auditing.
-brew "nmap"
-
-# Node and it's packet manager npm are used for 'neovims' copilot.
-brew "node"
-
-# Alternative to 'grep', used for infile search in 'fzf'.
-brew "ripgrep"
-
-# Modern replacement for 'sed'.
-brew "sd"
-
-# Shellcheck gives warnings and suggestions for 'bash' and 'sh' shell scripts
-brew "shellcheck"
-
-# Minimalistic, fast and customizable prompt for any shell.
-brew "starship"
-
-# Collection of help pages, that are simpler to read than man pages.
-brew "tealdeer"
-
-# Terminal multiplexer.
-brew "tmux"
-
-# The 'tree' utility prints out a directory structure in a tree-like display.
-brew "tree"
-
-# Used for downloading files. Alternative to 'curl'.
-brew "wget"
-
+# Add additional sources for brew packages.
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 
-# My favourite fonts
+# Not configurable packages
+brew "mas"
+brew "chezmoi" 
+
+# Configurable CLI packages
+{{- if .install.bat }}
+brew "bat"
+{{- end }}
+
+{{- if .install.bottom }}
+brew "bottom"
+{{- end }}
+
+{{- if .install.cmake }}
+brew "cmake"
+{{- end }}
+
+{{- if .install.exa }}
+brew "exa"
+{{- end }}
+
+{{- if .install.fd }}
+brew "fd"
+{{- end }}
+
+{{- if .install.go }}
+brew "go"
+{{- end }}
+
+{{- if .install.iproute2 }}
+brew "iproute2mac"
+{{- end }}
+
+{{- if .install.lf }}
+brew "lf"
+{{- end }}
+
+{{- if .install.neofetch }}
+brew "neofetch"
+{{- end }}
+
+{{- if .install.neovim }}
+brew "neovim"
+{{- end }}
+
+{{- if .install.nerdfonts }}
 cask "font-fira-code-nerd-font"
 cask "font-meslo-lg-nerd-font"
+{{- end }}
 
-{{- if .install.cask }}
+{{- if .install.ninja }}
+brew "ninja"
+{{- end }}
 
-# Terminal emulator
-cask "iterm2"
-cask "kitty"
+{{- if .install.nmap }}
+brew "nmap"
+{{- end }}
+
+{{- if .install.node }}
+brew "node"
+{{- end }}
+
+{{- if .install.ripgrep }}
+brew "ripgrep"
+{{- end }}
+
+{{- if .install.ruby }}
+brew "ruby"
+{{- end }}
+
+{{- if .install.sd }}
+brew "sd"
+{{- end }}
+
+{{- if .install.shellcheck }}
+brew "shellcheck"
+{{- end }}
+
+{{- if .install.starship }}
+brew "starship"
+{{- end }}
+
+{{- if .install.tldr }}
+brew "tealdeer"
+{{- end }}
+
+{{- if .install.tmux }}
+brew "tmux"
+{{- end }}
+
+{{- if .install.tree }}
+brew "tree"
+{{- end }}
+
+{{- if .install.wget }}
+brew "wget"
+{{- end }}
+
+{{- if .install.xclip }}
+brew "xclip"
+{{- end }}
+
+# Configurable GUI packages
+{{- if .install.alacritty }}
 cask "alacritty"
+{{- end }}
 
-# Flashcards
+{{- if .install.amphetamine }}
+mas "Amphetamine", id: 937984704
+{{- end }}
+
+{{- if .install.anki }}
 cask "anki"
+{{- end }}
 
-# Thoroughly uninstall unwanted apps
+{{- if .install.appcleaner }}
 cask "appcleaner"
+{{- end }}
 
-cask "discord"
-
-# Virtualization software
-cask "docker"
-
-# Tool to flash OS images to SD cards & USB drives
-cask "balenaetcher"
-
-# Browser
-cask "firefox"
+{{- if .install.chrome }}
 cask "google-chrome"
+{{- end }}
 
-# Torrent client
-cask "transmission"
+{{- if .install.discord }}
+cask "discord"
+{{- end }}
 
-# File archiver
+{{- if .install.docker }}
+cask "docker"
+{{- end }}
+
+{{- if .install.etcher }}
+cask "balenaetcher"
+{{- end }}
+
+{{- if .install.firefox }}
+cask "firefox"
+{{- end }}
+
+{{- if .install.folx }}
+cask "folx"
+{{- end }}
+
+{{- if .install.iterm2 }}
+cask "iterm2"
+{{- end }}
+
+{{- if .install.jabref }}
+cask "jabref"
+{{- end }}
+
+{{- if .install.keka }}
 cask "keka"
+{{- end }}
 
-# Firewall
+{{- if .install.kitty }}
+cask "kitty"
+{{- end }}
+
+{{- if .install.lulu }}
 cask "lulu"
+{{- end }}
 
-# Best messenger on earth
+{{- if .install.magnet }}
+mas "Magnet", id: 441258766
+{{- end }}
+
+{{- if .install.meld }}
+cask "meld"
+{{- end }}
+
+{{- if .install.mipony }}
+cask "mipony"
+{{- end }}
+
+{{- if .install.seafile }}
+cask "seafile-client"
+{{- end }}
+
+{{- if .install.signal }}
 cask "signal"
+{{- end }}
 
-# Markdown editor
+{{- if .install.sublime  }}
+cask "sublime-text"
+{{- end }}
+
+{{- if .install.texpad }}
+cask "texpad"
+{{- end }}
+
+{{- if .install.transmission }}
+cask "transmission"
+{{- end }}
+
+{{- if .install.typora }}
 cask "typora"
+{{- end }}
 
-# Lossless audio decoder
+{{- if .install.vlc }}
+cask "vlc"
+{{- end }}
+
+{{- if .install.wireshark }}
+cask "wireshark"
+{{- end }}
+
+{{- if .install.xld }}
 cask "xld"
+{{- end }}
 
-# Media file tag editor
+{{- if .install.yate }}
 cask "yate"
+{{- end }}
 
-# Keeps your Mac awake
-# mas "Amphetamine", id: 937984704
-
-# Window manager for Mac
-# mas "Magnet", id: 441258766
-
+{{- if .install.zoom }}
+cask "zoom"
 {{- end }}

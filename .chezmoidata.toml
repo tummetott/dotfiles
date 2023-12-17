@@ -1,7 +1,65 @@
-nerdfonts = true
-
 [kitty]
 fontsize = 17.0
 
 [alacritty]
 fontsize = 15.0
+
+[install]
+alacritty = false
+amphetamine = false
+anki = false
+appcleaner = false
+bat = false
+bottom = false
+chrome = false
+cmake = false
+discord = false
+docker = false
+etcher = false
+exa = false
+fd = false
+firefox = false
+folx = false
+fzf = false
+git = false
+go = false
+iproute2 = false
+iterm2 = false
+jabref = false
+keka = false
+kitty = false
+lf = false
+lulu = false
+magnet = false
+meld = false
+miniconda = false
+mipony = false
+neofetch = false
+neovim = false
+nerdfonts = false
+ninja = false
+nmap = false
+node = false
+perl = false
+ripgrep = false
+ruby = false
+rust = false
+sd = false
+seafile = false
+shellcheck = false
+signal = false
+starship = false
+sublime = false
+texpad = false
+tldr = false
+tmux = false
+transmission = false
+tree = false
+typora = false
+vlc = false
+wget = false
+wireshark = false
+xclip = false
+xld = false
+yate = false
+zoom = false

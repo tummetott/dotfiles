@@ -88,9 +88,7 @@ if ! zgen saved; then
     zgen load romkatv/powerlevel10k powerlevel10k
 
     # Zgen should only source the 'profile_helper.sh' script
-    # TODO: Change once merged
-    # zgen load tinted-theming/base16-shell profile_helper.sh main
-    zgen load tummetott/base16-shell profile_helper.sh fix_sublime_hook
+    zgen load tinted-theming/base16-shell profile_helper.sh main
 
     # As you type commands, you will see a completion offered after the cursor
     # in a muted gray color
