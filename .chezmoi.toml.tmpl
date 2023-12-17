@@ -1,5 +1,8 @@
 # vim: set ft=toml:
 
+[merge]
+command = 'nvimdiff'
+
 [scriptEnv]
 XDG_CONFIG_HOME = "{{ .chezmoi.homeDir }}/.config"
 XDG_DATA_HOME = "{{ .chezmoi.homeDir }}/.local/share"
@@ -13,7 +16,6 @@ state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
 
 [data.install]
-
 {{- if eq .chezmoi.os "darwin" }}
 alacritty = true
 amphetamine = false
@@ -71,7 +73,6 @@ xld = false
 yate = false
 zoom = false
 {{- end }}
-
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 alacritty = false
 anki = false
@@ -118,7 +119,6 @@ wireshark = false
 xclip = false
 zoom = false
 {{- end }}
-
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
 alacritty = false
 anki = false
@@ -165,7 +165,6 @@ wireshark = false
 xclip = false
 zoom = false
 {{- end }}
-
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
 bat = true
 bottom = true
