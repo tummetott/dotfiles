@@ -44,7 +44,7 @@ fi
 {{- if .install.rust }}
 
 if has rustup; then
-    info 'Rustup already installed!'
+    info 'Rustup already installed'
 else
     info 'Install rust and cargo'
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- --no-modify-path -y

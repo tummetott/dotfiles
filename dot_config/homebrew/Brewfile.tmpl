@@ -8,7 +8,7 @@ tap "homebrew/cask-fonts"
 brew "mas"
 brew "chezmoi" 
 
-# Configurable CLI packages
+# Configurable packages
 {{- if .install.bat }}
 brew "bat"
 {{- end }}
@@ -19,6 +19,10 @@ brew "bottom"
 
 {{- if .install.cmake }}
 brew "cmake"
+{{- end }}
+
+{{- if .install.conda }}
+cask "miniconda"
 {{- end }}
 
 {{- if .install.exa }}
@@ -110,7 +114,6 @@ brew "wget"
 brew "xclip"
 {{- end }}
 
-# Configurable GUI packages
 {{- if .install.alacritty }}
 cask "alacritty"
 {{- end }}
