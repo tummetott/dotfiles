@@ -10,9 +10,14 @@ if has brew; then
 else
     info 'Install homebrew'
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+    # Add brew to path so we can use it
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 info 'Install formulas from Brewfile'
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
+
+# Delete the chezmoi binary installed by the 'curl | sh' script, since we
+# already have it installed via homebrew.
+rm -rf "$HOME/bin"

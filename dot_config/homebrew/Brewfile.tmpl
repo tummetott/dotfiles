@@ -1,3 +1,5 @@
+# vim: set ft=conf:
+
 # A 'cat' clone with syntax highlighting and git integration. It is used as a
 # pager for 'git' and 'fzf'.
 brew "bat"
@@ -5,6 +7,9 @@ brew "bat"
 # Graphical process/system monitor with a customizable interface and a multitude
 # of features. It is used as a replacement for 'top' and 'htop'.
 brew "bottom"
+
+# Dotfile manager, that is used to manage this dotfiles repository.
+brew "chezmoi"
 
 # Cross-platform, open-source build system.
 brew "cmake"
@@ -111,9 +116,9 @@ cask "xld"
 cask "yate"
 
 # Keeps your Mac awake
-mas "Amphetamine", id: 937984704
+# mas "Amphetamine", id: 937984704
 
 # Window manager for Mac
-mas "Magnet", id: 441258766
+# mas "Magnet", id: 441258766
 
 {{- end }}
