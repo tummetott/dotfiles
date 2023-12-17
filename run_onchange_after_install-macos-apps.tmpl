@@ -28,19 +28,6 @@ if [ -f "$HOME/.local/bin/chezmoi" ]; then
     rm "$HOME/.local/bin/chezmoi"
 fi
 
-# Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
-# be obsolete when macOS updates 'ncurses' to version 6.3 or higher
-if infocmp tmux-256color &> /dev/null; then
-    info 'The "tmux-256color" terminfo is already available'
-else
-    info 'Create terminfo entry for tmux'
-    tempdir="$(mktemp -d)"
-    git clone https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/ "$tempdir"
-    pushd "$tempdir"
-    tic -x tmux-256color
-    popd && rm -rf "$tempdir"
-fi
-
 {{- if .install.rust }}
 
 if has rustup; then

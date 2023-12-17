@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+set -euo pipefail
+source ~/.local/share/chezmoi/.script_helper
+source ~/.config/shell/env
+
+# Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
+# be obsolete when macOS updates 'ncurses' to version 6.3 or higher
+if infocmp tmux-256color &> /dev/null; then
+    info 'The "tmux-256color" terminfo is already available'
+else
+    info 'Create terminfo entry for tmux'
+    tempdir="$(mktemp -d)"
+    git clone https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/ "$tempdir"
+    pushd "$tempdir"
+    tic -x tmux-256color
+    popd && rm -rf "$tempdir"
+fi
+
+# Disable startup chime
+sudo nvram StartupMute=%01
+
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+# Disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Automatically quit printer app once the print jobs complete
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Use column view in all Finder windows by default
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+# Disable the warning before emptying the Trash
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+# Set the icon size of Dock items to 36 pixels
+defaults write com.apple.dock tilesize -int 40
+
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Disable inline attachments in mail (just show the icons)
+defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
+
+# NOTE: Changes will be applied after a restart
