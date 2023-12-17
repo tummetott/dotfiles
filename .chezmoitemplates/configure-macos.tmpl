@@ -1,8 +1,10 @@
 # vim: set ft=bash:
 
+echo '1'
 set -euo pipefail
+echo '2'
 source ~/.local/share/chezmoi/.script_helper
-source ~/.config/shell/env
+echo '3'
 
 # Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
 # be obsolete when macOS updates 'ncurses' to version 6.3 or higher
