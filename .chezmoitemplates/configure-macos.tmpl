@@ -19,6 +19,9 @@ fi
 info 'Install zsh plugins'
 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc'
 
+info 'Install nvim plugins'
+nvim --headless '+Lazy! sync' +qa
+
 info 'Change macOS settings'
 
 # Disable startup chime
