@@ -2,6 +2,7 @@
 
 set -euo pipefail
 source ~/.local/share/chezmoi/.script_helper
+source ~/.config/shell/env
 
 # Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
 # be obsolete when macOS updates 'ncurses' to version 6.3 or higher
@@ -17,7 +18,7 @@ else
 fi
 
 info 'Install zsh plugins'
-zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc'
+zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc && exit 0'
 
 info 'Install nvim plugins'
 nvim --headless '+Lazy! sync' +qa
