@@ -20,9 +20,9 @@ info 'Install formulas from Brewfile'
 
 # Delete the chezmoi binary installed by the 'curl | sh' script, since we
 # already have it installed via homebrew.
-if [ -f "$HOME/.local/bin/chezmoi" ]; then
-    rm "$HOME/.local/bin/chezmoi"
-fi
+# if [ -f "$HOME/.local/bin/chezmoi" ]; then
+#     rm "$HOME/.local/bin/chezmoi"
+# fi
 
 {{- if .install.rust }}
 
