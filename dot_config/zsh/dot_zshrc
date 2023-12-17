@@ -179,7 +179,7 @@ ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
 # Initialize conda
 if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
     source "$CONDA_HOME/etc/profile.d/conda.sh"
-else
+fi
 
 # Autostart tmux
 if (( $+commands[tmux] )); then
