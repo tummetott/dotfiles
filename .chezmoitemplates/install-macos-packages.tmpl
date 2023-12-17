@@ -16,7 +16,7 @@ else
 fi
 
 info 'Install formulas from Brewfile'
-NONINTERACTIVE=1 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
+brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 # Delete the chezmoi binary installed by the 'curl | sh' script, since we
 # already have it installed via homebrew.
