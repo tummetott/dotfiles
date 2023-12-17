@@ -66,6 +66,10 @@ brew "nmap"
 brew "node"
 {{- end }}
 
+{{- if .install.perl }}
+brew "perl"
+{{- end }}
+
 {{- if .install.ripgrep }}
 brew "ripgrep"
 {{- end }}
@@ -175,10 +179,6 @@ mas "Magnet", id: 441258766
 cask "meld"
 {{- end }}
 
-{{- if .install.mipony }}
-cask "mipony"
-{{- end }}
-
 {{- if .install.seafile }}
 cask "seafile-client"
 {{- end }}
@@ -191,8 +191,8 @@ cask "signal"
 cask "sublime-text"
 {{- end }}
 
-{{- if .install.texpad }}
-cask "texpad"
+{{- if .install.texifier }}
+cask "texifier"
 {{- end }}
 
 {{- if .install.transmission }}
