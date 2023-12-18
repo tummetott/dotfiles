@@ -1,0 +1,24 @@
+# vim: set ft=bash:
+
+source ~/.local/share/chezmoi/.script_helper
+set -euo pipefail
+trap on_error ERR
+source ~/.config/shell/env
+
+info 'Update apt'
+sudo apt -y update >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+info 'Upgrade apt'
+sudo apt -y upgrade >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+info 'Autoremove apt'
+sudo apt -y autoremove >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
+    error 'Could not find Aptfile'
+fi
+
+info 'Install packages from Aptfile'
+sudo apt -y install \
+    $(grep -vE '^\s*#' "$DOTFILES/bootstrap/Aptfiles/$1"  | tr '\n' ' ') \
+    >> "$BOOTSTRAP_LOG_FILE" 2>&1
