@@ -17,5 +17,6 @@
 {{- else if ne .chezmoi.os "linux" }}
 
 .config/aptitude
+.config/snap
 
 {{- end }}

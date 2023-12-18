@@ -1,0 +1,83 @@
+# Not configurable packages
+build-essential
+snapd
+zsh
+
+# Configurable packages
+{{- if .install.bat }}
+bat
+{{- end }}
+
+{{- if .install.cmake }}
+cmake
+{{- end }}
+
+{{- if .install.exa }}
+exa
+{{- end }}
+
+{{- if .install.fd-find }}
+fd-find
+{{- end }}
+
+{{- if .install.gnome-tweaks }}
+gnome-tweaks
+{{- end }}
+
+{{- if .install.go }}
+golang-go
+{{- end }}
+
+{{- if .install.kitty }}
+kitty
+{{- end }}
+
+{{- if .install.lf }}
+lfm
+{{- end }}
+
+{{- if .install.meld }}
+meld
+{{- end }}
+
+{{- if .install.neofetch }}
+neofetch
+{{- end }}
+
+{{- if .install.nmap }}
+nmap
+{{- end }}
+
+{{- if .install.node }}
+nodejs
+npm
+{{- end }}
+
+{{- if .install.python3 }}
+python3
+python3-pip
+{{- end }}
+
+{{- if .install.ripgrep }}
+ripgrep
+{{- end }}
+
+{{- if .install.shellcheck }}
+shellcheck
+{{- end }}
+
+{{- if .install.tldr }}
+tldr
+{{- end }}
+
+{{- if .install.tmux }}
+tmux
+{{- end }}
+
+{{- if .install.tree }}
+tree
+{{- end }}
+
+{{- if .install.wget }}
+wget
+{{- end }}

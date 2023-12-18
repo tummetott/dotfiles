@@ -4,7 +4,10 @@
 {{- if and (eq .chezmoi.os "linux") (or
     (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "pop")) }}
 
+alias bat='batcat'
+alias btm='bottom'
 alias fd='fdfind'
+alias lf='lfm'
 
 {{- end }}
 

@@ -80,6 +80,7 @@ xld = false
 yate = false
 zoom = false
 {{- end }}
+
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 alacritty = false
 anki = false
@@ -94,6 +95,7 @@ etcher = false
 exa = true
 fd = true
 git = true
+gnome_tweaks = false
 go = false
 jabref = false
 kitty = true
@@ -123,80 +125,14 @@ typora = false
 vlc = false
 wget = true
 wireshark = false
-xclip = false
 zoom = false
 {{- end }}
+
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-alacritty = false
-anki = false
-bat = true
-bottom = true
-chrome = false
-cmake = false
-conda = false
-discord = false
-docker = false
-etcher = false
-exa = true
-fd = true
-git = true
-go = false
-jabref = false
-kitty = true
-lf = false
-meld = false
-neofetch = false
-neovim = true
-nerdfonts = true
-ninja = false
-nmap = false
-node = false
-perl = false
-ripgrep = true
-ruby = false
-rust = false
-sd = false
-seafile = false
-shellcheck = false
-signal = false
-starship = true
-sublime = false
-tldr = true
-tmux = true
-transmission = false
-tree = true
-typora = false
-vlc = false
-wget = true
-wireshark = false
-xclip = false
-zoom = false
 {{- end }}
+
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
-bat = true
-bottom = true
-cmake = false
-conda = false
-exa = true
-fd = true
-git = true
-go = false
-lf = false
-neofetch = false
-neovim = true
-ninja = false
-nmap = false
-node = false
-perl = false
-ripgrep = true
-ruby = false
-rust = false
-sd = false
-shellcheck = false
-starship = true
-tldr = true
-tmux = true
-tree = true
-wget = true
-xclip = false
+{{- end }}
+
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 {{- end }}
