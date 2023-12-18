@@ -2,8 +2,8 @@
 
 {{- if ne .chezmoi.os "darwin" }}
 
-.config/homebrew/Brewfile
-.config/iterm2/com.googlecode.iterm2.plist
+.config/homebrew
+.config/iterm2
 .config/shell/functions/clean-clipboard
 .config/shell/functions/finder-path
 .config/shell/functions/show-in-finder
@@ -13,5 +13,9 @@
 .local/share/scripts/enable-ftp-server
 .local/share/scripts/enable-network-ds-store-files
 .local/share/scripts/enable-ssh-server
+
+{{- else if ne .chezmoi.os "linux" }}
+
+.config/aptitude
 
 {{- end }}

@@ -1,0 +1,67 @@
+# Syntax highlighting program, used for preview in 'fzf'
+bat
+
+# All the packages needed to compile a Debian package
+build-essential
+
+# Cross-platform, open-source build system generator
+cmake
+
+# Get a file from an HTTP, HTTPS or FTP server
+curl
+
+# Alternative to 'find', used for file name search in 'fzf'
+fd-find
+
+# Additional settings for gnome
+gnome-tweaks
+
+# GO programming language SDK
+golang-go
+
+# Kitty terminal emulator. My alternative to alacritty on linux
+kitty
+
+# Visual diff tool
+meld
+
+# Command-line system information tool
+neofetch
+
+# Node and it's packet manager npm
+nodejs
+npm
+
+# Network scanner
+nmap
+
+# Programming language
+python3
+python3-pip
+
+# Faster alternative to 'grep', used for infile search in 'fzf'
+ripgrep
+
+# Shellcheck gives warnings and suggestions for 'bash' / 'sh' shell scripts
+shellcheck
+    
+# Package manager snap
+snapd
+
+# Collection of help pages, that are simpler to read than man pages
+tldr
+
+# Terminal multiplexer
+tmux
+
+# The 'tree' utility prints out a directory structure in a tree-like display
+tree
+
+# Package for retrieving files using HTTP, HTTPS, FTP and FTPS
+wget
+
+# Command line clipboard
+xsel
+
+# My favorite shell
+zsh
