@@ -63,3 +63,11 @@ on_error() {
     error "An error occurred!
     Note: Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
 }
+
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}

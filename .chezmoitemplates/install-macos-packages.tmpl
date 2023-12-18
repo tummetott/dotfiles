@@ -10,7 +10,7 @@ sudo true
 
 if has brew; then
     info 'Update homebrew'
-    brew update
+    brew update >> "$BOOTSTRAP_LOG_FILE" 2>&1
 else
     info 'Install homebrew'
     brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
@@ -21,6 +21,7 @@ else
 fi
 
 info 'Install formulas from Brewfile'
+brew tab 'homebrew/bundle' > dev/null
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 {{- if .install.rust }}
