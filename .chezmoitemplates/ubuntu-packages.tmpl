@@ -20,5 +20,5 @@ fi
 
 info 'Install packages from Aptfile'
 sudo apt -y install \
-    $(grep -vE '^\s*#' "$DOTFILES/bootstrap/Aptfiles/$1"  | tr '\n' ' ') \
+    $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ') \
     >> "$BOOTSTRAP_LOG_FILE" 2>&1
