@@ -21,7 +21,7 @@ else
 fi
 
 info 'Install formulas from Brewfile'
-brew tap 'homebrew/bundle' > /dev/null
+brew tap 'homebrew/bundle' >> "$BOOTSTRAP_LOG_FILE" 2>&1
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 {{- if .install.rust }}
@@ -30,7 +30,8 @@ if has rustup; then
     info 'Rustup already installed'
 else
     info 'Install rust and cargo'
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- --no-modify-path -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+        bash -s -- --no-modify-path -y >> "$BOOTSTRAP_LOG_FILE" 2>&1
     source "$CARGO_HOME/env"
 fi
 
