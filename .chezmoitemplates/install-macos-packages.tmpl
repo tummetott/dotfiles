@@ -4,7 +4,7 @@ set -euo pipefail
 source ~/.local/share/chezmoi/.script_helper
 source ~/.config/shell/env
 
-# Cache the sudo password for the whole scipt
+# Cache the sudo password for subsequent sudo commands within this script
 sudo true
 
 if has brew; then
@@ -12,8 +12,8 @@ if has brew; then
     brew update
 else
     info 'Install homebrew'
-    NONINTERACTIVE=1 \
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
+    NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")" &>> "$CHEZMOI_LOG_FILE"
 
     # Add brew to path so we can use it
     eval "$(/opt/homebrew/bin/brew shellenv)"

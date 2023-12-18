@@ -17,11 +17,12 @@ else
     popd && rm -rf "$tempdir"
 fi
 
-# TODO: this command does not exit after plugin installation
 info 'Install zsh plugins'
+# The TMUX env ensures that tmux is not started
 TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc'
 
-# TODO: this command does not install all the colorschemes?
+# TODO: this command does not install plugins located at
+# 'tummetott/plugins/colors'
 info 'Install nvim plugins'
 nvim --headless '+Lazy! sync' +qa
 echo '' # The the previous cmd puts no newline
