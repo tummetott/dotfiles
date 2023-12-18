@@ -16,6 +16,12 @@ data_home = "{{ .chezmoi.homeDir }}/.local/share"
 state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
 
+[data.kitty]
+fontsize = 17.0
+
+[data.alacritty]
+fontsize = 15.0
+
 [data.install]
 {{- if eq .chezmoi.os "darwin" }}
 alacritty = true
