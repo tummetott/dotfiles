@@ -9,7 +9,8 @@ if has brew; then
     brew update
 else
     info 'Install homebrew'
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    NONINTERACTIVE=1 \
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     # Add brew to path so we can use it
     eval "$(/opt/homebrew/bin/brew shellenv)"
