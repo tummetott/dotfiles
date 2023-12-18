@@ -61,5 +61,5 @@ get_latest_from_github() {
 
 on_error() {
     error "An error occurred!
-    Note: Some of the output was supressed and written to $CHEZMOI_BOOT_LOG"
+    Note: Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
 }
