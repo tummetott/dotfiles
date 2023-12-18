@@ -21,7 +21,7 @@ else
 fi
 
 info 'Install formulas from Brewfile'
-brew tab 'homebrew/bundle' > dev/null
+brew tab 'homebrew/bundle' > /dev/null
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 
 {{- if .install.rust }}

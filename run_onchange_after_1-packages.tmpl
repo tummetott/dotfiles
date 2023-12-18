@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # vim: set ft=bash:
 
+# This file should be re-ecexuted as soon as chezmoi.toml changes
+# chezmoi.toml hash: {{ include ".hash" }} 
+
 {{- if eq .chezmoi.os "darwin" }}
-{{-   template "configure-macos.tmpl" . -}}
+{{-   template "macos-packages.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 # TODO
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
