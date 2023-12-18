@@ -4,6 +4,9 @@ set -euo pipefail
 source ~/.local/share/chezmoi/.script_helper
 source ~/.config/shell/env
 
+# Cache the sudo password for the whole scipt
+sudo true
+
 if has brew; then
     info 'Update homebrew'
     brew update

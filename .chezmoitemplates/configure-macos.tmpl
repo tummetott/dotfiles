@@ -19,7 +19,7 @@ fi
 
 # TODO: this command does not exit after plugin installation
 info 'Install zsh plugins'
-zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc && exit 0'
+TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc'
 
 # TODO: this command does not install all the colorschemes?
 info 'Install nvim plugins'
