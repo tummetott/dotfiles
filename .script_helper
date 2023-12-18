@@ -60,5 +60,6 @@ get_latest_from_github() {
 }
 
 on_error() {
-    error "An error occurred. Please check the log file at $CHEZMOI_LOG_FILE"
+    error "An error occurred!
+    Note: Some of the output was supressed and written to $CHEZMOI_BOOT_LOG"
 }
