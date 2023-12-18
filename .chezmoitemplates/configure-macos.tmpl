@@ -1,7 +1,8 @@
 # vim: set ft=bash:
 
-set -euo pipefail
 source ~/.local/share/chezmoi/.script_helper
+set -euo pipefail
+trap on_error ERR
 source ~/.config/shell/env
 
 # Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
