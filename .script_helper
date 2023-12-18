@@ -22,7 +22,6 @@ warn() {
 
 error() {
     printf "%s\n" "${BOLD}${RED}x $*${NO_COLOR}"
-    false
 }
 
 compl() {
@@ -60,8 +59,8 @@ get_latest_from_github() {
 }
 
 on_error() {
-    error "An error occurred!
-    Note: Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
+    error "An error occurred"
+    warn "Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
 }
 
 pushd () {
