@@ -5,12 +5,12 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-info 'update font cache'
+info 'Update font cache'
 fc-cache -f -v >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
 {{- if .install.zsh }}
 
 info 'Set zsh as default shell'
-chsh -s "$(which zsh)"
+sudo chsh -s "$(which zsh)" "$USER"
 
 {{- end }}
