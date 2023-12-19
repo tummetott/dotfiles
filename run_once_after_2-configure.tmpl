@@ -10,8 +10,8 @@ source ~/.config/shell/env
 true
 
 # Install OS dependent packages
-{{-   template "macos-configure.tmpl" . -}}
 {{- if eq .chezmoi.os "darwin" }}
+{{-   template "macos-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 {{-   template "ubuntu-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
