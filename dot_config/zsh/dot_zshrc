@@ -73,7 +73,7 @@ source "$ZGEN_DIR/zgen/zgen.zsh"
 # source the init script directly without parsing its dialect every time, which
 # also means you need to regenerate the init script after updating your zshrc.
 # Remove the init script with: 'zgen reset'
-if false; then
+if ! zgen saved; then
 
     # Add additional completions for zsh. The completions must be loaded before
     # oh-my-zsh in order to be included into the 'compinit' call
