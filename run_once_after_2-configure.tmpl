@@ -6,8 +6,10 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
+# Cache the sudo password for subsequent sudo commands within this script
 true
 
+# Install OS dependent packages
 {{-   template "macos-configure.tmpl" . -}}
 {{- if eq .chezmoi.os "darwin" }}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
