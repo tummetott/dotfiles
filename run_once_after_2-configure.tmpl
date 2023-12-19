@@ -6,10 +6,7 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-# Cache the sudo password for subsequent sudo commands within this script
-true
-
-# Install OS dependent packages
+# Configure OS dependent packages
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
@@ -47,3 +44,6 @@ else
 fi
 
 compl 'Installation successful. You should restart now.'
+# compl 'Installation successful. Press any key to restart'
+# read -n 1 -s -r
+# sudo reboot now
