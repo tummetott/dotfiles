@@ -4,6 +4,7 @@
 source ~/.local/share/chezmoi/.script_helper
 set -euo pipefail
 trap on_error ERR
+source ~/.config/shell/env
 
 info 'Install zsh plugins'
 # The TMUX env ensures that tmux is not started when executing .zshrc
