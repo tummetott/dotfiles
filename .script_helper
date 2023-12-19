@@ -34,14 +34,14 @@ has() {
 
 download() {
     url="$1"
-    file="$2"
+    dst="$2"
 
     if has curl; then
-        cmd="curl --fail --silent --location --output $file $url"
+        cmd="curl --fail --silent --location --output $dst $url"
     elif has wget; then
-        cmd="wget --quiet --output-document=$file $url"
+        cmd="wget --quiet --output-document=$dst $url"
     elif has fetch; then
-        cmd="fetch --quiet --output=$file $url"
+        cmd="fetch --quiet --output=$dst $url"
     else
         error "No HTTP download program (curl, wget, fetch) found"
         return 1

@@ -4,6 +4,15 @@
 # This file is re-ecexuted as soon as chezmoi.toml changes
 # chezmoi.toml hash: {{ include ".hash" }} 
 
+source ~/.local/share/chezmoi/.script_helper
+set -euo pipefail
+trap on_error ERR
+source ~/.config/shell/env
+
+# Cache the sudo password for subsequent sudo commands within this script
+sudo true
+
+# Install OS dependent packages
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-packages.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
@@ -14,4 +23,42 @@
 # TODO
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 # TODO
+{{- end }}
+
+# Next are generic packages, suitable for all operating systems and CPU
+# architectures.
+
+{{- if .install.rust }}
+if has rustup; then
+    info 'Rustup already installed'
+else
+    info 'Install rustup'
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+        bash -s -- --no-modify-path -y >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    source "$CARGO_HOME/env"
+fi
+{{- end }}
+
+# Get the installer URL of miniconda
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "arm64") }}
+url='https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh'
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
+url='https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+{{- else if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") }}
+url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh'
+{{- else if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64") }}
+url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh'
+{{- end }}
+
+# Install miniconda
+{{- if .install.conda }}
+if [ -x "$CONDA_HOME/bin/conda" ]; then
+    info 'Conda is already installed'
+else
+    info 'Install conda'
+    mkdir -p "$CONDA_HOME"
+    download "$url" "$CONDA_HOME/miniconda.sh"
+    /bin/bash "$CONDA_HOME/miniconda.sh" -b -u -p "$CONDA_HOME" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    rm -f "$CONDA_HOME/miniconda.sh"
+fi
 {{- end }}
