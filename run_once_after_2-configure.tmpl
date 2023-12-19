@@ -22,7 +22,7 @@ source ~/.config/shell/env
 
 info 'Install zsh plugins'
 # The TMUX env ensures that tmux is not started when executing .zshrc
-# TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
+TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
 # TODO: this command does not install plugins located at
 # 'tummetott/plugins/colors'
