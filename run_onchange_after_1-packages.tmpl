@@ -28,6 +28,7 @@ sudo true
 # Next are generic packages, suitable for all operating systems and CPU
 # architectures.
 
+# Install rust
 {{- if .install.rust }}
 if has rustup; then
     info 'Rustup already installed'

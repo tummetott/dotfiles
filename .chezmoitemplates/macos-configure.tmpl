@@ -1,33 +1,5 @@
 # vim: set ft=bash:
 
-source ~/.local/share/chezmoi/.script_helper
-set -euo pipefail
-trap on_error ERR
-source ~/.config/shell/env
-
-# Create the 'tmux-256color' terminfo entry if it doesn't exist. This step will
-# be obsolete when macOS updates 'ncurses' to version 6.3 or higher
-if infocmp tmux-256color &> /dev/null; then
-    info 'The "tmux-256color" terminfo is already available'
-else
-    info 'Create terminfo entry for tmux'
-    tempdir="$(mktemp -d)"
-    url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
-    git clone "$url" "$tempdir" >> "$BOOTSTRAP_LOG_FILE" 2>&1
-    pushd "$tempdir"
-    tic -x tmux-256color
-    popd && rm -rf "$tempdir"
-fi
-
-info 'Install zsh plugins'
-# The TMUX env ensures that tmux is not started
-TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
-# TODO: this command does not install plugins located at
-# 'tummetott/plugins/colors'
-info 'Install nvim plugins'
-nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
 info 'Change macOS settings'
 
 # Disable startup chime
@@ -63,5 +35,3 @@ defaults write com.apple.dock minimize-to-application -bool true
 
 # Disable inline attachments in mail (just show the icons)
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
-
-compl 'Installation successful. You should restart now.'

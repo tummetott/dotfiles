@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # vim: set ft=bash:
 
+source ~/.local/share/chezmoi/.script_helper
+set -euo pipefail
+trap on_error ERR
+source ~/.config/shell/env
+
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
@@ -12,3 +17,29 @@
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 # TODO
 {{- end }}
+
+info 'Install zsh plugins'
+# The TMUX env ensures that tmux is not started when executing .zshrc
+TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+# TODO: this command does not install plugins located at
+# 'tummetott/plugins/colors'
+info 'Install nvim plugins'
+nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+# Create the 'tmux-256color' terminfo entry if it is missing. This step is
+# important due to many systems operating with older 'ncurses' versions
+# (pre-6.3), which do not have the 'tmux-256color' terminfo entry included.
+if infocmp tmux-256color &> /dev/null; then
+    info 'The "tmux-256color" terminfo is already available'
+else
+    info 'Create terminfo entry for tmux'
+    tempdir="$(mktemp -d)"
+    url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
+    git clone "$url" "$tempdir" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    pushd "$tempdir"
+    tic -x tmux-256color
+    popd && rm -rf "$tempdir"
+fi
+
+compl 'Installation successful. You should restart now.'
