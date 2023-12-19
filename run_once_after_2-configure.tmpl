@@ -6,7 +6,8 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-# Configure OS dependent packages
+# Configure OS dependent packages. HACK: This comment is important, otherwise an
+# error occurs. This must be a bug of chezmoi.
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}

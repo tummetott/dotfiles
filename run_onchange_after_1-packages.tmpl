@@ -12,7 +12,8 @@ source ~/.config/shell/env
 # Cache the sudo password for subsequent sudo commands within this script
 sudo true
 
-# Install OS dependent packages
+# Install OS dependent packages. HACK: This comment is important, otherwise an
+# error occurs. This must be a bug of chezmoi.
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-packages.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
