@@ -4,7 +4,7 @@
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-# TODO
+{{-   template "ubuntu-configure.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
 # TODO
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}

@@ -1,5 +1,15 @@
+{{- if and (eq .chezmoi.os "linux") .install.nerdfonts }}
+
 ['.local/share/fonts/FiraCode']
 type = 'archive'
-url = 'https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.tar.xz'
+url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz'
 extract = true
-# stripComponents = 1
+include = ['*.ttf']
+
+['.local/share/fonts/Meslo']
+type = 'archive'
+url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.tar.xz'
+extract = true
+include = ['*.ttf']
+
+{{- end }}
