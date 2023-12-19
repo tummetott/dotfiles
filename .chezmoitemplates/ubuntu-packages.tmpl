@@ -24,8 +24,6 @@ sudo apt -y install \
     >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
 info 'Install packages from Snapfile'
-while read -r line; do
-    # Skip lines that start with '#'
-    if [[ $line =~ ^# ]]; then continue; fi
+while grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile" | read -r line; do
     sudo snap install "$line"
 done < "$XDG_CONFIG_HOME/snap/Snapfile"

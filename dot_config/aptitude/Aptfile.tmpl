@@ -1,11 +1,13 @@
 # Not configurable packages
-build-essential
 snapd
-zsh
 
 # Configurable packages
 {{- if .install.bat }}
 bat
+{{- end }}
+
+{{- if .install.build_essential }}
+build-essential
 {{- end }}
 
 {{- if .install.cmake }}
@@ -80,4 +82,8 @@ tree
 
 {{- if .install.wget }}
 wget
+{{- end }}
+
+{{- if .install.zsh }}
+zsh
 {{- end }}
