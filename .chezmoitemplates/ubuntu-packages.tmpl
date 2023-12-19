@@ -26,4 +26,4 @@ sudo apt -y install \
 info 'Install packages from Snapfile'
 while grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile" | read -r line; do
     sudo snap install "$line"
-done < "$XDG_CONFIG_HOME/snap/Snapfile"
+done
