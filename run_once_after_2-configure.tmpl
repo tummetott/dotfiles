@@ -5,18 +5,6 @@ source ~/.local/share/chezmoi/.script_helper
 set -euo pipefail
 trap on_error ERR
 
-{{- if eq .chezmoi.os "darwin" }}
-{{-   template "macos-configure.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-{{-   template "ubuntu-configure.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-# TODO
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
-# TODO
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-# TODO
-{{- end }}
-
 info 'Install zsh plugins'
 # The TMUX env ensures that tmux is not started when executing .zshrc
 TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
