@@ -82,23 +82,17 @@ zoom = false
 {{- end }}
 
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-alacritty = false
-anki = false
+alacritty = true
 bat = true
 bottom = true
 build_essential = true
-chrome = false
 cmake = false
 conda = false
-discord = false
-docker = false
-etcher = false
 exa = true
 fd = true
 git = true
 gnome_tweaks = false
 go = false
-jabref = false
 kitty = true
 lf = false
 meld = false
@@ -113,22 +107,14 @@ python = false
 ripgrep = true
 ruby = false
 rust = false
-sd = false
-seafile = false
 shellcheck = false
 signal = false
 starship = true
-sublime = false
 tldr = true
 tmux = true
-transmission = false
 tree = true
-typora = false
-vlc = false
 wget = true
-wireshark = false
 zsh = true
-zoom = false
 {{- end }}
 
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
