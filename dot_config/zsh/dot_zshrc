@@ -130,11 +130,6 @@ unsetopt HIST_VERIFY
 # Source the 'powerlevel10k' config
 [ -f ${ZDOTDIR}/p10k.zsh ] && source ${ZDOTDIR}/p10k.zsh
 
-# Initialize starship and use a transient prompt
-# eval "$(starship init zsh)"
-# [ -f "$XDG_CONFIG_HOME/starship/init-transient.zsh" ] &&
-#     source "$XDG_CONFIG_HOME/starship/init-transient.zsh"
-
 # With 'base16-shell', the default 'zsh-autosuggestions' color (color8) closely
 # matches the terminal foreground color, making it hard to distinguish
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'

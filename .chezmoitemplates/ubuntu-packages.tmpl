@@ -30,3 +30,12 @@ info 'Install packages from Snapfile'
 while read -r line; do
     sudo snap install $line >> "$BOOTSTRAP_LOG_FILE" 2>&1
 done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
+
+{{- if .install.starship }}
+if has starship; then
+    info 'Starship is already installed'
+else
+    info 'Install starship'
+    curl -sS https://starship.rs/install.sh | sh
+fi
+{{- end }}
