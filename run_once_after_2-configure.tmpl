@@ -6,43 +6,45 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-# Configure OS dependent packages. HACK: This comment is important, otherwise an
-# error occurs. This must be a bug of chezmoi.
+# HACK: This comment is important, otherwise an error occurs. This must be a bug
+# of chezmoi.
+
+# Configurations for macOS
 {{- if eq .chezmoi.os "darwin" }}
-{{-   template "macos-configure.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-{{-   template "ubuntu-configure.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-# TODO
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
-# TODO
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+    {{-   template "macos-configure.tmpl" . -}}
+    {{-   template "tmux-terminfo.tmpl" . -}}
+{{- end }}
+
+# Configurations for Ubuntu
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+    {{-   template "ubuntu-configure.tmpl" . -}}
+{{- end }}
+
+# Configurations for popOS
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
 # TODO
 {{- end }}
 
+# Configurations for Kali
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{- end }}
+
+# Configurations for pi
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
+# TODO
+{{- end }}
+
+{{- if .install.zsh }}
 info 'Install zsh plugins'
 # The TMUX env ensures that tmux is not started when executing .zshrc
 TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
+{{- end }}
 
-# TODO: this command does not install plugins located at
-# 'tummetott/plugins/colors'
+{{- if .install.nvim }}
 info 'Install nvim plugins'
+# TODO: this command does not install all neovim plugins
 nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
-# Create the 'tmux-256color' terminfo entry if it is missing. This step is
-# important due to many systems operating with older 'ncurses' versions
-# (pre-6.3), which do not have the 'tmux-256color' terminfo entry included.
-if infocmp tmux-256color &> /dev/null; then
-    info 'The "tmux-256color" terminfo is already available'
-else
-    info 'Create terminfo entry for tmux'
-    tempdir="$(mktemp -d)"
-    url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
-    git clone "$url" "$tempdir" >> "$BOOTSTRAP_LOG_FILE" 2>&1
-    pushd "$tempdir"
-    tic -x tmux-256color
-    popd && rm -rf "$tempdir"
-fi
+{{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
 compl 'Installation successful. You should restart now.'
