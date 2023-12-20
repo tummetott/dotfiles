@@ -14,7 +14,7 @@ BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
 {{- if eq .chezmoi.os "darwin" }}
 fontsize = 17.0
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-fontsize = 15.0
+fontsize = 13.0
 {{- end }}
 
 [data.xdg]
