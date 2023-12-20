@@ -1,28 +1,9 @@
+#!/urs/bin/env zsh
+
 # Important: Do not export ZDOTDIR for cross-OS compatibility. Linux starts with
 # a login shell, then switches to interactive, non-login shells. MacOS does not
 # start with a login shell, but treats all shells as interactive login shells.
 # Exporting ZDOTDIR would lead to inconsistencies: On Linux, ~/.zshenv is
 # overlooked for interactive shells as Zsh searches ~/.config/zsh/.zshenv.
 # However, macOS sources it as expected.
-ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-# Source my shell independent enviroment variables
-[ -f ~/.config/shell/env ] && source ~/.config/shell/env
-
-# Hostname up to the first '.'
-export SHORT_HOST=${SHORT_HOST:-${(%):-%m}}
-
-# Define new compdump location. The zsh directory must be created manually
-export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
-
-# When pressing ESC, use a minimal timeout of 1 ms
-export KEYTIMEOUT=1
-
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
-export ZSH_SESSIONS_DIR="$XDG_STATE_HOME/zsh/sessions"
-
-# Prevent zgen from running compinit. This is already done by oh-my-zsh
-export ZGEN_AUTOLOAD_COMPINIT=0
-
-# remove duplicates in paths
-typeset -gU cdpath fpath mailpath path
+ZDOTDIR="$HOME/.config/zsh"

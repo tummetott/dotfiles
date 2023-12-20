@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# vim: set ft=bash:
+
+# Linux starts with a login shell, then switches to interactive, non-login
+# shells. MacOS does not start with a login shell, but treats all shells as
+# interactive login shells. Thus, bash_profile is executed once on Linux but for
+# every shell on macOS.
 
 {{- if hasPrefix .chezmoi.hostname "gruenau" }}
 
@@ -9,5 +15,11 @@ exit 0
 
 {{- end }}
 
+# Source shell-independent environment. As everything is exported within this
+# file, sourcing it early on Linux suffices to set up the environment for all
+# subsequent shells.
+[ -f ~/.config/shell/env ] && source ~/.config/shell/env
+
 # Manually sourcing bashrc, as it's not automatically read by login shells.
+# Needed for macOS and SSH.
 [ -f ~/.bashrc ] && source ~/.bashrc

@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-# Source environment variables. They are also usefull for non-interactive shells
-[ -f ~/.config/shell/env ] && source ~/.config/shell/env
-
 # Ensure only interactive login shells source bashrc. Non-interactive shells
-# (like those running scripts) should not perform the interactive configurations
-# typically found in bashrc. We check for an interactive shell by testing if PS1
-# is set.
+# (like the inital login shell on linux) should not perform the interactive
+# configurations typically found in bashrc.
 [[ -z "$PS1" ]] && return
 
 # Source alias file

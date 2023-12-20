@@ -1,14 +1,23 @@
 #!/usr/bin/env zsh
 # vim: set ft=zsh:
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-
-# In Kali Linux, PATH is overwritten in /etc/zprofile after loading ~/.zshenv.
-# To restore my PATH, I reload my environment settings again and clean up
-# duplicates.
+# Source my shell independent enviroment variables
 [ -f ~/.config/shell/env ] && source ~/.config/shell/env
+
+# Hostname up to the first '.'
+export SHORT_HOST=${SHORT_HOST:-${(%):-%m}}
+
+# Define new compdump location. The zsh directory must be created manually
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
+# When pressing ESC, use a minimal timeout of 1 ms
+export KEYTIMEOUT=1
+
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export ZSH_SESSIONS_DIR="$XDG_STATE_HOME/zsh/sessions"
+
+# Prevent zgen from running compinit. This is already done by oh-my-zsh
+export ZGEN_AUTOLOAD_COMPINIT=0
+
+# Remove duplicates in paths
 typeset -gU cdpath fpath mailpath path
-
-{{- end }}
-
-# Let's see what I will add here ..
