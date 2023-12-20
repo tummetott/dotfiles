@@ -22,35 +22,36 @@ source ~/.config/shell/env
 
 # Configurations for popOS
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-# TODO
+    # TODO
 {{- end }}
 
 # Configurations for Kali
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+    # TODO
 {{- end }}
 
 # Configurations for pi
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
-# TODO
+    # TODO
 {{- end }}
 
-{{- if .install.zsh }}
-info 'Install zsh plugins'
-# The TMUX env ensures that tmux is not started when executing .zshrc
-TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
-{{- end }}
+if has zsh; then
+    info 'Install zsh plugins'
+    # The TMUX env ensures that tmux is not started when executing .zshrc
+    TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
+fi
 
-{{- if .install.neovim }}
-info 'Install nvim plugins'
-# TODO: this command does not install all neovim plugins
-nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
-{{- end }}
+if has nvim; then
+    info 'Install nvim plugins'
+    # TODO: this command does not install all neovim plugins
+    nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
+fi
 
 {{- if eq .chezmoi.os "darwin" }}
-compl 'Installation successful. You should restart now.'
+    compl 'Installation successful. You should restart now.'
 {{- else if eq .chezmoi.os "linux" }}
-# Force restart when on linux
-compl 'Installation successful. Press any key to restart'
-read -n 1 -s -r
-sudo reboot now
+    # Force restart when on linux
+    compl 'Installation successful. Press any key to restart'
+    read -n 1 -s -r
+    sudo reboot now
 {{- end }}

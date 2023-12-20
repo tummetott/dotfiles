@@ -14,35 +14,35 @@ sudo true
 
 # Install packages for macOS
 {{- if eq .chezmoi.os "darwin" }}
-{{-   template "brew-packages.tmpl" . -}}
-{{-   template "rust.tmpl" . -}}
-{{-   template "conda.tmpl" . -}}
+    {{- template "brew-packages.tmpl" . -}}
+    {{- template "rust.tmpl" . -}}
+    {{- template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for Ubuntu
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-{{-   template "aptitude-packages.tmpl" . -}}
-{{-   template "snap-packages.tmpl" . -}}
-{{-   template "starship.tmpl" . -}}
-{{-   template "rust.tmpl" . -}}
-{{-   template "conda.tmpl" . -}}
+    {{- template "aptitude-packages.tmpl" . -}}
+    {{- template "snap-packages.tmpl" . -}}
+    {{- template "starship.tmpl" . -}}
+    {{- template "rust.tmpl" . -}}
+    {{- template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for popOS
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-# TODO
+    # TODO
 {{- end }}
 
 # Install packages for Kali
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-{{-   template "aptitude-packages.tmpl" . -}}
-{{-   template "snap-packages.tmpl" . -}}
-{{-   template "starship.tmpl" . -}}
-{{-   template "rust.tmpl" . -}}
-{{-   template "conda.tmpl" . -}}
+    {{- template "aptitude-packages.tmpl" . -}}
+    {{- template "snap-packages.tmpl" . -}}
+    {{- template "starship.tmpl" . -}}
+    {{- template "rust.tmpl" . -}}
+    {{- template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for pi
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
-# TODO
+    # TODO
 {{- end }}
