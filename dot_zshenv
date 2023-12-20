@@ -1,3 +1,11 @@
+# Important: Do not export ZDOTDIR for cross-OS compatibility. Linux starts with
+# a login shell, then switches to interactive, non-login shells. MacOS does not
+# start with a login shell, but treats all shells as interactive login shells.
+# Exporting ZDOTDIR would lead to inconsistencies: On Linux, ~/.zshenv is
+# overlooked for interactive shells as Zsh searches ~/.config/zsh/.zshenv.
+# However, macOS sources it as expected.
+ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
 # Source my shell independent enviroment variables
 [ -f ~/.config/shell/env ] && source ~/.config/shell/env
 
