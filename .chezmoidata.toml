@@ -45,7 +45,6 @@ sd = false
 seafile = false
 shellcheck = false
 signal = false
-snap = false
 starship = false
 sublime = false
 texifier = false

@@ -109,7 +109,6 @@ ruby = false
 rust = false
 shellcheck = false
 signal = false
-snap = true
 starship = true
 tldr = true
 tmux = true
@@ -119,7 +118,6 @@ zsh = true
 {{- end }}
 
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-snap = true
 {{- end }}
 
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
