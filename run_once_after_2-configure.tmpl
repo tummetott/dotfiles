@@ -47,6 +47,9 @@ if has nvim; then
     nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
 fi
 
+
+# hash=$($HOME/.local/bin/chezmoi state data | grep -E '\\"name\\": \\"1-packages\\"' | awk -F '"' '{print $2}')
+
 {{- if eq .chezmoi.os "darwin" }}
     compl 'Installation successful. You should restart now.'
 {{- else if eq .chezmoi.os "linux" }}
