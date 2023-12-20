@@ -36,6 +36,7 @@ if has starship; then
     info 'Starship is already installed'
 else
     info 'Install starship'
-    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --bin-dir ~/.local/bin
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --bin-dir ~/.local/bin \
+    >> "$BOOTSTRAP_LOG_FILE" 2>&1
 fi
 {{- end }}
