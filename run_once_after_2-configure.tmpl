@@ -44,7 +44,11 @@ else
     popd && rm -rf "$tempdir"
 fi
 
+{{- if eq .chezmoi.os "darwin" }}
 compl 'Installation successful. You should restart now.'
-# compl 'Installation successful. Press any key to restart'
-# read -n 1 -s -r
-# sudo reboot now
+{{- else if eq .chezmoi.os "linux" }}
+# Force restart when on linux
+compl 'Installation successful. Press any key to restart'
+read -n 1 -s -r
+sudo reboot now
+{{- end }}

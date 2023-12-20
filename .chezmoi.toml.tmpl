@@ -15,12 +15,11 @@ config_home = "{{ .chezmoi.homeDir }}/.config"
 data_home = "{{ .chezmoi.homeDir }}/.local/share"
 state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
-
-[data.kitty]
+{{- if eq .chezmoi.os "darwin" }}
 fontsize = 17.0
-
-[data.alacritty]
+{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 fontsize = 15.0
+{{- end }}
 
 [data.install]
 {{- if eq .chezmoi.os "darwin" }}

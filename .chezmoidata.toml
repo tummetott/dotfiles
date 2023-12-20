@@ -1,8 +1,4 @@
-[kitty]
 fontsize = 17.0
-
-[alacritty]
-fontsize = 15.0
 
 [install]
 alacritty = false
