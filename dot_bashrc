@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# NOTE: We avoid sourcing the environment here because it's already
+# sourced in bash_profile. When bash is
+# 1. default shell on macOS: bash_profile is executed for each new shell.
+# 2. default shell on Linux: bash_profile was executed during login.
+# 3. subshell on any OS: bash_profile is NOT executed, expecting the
+#    parent shell to have already sourced the environment.
+
 # Ensure only interactive login shells source bashrc. Non-interactive shells
 # (like the inital login shell on linux) should not perform the interactive
 # configurations typically found in bashrc.
