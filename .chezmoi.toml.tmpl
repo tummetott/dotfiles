@@ -16,6 +16,7 @@ fontsize = 17.0
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
 fontsize = 13.0
 {{- end }}
+nerdfonts = true
 
 [data.xdg]
 config_home = "{{ .chezmoi.homeDir }}/.config"
@@ -53,7 +54,6 @@ magnet = false
 meld = false
 neofetch = false
 neovim = true
-nerdfonts = true
 ninja = false
 nmap = false
 node = true
@@ -99,7 +99,6 @@ lf = false
 meld = false
 neofetch = false
 neovim = true
-nerdfonts = true
 ninja = false
 nmap = false
 node = false

@@ -46,7 +46,7 @@ tmux set -g pane-active-border-style fg='colour19',bg='colour0'
 # Set default colors for the line
 tmux set -g status-style "fg=${text},bg=colour0"
 
-{{- if .install.nerdfonts }}
+{{- if .nerdfonts }}
 
 # All window tabs but the current
 tmux setw -g window-status-format "#[\
