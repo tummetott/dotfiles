@@ -36,6 +36,6 @@ if has starship; then
     info 'Starship is already installed'
 else
     info 'Install starship'
-    curl -fsSL https://starship.rs/install.sh | bash -s -- --bin-dir ~/.local/bin
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --bin-dir ~/.local/bin
 fi
 {{- end }}
