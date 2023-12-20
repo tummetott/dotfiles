@@ -12,17 +12,32 @@ source ~/.config/shell/env
 # Cache the sudo password for subsequent sudo commands within this script
 sudo true
 
-# Install OS dependent packages. HACK: This comment is important, otherwise an
-# error occurs. This must be a bug of chezmoi.
+# Install packages for macOS
 {{- if eq .chezmoi.os "darwin" }}
 {{-   template "macos-packages.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (or
-    (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "kali")) }}
-{{-   template "linux-packages.tmpl" . -}}
+{{- end }}
+
+# Install packages for Ubuntu
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+{{-   template "aptitude-packages.tmpl" . -}}
 {{-   template "snap-packages.tmpl" . -}}
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
+{{-   template "starship.tmpl" . -}}
+{{- end }}
+
+# Install packages for popOS
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
 # TODO
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
+{{- end }}
+
+# Install packages for Kali
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{-   template "aptitude-packages.tmpl" . -}}
+{{-   template "snap-packages.tmpl" . -}}
+{{-   template "starship.tmpl" . -}}
+{{- end }}
+
+# Install packages for pi
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
 # TODO
 {{- end }}
 

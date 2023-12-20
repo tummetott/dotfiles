@@ -5,15 +5,13 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-{{- if .install.snap }}
 if ! has snap; then
     {
         sudo apt -y update
         sudo apt -y install snapd
-        # This is technically only needed for Kali but it should not hurt to
-        # enable it on other systems as well (it should be running already). I
-        # would template this but I can't define a template within a template.
+        {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
         sudo systemctl enable --now snapd apparmor
+        {{- end }}
     } >> "$BOOTSTRAP_LOG_FILE" 2>&1
     warn 'Could not install snap packages because the system needs a restart!'
 # elif ! systemctl is-active --quiet snapd || systemctl ! is-active --quiet apparmor; then
@@ -27,4 +25,3 @@ else
         sudo snap install $line >> "$BOOTSTRAP_LOG_FILE" 2>&1
     done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
 fi
-{{- end }}

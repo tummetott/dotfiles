@@ -6,6 +6,7 @@ trap on_error ERR
 source ~/.config/shell/env
 
 # Cache the sudo password for subsequent sudo commands within this script
+# TODO: move to parent
 sudo true
 
 info 'Update apt'
@@ -25,13 +26,3 @@ info 'Install packages from Aptfile'
 sudo apt -y install \
     $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ') \
     >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
-{{- if .install.starship }}
-if has starship; then
-    info 'Starship is already installed'
-else
-    info 'Install starship'
-    curl -fsSL https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin \
-    >> "$BOOTSTRAP_LOG_FILE" 2>&1
-fi
-{{- end }}
