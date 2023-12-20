@@ -1,0 +1,61 @@
+# vim: set ft=bash:
+
+source ~/.local/share/chezmoi/.script_helper
+set -euo pipefail
+trap on_error ERR
+source ~/.config/shell/env
+
+# Cache the sudo password for subsequent sudo commands within this script
+sudo true
+
+info 'Update apt'
+sudo apt -y update >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+info 'Upgrade apt'
+sudo apt -y upgrade >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+info 'Autoremove apt'
+sudo apt -y autoremove >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
+    error 'Could not find Aptfile'
+fi
+
+info 'Install packages from Aptfile'
+sudo apt -y install \
+    $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ') \
+    >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+{{- if .install.snap }}
+if ! has snap; then
+    {
+        sudo apt -y update
+        sudo apt -y install snapd
+        # This is technically only needed for Kali but it should not hurt to
+        # enable it on other systems as well (it should be running already). I
+        # would template this but I can't define a template within a template.
+        sudo systemctl enable --now snapd apparmor
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    warn 'Could not install snap packages because the system needs a restart!'
+# elif ! systemctl is-active --quiet snapd || systemctl ! is-active --quiet apparmor; then
+#     sudo systemctl enable --now snapd apparmor >> "$BOOTSTRAP_LOG_FILE" 2>&1
+#     error 'Snap needs a restart. Press any key to restart'
+#     read -n 1 -s -r
+#     sudo reboot now
+else
+    info 'Install packages from Snapfile'
+    while read -r line; do
+        sudo snap install $line >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
+fi
+{{- end }}
+
+{{- if .install.starship }}
+if has starship; then
+    info 'Starship is already installed'
+else
+    info 'Install starship'
+    curl -fsSL https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin \
+    >> "$BOOTSTRAP_LOG_FILE" 2>&1
+fi
+{{- end }}
