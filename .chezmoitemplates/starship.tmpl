@@ -1,10 +1,5 @@
 # vim: set ft=bash:
 
-source ~/.local/share/chezmoi/.script_helper
-set -euo pipefail
-trap on_error ERR
-source ~/.config/shell/env
-
 {{- if .install.starship }}
 if has starship; then
     info 'Starship is already installed'
@@ -12,5 +7,6 @@ else
     info 'Install starship'
     curl -fsSL https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin \
     >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
 fi
 {{- end }}

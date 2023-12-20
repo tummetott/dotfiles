@@ -14,7 +14,9 @@ sudo true
 
 # Install packages for macOS
 {{- if eq .chezmoi.os "darwin" }}
-{{-   template "macos-packages.tmpl" . -}}
+{{-   template "brew-packages.tmpl" . -}}
+{{-   template "rust.tmpl" . -}}
+{{-   template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for Ubuntu
@@ -22,6 +24,8 @@ sudo true
 {{-   template "aptitude-packages.tmpl" . -}}
 {{-   template "snap-packages.tmpl" . -}}
 {{-   template "starship.tmpl" . -}}
+{{-   template "rust.tmpl" . -}}
+{{-   template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for popOS
@@ -34,48 +38,11 @@ sudo true
 {{-   template "aptitude-packages.tmpl" . -}}
 {{-   template "snap-packages.tmpl" . -}}
 {{-   template "starship.tmpl" . -}}
+{{-   template "rust.tmpl" . -}}
+{{-   template "conda.tmpl" . -}}
 {{- end }}
 
 # Install packages for pi
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
 # TODO
-{{- end }}
-
-# Next are generic packages, suitable for all operating systems and CPU
-# architectures.
-
-# Install rust
-{{- if .install.rust }}
-if has rustup; then
-    info 'Rustup already installed'
-else
-    info 'Install rustup'
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
-        bash -s -- --no-modify-path -y >> "$BOOTSTRAP_LOG_FILE" 2>&1
-    source "$CARGO_HOME/env"
-fi
-{{- end }}
-
-# Get the installer URL of miniconda
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "arm64") }}
-url='https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh'
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
-url='https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-{{- else if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") }}
-url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh'
-{{- else if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64") }}
-url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh'
-{{- end }}
-
-# Install miniconda
-{{- if .install.conda }}
-if [ -x "$CONDA_HOME/bin/conda" ]; then
-    info 'Conda is already installed'
-else
-    info 'Install conda'
-    mkdir -p "$CONDA_HOME"
-    download "$url" "$CONDA_HOME/miniconda.sh"
-    /bin/bash "$CONDA_HOME/miniconda.sh" -b -u -p "$CONDA_HOME" >> "$BOOTSTRAP_LOG_FILE" 2>&1
-    rm -f "$CONDA_HOME/miniconda.sh"
-fi
 {{- end }}

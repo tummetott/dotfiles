@@ -1,10 +1,5 @@
 # vim: set ft=bash:
 
-source ~/.local/share/chezmoi/.script_helper
-set -euo pipefail
-trap on_error ERR
-source ~/.config/shell/env
-
 if ! has snap; then
     {
         sudo apt -y update
