@@ -1,14 +1,5 @@
 # vim: set ft=bash:
 
-source ~/.local/share/chezmoi/.script_helper
-set -euo pipefail
-trap on_error ERR
-source ~/.config/shell/env
-
-# Cache the sudo password for subsequent sudo commands within this script
-# TODO: move to parent
-sudo true
-
 info 'Update apt'
 sudo apt -y update >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
