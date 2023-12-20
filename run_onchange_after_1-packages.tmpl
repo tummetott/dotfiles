@@ -19,6 +19,7 @@ sudo true
 {{- else if and (eq .chezmoi.os "linux") (or
     (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "kali")) }}
 {{-   template "linux-packages.tmpl" . -}}
+{{-   template "snap-packages.tmpl" . -}}
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
 # TODO
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
