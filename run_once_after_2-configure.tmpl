@@ -27,7 +27,7 @@ source ~/.config/shell/env
 
 # Configurations for Kali
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-    # TODO
+    {{-   template "kali-configure.tmpl" . -}}
 {{- end }}
 
 # Configurations for pi
