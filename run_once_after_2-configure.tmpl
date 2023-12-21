@@ -44,7 +44,7 @@ fi
 
 if has nvim; then
     info 'Install nvim plugins'
-    # TODO: this command does not install all neovim plugins
+    # TODO: this command does not install all neovim plugins.
     nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
 fi
 
