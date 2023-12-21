@@ -53,7 +53,14 @@ pushd "$HOME/.local/share/chezmoi"
 git remote set-url origin git@github.com:tummetott/dotfiles.git
 popd
 
-# hash=$($HOME/.local/bin/chezmoi state data | grep -E '\\"name\\": \\"1-packages\\"' | awk -F '"' '{print $2}')
+if [[ ! -x "$FZF_BASE/bin/fzf" ]]; then
+    info 'Initialize FZF'
+    # The installation scrip of fzf downloads the executable and generates
+    # scripts for zsh and bash in $XDG_CONFIG_HOME/fzf to enable keybindings and
+    # completion.
+    "$FZF_BASE/install" --key-bindings --completion --no-update-rc --xdg \
+        >> "$BOOTSTRAP_LOG_FILE" 2>&1
+fi
 
 {{- if eq .chezmoi.os "darwin" }}
     compl 'Installation successful. You should restart now.'

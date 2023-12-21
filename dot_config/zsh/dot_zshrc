@@ -29,9 +29,6 @@ export KEYTIMEOUT=1
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 export ZSH_SESSIONS_DIR="$XDG_STATE_HOME/zsh/sessions"
 
-# Prevent zgen from running compinit. This is already done by oh-my-zsh
-export ZGEN_AUTOLOAD_COMPINIT=0
-
 # Remove duplicates in paths
 typeset -gU cdpath fpath mailpath path
 
@@ -42,18 +39,7 @@ setopt HIST_FIND_NO_DUPS
 HYPHEN_INSENSITIVE='true' # Treat '-' and '_' the same for completion purposes
 DISABLE_AUTO_TITLE='true' # Disable auto-setting terminal title
 COMPLETION_WAITING_DOTS='true' # Show red dots while waiting for completion
-
-# Load custom shell functions. This must be loaded before oh-my-zsh calls
-# compinit
-fpath=( $XDG_CONFIG_HOME/shell/functions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
-
-# Load custom completions. This must be loaded before oh-my-zsh calls
-# compinit
-# HINT: Delete compiled completions and recompile them with:
-# 'rm -f $ZSH_COMPDUMP; compinit -d "$ZSH_COMPDUMP"'
-fpath=( $XDG_CONFIG_HOME/zsh/completions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
+ZSH_DISABLE_COMPFIX='true'
 
 # Update the highlight color of ZVM. Must be defined before ZVM is loaded
 function zvm_config() {
@@ -74,65 +60,37 @@ function zvm_after_init() {
     fi
 }
 
-# Bootstrap plugin manager
-if [[ ! -f "$ZGEN_DIR/zgen/zgen.zsh" ]]; then
-    git clone 'https://github.com/tarjoilija/zgen.git' "$ZGEN_DIR/zgen"
-fi
+# Add shell functions to fpath and autoload them
+fpath=( $XDG_CONFIG_HOME/shell/functions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
 
-# Load plugin manager
-source "$ZGEN_DIR/zgen/zgen.zsh"
+# Add all directories containing completions to fpath and autoload the
+# completions. Must be done before oh-my-zsh calls compinit
+fpath=( $XDG_DATA_HOME/zsh/zsh-completions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+fpath=( $XDG_DATA_HOME/zsh/custom-completions "${fpath[@]}" )
+autoload -Uz $fpath[1]/*(.:t)
+# Delete compiled completions and recompile them with:
+# 'rm -f $ZSH_COMPDUMP; compinit -d "$ZSH_COMPDUMP"'
 
-# 'zgen' creates a static init script consisting of source statements for plugins
-# and pmodload statements for prezto modules. When ZSH starts up, zgen will
-# source the init script directly without parsing its dialect every time, which
-# also means you need to regenerate the init script after updating your zshrc.
-# Remove the init script with: 'zgen reset'
-if ! zgen saved; then
+[[ -s "$BASE16_SHELL_PATH/profile_helper.sh" ]] && \
+    source "$BASE16_SHELL_PATH/profile_helper.sh"
 
-    # Add additional completions for zsh. The completions must be loaded before
-    # oh-my-zsh in order to be included into the 'compinit' call
-    zgen load esc/conda-zsh-completion
-    zgen load zsh-users/zsh-completions
+[[ -s "$XDG_DATA_HOME/zsh/powerlevel10k/powerlevel10k.zsh-theme" ]] \
+    && source "$XDG_DATA_HOME/zsh/powerlevel10k/powerlevel10k.zsh-theme"
 
-    # Use the base components of oh-my-zsh. Load this framework at the very
-    # beginning (after the completions).
-    zgen oh-my-zsh
+[[ -s "$XDG_DATA_HOME/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-    # Load the awesome prompt theme 'powerlevel10k'.
-    zgen load romkatv/powerlevel10k powerlevel10k
+[[ -s "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-    # Zgen should only source the 'profile_helper.sh' script
-    zgen load tinted-theming/base16-shell profile_helper.sh main
+[[ -s "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh"
 
-    # As you type commands, you will see a completion offered after the cursor
-    # in a muted gray color
-    zgen load zsh-users/zsh-autosuggestions
-
-    # This plugin provides syntax highlighting for the shell zsh. It enables
-    # highlighting of commands whilst they are typed.
-    zgen load zsh-users/zsh-syntax-highlighting
-
-    # This plugin provides the real vim experience in zsh. It offers mode
-    # sensitive cursor styling and all vim keybindings
-    zgen load jeffreytse/zsh-vi-mode
-
-    # Fuzzy finder fzf, installed from a git repository instead of package
-    # manager. This approach provides a platform-independent installation method
-    # that is self-contained within my configuration setup.
-    zgen load junegunn/fzf
-
-    # The installation scrip of fzf downloads the executable and generates a
-    # script in $XDG_CONFIG_HOME/fzf/fzf.zsh for keybindings and completion.
-    if [[ ! -x "$FZF_BASE/bin/fzf" ]]; then
-        "$FZF_BASE/install" --key-bindings --completion --no-update-rc --xdg
-    fi
-
-    # Add BASE16 color schemes for 'fzf'
-    zgen load tinted-theming/base16-fzf . main
-
-    # generate the init script from plugins above
-    zgen save
-fi
+# Get rid of OMZ. Read all files in oh-my-zsh/lib and extract important cmds
+[[ -s "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh" ]] \
+    && source "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh"
 
 # oh-my-zsh enables shared-history. I don't want that
 unsetopt share_history
