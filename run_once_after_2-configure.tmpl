@@ -47,6 +47,10 @@ if has nvim; then
     nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
 fi
 
+# Change git remote from HTTPS to SSH
+pushd "$HOME/.local/share/chezmoi"
+git remote set-url origin git@github.com:tummetott/dotfiles.git
+popd
 
 # hash=$($HOME/.local/bin/chezmoi state data | grep -E '\\"name\\": \\"1-packages\\"' | awk -F '"' '{print $2}')
 
