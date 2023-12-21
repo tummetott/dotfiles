@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 # vim: set ft=bash:
 
-# This file is re-ecexuted as soon as chezmoi.toml changes
-# chezmoi.toml hash: {{ include ".hash" }} 
+# This script is set to re-execute under two conditions: either there's a change
+# in the chezmoi.toml configuration, or the installer signals re-execution by
+# updating the repeat.hash file. Including the hash values from the .scriptstate
+# directory allows the script to detect changes in these critical files,
+# ensuring it runs again whenever necessary to reflect any new configurations or
+# installation requirements.
+# {{ include ".scriptstate/chezmoi.toml.hash" }} 
+# {{ include ".scriptstate/repeat.hash" }} 
 
 source ~/.local/share/chezmoi/.script_helper
 set -euo pipefail
@@ -42,7 +48,7 @@ sudo true
     {{- template "conda.tmpl" . -}}
 {{- end }}
 
-# Install packages for pi
+# Install packages for Raspberry Pi
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
     # TODO
 {{- end }}

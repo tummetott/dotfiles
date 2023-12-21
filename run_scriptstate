@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# This script enhances the re-execution mechanism of Chezmoi installation
+# scripts. Commonly, Chezmoi uses the 'onchange_' prefix in script names and
+# incorporates external data, like hashes, via templates to trigger
+# re-executions. When this external data changes, the script is marked for
+# re-run.
+
+# The first piece of external data is the hash of the
+# ~/.config/chezmoi/chezmoi.toml file. Directly hashing a target file within a
+# Chezmoi template requires an absolute path, affecting portability. To
+# circumvent this, we calculate and store the hash of chezmoi.toml in the source
+# space. This approach retains portability and allows Chezmoi templates to use
+# the 'include' directive, enabling the script to detect changes and re-execute
+# as necessary.
+mkdir -p "$XDG_DATA_HOME/chezmoi/.scriptstate"
+shasum "$XDG_CONFIG_HOME/chezmoi/chezmoi.toml" | \
+    awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/chezmoi.toml.hash"
+
+# The second piece of external data is provided by the installer script itself.
+# Initially, repeat.hash is empty, serving as a placeholder. It gets updated
+# with the hash of the current time when the installer script determines a
+# re-execution is necessary after the system reboots. This mechanism acts as a
+# trigger, indicating that another run of the script is required to complete or
+# update the installation process post-reboot.
+touch "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"

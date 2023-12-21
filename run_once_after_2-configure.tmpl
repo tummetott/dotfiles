@@ -6,8 +6,9 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-# HACK: This comment is important, otherwise an error occurs. This must be a bug
-# of chezmoi.
+# This script is re-executed when the installer signals re-execution by updating
+# the repeat.hash file
+# {{ include ".scriptstate/repeat.hash" }} 
 
 # Configurations for macOS
 {{- if eq .chezmoi.os "darwin" }}
@@ -30,7 +31,7 @@ source ~/.config/shell/env
     {{-   template "kali-configure.tmpl" . -}}
 {{- end }}
 
-# Configurations for pi
+# Configurations for Raspberry Pi
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
     # TODO
 {{- end }}

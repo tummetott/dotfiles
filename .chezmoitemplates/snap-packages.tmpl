@@ -4,16 +4,20 @@ if ! has snap; then
     {
         sudo apt -y update
         sudo apt -y install snapd
+
         {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
         sudo systemctl enable --now snapd apparmor
         {{- end }}
+
     } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
     warn 'Could not install snap packages because the system needs a restart!'
-# elif ! systemctl is-active --quiet snapd || systemctl ! is-active --quiet apparmor; then
-#     sudo systemctl enable --now snapd apparmor >> "$BOOTSTRAP_LOG_FILE" 2>&1
-#     error 'Snap needs a restart. Press any key to restart'
-#     read -n 1 -s -r
-#     sudo reboot now
+
+    # Update the repeat.hash content with a new SHA hash of the current time.
+    # This action ensures that the install script re-executes after running
+    # 'chezmoi apply' on a rebooted system.
+    date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
+
 else
     info 'Install packages from Snapfile'
     while read -r line; do
