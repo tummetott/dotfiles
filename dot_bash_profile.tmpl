@@ -15,9 +15,6 @@ exit 0
 
 {{- end }}
 
-# Source shell-independent environment.
-[ -f ~/.config/shell/env ] && source ~/.config/shell/env
-
 # Manually sourcing bashrc, as it's not automatically read by login shells.
 # Needed for macOS and SSH.
 [ -f ~/.bashrc ] && source ~/.bashrc

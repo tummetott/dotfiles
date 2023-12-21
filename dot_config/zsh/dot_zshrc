@@ -1,28 +1,42 @@
 # vim: set ft=zsh:
 
-# Exit if necessary environment variables are not set
-required_envs=('XDG_CONFIG_HOME' 'XDG_DATA_HOME' 'XDG_STATE_HOME' \
-    'XDG_CACHE_HOME' 'ZGEN_DIR' 'ZDOTDIR' 'CONDA_HOME')
-for env in "${required_envs[@]}"; do
-    if [[ -z "${(P)env}" ]]; then
-        echo "Error: $env is not set"
-        return 1
-    fi
-done
+# This line sources shell-independent environment variables. While there is
+# considerable debate about whether such variables should be sourced in zprofile
+# or zshrc, sourcing them in zshrc is preferred for broader compatibility across
+# linux and macOS systems. This ensures that the environment variables are
+# consistently available across all interactive shells, regardless of how
+# they're initiated. Given the efficiency of modern computers, the performance
+# impact of sourcing these variables for every new interactive shell is
+# negligible.
+[ -f ~/.config/shell/env ] && source ~/.config/shell/env
 
-# Enable Powerlevel10k instant prompt only when tmux is running or it's an
-# active SSH connection. This block should stay close to the top of the zshrc
+# Initialize Powerlevel10k instant prompt. Keep this block near the top of zshrc
+# to ensure the prompt appears immediately when a new shell session starts.
 if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" \
     && ( -n "$TMUX" || -n "$SSH_TTY" ) ]]; then
   source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Hostname up to the first '.'
+export SHORT_HOST=${SHORT_HOST:-${(%):-%m}}
+
+# Define new compdump location. The zsh directory must be created manually
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
+# When pressing ESC, use a minimal timeout of 1 ms
+export KEYTIMEOUT=1
+
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export ZSH_SESSIONS_DIR="$XDG_STATE_HOME/zsh/sessions"
+
+# Prevent zgen from running compinit. This is already done by oh-my-zsh
+export ZGEN_AUTOLOAD_COMPINIT=0
+
+# Remove duplicates in paths
+typeset -gU cdpath fpath mailpath path
+
 # Show no duplicates in history
 setopt HIST_FIND_NO_DUPS
-
-# macOS's native /etc/zshrc overwrites my HISTFILE. That's why I have to define
-# this env in zshrc
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
 
 # Oh-my-zsh settings. Must be defined before oh-my-zsh is loaded
 HYPHEN_INSENSITIVE='true' # Treat '-' and '_' the same for completion purposes
