@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+# vim: set ft=sh:
+
+# Chezmoi employs asymmetric cryptography to secure specific dotfiles, such as
+# SSH keys. Within the dotfile repository, the private key is stored but
+# encrypted with a passphrase. To initialize Chezmoi on a new machine, it's
+# necessary to first decrypt the private key. This step allows Chezmoi to access
+# and decrypt the dotfiles.
+if [ ! -f "$HOME/.config/chezmoi/key.txt" ]; then
+    mkdir -p "$HOME/.config/chezmoi"
+    source "{{ .chezmoi.sourceDir }}/.script-helper"
+    info 'Please enter your dotfiles encryption password'
+    "$HOME/.local/bin/chezmoi" age decrypt \
+        --output "$HOME/.config/chezmoi/key.txt" \
+        --passphrase "{{ .chezmoi.sourceDir }}/.key.txt.age"
+    chmod 600 "$HOME/.config/chezmoi/key.txt"
+fi

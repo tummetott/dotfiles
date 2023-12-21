@@ -1,5 +1,11 @@
 # vim: set ft=toml:
 
+encryption = 'age'
+
+[age]
+identity = '{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt'
+recipient = 'age1py04fpx5dan88dsvz5thm37aaj4p93jrasqj7lfxw8u4r7w0capswq8zcv'
+
 [merge]
 command = 'nvimdiff'
 
