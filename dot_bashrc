@@ -40,8 +40,6 @@ if command -v starship &> /dev/null; then
     eval "$(starship init bash)"
 fi
 
-# BASE16 colors. NOTE: Base16-shell is configured and initalized in zshrc. Bash
-# simply executes the theme when zsh initialized it before.
 [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
     source "$BASE16_SHELL_PATH/profile_helper.sh"
 
