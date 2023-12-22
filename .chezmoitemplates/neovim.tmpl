@@ -1,0 +1,31 @@
+# vim: set ft=bash:
+
+if ! has nvim; then
+    {{ if eq .chezmoi.os "darwin" }}
+    {
+        brew update
+        brew install neovim
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if has snap; then
+        sudo snap install nvim --classic >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    else
+        warn 'Could not install neovim because snap is not available'
+    fi
+
+    {{ else }}
+    error 'No installation instructions are available to install tmux'
+    {{ end }}
+fi
+
+if has nvim; then
+    if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then
+        info 'Install nvim plugins'
+        # TODO: this command does not install all neovim plugins.
+        nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    fi
+fi

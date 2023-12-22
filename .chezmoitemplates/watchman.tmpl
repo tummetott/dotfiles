@@ -1,20 +1,30 @@
 # vim: set ft=bash:
 
-{{- if .install.watchman }}
-if has watchman; then
-    info 'Watchman already installed'
-else
-    info 'Install Watchman. This takes a while ..'
-    sudo apt -y update
-    sudo apt -y install libssl-dev
-    tmpdir="$(mktemp -d)"
-    pushd "$tmpdir"
-    {{ $tag := (gitHubLatestRelease "facebook/watchman").TagName }}
-    url='https://github.com/facebook/watchman/archive/refs/tags/{{ $tag }}.tar.gz'
-    download "$url" "$tmpdir/watchman.tar.gz"
-    tar -xzf 'watchman.tar.gz'
-    pushd watchman-*/
-    sudo ./install-system-packages.sh
-    ./autogen.sh
+if ! has watchman; then
+
+    {{ if eq .chezmoi.os "darwin" }}
+    info 'Install Watchman'
+    brew update
+    brew install watchman
+
+    {{ else }}
+    error 'No installation instructions are available to install watchman'
+    exit 1
+
+    {{ end }}
 fi
-{{- end }}
+
+CHEZMOI_SOURCE_PATH="$(chezmoi source-path)"
+if ! watchman watch-list | grep -q "$CHEZMOI_SOURCE_PATH"; then
+    info 'Configure watchman to sync source and target state of chezmoi'
+    # Tell watchman to watch your source directory
+    watchman watch "${CHEZMOI_SOURCE_PATH}"
+    # Tell watchman to run 'chezmoi apply --force' whenever your source
+    # directory changes
+    watchman -j <<EOT
+["trigger", "${CHEZMOI_SOURCE_PATH}", {
+  "name": "chezmoi-apply",
+  "command": ["chezmoi", "apply", "--force"]
+}]
+EOT
+fi

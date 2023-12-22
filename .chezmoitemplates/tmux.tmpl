@@ -1,0 +1,35 @@
+# vim: set ft=bash:
+
+if ! has tmux; then
+    {{ if eq .chezmoi.os "darwin" }}
+    {
+        brew update
+        brew install tmux
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    {
+        sudo apt -y update
+        sudo apt -y install tmux
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+    {{ else }}
+    error 'No installation instructions are available to install tmux'
+    {{ end }}
+fi
+
+# Create the 'tmux-256color' terminfo entry if it is missing. Many systems are
+# operating with older 'ncurses' versions (pre-6.3), which do not have the
+# 'tmux-256color' terminfo entry included.
+if ! infocmp tmux-256color &> /dev/null; then
+    info 'Create terminfo entry for tmux'
+    tempdir="$(mktemp -d)"
+    url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
+    git clone "$url" "$tempdir" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    pushd "$tempdir"
+    tic -x tmux-256color
+    popd && rm -rf "$tempdir"
+fi

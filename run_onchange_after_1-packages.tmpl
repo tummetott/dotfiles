@@ -19,39 +19,52 @@ source ~/.config/shell/env
 info "Please enter your computer's password"
 sudo true
 
-# Install packages for macOS
-{{- if eq .chezmoi.os "darwin" }}
-    {{- template "brew-packages.tmpl" . -}}
-    {{- template "rust.tmpl" . -}}
-    {{- template "conda.tmpl" . -}}
-{{- end }}
+{{ if eq .chezmoi.os "darwin" }}
+    {{ template "brew-packages.tmpl" . }}
+{{ end }}
 
-# Install packages for Ubuntu
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-    {{- template "aptitude-packages.tmpl" . -}}
-    {{- template "snap-packages.tmpl" . -}}
-    {{- template "starship.tmpl" . -}}
-    {{- template "rust.tmpl" . -}}
-    {{- template "conda.tmpl" . -}}
-    {{- template "watchman.tmpl" . -}}
-{{- end }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+    {{ template "aptitude-packages.tmpl" . }}
+    {{ template "snap-packages.tmpl" . }}
+{{ end }}
 
-# Install packages for popOS
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
     # TODO
-{{- end }}
+{{ end }}
 
-# Install packages for Kali
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-    {{- template "aptitude-packages.tmpl" . -}}
-    {{- template "snap-packages.tmpl" . -}}
-    {{- template "starship.tmpl" . -}}
-    {{- template "rust.tmpl" . -}}
-    {{- template "conda.tmpl" . -}}
-    {{- template "watchman.tmpl" . -}}
-{{- end }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+    {{ template "aptitude-packages.tmpl" . }}
+    {{ template "snap-packages.tmpl" . }}
+{{ end }}
 
-# Install packages for Raspberry Pi
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
     # TODO
-{{- end }}
+{{ end }}
+
+{{ if .install.zsh }}
+    {{ template "zsh.tmpl" . }}
+{{ end }}
+
+{{ if .install.neovim }}
+    {{ template "neovim.tmpl" . }}
+{{ end }}
+
+{{ if .install.tmux }}
+    {{ template "tmux.tmpl" . }}
+{{ end }}
+
+{{ if .install.watchman }}
+    {{ template "watchman.tmpl" . }}
+{{ end }}
+
+{{ if .install.rust }}
+    {{ template "rust.tmpl" . }}
+{{ end }}
+
+{{ if .install.conda }}
+    {{ template "conda.tmpl" . }}
+{{ end }}
+
+{{ if .install.starship }}
+    {{ template "starship.tmpl" . }}
+{{ end }}

@@ -43,10 +43,6 @@ brew "lf"
 brew "neofetch"
 {{- end }}
 
-{{- if .install.neovim }}
-brew "neovim"
-{{- end }}
-
 {{- if .nerdfonts }}
 cask "font-fira-code-nerd-font"
 cask "font-meslo-lg-nerd-font"
@@ -82,10 +78,6 @@ brew "sd"
 
 {{- if .install.shellcheck }}
 brew "shellcheck"
-{{- end }}
-
-{{- if .install.starship }}
-brew "starship"
 {{- end }}
 
 {{- if .install.tldr }}

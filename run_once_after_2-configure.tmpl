@@ -13,7 +13,6 @@ source ~/.config/shell/env
 # Configurations for macOS
 {{- if eq .chezmoi.os "darwin" }}
     {{-   template "macos-configure.tmpl" . -}}
-    {{-   template "tmux-terminfo.tmpl" . -}}
 {{- end }}
 
 # Configurations for Ubuntu
@@ -35,18 +34,6 @@ source ~/.config/shell/env
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
     # TODO
 {{- end }}
-
-if has zsh; then
-    info 'Install zsh plugins'
-    # The TMUX env ensures that tmux is not started when executing .zshrc
-    TMUX=1 zsh -c 'source $XDG_CONFIG_HOME/zsh/.zshrc' >> "$BOOTSTRAP_LOG_FILE" 2>&1
-fi
-
-if has nvim; then
-    info 'Install nvim plugins'
-    # TODO: this command does not install all neovim plugins.
-    nvim --headless '+Lazy! sync' +qa >> "$BOOTSTRAP_LOG_FILE" 2>&1
-fi
 
 # Change git remote from HTTPS to SSH
 pushd "$HOME/.local/share/chezmoi"

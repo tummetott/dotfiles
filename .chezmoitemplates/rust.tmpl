@@ -1,12 +1,8 @@
 # vim: set ft=bash:
 
-{{- if .install.rust }}
-if has rustup; then
-    info 'Rustup already installed'
-else
+if ! has rustup; then
     info 'Install rustup'
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
         bash -s -- --no-modify-path -y >> "$BOOTSTRAP_LOG_FILE" 2>&1
     source "$CARGO_HOME/env"
 fi
-{{- end }}

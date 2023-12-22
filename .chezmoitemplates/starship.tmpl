@@ -1,12 +1,17 @@
 # vim: set ft=bash:
 
-{{- if .install.starship }}
-if has starship; then
-    info 'Starship is already installed'
-else
-    info 'Install starship'
-    curl -fsSL https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin \
-    >> "$BOOTSTRAP_LOG_FILE" 2>&1
+if ! has starship; then
 
+    {{ if eq .chezmoi.os "darwin" }}
+    {
+        brew update
+        brew install starship
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+    {{ else }}
+    info 'Install starship'
+    curl -fsSL https://starship.rs/install.sh \
+        | sh -s -- -y --bin-dir ~/.local/bin >> "$BOOTSTRAP_LOG_FILE" 2>&1
+
+    {{ end }}
 fi
-{{- end }}

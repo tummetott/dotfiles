@@ -5,9 +5,9 @@ if ! has snap; then
         sudo apt -y update
         sudo apt -y install snapd
 
-        {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+        {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
         sudo systemctl enable --now snapd snapd.apparmor
-        {{- end }}
+        {{ end }}
 
     } >> "$BOOTSTRAP_LOG_FILE" 2>&1
 

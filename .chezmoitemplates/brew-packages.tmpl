@@ -1,17 +1,16 @@
 # vim: set ft=bash:
 
-if has brew; then
-    info 'Update homebrew'
-    brew update >> "$BOOTSTRAP_LOG_FILE" 2>&1
-else
+if ! has brew; then
     info 'Install homebrew'
-    brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
-    NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")" >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
-    # Add brew to path so we can use it
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    {
+        brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
+        NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")"
+        # Add brew to path so we can use it
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        brew update
+        brew tap 'homebrew/bundle'
+    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
 fi
 
 info 'Install formulas from Brewfile'
-brew tap 'homebrew/bundle' >> "$BOOTSTRAP_LOG_FILE" 2>&1
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
