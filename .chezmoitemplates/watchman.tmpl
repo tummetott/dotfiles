@@ -5,7 +5,7 @@ if has watchman; then
     info 'Watchman already installed'
 else
     info 'Install Watchman'
-    tempdir="$(mktemp -d)"
+    tmpdir="$(mktemp -d)"
     pushd "$tmpdir"
     {{ $tag := (gitHubLatestRelease "facebook/watchman").TagName }}
     url='https://github.com/facebook/watchman/archive/refs/tags/{{ $tag }}.tar.gz'
