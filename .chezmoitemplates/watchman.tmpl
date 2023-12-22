@@ -6,7 +6,7 @@ if has watchman; then
 else
     info 'Install Watchman. This takes a while ..'
     sudo apt -y update
-    sudo apt -y install openssl
+    sudo apt -y install libssl-dev
     tmpdir="$(mktemp -d)"
     pushd "$tmpdir"
     {{ $tag := (gitHubLatestRelease "facebook/watchman").TagName }}
