@@ -54,6 +54,7 @@ transmission = false
 tree = false
 typora = false
 vlc = false
+watchman = false
 wget = false
 wireshark = false
 xld = false

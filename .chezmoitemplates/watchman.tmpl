@@ -1,0 +1,18 @@
+# vim: set ft=bash:
+
+{{- if .install.watchman }}
+if has watchman; then
+    info 'Watchman already installed'
+else
+    info 'Install Watchman'
+    tempdir="$(mktemp -d)"
+    pushd "$tmpdir"
+    {{ $tag := (gitHubLatestRelease "facebook/watchman").TagName }}
+    url='https://github.com/facebook/watchman/archive/refs/tags/{{ $tag }}.tar.gz'
+    download "$url" "$tmpdir/watchman.tar.gz"
+    tar -xzf 'watchman.tar.gz'
+    pushd watchman-*/
+    # sudo ./install-system-packages.sh
+    ./autogen.sh
+fi
+{{- end }}

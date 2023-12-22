@@ -100,6 +100,10 @@ brew "tmux"
 brew "tree"
 {{- end }}
 
+{{- if .install.watchman }}
+brew "watchman"
+{{- end }}
+
 {{- if .install.wget }}
 brew "wget"
 {{- end }}
