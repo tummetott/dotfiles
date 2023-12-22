@@ -35,3 +35,22 @@ defaults write com.apple.dock minimize-to-application -bool true
 
 # Disable inline attachments in mail (just show the icons)
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
+
+{{ if .install.watchman }}
+CHEZMOI_SOURCE_PATH="$(chezmoi source-path)"
+if watchman watch-list | grep -q "$CHEZMOI_SOURCE_PATH"; then
+    info 'Watchman is already watching chezmois source path'
+else
+    info 'Configure watchman to sync source and target state of chezmoi'
+    # Tell watchman to watch your source directory
+    watchman watch "${CHEZMOI_SOURCE_PATH}"
+    # Tell watchman to run 'chezmoi apply --force' whenever your source
+    # directory changes
+    watchman -j <<EOT
+["trigger", "${CHEZMOI_SOURCE_PATH}", {
+  "name": "chezmoi-apply",
+  "command": ["chezmoi", "apply", "--force"]
+}]
+EOT
+fi
+{{ end }}
