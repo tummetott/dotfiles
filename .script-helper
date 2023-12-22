@@ -32,6 +32,23 @@ has() {
     command -v "$1" 1>/dev/null 2>&1
 }
 
+log() {
+    "$@" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+}
+
+on_error() {
+    error "An error occurred"
+    warn "Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
+}
+
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
 download() {
     url="$1"
     dst="$2"
@@ -56,17 +73,4 @@ get_latest_from_github() {
         | grep "\"browser_download_url\": .*${release}.*" \
         | cut -d '"' -f 4 \
         | xargs -n 1 curl -sSLO
-}
-
-on_error() {
-    error "An error occurred"
-    warn "Some of the output was supressed and written to $BOOTSTRAP_LOG_FILE"
-}
-
-pushd () {
-    command pushd "$@" > /dev/null
-}
-
-popd () {
-    command popd "$@" > /dev/null
 }

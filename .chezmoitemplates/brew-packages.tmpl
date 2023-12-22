@@ -2,14 +2,12 @@
 
 if ! has brew; then
     info 'Install homebrew'
-    {
-        brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
-        NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")"
-        # Add brew to path so we can use it
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-        brew update
-        brew tap 'homebrew/bundle'
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
+    log NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")"
+    # Add brew to path so we can use it
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    log brew update
+    log brew tap 'homebrew/bundle'
 fi
 
 info 'Install formulas from Brewfile'
