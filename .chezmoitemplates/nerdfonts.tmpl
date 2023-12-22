@@ -1,0 +1,20 @@
+# vim: set ft=bash:
+
+# I don't print any output because the code is run even when nerdfonts are
+# installed. I don't know how to check this in a potable way.
+
+{{ if eq .chezmoi.os "darwin" }}
+{
+    brew update
+    brew install --cask 'font-fira-code-nerd-font'
+    brew install --cask 'font-meslo-lg-nerd-font'
+
+} >> "$BOOTSTRAP_LOG_FILE" 2>&1
+{{ end }}
+
+# Nerdfonts for linux are installed as external source
+
+{{ if eq .chezmoi.os "linux" }}
+# Update font cache
+fc-cache -f -v >> "$BOOTSTRAP_LOG_FILE" 2>&1
+{{ end }}

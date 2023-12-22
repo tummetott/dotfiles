@@ -23,22 +23,24 @@ sudo true
     {{ template "brew-packages.tmpl" . }}
 {{ end }}
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
-    {{ template "aptitude-packages.tmpl" . }}
-    {{ template "snap-packages.tmpl" . }}
-{{ end }}
-
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-    # TODO
-{{ end }}
-
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{ if and (eq .chezmoi.os "linux") (or 
+    (eq .chezmoi.osRelease.id "ubuntu")
+    (eq .chezmoi.osRelease.id "pop")
+    (eq .chezmoi.osRelease.id "kali")) }}
     {{ template "aptitude-packages.tmpl" . }}
     {{ template "snap-packages.tmpl" . }}
 {{ end }}
 
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
     # TODO
+{{ end }}
+
+{{ if .install.watchman }}
+    {{ template "watchman.tmpl" . }}
+{{ end }}
+
+{{ if .nerdfonts }}
+    {{ template "nerdfonts.tmpl" . }}
 {{ end }}
 
 {{ if .install.zsh }}
@@ -53,8 +55,8 @@ sudo true
     {{ template "tmux.tmpl" . }}
 {{ end }}
 
-{{ if .install.watchman }}
-    {{ template "watchman.tmpl" . }}
+{{ if .install.fzf }}
+    {{ template "fzf.tmpl" . }}
 {{ end }}
 
 {{ if .install.rust }}
