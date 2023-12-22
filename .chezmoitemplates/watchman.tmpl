@@ -4,7 +4,7 @@
 if has watchman; then
     info 'Watchman already installed'
 else
-    info 'Install Watchman'
+    info 'Install Watchman. This takes a while ..'
     tmpdir="$(mktemp -d)"
     pushd "$tmpdir"
     {{ $tag := (gitHubLatestRelease "facebook/watchman").TagName }}
@@ -12,7 +12,7 @@ else
     download "$url" "$tmpdir/watchman.tar.gz"
     tar -xzf 'watchman.tar.gz'
     pushd watchman-*/
-    # sudo ./install-system-packages.sh
+    sudo ./install-system-packages.sh
     ./autogen.sh
 fi
 {{- end }}
