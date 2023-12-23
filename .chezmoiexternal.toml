@@ -44,7 +44,8 @@ refreshPeriod = '168h'
 
 ['.local/share/zsh/zsh-completions']
 type = 'archive'
-url = 'https://github.com/zsh-users/zsh-completions/archive/refs/tags/{{ (gitHubLatestRelease "zsh-users/zsh-completions").TagName }}.tar.gz'
+{{ $tag := (gitHubLatestRelease "zsh-users/zsh-completions").TagName }}
+url = 'https://github.com/zsh-users/zsh-completions/archive/refs/tags/{{ $tag }}.tar.gz'
 exact = true
 stripComponents = 2
 include = ['*/src/_*']
