@@ -2,7 +2,7 @@
 
 if ! has zsh; then
     {{ if eq .chezmoi.os "darwin" }}
-    info 'Install zsh'
+    info 'Installing zsh'
     log brew update
     log brew install zsh
 
@@ -10,12 +10,12 @@ if ! has zsh; then
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    info 'Install zsh'
+    info 'Installing zsh'
     log sudo apt -y update
     log sudo apt -y install zsh
 
     {{ else }}
-    error 'No installation instructions are available to install zsh'
+    error 'No zsh installation instructions found for this system'
     exit 1
     {{ end }}
 fi

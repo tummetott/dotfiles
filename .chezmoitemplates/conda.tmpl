@@ -10,12 +10,12 @@ url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh'
 {{ else if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "amd64") }}
 url='https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh'
 {{ else }}
-error 'No installation instructions are available to install conda'
+error 'No conda installation instructions found for this system'
 exit 1
 {{ end }}
 
 if ! [ -x "$CONDA_HOME/bin/conda" ]; then
-    info 'Install conda'
+    info 'Installing conda'
     mkdir -p "$CONDA_HOME"
     download "$url" "$CONDA_HOME/miniconda.sh"
     log bash "$CONDA_HOME/miniconda.sh" -b -u -p "$CONDA_HOME"

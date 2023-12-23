@@ -3,12 +3,12 @@
 if ! has watchman; then
 
     {{ if eq .chezmoi.os "darwin" }}
-    info 'Install Watchman'
+    info 'Installing watchman'
     log brew update
     log brew install watchman
 
     {{ else }}
-    error 'No installation instructions are available to install watchman'
+    error 'No watchman installation instructions found for this system'
     exit 1
 
     {{ end }}

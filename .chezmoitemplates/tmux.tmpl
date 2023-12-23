@@ -2,7 +2,7 @@
 
 if ! has tmux; then
     {{ if eq .chezmoi.os "darwin" }}
-    info 'Install tmux'
+    info 'Installing tmux'
     log brew update
     log brew install tmux
 
@@ -10,12 +10,12 @@ if ! has tmux; then
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    info 'Install tmux'
+    info 'Installing tmux'
     log sudo apt -y update
     log sudo apt -y install tmux
 
     {{ else }}
-    error 'No installation instructions are available to install tmux'
+    error 'No tmux installation instructions found for this system'
     exit 1
     {{ end }}
 fi

@@ -1,7 +1,7 @@
 # vim: set ft=bash:
 
 if ! has snap; then
-    info 'Install snap'
+    info 'Installing snap'
     log sudo apt -y update
     log sudo apt -y install snapd
 
@@ -17,7 +17,7 @@ if ! has snap; then
     date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
 
 else
-    info 'Install packages from Snapfile'
+    info 'Installing packages from Snapfile'
     while read -r line; do
         log sudo snap install $line
     done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")

@@ -14,6 +14,6 @@ if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
     exit 1
 fi
 
-info 'Install packages from Aptfile'
+info 'Installing packages from Aptfile'
 log sudo apt -y install \
     $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ')

@@ -3,12 +3,12 @@
 if ! has starship; then
 
     {{ if eq .chezmoi.os "darwin" }}
-    info 'Install starship'
+    info 'Installing starship'
     log brew update
     log brew install starship
 
     {{ else }}
-    info 'Install starship'
+    info 'Installing starship'
     log curl -fsSL https://starship.rs/install.sh \
         | sh -s -- -y --bin-dir ~/.local/bin
 

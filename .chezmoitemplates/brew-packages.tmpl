@@ -1,7 +1,7 @@
 # vim: set ft=bash:
 
 if ! has brew; then
-    info 'Install homebrew'
+    info 'Installing homebrew'
     brew_url='https://raw.githubusercontent.com/Homebrew/install/master/install.sh'
     log NONINTERACTIVE=1 bash -c "$(curl -fsSL "$brew_url")"
     # Add brew to path so we can use it
@@ -10,5 +10,5 @@ if ! has brew; then
     log brew tap 'homebrew/bundle'
 fi
 
-info 'Install formulas from Brewfile'
+info 'Installing formulas from Brewfile'
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"

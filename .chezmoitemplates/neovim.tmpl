@@ -2,7 +2,7 @@
 
 if ! has nvim; then
     {{ if eq .chezmoi.os "darwin" }}
-    info 'Install neovim'
+    info 'Installing neovim'
     log brew update
     log brew install neovim
 
@@ -11,21 +11,21 @@ if ! has nvim; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     if has snap; then
-        info 'Install neovim'
+        info 'Installing neovim'
         log sudo snap install nvim --classic
     else
         warn 'Could not install neovim because snap is not available'
     fi
 
     {{ else }}
-    error 'No installation instructions are available to install tmux'
+    error 'No neovim installation instructions found for this system'
     exit 1
     {{ end }}
 fi
 
 if has nvim; then
     if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then
-        info 'Install nvim plugins'
+        info 'Installing nvim plugins'
         # TODO: this command does not install all neovim plugins.
         log nvim --headless '+Lazy! sync' +qa
     fi
