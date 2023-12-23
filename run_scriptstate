@@ -13,9 +13,10 @@
 # space. This approach retains portability and allows Chezmoi templates to use
 # the 'include' directive, enabling the script to detect changes and re-execute
 # as necessary.
-mkdir -p "$XDG_DATA_HOME/chezmoi/.scriptstate"
-shasum "$XDG_CONFIG_HOME/chezmoi/chezmoi.toml" | \
-    awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/chezmoi.toml.hash"
+CHEZMOI="$HOME/.local/share/chezmoi"
+mkdir -p "$CHEZMOI/.scriptstate"
+shasum "$HOME/.config/chezmoi/chezmoi.toml" \
+    | awk '{print $1}' > "$CHEZMOI/.scriptstate/chezmoi.toml.hash"
 
 # The second piece of external data is provided by the installer script itself.
 # Initially, repeat.hash is empty, serving as a placeholder. It gets updated
@@ -23,4 +24,4 @@ shasum "$XDG_CONFIG_HOME/chezmoi/chezmoi.toml" | \
 # re-execution is necessary after the system reboots. This mechanism acts as a
 # trigger, indicating that another run of the script is required to complete or
 # update the installation process post-reboot.
-touch "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
+touch "$CHEZMOI/.scriptstate/repeat.hash"
