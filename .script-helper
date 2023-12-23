@@ -33,7 +33,11 @@ has() {
 }
 
 log() {
-    "$@" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    # The 'env' command is used when arguments contain environment variables
+    # preceding the actual command. Errors are captured using '||' to ensure the
+    # function returns the error status, thereby triggering the 'trap' and
+    # invoking the 'on_error' function.
+    env "$@" >> "$BOOTSTRAP_LOG_FILE" 2>&1 || return $?
 }
 
 on_error() {
