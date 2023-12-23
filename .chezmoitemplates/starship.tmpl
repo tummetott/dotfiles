@@ -9,8 +9,9 @@ if ! has starship; then
 
     {{ else }}
     info 'Installing starship'
-    log curl -fsSL https://starship.rs/install.sh \
-        | sh -s -- -y --bin-dir ~/.local/bin
+    # The log function does not work gere because of the piping
+    curl -fsSL https://starship.rs/install.sh \
+        | sh -s -- -y --bin-dir ~/.local/bin >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
     {{ end }}
 fi

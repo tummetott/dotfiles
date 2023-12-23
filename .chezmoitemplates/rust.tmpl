@@ -2,6 +2,8 @@
 
 if ! has rustup; then
     info 'Installing rustup'
-    log curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- --no-modify-path -y
+    # The log function does not work gere because of the piping
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | bash -s -- --no-modify-path -y >> "$BOOTSTRAP_LOG_FILE" 2>&1
     source "$CARGO_HOME/env"
 fi

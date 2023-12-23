@@ -12,8 +12,6 @@ YELLOW="$(tput setaf 3 2>/dev/null || echo '')"
 BLUE="$(tput setaf 4 2>/dev/null || echo '')"
 NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 
-BOOTSTRAP_LOG_FILE='/tmp/chezmoi.log'
-
 info() {
     printf "%s\n" "${BOLD}${BLUE}> $*${NO_COLOR}"
 }

@@ -9,6 +9,13 @@ recipient = 'age1py04fpx5dan88dsvz5thm37aaj4p93jrasqj7lfxw8u4r7w0capswq8zcv'
 [merge]
 command = 'nvimdiff'
 
+[scriptEnv]
+XDG_CONFIG_HOME = "{{ .chezmoi.homeDir }}/.config"
+XDG_DATA_HOME = "{{ .chezmoi.homeDir }}/.local/share"
+XDG_STATE_HOME = "{{ .chezmoi.homeDir }}/.local/state"
+XDG_CACHE_HOME = "{{ .chezmoi.homeDir }}/.cache"
+BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
+
 [data]
 {{- if eq .chezmoi.os "darwin" }}
 fontsize = 17.0
