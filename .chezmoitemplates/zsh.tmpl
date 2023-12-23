@@ -20,7 +20,7 @@ if ! has zsh; then
     {{ end }}
 fi
 
-if echo "$SHELL" | grep -q 'zsh'; then
+if ! echo "$SHELL" | grep -q 'zsh'; then
     info 'Set zsh as default shell'
-    sudo chsh -s "$(which zsh)" "$USER"
+    log sudo chsh -s "$(which zsh)" "$USER"
 fi
