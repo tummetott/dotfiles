@@ -79,16 +79,8 @@ brew "shellcheck"
 brew "tealdeer"
 {{- end }}
 
-{{- if .install.tmux }}
-brew "tmux"
-{{- end }}
-
 {{- if .install.tree }}
 brew "tree"
-{{- end }}
-
-{{- if .install.watchman }}
-brew "watchman"
 {{- end }}
 
 {{- if .install.wget }}

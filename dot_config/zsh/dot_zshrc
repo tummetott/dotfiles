@@ -66,8 +66,10 @@ autoload -Uz $fpath[1]/*(.:t)
 
 # Add all directories containing completions to fpath and autoload the
 # completions. Must be done before oh-my-zsh calls compinit
-fpath=( $XDG_DATA_HOME/zsh/zsh-completions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
+if [ -d $XDG_DATA_HOME/zsh/zsh-completions ]; then
+    fpath=( $XDG_DATA_HOME/zsh/zsh-completions "${fpath[@]}" )
+    autoload -Uz $fpath[1]/*(.:t)
+fi
 fpath=( $XDG_DATA_HOME/zsh/custom-completions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 # Delete compiled completions and recompile them with:
