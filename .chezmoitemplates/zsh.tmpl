@@ -3,23 +3,20 @@
 if ! has zsh; then
     {{ if eq .chezmoi.os "darwin" }}
     info 'Install zsh'
-    {
-        brew update
-        brew install zsh
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    log brew update
+    log brew install zsh
 
     {{ else if and (eq .chezmoi.os "linux") (or
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     info 'Install zsh'
-    {
-        sudo apt -y update
-        sudo apt -y install zsh
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    log sudo apt -y update
+    log sudo apt -y install zsh
 
     {{ else }}
     error 'No installation instructions are available to install zsh'
+    exit 1
     {{ end }}
 fi
 

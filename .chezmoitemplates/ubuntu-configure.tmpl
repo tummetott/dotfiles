@@ -2,5 +2,5 @@
 
 {{- if .nerdfonts }}
 info 'Update font cache'
-fc-cache -f -v >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log fc-cache -f -v
 {{- end }}

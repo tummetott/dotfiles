@@ -1,6 +1,0 @@
-# vim: set ft=bash:
-
-{{- if .nerdfonts }}
-info 'Update font cache'
-fc-cache -f -v >> "$BOOTSTRAP_LOG_FILE" 2>&1
-{{- end }}

@@ -1,15 +1,13 @@
 # vim: set ft=bash:
 
 if ! has snap; then
-    {
-        sudo apt -y update
-        sudo apt -y install snapd
+    info 'Install snap'
+    log sudo apt -y update
+    log sudo apt -y install snapd
 
-        {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
-        sudo systemctl enable --now snapd snapd.apparmor
-        {{ end }}
-
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+    log sudo systemctl enable --now snapd snapd.apparmor
+    {{ end }}
 
     warn 'Could not install snap packages because the system needs a restart!'
 
@@ -21,6 +19,6 @@ if ! has snap; then
 else
     info 'Install packages from Snapfile'
     while read -r line; do
-        sudo snap install $line >> "$BOOTSTRAP_LOG_FILE" 2>&1
+        log sudo snap install $line
     done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
 fi

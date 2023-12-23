@@ -4,8 +4,8 @@ if ! has watchman; then
 
     {{ if eq .chezmoi.os "darwin" }}
     info 'Install Watchman'
-    brew update
-    brew install watchman
+    log brew update
+    log brew install watchman
 
     {{ else }}
     error 'No installation instructions are available to install watchman'
@@ -18,10 +18,10 @@ CHEZMOI_SOURCE_PATH="$(chezmoi source-path)"
 if ! watchman watch-list | grep -q "$CHEZMOI_SOURCE_PATH"; then
     info 'Configure watchman to sync source and target state of chezmoi'
     # Tell watchman to watch your source directory
-    watchman watch "${CHEZMOI_SOURCE_PATH}"
+    log watchman watch "${CHEZMOI_SOURCE_PATH}"
     # Tell watchman to run 'chezmoi apply --force' whenever your source
     # directory changes
-    watchman -j <<EOT
+    log watchman -j <<EOT
 ["trigger", "${CHEZMOI_SOURCE_PATH}", {
   "name": "chezmoi-apply",
   "command": ["chezmoi", "apply", "--force"]

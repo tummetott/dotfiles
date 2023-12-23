@@ -3,15 +3,14 @@
 if ! has starship; then
 
     {{ if eq .chezmoi.os "darwin" }}
-    {
-        brew update
-        brew install starship
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    info 'Install starship'
+    log brew update
+    log brew install starship
 
     {{ else }}
     info 'Install starship'
-    curl -fsSL https://starship.rs/install.sh \
-        | sh -s -- -y --bin-dir ~/.local/bin >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    log curl -fsSL https://starship.rs/install.sh \
+        | sh -s -- -y --bin-dir ~/.local/bin
 
     {{ end }}
 fi

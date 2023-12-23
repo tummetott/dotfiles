@@ -1,19 +1,19 @@
 # vim: set ft=bash:
 
 info 'Update apt'
-sudo apt -y update >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log sudo apt -y update
 
 info 'Upgrade apt'
-sudo apt -y upgrade >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log sudo apt -y upgrade
 
 info 'Autoremove apt'
-sudo apt -y autoremove >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log sudo apt -y autoremove
 
 if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
     error 'Could not find Aptfile'
+    exit 1
 fi
 
 info 'Install packages from Aptfile'
-sudo apt -y install \
-    $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ') \
-    >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log sudo apt -y install \
+    $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ')

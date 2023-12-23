@@ -18,6 +18,6 @@ if ! [ -x "$CONDA_HOME/bin/conda" ]; then
     info 'Install conda'
     mkdir -p "$CONDA_HOME"
     download "$url" "$CONDA_HOME/miniconda.sh"
-    /bin/bash "$CONDA_HOME/miniconda.sh" -b -u -p "$CONDA_HOME" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    log bash "$CONDA_HOME/miniconda.sh" -b -u -p "$CONDA_HOME"
     rm -f "$CONDA_HOME/miniconda.sh"
 fi

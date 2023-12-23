@@ -4,17 +4,14 @@
 # installed. I don't know how to check this in a potable way.
 
 {{ if eq .chezmoi.os "darwin" }}
-{
-    brew update
-    brew install --cask 'font-fira-code-nerd-font'
-    brew install --cask 'font-meslo-lg-nerd-font'
-
-} >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log brew update
+log brew install --cask 'font-fira-code-nerd-font'
+log brew install --cask 'font-meslo-lg-nerd-font'
 {{ end }}
 
 # Nerdfonts for linux are installed as external source
 
 {{ if eq .chezmoi.os "linux" }}
 # Update font cache
-fc-cache -f -v >> "$BOOTSTRAP_LOG_FILE" 2>&1
+log fc-cache -f -v
 {{ end }}

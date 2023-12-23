@@ -2,22 +2,21 @@
 
 if ! has tmux; then
     {{ if eq .chezmoi.os "darwin" }}
-    {
-        brew update
-        brew install tmux
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    info 'Install tmux'
+    log brew update
+    log brew install tmux
 
     {{ else if and (eq .chezmoi.os "linux") (or
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    {
-        sudo apt -y update
-        sudo apt -y install tmux
-    } >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    info 'Install tmux'
+    log sudo apt -y update
+    log sudo apt -y install tmux
 
     {{ else }}
     error 'No installation instructions are available to install tmux'
+    exit 1
     {{ end }}
 fi
 
@@ -28,7 +27,7 @@ if ! infocmp tmux-256color &> /dev/null; then
     info 'Create terminfo entry for tmux'
     tempdir="$(mktemp -d)"
     url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
-    git clone "$url" "$tempdir" >> "$BOOTSTRAP_LOG_FILE" 2>&1
+    log git clone "$url" "$tempdir"
     pushd "$tempdir"
     tic -x tmux-256color
     popd && rm -rf "$tempdir"
