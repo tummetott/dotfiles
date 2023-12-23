@@ -91,7 +91,4 @@ function cycle_base16 {
     echo "New base16 colorscheme: $current_theme"
     colortest "$current_theme"
     unset -f usage colortest
-
-    # HACK: Reload the tmux.conf. Ideally this should be a base16-shell hook
-    tmux source-file $XDG_CONFIG_HOME/tmux/tmux.conf
 }
