@@ -115,7 +115,7 @@ table.insert(M, {
         vim.g.gruvbox_material_foreground = 'material'
         -- Whenever the colorscheme changes, apply my overwrites
         vim.api.nvim_create_autocmd('ColorScheme', {
-            group = vim.api.nvim_create_augroup('base16_overwrites', {}),
+            group = vim.api.nvim_create_augroup('gruvbox_overwrites', {}),
             callback = function(ctx)
                 if string.find(ctx.match, '^gruvbox%-material') then
                     overwrites()
