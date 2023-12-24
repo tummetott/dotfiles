@@ -18,6 +18,7 @@ etcher = false
 exa = false
 fd = false
 firefox = false
+flatpak = false
 folx = false
 fzf = false
 git = false

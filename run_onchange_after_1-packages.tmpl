@@ -35,6 +35,10 @@ sudo true
     # TODO
 {{ end }}
 
+{{ if .install.flatpak }}
+    {{ template "flatpak.tmpl" . }}
+{{ end }}
+
 {{ if .install.watchman }}
     {{ template "watchman.tmpl" . }}
 {{ end }}

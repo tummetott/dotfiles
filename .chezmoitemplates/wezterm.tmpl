@@ -11,7 +11,10 @@ if ! has wezterm; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     info 'Installing wezterm'
-    # TODO
+    if ! has flatpak; then
+        {{ template "flatpak.tmpl" . }}
+        log flatpak install flathub org.wezfurlong.wezterm
+    fi
 
     {{ else }}
     error 'No wezterm installation instructions found for this system'
@@ -19,7 +22,7 @@ if ! has wezterm; then
     {{ end }}
 fi
 
-if ! infocmp termwez &> /dev/null; then
+if ! infocmp wezterm &> /dev/null; then
     info 'Create terminfo entry for wezterm'
     tempfile=$(mktemp) \
         && curl -so $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
