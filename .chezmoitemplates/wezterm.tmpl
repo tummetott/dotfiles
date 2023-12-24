@@ -10,11 +10,11 @@ if ! has wezterm; then
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    info 'Installing wezterm'
     if ! has flatpak; then
         {{ template "flatpak.tmpl" . }}
-        log flatpak install flathub org.wezfurlong.wezterm
     fi
+    info 'Installing wezterm'
+    log flatpak install --noninteractive --user flathub org.wezfurlong.wezterm
 
     {{ else }}
     error 'No wezterm installation instructions found for this system'
