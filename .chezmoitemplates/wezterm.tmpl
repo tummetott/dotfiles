@@ -1,6 +1,6 @@
 # vim: set ft=bash:
 
-if ! has wezterm; then
+if ! has wezterm || has flatpak && ! (flatpak list --app | grep -qi 'wezterm'); then
     {{ if eq .chezmoi.os "darwin" }}
     info 'Installing wezterm'
     log brew update
