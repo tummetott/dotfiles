@@ -29,6 +29,6 @@ if ! infocmp tmux-256color &> /dev/null; then
     url='https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/'
     log git clone "$url" "$tempdir"
     pushd "$tempdir"
-    tic -x tmux-256color
+    tic -x -o ~/.terminfo tmux-256color
     popd && rm -rf "$tempdir"
 fi

@@ -70,3 +70,7 @@ sudo true
 {{ if .install.starship }}
     {{ template "starship.tmpl" . }}
 {{ end }}
+
+{{ if .install.wezterm }}
+    {{ template "wezterm.tmpl" . }}
+{{ end }}
