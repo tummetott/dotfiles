@@ -9,16 +9,15 @@ if ! has snap; then
     log sudo systemctl enable --now snapd snapd.apparmor
     {{ end }}
 
-    warn 'Could not install snap packages because the system needs a restart!'
+    # warn 'Could not install snap packages because the system needs a restart!'
 
     # Update the repeat.hash content with a new SHA hash of the current time.
     # This action ensures that the install script re-executes after running
     # 'chezmoi apply' on a rebooted system.
-    date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
-
-else
-    info 'Installing packages from Snapfile'
-    while read -r line; do
-        log sudo snap install $line
-    done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
+    # date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
 fi
+
+info 'Installing packages from Snapfile'
+while read -r line; do
+    log sudo snap install $line
+done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile")
