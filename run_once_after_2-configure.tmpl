@@ -19,7 +19,7 @@ popd
     compl 'Installation successful. You should restart now.'
 {{ else if eq .chezmoi.os "linux" }}
     # Force restart when on linux
-    compl 'Installation successful. Press any key to restart'
+    compl 'Installation successful. Press any key to reboot'
     read -n 1 -s -r
     sudo reboot now
 {{ end }}

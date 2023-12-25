@@ -2,8 +2,9 @@ local wezterm = require 'wezterm'
 local config = {}
 
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
-config.font_size = 17.0
+config.font_size = {{ .fontsize }}
 config.enable_tab_bar = false
+config.audible_bell = 'Disabled'
 -- The default term is 'xterm-256color'
 config.term = 'wezterm'
 config.enable_csi_u_key_encoding = true
