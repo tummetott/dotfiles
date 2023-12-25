@@ -1,0 +1,30 @@
+# vim: set ft=bash:
+
+{{ if and (eq .chezmoi.os "linux") (or
+    (eq .chezmoi.osRelease.id "ubuntu")
+    (eq .chezmoi.osRelease.id "pop")
+    (eq .chezmoi.osRelease.id "kali")) }}
+
+info 'Installing snap'
+log sudo apt -y update
+log sudo apt -y install snapd
+
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+log sudo systemctl enable --now snapd snapd.apparmor
+{{ end }}
+
+warn "The system needs a reboot in order to use snap. Run 'chezmoi apply' after reboot to continue the installation."
+info 'Press any key to restart!'
+read -n 1 -s -r
+sudo reboot now
+
+# # Update the repeat.hash content with a new SHA hash of the current time.
+# # This action ensures that the install script re-executes after running
+# # 'chezmoi apply' on a rebooted system.
+# date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
+
+{{ else }}
+
+error 'No snap installation instructions found for this system'
+
+{{ end }}

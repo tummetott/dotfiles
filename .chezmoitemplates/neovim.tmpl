@@ -14,7 +14,7 @@ if ! has nvim; then
         info 'Installing neovim'
         log sudo snap install nvim --classic
     else
-        warn 'Could not install neovim because snap is not available'
+        {{ template "snap.tmpl" . }}
     fi
 
     {{ else }}

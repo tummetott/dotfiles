@@ -63,6 +63,10 @@ sudo true
     {{ template "fzf.tmpl" . }}
 {{ end }}
 
+{{ if .install.bottom }}
+    {{ template "bottom.tmpl" . }}
+{{ end }}
+
 {{ if .install.rust }}
     {{ template "rust.tmpl" . }}
 {{ end }}

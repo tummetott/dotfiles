@@ -1,0 +1,30 @@
+# vim: set ft=bash:
+
+if ! (has btm || has bottom); then
+    {{ if eq .chezmoi.os "darwin" }}
+    info 'Installing bottom'
+    log brew update
+    log brew install bottom
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if has snap; then
+        info 'Installing bottom'
+        log sudo snap install bottom
+        log sudo snap connect bottom:mount-observe
+        log sudo snap connect bottom:hardware-observe
+        log sudo snap connect bottom:system-observe
+        log sudo snap connect bottom:process-control
+    else
+        {{ template "snap.tmpl" . }}
+    fi
+
+
+    {{ else }}
+    error 'No bottom installation instructions found for this system'
+    exit 1
+    {{ end }}
+
+fi
