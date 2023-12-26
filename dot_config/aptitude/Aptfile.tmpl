@@ -10,10 +10,6 @@ build-essential
 cmake
 {{- end }}
 
-{{- if .install.exa }}
-exa
-{{- end }}
-
 {{- if .install.fd }}
 fd-find
 {{- end }}
@@ -36,6 +32,10 @@ kitty
 
 {{- if .install.lf }}
 lfm
+{{- end }}
+
+{{- if .install.lsd }}
+lsd
 {{- end }}
 
 {{- if .install.meld }}
