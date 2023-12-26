@@ -1,0 +1,35 @@
+# Color settings for lsd assume that base16-shell is installed.
+user: 7 # white
+group: 8 # grey
+permission:
+  read: 2 # green
+  write: 3 # yellow
+  exec: 1 # red
+  exec-sticky: 5 # magenta
+  no-access: 8 # grey
+  octal: 5 # magenta
+  acl: 5 # magenta
+  context: 5 # magenta
+date:
+  hour-old: 8 # grey
+  day-old: 8 # grey
+  older: 8 # grey
+size:
+  none: 6 # cyan
+  small: 6 # cyan
+  medium: 6 # cyan
+  large: 6 # cyan
+tree-edge: 20 # light grey
+git-status:
+  default: 7 # white
+  unmodified: 7 # white
+  ignored: 8 # grey
+  new-in-index: 16 # green
+  new-in-workdir: 3 # yellow
+  modified: 3 # yellow
+  conflicted: 1 # red
+
+  # This settings are rather useless
+  typechange: 3 # yellow
+  deleted: 1 # red
+  renamed: 2 # green

@@ -1,0 +1,25 @@
+# This specifies the columns and their order when using the long and the tree
+# layout. Possible values: permission, user, group, context, size, date, name,
+# inode, links, git
+blocks:
+- permission
+- user
+- size
+- date
+# - git
+- name
+
+# This specifies the date format for the date column. The freeform format
+# accepts a strftime like string. Possible values: date, relative,
+# '+<date_format>'.
+date: relative
+# date: '+%d %b %y %H:%M'
+
+permission: rwx
+
+color:
+  # When to colorize the output. Possible values: never, auto, always
+  when: auto
+  # How to colorize the output. Possible values: default, custom
+  # When "custom" is set, lsd will look in the config directory for 'colors.yaml'.
+  theme: custom

@@ -18,11 +18,11 @@ alias cdf='cd "$(finder-path)"'
 alias sudoedit='sudo -e'
 {{- end }}
 
-if [ -x "$(command -v exa)" ]; then
-    alias ls='exa --icons'
-    alias ll='ls -l'
-    alias la='ls -la'
+if command -v lsd > /dev/null; then
+    alias ls='lsd'
 fi
+alias ll='ls -l'
+alias la='ls -la'
 
 # Also expand aliases when running a sudo command. When you use an alias with a
 # trailing space in its definition, it tells the shell to try to expand the next
