@@ -14,7 +14,7 @@ if ! has lsd; then
         {{ template "rust.tmpl" . }}
     fi
     info 'Installing lsd'
-    cargo install lsd
+    log cargo install lsd
 
     {{ else }}
     error 'No lsd installation instructions found for this system'
