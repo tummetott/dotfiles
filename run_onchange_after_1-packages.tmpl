@@ -79,6 +79,10 @@ sudo true
     {{ template "starship.tmpl" . }}
 {{ end }}
 
+{{ if .install.lsd }}
+    {{ template "lsd.tmpl" . }}
+{{ end }}
+
 {{ if .install.wezterm }}
     {{ template "wezterm.tmpl" . }}
 {{ end }}
