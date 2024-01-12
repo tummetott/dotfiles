@@ -270,3 +270,18 @@ vim.keymap.set(
     '<cmd>Lazy<cr>',
     { desc = 'Open Lazy' }
 )
+
+vim.api.nvim_create_user_command('DebugKeymaps', function()
+    vim.keymap.set('n', '<c-i>', '<cmd>echo "C-i"<cr>')
+    vim.keymap.set('n', '<tab>', '<cmd>echo "Tab"<cr>')
+    vim.keymap.set('n', '<c-m>', '<cmd>echo "C-m"<cr>')
+    vim.keymap.set('n', '<cr>', '<cmd>echo "CR"<cr>')
+    vim.keymap.set('n', '<c-j>', '<cmd>echo "C-j"<cr>')
+    vim.keymap.set('n', '<c-k>', '<cmd>echo "C-k"<cr>')
+    vim.keymap.set('n', '<c-l>', '<cmd>echo "C-l"<cr>')
+    vim.keymap.set('n', '<c-h>', '<cmd>echo "C-h"<cr>')
+    vim.keymap.set('n', '<c-;>', '<cmd>echo "C-;"<cr>')
+    vim.keymap.set('n', '<c-,>', '<cmd>echo "C-,"<cr>')
+    vim.keymap.set('n', '<c-.>', '<cmd>echo "C-."<cr>')
+    vim.keymap.set('n', '<c-/>', '<cmd>echo "C-/"<cr>')
+end, { desc = 'Print out the pressed keymap for debugging purpose' })
