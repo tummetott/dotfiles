@@ -1,0 +1,50 @@
+# vim: set ft=bash:
+
+if ! has alacritty; then
+    {{ if eq .chezmoi.os "darwin" }}
+    info 'Installing alacritty'
+    log brew update
+    log brew install --cask alacritty
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if ! has rust; then
+        {{ template "rust.tmpl" . }}
+    fi
+    info 'Installing dependencies for alacritty'
+    log sudo apt update
+    log sudo apt -y install cmake pkg-config libfreetype6-dev \
+        libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+    # Make sure to have the right rust compiler isntalled
+    log rustup override set stable
+    log rustup update stable
+
+    info 'Installing alacritty'
+    tempdir="$(mktemp -d)"
+    log git clone 'https://github.com/alacritty/alacritty.git' "$tempdir"
+    pushd "$tempdir"
+    log cargo build --release
+    cp target/release/alacritty ~/.local/bin/alacritty
+
+    if ! infocmp alacritty &> /dev/null; then
+        info 'Create terminfo entry for alacritty'
+        log sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+    fi
+
+    # # Create desktop entry
+    # sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+    # log sudo desktop-file-install extra/linux/Alacritty.desktop
+    # log sudo update-desktop-database
+    #
+    # # Create zsh completions
+    # cp extra/completions/_alacritty ~/.local/share/zsh/custom-completions/_alacritty
+
+    popd && rm -rf "$tempdir"
+
+    {{ else }}
+    error 'No alacritty installation instructions found for this system'
+    exit 1
+    {{ end }}
+fi

@@ -82,3 +82,7 @@ sudo true
 {{ if .install.wezterm }}
     {{ template "wezterm.tmpl" . }}
 {{ end }}
+
+{{ if .install.alacritty }}
+    {{ template "alacritty.tmpl" . }}
+{{ end }}
