@@ -89,6 +89,7 @@ map ctrl+, send_text all \e[44;5u
 map ctrl+; send_text all \e[59;5u
 map ctrl+/ send_text all \e[47;5u
 map shift+enter send_text all \e[13;2u
+map ctrl+enter send_text all \e[13;5u
 
 # HACK: tmux struggles to differentiate between TAB and C-i, as well as CR and
 # C-m. Even when sending the correct 'CSI u' sequence for C-i and C-m, tmux
@@ -100,9 +101,9 @@ map shift+enter send_text all \e[13;2u
 # One drawback of this approach arises when tmux is not in use. In such cases,
 # the custom sequence, which precedes the 'CSI u' sequence, is also transmitted
 # to the terminal program. While most terminal programs ignore unknown custom
-# sequences (like nvim), some may exhibit unexpected behavior. For instance, my
-# zsh-vi-mode plugin interprets this custom sequence as ESC, transitioning to
-# normal mode. However, this is a minor side effect since I do not use the keys
-# C-i and C-m in zsh.
+# sequences (like nvim), some may exhibit unexpected behavior. For instance, zsh
+# does not ignore the preceding custom sequence when creating a keymap on C-i.
+# However, this is a minor side effect since I do not use the keys C-i and C-m
+# in zsh.
 map ctrl+i send_text all \e[555;0~\e[105;5u
 map ctrl+m send_text all \e[555;0~\e[109;5u
