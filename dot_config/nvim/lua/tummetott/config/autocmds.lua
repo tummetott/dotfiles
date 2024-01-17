@@ -138,3 +138,14 @@ autocmd({ 'BufWritePre' }, {
         vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
     end,
 })
+
+-- Start insert mode when switching to a terminal buffer
+autocmd('BufEnter', {
+    group = group,
+    pattern = 'term://*',
+    callback = function()
+        if vim.bo.buftype == 'terminal' then
+            vim.cmd('startinsert')
+        end
+    end
+})

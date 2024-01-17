@@ -23,6 +23,12 @@ return {
             mode = 't',
             remap = true,
             desc = 'Toggle terminal size',
-        }
+        },
+        {
+            '<c-k>',
+            '<c-\\><c-n><c-w>k',
+            mode = 't',
+            desc = 'Move to top pane',
+        },
     }
 }
