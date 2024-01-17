@@ -137,10 +137,7 @@ ZSH_HIGHLIGHT_STYLES[autodirectory]=none
 ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
 
 # Source lf icons file
-# [ -f ~/.config/lf/lficons ] && source ~/.config/lf/lficons
-
-# Bind my custom 'lfcd' function to ctrl-o
-# bindkey -s '^o' 'lfcd\n'
+[ -f ~/.config/lf/lficons ] && source ~/.config/lf/lficons
 
 # Source my aliases file
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"

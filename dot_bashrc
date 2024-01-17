@@ -40,11 +40,17 @@ if command -v starship &> /dev/null; then
     eval "$(starship init bash)"
 fi
 
+# Base16-shell colors
 [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
     source "$BASE16_SHELL_PATH/profile_helper.sh"
 
-# Activate FZF.
+# Activate FZF
 [ -f "$XDG_CONFIG_HOME/fzf/fzf.bash" ] && source "$XDG_CONFIG_HOME/fzf/fzf.bash"
+
+# Change fzf keymap from C-t to C-g
+bind -r '\C-t'
+bind -m vi-command -x '"\C-g": fzf-file-widget'
+bind -m vi-insert -x '"\C-g": fzf-file-widget'
 
 # Load custom shell functions.
 if [ -d "$XDG_CONFIG_HOME/shell/functions" ]; then
