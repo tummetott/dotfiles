@@ -56,7 +56,6 @@ transmission = false
 tree = false
 typora = false
 vlc = false
-watchman = false
 wezterm = false
 wget = false
 wireshark = false

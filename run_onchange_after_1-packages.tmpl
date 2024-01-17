@@ -39,10 +39,6 @@ sudo true
     {{ template "flatpak.tmpl" . }}
 {{ end }}
 
-{{ if .install.watchman }}
-    {{ template "watchman.tmpl" . }}
-{{ end }}
-
 {{ if .nerdfonts }}
     {{ template "nerdfonts.tmpl" . }}
 {{ end }}
