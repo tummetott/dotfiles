@@ -4,8 +4,8 @@
 - Remap CAPSLOCK to CTRL
 - macOS: Get the latest system updates
 - macOS: Run `xcode-select --install` or install Xcode via AppStore
-- Ubuntu: Run `ibus-setup`. Go to 'Emoji' tab and remove the `C-;` and `C-.` keymaps
-- Linux in VM on macOS: Go to `Settings` -> `Keyboard` and change 'Input Source' to `English (UK, Macintosh)`
+- Ubuntu: Run `ibus-setup`. Go to Emoji tab and remove the `C-;` and `C-.` keymaps
+- Linux in VM on macOS: Go to `Settings` -> `Keyboard` and change the input source to `English (UK, Macintosh)`
 
 ### Install
 
