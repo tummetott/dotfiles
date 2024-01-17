@@ -52,12 +52,19 @@ vim.keymap.set(
 )
 
 -- Delete from the current cursor position to the end of the line, following an
--- Emacs-style command
+-- Emacs-style command. Delete to the black hole register and don't move the
+-- cursor.
 vim.keymap.set(
     'i',
     '<C-k>',
-    'col(".") == col("$") ? "" : "<C-o>D"',
-    { desc = 'Delete to end of line', expr = true }
+    function()
+        if vim.fn.col('.') ~= vim.fn.col('$') then
+            local cursor = vim.api.nvim_win_get_cursor(0)
+            vim.api.nvim_command('normal! "_D')
+            vim.api.nvim_win_set_cursor(0, cursor)
+        end
+    end,
+    { desc = 'Delete to end of line' }
 )
 
 -- gV selects the previous paste
