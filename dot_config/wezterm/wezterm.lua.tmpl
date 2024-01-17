@@ -4,12 +4,14 @@ local wezterm = require 'wezterm'
 local config = {}
 
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
+---@diagnostic disable-next-line: malformed-number
 config.font_size = {{ .fontsize }}
 config.enable_tab_bar = false
 config.audible_bell = 'Disabled'
 config.colors = {
     cursor_fg = 'black',
     cursor_bg = '#c6d0f6',
+    cursor_border = '#c6d0f6',
 }
 -- The default term is 'xterm-256color'. I could change that to wezterms own
 -- terminfo with the following cmd:
