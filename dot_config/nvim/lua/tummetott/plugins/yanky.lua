@@ -86,5 +86,8 @@ return {
             '<Cmd>YankyRingHistory<Cr>',
             desc = 'Show yank ring history',
         },
+        -- This keymap is set here because yanky must be loaded in order to
+        -- highlight the yanked text.
+        { 'Y', 'y$', desc = 'Yank to end of line' },
     }
 }
