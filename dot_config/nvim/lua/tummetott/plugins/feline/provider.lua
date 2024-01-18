@@ -47,29 +47,29 @@ M.buff_name = function()
 
     if bufname == '' then
         return '[No File]'
-    end
-
-    if ft == 'oil' then
-        bufname = string.match(bufname, '^oil://(.*)')
-        local icon = { str = ' ', hl = { fg = '#e68805' } }
-        return vim.fn.fnamemodify(bufname, ':~'), icon
-    end
-
-    if has_diffview() then
-        bufname = diffview_winbar_text()
     elseif bufname == 'diffview://null' then
         return '[Empty Diffview]'
     end
 
+    if ft == 'oil' then
+        local path = string.match(bufname, '^oil://(.*)')
+        local icon = { str = ' ', hl = { fg = '#e68805' } }
+        return vim.fn.fnamemodify(path, ':~'), icon
+    end
+
+    if has_diffview() then
+        bufname = diffview_winbar_text()
+    end
+
     -- Trim the full file path relative to our cwd
-    bufname = vim.fn.fnamemodify(bufname, ':~:.')
+    local path = vim.fn.fnamemodify(bufname, ':~:.')
 
     -- Get icon and icon color
     local icon_str, icon_color = require('nvim-web-devicons').get_icon_color(
             vim.fn.expand('%:t'), nil, { default = true })
     local icon = { str = icon_str, hl = { fg = icon_color } }
 
-    return ' ' .. bufname, icon
+    return ' ' .. path, icon
 end
 
 M.help_file = function()
