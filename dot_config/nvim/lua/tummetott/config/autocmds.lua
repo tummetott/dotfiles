@@ -71,41 +71,6 @@ autocmd({ 'BufWritePre', 'BufWinLeave' }, {
     end,
 })
 
--- Change the visual highlight for diff views
-autocmd('OptionSet', {
-    group = group,
-    pattern = 'diff',
-    callback = function()
-        -- Don't do anything when diffview is open
-        if require 'tummetott.utils'.is_loaded('diffview.nvim') and
-            require 'diffview.lib'.get_current_view() then
-            return
-        end
-        local windows = vim.api.nvim_list_wins()
-        for _, win in ipairs(windows) do
-            vim.api.nvim_win_call(win, function()
-                if vim.wo.diff then
-                    vim.opt_local.winhl:append {
-                        ['Visual'] = 'DiffVisual',
-                    }
-                else
-                    vim.opt_local.winhl:remove { 'Visual' }
-                end
-            end)
-        end
-    end
-})
-
--- OptionSet is not triggered on startup, therfore the above autocmd is not
--- triggered when starting nvim in diff move. Trigger it manually.
-autocmd('VimEnter', {
-    group = group,
-    callback = function()
-        vim.cmd('doautocmd OptionSet diff')
-    end,
-    once = true
-})
-
 -- Resize splits if window got resized
 autocmd('VimResized', {
     group = group,
@@ -147,5 +112,32 @@ autocmd('BufEnter', {
         if vim.bo.buftype == 'terminal' then
             vim.cmd('startinsert')
         end
+    end
+})
+
+-- PERF: Check the performance. If the impact is too big, figure out how to
+-- register this autocmds on diff split enter, and clear the group on diff split
+-- exit.
+autocmd('ModeChanged', {
+    -- Entering any visual mode (\22 is visual block mode).
+    pattern = '*:[v\22]',
+    callback = function()
+        vim.opt_local.winhl:append {
+            ['DiffAdd'] = 'None',
+            ['DiffText'] = 'None',
+            ['DiffChange'] = 'None',
+        }
+    end
+})
+
+autocmd('ModeChanged', {
+    -- Leaving any visual mode.
+    pattern = '*:[^v\22]',
+    callback = function()
+        vim.opt_local.winhl:remove {
+            'DiffAdd',
+            'DiffText',
+            'DiffChange',
+        }
     end
 })

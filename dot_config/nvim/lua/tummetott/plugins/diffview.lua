@@ -107,25 +107,6 @@ return {
                     scrollbar.hide()
                 end
 
-                -- Change highlighting of 2-way diff views
-                if ctx.layout_name:match('^diff2') then
-                    if ctx.symbol == 'a' then
-                        vim.opt_local.winhl:append {
-                            ['DiffAdd'] = 'DiffColorDelete',
-                            ['DiffText'] = 'DiffColorDelete',
-                        }
-                    elseif ctx.symbol == 'b' then
-                        vim.opt_local.winhl:append {
-                            ['DiffAdd'] = 'DiffColorAdd',
-                            ['DiffText'] = 'DiffColorAdd',
-                        }
-                    end
-                else
-                    vim.opt_local.winhl:append {
-                        ['Visual'] = 'DiffVisual',
-                    }
-                end
-
                 -- Scroll the window until the lines displaying help and context
                 -- information are no longer visible
                 vim.schedule(scroll_panel)
