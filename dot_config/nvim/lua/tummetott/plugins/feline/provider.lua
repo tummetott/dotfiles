@@ -1,6 +1,11 @@
 local M = {}
 
-local diffview_buffername = function()
+local has_diffview = function()
+    return require 'tummetott.utils'.is_loaded('diffview.nvim') and
+        require 'diffview.lib'.get_current_view()
+end
+
+local diffview_winbar_text = function()
     local view = require('diffview.lib').get_current_view()
     local bufnr = vim.api.nvim_get_current_buf()
     local rev_label = ''
@@ -10,41 +15,48 @@ local diffview_buffername = function()
             path = string.format('%s/%s', view.adapter.ctx.toplevel, file.path)
             local rev = file.rev
             if rev.type == 1 then
-                rev_label = ' 󱞳 LOCAL'
+                rev_label = 'LOCAL'
             elseif rev.type == 2 then
                 local head = vim.trim(vim.fn.system(
                     {'git', 'rev-parse', '--revs-only', 'HEAD'}))
                 if head == rev.commit then
-                    rev_label = ' 󱞳 HEAD'
+                    rev_label = 'HEAD'
                 else
-                    rev_label = string.format(' 󱞳 %s', rev.commit:sub(1, 7))
+                    rev_label = string.format('%s', rev.commit:sub(1, 7))
                 end
             elseif rev.type == 3 then
                 rev_label = ({
-                    [0] = ' 󱞳 INDEX',
-                    [1] = ' 󱞳 MERGE COMMON ANCESTOR',
-                    [2] = ' 󱞳 MERGE OURS',
-                    [3] = ' 󱞳 MERGE THEIRS',
+                    [0] = 'INDEX',
+                    [1] = 'MERGE COMMON ANCESTOR',
+                    [2] = 'MERGE OURS',
+                    [3] = 'MERGE THEIRS',
                 })[rev.stage] or ''
             end
         end
     end
-    return path, rev_label
+    if rev_label == '' then
+        return path
+    else
+        return string.format('%s 󱞳 %s', path, rev_label)
+    end
 end
 
 M.buff_name = function()
     local bufname = vim.api.nvim_buf_get_name(0)
-    local filetype = vim.bo.filetype
+    local ft = vim.bo.filetype
 
     if bufname == '' then
         return '[No File]'
     end
 
-    local rev_label = ''
-    -- If diffview is active
-    if require 'tummetott.utils'.is_loaded('diffview.nvim') and
-        require 'diffview.lib'.get_current_view() then
-        bufname, rev_label = diffview_buffername()
+    if ft == 'oil' then
+        bufname = string.match(bufname, '^oil://(.*)')
+        local icon = { str = ' ', hl = { fg = '#e68805' } }
+        return vim.fn.fnamemodify(bufname, ':~'), icon
+    end
+
+    if has_diffview() then
+        bufname = diffview_winbar_text()
     elseif bufname == 'diffview://null' then
         return '[Empty Diffview]'
     end
@@ -57,7 +69,7 @@ M.buff_name = function()
             vim.fn.expand('%:t'), nil, { default = true })
     local icon = { str = icon_str, hl = { fg = icon_color } }
 
-    return string.format(' %s%s', bufname, rev_label), icon
+    return ' ' .. bufname, icon
 end
 
 M.help_file = function()
