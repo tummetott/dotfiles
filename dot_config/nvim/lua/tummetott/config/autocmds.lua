@@ -129,7 +129,6 @@ autocmd('ModeChanged', {
         }
     end
 })
-
 autocmd('ModeChanged', {
     -- Leaving any visual mode.
     pattern = '*:[^v\22]',

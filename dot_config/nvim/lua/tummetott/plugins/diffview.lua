@@ -19,7 +19,6 @@ local scroll_panel = function()
     end
 end
 
-local cursorline
 return {
     'sindrets/diffview.nvim',
     enabled = true,
@@ -76,11 +75,6 @@ return {
                 if (view.class:name() == 'DiffView') then
                     vim.cmd('DiffviewToggleFiles')
                 end
-
-                -- Rename my tab. Only works with tabby.nvim
-                if vim.fn.exists(':TabRename') ~= 0 then
-                    vim.cmd('TabRename Diffview')
-                end
             end,
             diff_buf_win_enter = function(bufnr, winid, ctx)
                 -- Locally disable line wrap, list chars and relative numbers
@@ -92,13 +86,6 @@ return {
                 local ok, ibl = pcall(require, 'ibl')
                 if ok then
                     ibl.setup_buffer(bufnr, { enabled = false })
-                end
-
-                -- Disable cursorline
-                local ok, reticle = pcall(require, 'reticle')
-                if ok and reticle.has_cursorline() then
-                    reticle.disable_cursorline()
-                    cursorline = true
                 end
 
                 -- Disable scrollbar
@@ -116,15 +103,6 @@ return {
                 local loaded, ibl = pcall(require, 'ibl')
                 if loaded then
                     ibl.setup_buffer(0, { enabled = true })
-                end
-
-                -- Enable cursorline
-                if cursorline then
-                    local ok, reticle = pcall(require, 'reticle')
-                    if ok then
-                        reticle.enable_cursorline()
-                        cursorline = false
-                    end
                 end
 
                 -- Disable scrollbar
@@ -162,6 +140,11 @@ return {
             '<Cmd>DiffviewOpen HEAD --staged --selected-file=' ..
                 vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
             desc = 'INDEX against HEAD',
+        },
+        {
+            '<Leader>da',
+            '<Cmd>DiffviewFileHistory<CR>',
+            desc = 'history for all files',
         },
         {
             '<Leader>dc',

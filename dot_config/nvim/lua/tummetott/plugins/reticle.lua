@@ -4,21 +4,27 @@ return {
     dev = true,
     event = 'VeryLazy',
     opts = {
-        always_highlight_number = true,
         on_startup = {
             cursorline = true,
         },
+        follow = {
+            cursorline = true,
+            cursorcolumn = true,
+        },
+        disable_in_insert = true,
+        disable_in_diff = true,
+        always_highlight_number = true,
         on_focus = {
             cursorline = { 'help' },
         },
         ignore = {
             cursorline = {
-                'TelescopePrompt',
-                'NvimTree',
-                'Trouble',
-                'NvimSeparator',
                 'alpha',
                 'FTerm',
+                'NvimSeparator',
+                'NvimTree',
+                'TelescopePrompt',
+                'Trouble',
             },
         },
     },

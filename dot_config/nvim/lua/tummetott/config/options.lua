@@ -63,9 +63,6 @@ vim.opt.hlsearch = false
 -- Always leave some lines below and above the cursor when scrolling
 vim.opt.scrolloff = 2
 
--- Enable cursorline
-vim.opt.cursorline = true
-
 -- Disable swap files
 vim.opt.swapfile = false
 

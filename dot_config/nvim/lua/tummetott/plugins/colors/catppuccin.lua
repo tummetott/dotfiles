@@ -24,6 +24,7 @@ table.insert(M, {
                 IncSearch = { bg = c.maroon },
                 FlashLabel = { fg = c.base, bg = c.maroon, style = { 'bold' } },
                 CursorLine = { bg = darken(c.surface0, 0.4, c.base) },
+                CursorColumn = { link = 'CursorLine' },
                 CursorLineNr = { fg = c.lavender, style = { 'bold' } },
                 Folded = { fg = c.overlay0, bg = c.base },
                 StatusLine = { bg = '' },
