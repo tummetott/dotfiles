@@ -1,7 +1,7 @@
 -- VSCode like scrollbar with gitsigns, and search result markers
 return {
     'petertriho/nvim-scrollbar',
-    enabled = false,
+    enabled = true,
     event = 'VeryLazy',
     opts = {
         handle = {
