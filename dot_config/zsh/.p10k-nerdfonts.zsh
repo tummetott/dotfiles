@@ -213,28 +213,8 @@
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=false
   # Don't shorten directories that contain any of these files. They are anchors.
   local anchor_files=(
-    .bzr
-    .citc
-    .git
-    .hg
-    .node-version
-    .python-version
-    .go-version
-    .ruby-version
-    .lua-version
-    .java-version
-    .perl-version
-    .php-version
-    .tool-version
-    .shorten_folder_marker
-    .svn
-    .terraform
-    CVS
-    Cargo.toml
-    composer.json
-    go.mod
-    package.json
-    stack.yaml
+    .chezmoidata.toml
+    .p10k-anchor
   )
   typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
   # If set to "first" ("last"), remove everything before the first (last) subdirectory that contains
@@ -247,7 +227,7 @@
   # This moves the truncation point to the right (positive offset) or to the left (negative offset)
   # relative to the marker. Plain "first" and "last" are equivalent to "first:0" and "last:0"
   # respectively.
-  typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=false
+  typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=last
   # Don't shorten this many last directory segments. They are anchors.
   typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
   # Shorten directory if it's longer than this even if there is space for it. The value can
@@ -318,7 +298,14 @@
   # parameter. For example, if POWERLEVEL9K_DIR_WORK_NOT_WRITABLE_FOREGROUND is not set, it falls
   # back to POWERLEVEL9K_DIR_FOREGROUND.
   #
-  # typeset -g POWERLEVEL9K_DIR_CLASSES=()
+  typeset -g POWERLEVEL9K_DIR_CLASSES=(
+      '/etc|/etc/*' ETC '' 
+      '~' HOME '' 
+      '~/.local/share/chezmoi/dot_config/nvim(|/*)' NVIM ''
+      '~/.local/share/chezmoi(|/*)' CHEZMOI ''
+      '~/*' HOME_SUBFOLDER ''
+      '*' DEFAULT ''
+   )
 
   # Custom prefix.
   # typeset -g POWERLEVEL9K_DIR_PREFIX='%fin '

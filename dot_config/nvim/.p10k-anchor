@@ -1,0 +1,6 @@
+This specific file functions as an anchor for Powerlevel10k. When you navigate
+(cd) into the directory containing this file, Powerlevel10k will truncate the
+directory path displayed in your prompt, shortening it to just this directory.
+This means only the path of this directory and its subdirectories, if any, will
+be shown in the prompt, effectively hiding the rest of the path leading up to
+it.
