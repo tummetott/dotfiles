@@ -35,7 +35,11 @@ truncation_length = 5
 format = '[$read_only]($style)[$path]($style) '
 read_only = ' '
 style = 'blue'
-# truncate_to_repo = false
+truncate_to_repo = false
+
+[directory.substitutions]
+'~/.local/share/chezmoi/dot_config/nvim' = 'nvim'
+'~/.local/share/chezmoi' = 'chezmoi'
 
 [custom.home]
 symbol = ' '
