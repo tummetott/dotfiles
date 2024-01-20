@@ -1,0 +1,26 @@
+# vim: set ft=bash:
+
+if ! has nu; then
+    {{ if eq .chezmoi.os "darwin" }}
+    info 'Installing nushell'
+    log brew update
+    log brew install nushell
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if ! has cargo; then
+        {{ template "bootstrap/rust.tmpl" . }}
+    fi
+    into 'Installing dependencies for nushell'
+    log sudo apt install pkg-config libssl-dev build-essential
+
+    info 'Installing nushell'
+    log cargo install nu
+
+    {{ else }}
+    error 'No nushell installation instructions found for this system'
+    exit 1
+    {{ end }}
+fi

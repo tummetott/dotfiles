@@ -86,3 +86,7 @@ sudo true
 {{ if .install.alacritty }}
     {{ template "bootstrap/alacritty.tmpl" . }}
 {{ end }}
+
+{{ if .install.nushell }}
+    {{ template "bootstrap/nushell.tmpl" . }}
+{{ end }}
