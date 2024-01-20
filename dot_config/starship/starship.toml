@@ -1,11 +1,9 @@
 # Don't print a new line after each command
 add_newline = false
 
+# Modules you explicitly add to the format will not be part of $all
 format = """
-${custom.home}\
-${custom.directory}\
-${custom.chezmoi}\
-${custom.nvim}\
+${custom.icon}\
 $all
 """
 
@@ -43,26 +41,21 @@ truncate_to_repo = false
 '~/.local/share/chezmoi/dot_config/nvim' = 'nvim'
 '~/.local/share/chezmoi' = 'chezmoi'
 
-[custom.home]
-symbol = ' '
-when = '[ "$HOME" = "$PWD" ]'
-style = 'blue'
-
-[custom.chezmoi]
-symbol = ' '
-when = '''[[ "$PWD" == "$HOME/.local/share/chezmoi"* 
-    && "$PWD" != "$HOME/.local/share/chezmoi/dot_config/nvim"* ]]'''
-style = 'blue'
-
-[custom.nvim]
-symbol = ' '
-when = '[[ "$PWD" == "$HOME/.local/share/chezmoi/dot_config/nvim"* ]]'
-style = 'blue'
-
-[custom.directory]
-symbol = ' '
-when = '''[[ -w "$PWD" && "$HOME" != "$PWD" 
-    && "$PWD" != "$HOME/.local/share/chezmoi"* ]]'''
+[custom.icon]
+shell = ['bash']
+command = '''
+    if [[ "$PWD" == "$HOME/.local/share/chezmoi/dot_config/nvim"* ]]; then
+        echo ''
+    elif [[ "$PWD" == "$HOME/.local/share/chezmoi"* ]]; then
+        echo ''
+    elif [[ "$PWD" == "$HOME" ]]; then
+        echo ''
+    elif [[ -w "$PWD" ]]; then
+        echo ''
+    fi
+'''
+when = true
+format = '[$output]($style) '
 style = 'blue'
 
 [time]
