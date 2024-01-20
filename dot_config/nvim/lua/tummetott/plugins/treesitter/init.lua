@@ -6,6 +6,7 @@ table.insert(M, {
     build = function()
         pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
+    dependencies = { 'nushell/tree-sitter-nu' },
     opts = {
         ensure_installed = {
             'bash',
