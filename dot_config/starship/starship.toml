@@ -4,6 +4,8 @@ add_newline = false
 format = """
 ${custom.home}\
 ${custom.directory}\
+${custom.chezmoi}\
+${custom.nvim}\
 $all
 """
 
@@ -46,9 +48,21 @@ symbol = ' '
 when = '[ "$HOME" = "$PWD" ]'
 style = 'blue'
 
+[custom.chezmoi]
+symbol = ' '
+when = '''[[ "$PWD" == "$HOME/.local/share/chezmoi"* 
+    && "$PWD" != "$HOME/.local/share/chezmoi/dot_config/nvim"* ]]'''
+style = 'blue'
+
+[custom.nvim]
+symbol = ' '
+when = '[[ "$PWD" == "$HOME/.local/share/chezmoi/dot_config/nvim"* ]]'
+style = 'blue'
+
 [custom.directory]
 symbol = ' '
-when = '[ -w "$PWD" ] && [ "$HOME" != "$PWD" ]'
+when = '''[[ -w "$PWD" && "$HOME" != "$PWD" 
+    && "$PWD" != "$HOME/.local/share/chezmoi"* ]]'''
 style = 'blue'
 
 [time]

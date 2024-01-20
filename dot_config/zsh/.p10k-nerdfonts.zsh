@@ -302,7 +302,7 @@
       '/etc|/etc/*' ETC '' 
       '~' HOME '' 
       '~/.local/share/chezmoi/dot_config/nvim(|/*)' NVIM ''
-      '~/.local/share/chezmoi(|/*)' CHEZMOI ''
+      '~/.local/share/chezmoi(|/*)' CHEZMOI ''
       '~/*' HOME_SUBFOLDER ''
       '*' DEFAULT ''
    )
