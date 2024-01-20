@@ -14,7 +14,8 @@ if ! has nu; then
         {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing dependencies for nushell'
-    log sudo apt install pkg-config libssl-dev build-essential
+    log sudo apt -y update
+    log sudo apt -y install pkg-config libssl-dev build-essential
 
     info 'Installing nushell'
     log cargo install nu
