@@ -2,6 +2,7 @@
 
 {{- if ne .chezmoi.os "darwin" }}
 
+Library/*
 .config/homebrew
 .config/iterm2
 .config/shell/functions/clean-clipboard
@@ -18,5 +19,6 @@
 
 .config/aptitude
 .config/snap
+.config/nushell
 
 {{- end }}
