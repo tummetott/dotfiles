@@ -11,7 +11,7 @@ if ! has alacritty; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     if ! has rust; then
-        {{ template "rust.tmpl" . }}
+        {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing dependencies for alacritty'
     log sudo apt update

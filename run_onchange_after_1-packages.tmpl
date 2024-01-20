@@ -20,15 +20,15 @@ info "Please enter your computer's password"
 sudo true
 
 {{ if eq .chezmoi.os "darwin" }}
-    {{ template "brew-packages.tmpl" . }}
+    {{ template "bootstrap/brew-packages.tmpl" . }}
 {{ end }}
 
 {{ if and (eq .chezmoi.os "linux") (or 
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    {{ template "aptitude-packages.tmpl" . }}
-    {{ template "snap-packages.tmpl" . }}
+    {{ template "bootstrap/aptitude-packages.tmpl" . }}
+    {{ template "bootstrap/snap-packages.tmpl" . }}
 {{ end }}
 
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
@@ -36,53 +36,53 @@ sudo true
 {{ end }}
 
 {{ if .install.flatpak }}
-    {{ template "flatpak.tmpl" . }}
+    {{ template "bootstrap/flatpak.tmpl" . }}
 {{ end }}
 
 {{ if .nerdfonts }}
-    {{ template "nerdfonts.tmpl" . }}
+    {{ template "bootstrap/nerdfonts.tmpl" . }}
 {{ end }}
 
 {{ if .install.zsh }}
-    {{ template "zsh.tmpl" . }}
+    {{ template "bootstrap/zsh.tmpl" . }}
 {{ end }}
 
 {{ if .install.neovim }}
-    {{ template "neovim.tmpl" . }}
+    {{ template "bootstrap/neovim.tmpl" . }}
 {{ end }}
 
 {{ if .install.tmux }}
-    {{ template "tmux.tmpl" . }}
+    {{ template "bootstrap/tmux.tmpl" . }}
 {{ end }}
 
 {{ if .install.fzf }}
-    {{ template "fzf.tmpl" . }}
+    {{ template "bootstrap/fzf.tmpl" . }}
 {{ end }}
 
 {{ if .install.bottom }}
-    {{ template "bottom.tmpl" . }}
+    {{ template "bootstrap/bottom.tmpl" . }}
 {{ end }}
 
 {{ if .install.rust }}
-    {{ template "rust.tmpl" . }}
+    {{ template "bootstrap/rust.tmpl" . }}
 {{ end }}
 
 {{ if .install.conda }}
-    {{ template "conda.tmpl" . }}
+    {{ template "bootstrap/conda.tmpl" . }}
 {{ end }}
 
 {{ if .install.starship }}
-    {{ template "starship.tmpl" . }}
+    {{ template "bootstrap/starship.tmpl" . }}
 {{ end }}
 
 {{ if .install.lsd }}
-    {{ template "lsd.tmpl" . }}
+    {{ template "bootstrap/lsd.tmpl" . }}
 {{ end }}
 
 {{ if .install.wezterm }}
-    {{ template "wezterm.tmpl" . }}
+    {{ template "bootstrap/wezterm.tmpl" . }}
 {{ end }}
 
 {{ if .install.alacritty }}
-    {{ template "alacritty.tmpl" . }}
+    {{ template "bootstrap/alacritty.tmpl" . }}
 {{ end }}

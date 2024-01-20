@@ -20,7 +20,7 @@ if ! is_wezterm_installed; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     if ! has flatpak; then
-        {{ template "flatpak.tmpl" . }}
+        {{ template "bootstrap/flatpak.tmpl" . }}
     fi
     info 'Installing wezterm'
     log flatpak install --noninteractive --user flathub org.wezfurlong.wezterm

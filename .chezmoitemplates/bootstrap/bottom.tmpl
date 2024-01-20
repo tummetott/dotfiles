@@ -18,7 +18,7 @@ if ! (has btm || has bottom); then
         log sudo snap connect bottom:system-observe
         log sudo snap connect bottom:process-control
     else
-        {{ template "snap.tmpl" . }}
+        {{ template "bootstrap/snap.tmpl" . }}
     fi
 
 

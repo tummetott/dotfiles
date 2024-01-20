@@ -2,7 +2,7 @@
 
 if [ -f "$XDG_CONFIG_HOME/snap/Snapfile" ]; then
     if ! has snap; then
-        {{ template "snap.tmpl" . }}
+        {{ template "bootstrap/snap.tmpl" . }}
     else
         info 'Installing packages from Snapfile'
         while read -r line; do

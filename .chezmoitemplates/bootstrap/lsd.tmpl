@@ -11,7 +11,7 @@ if ! has lsd; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
     if ! has cargo; then
-        {{ template "rust.tmpl" . }}
+        {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing lsd'
     log cargo install lsd
