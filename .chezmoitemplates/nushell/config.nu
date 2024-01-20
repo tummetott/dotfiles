@@ -489,7 +489,7 @@ $env.config = {
             name: move_left
             modifier: control
             keycode: char_b
-            mode: emacs
+            mode: [emacs vi_insert]
             event: {
                 until: [
                     {send: menuleft}
@@ -501,7 +501,7 @@ $env.config = {
             name: move_right_or_take_history_hint
             modifier: control
             keycode: char_f
-            mode: emacs
+            mode: [emacs vi_insert]
             event: {
                 until: [
                     {send: historyhintcomplete}
@@ -549,7 +549,7 @@ $env.config = {
             name: cut_line_from_start
             modifier: control
             keycode: char_u
-            mode: emacs
+            mode: [emacs vi_insert]
             event: {edit: cutfromstart}
         }
         {
