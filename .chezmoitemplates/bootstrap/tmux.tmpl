@@ -14,6 +14,22 @@ if ! has tmux; then
     log sudo apt -y update
     log sudo apt -y install tmux
 
+    {{ else if and (eq .chezmoi.os "linux") 
+        (eq .chezmoi.osRelease.id "debian") }}
+    info 'Installing dependencies for tmux'
+    log sudo apt update
+    log sudo apt -y install libevent-dev ncurses-dev build-essential bison pkg-config
+
+    info 'Installing tmux'
+    tempdir="$(mktemp -d)"
+    log git clone 'https://github.com/tmux/tmux.git' "$tempdir"
+    pushd "$tempdir"
+    log sh autogen.sh
+    log ./configure
+    log make
+    log sudo make install
+    popd && rm -rf "$tempdir"
+
     {{ else }}
     error 'No tmux installation instructions found for this system'
     exit 1
