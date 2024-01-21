@@ -24,11 +24,7 @@ fontsize = 13.0
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 fontsize = 12.0
 {{- end }}
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
-nerdfonts = false
-{{- else }}
 nerdfonts = true
-{{- end }}
 
 [data.xdg]
 config_home = "{{ .chezmoi.homeDir }}/.config"

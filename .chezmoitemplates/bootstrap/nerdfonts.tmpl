@@ -11,7 +11,16 @@ log brew install --cask 'font-meslo-lg-nerd-font'
 
 # Nerdfonts for linux are installed as external source
 
-{{ if eq .chezmoi.os "linux" }}
-# Update font cache
-log fc-cache -f -v
+{{ if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "debian")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if ! has fc-cache; then
+        info 'Installing fontconfig'
+        log sudo apt update
+        log sudo apt -y fontconfig
+    fi
+    info 'Update font cache'
+    log fc-cache -f -v
 {{ end }}
