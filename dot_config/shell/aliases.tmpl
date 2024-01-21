@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 # vim: set ft=bash:
 
-{{ if and (eq .chezmoi.os "linux") (or
+{{- if and (eq .chezmoi.os "linux") (or
     (eq .chezmoi.osRelease.id "ubuntu")
     (eq .chezmoi.osRelease.id "pop")
+    (eq .chezmoi.osRelease.id "debian")
     (eq .chezmoi.osRelease.id "kali")) }}
 alias bat='batcat'
 alias btm='bottom'
