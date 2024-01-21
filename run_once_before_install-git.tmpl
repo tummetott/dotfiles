@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+source ~/.local/share/chezmoi/.script-helper
+set -euo pipefail
+trap on_error ERR
+
+# Git is a dependency for chezmoi. We need it for the external sources,
+# therefore it must be installed before they are downloaded. macOS has git
+# installed by default.
+{{ if and (eq .chezmoi.os "linux") (or 
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "debian")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    info 'Installing git'
+    log sudo apt update
+    log sudo apt -y git
+{{ end }}
