@@ -9,6 +9,7 @@ if ! (has btm || has bottom); then
     {{ else if and (eq .chezmoi.os "linux") (or
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
     if has snap; then
         info 'Installing bottom'
