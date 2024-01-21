@@ -18,7 +18,8 @@ if ! has tmux; then
         (eq .chezmoi.osRelease.id "debian") }}
     info 'Installing dependencies for tmux'
     log sudo apt update
-    log sudo apt -y install libevent-dev ncurses-dev build-essential bison pkg-config
+    log sudo apt -y install automake libevent-dev ncurses-dev build-essential \
+        bison pkg-config
 
     info 'Installing tmux'
     tempdir="$(mktemp -d)"
