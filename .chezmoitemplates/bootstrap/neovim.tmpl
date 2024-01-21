@@ -18,6 +18,10 @@ if ! has nvim; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi
 
+    # We need a c compiler for treesitter
+    log sudo apt -y update
+    log sudo apt -y install build-essential
+
     {{ else }}
     error 'No neovim installation instructions found for this system'
     exit 1
