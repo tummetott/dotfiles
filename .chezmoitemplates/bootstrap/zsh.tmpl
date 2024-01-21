@@ -9,7 +9,8 @@ if ! has zsh; then
     {{ else if and (eq .chezmoi.os "linux") (or
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "kali")) }}
+        (eq .chezmoi.osRelease.id "kali"))
+        (eq .chezmoi.osRelease.id "debian") }}
     info 'Installing zsh'
     log sudo apt -y update
     log sudo apt -y install zsh

@@ -31,7 +31,7 @@ sudo true
     {{ template "bootstrap/snap-packages.tmpl" . }}
 {{ end }}
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "raspbian") }}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
     # TODO
 {{ end }}
 
