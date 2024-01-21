@@ -9,6 +9,7 @@ if ! has lsd; then
     {{ else if and (eq .chezmoi.os "linux") (or
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
     if ! has cargo; then
         {{ template "bootstrap/rust.tmpl" . }}
