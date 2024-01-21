@@ -3,6 +3,7 @@
 {{ if and (eq .chezmoi.os "linux") (or
     (eq .chezmoi.osRelease.id "ubuntu")
     (eq .chezmoi.osRelease.id "pop")
+    (eq .chezmoi.osRelease.id "debian")
     (eq .chezmoi.osRelease.id "kali")) }}
 
 info 'Installing snap'
@@ -11,6 +12,10 @@ log sudo apt -y install snapd
 
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 log sudo systemctl enable --now snapd snapd.apparmor
+{{ end }}
+
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
+log sudo snap install core
 {{ end }}
 
 warn "The system needs a reboot in order to use snap. Run 'chezmoi apply' after reboot to continue the installation."
