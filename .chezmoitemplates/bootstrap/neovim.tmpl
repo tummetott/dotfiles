@@ -23,7 +23,7 @@ if ! has nvim; then
     log sudo apt -y install build-essential
 
     {{ else }}
-    error 'No neovim installation instructions found for this system'
+    error 'No installation instructions found for: neovim'
     exit 1
     {{ end }}
 fi

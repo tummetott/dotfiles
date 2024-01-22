@@ -47,7 +47,7 @@ if ! has alacritty; then
     popd && rm -rf "$tempdir"
 
     {{ else }}
-    error 'No alacritty installation instructions found for this system'
+    error 'No installation instructions found for: alacritty'
     exit 1
     {{ end }}
 fi

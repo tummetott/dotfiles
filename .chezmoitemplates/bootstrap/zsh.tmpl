@@ -16,7 +16,7 @@ if ! has zsh; then
     log sudo apt -y install zsh
 
     {{ else }}
-    error 'No zsh installation instructions found for this system'
+    error 'No installation instructions found for: zsh'
     exit 1
     {{ end }}
 fi

@@ -22,7 +22,7 @@ if ! has nu; then
     log cargo install nu
 
     {{ else }}
-    error 'No nushell installation instructions found for this system'
+    error 'No installation instructions found for: nushell'
     exit 1
     {{ end }}
 fi

@@ -12,7 +12,7 @@ if ! has flatpak; then
     log flatpak remote-add --user --if-not-exists flathub "$URL"
 
     {{ else }}
-    error 'No flatpak installation instructions found for this system'
+    error 'No installation instructions found for: flatpak'
     exit 1
     {{ end }}
 fi

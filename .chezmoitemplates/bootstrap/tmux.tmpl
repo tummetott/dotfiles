@@ -32,7 +32,7 @@ if ! has tmux; then
     popd && rm -rf "$tempdir"
 
     {{ else }}
-    error 'No tmux installation instructions found for this system'
+    error 'No installation instructions found for: tmux'
     exit 1
     {{ end }}
 fi

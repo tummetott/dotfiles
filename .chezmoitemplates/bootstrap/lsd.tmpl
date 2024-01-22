@@ -18,7 +18,7 @@ if ! has lsd; then
     log cargo install lsd
 
     {{ else }}
-    error 'No lsd installation instructions found for this system'
+    error 'No installation instructions found for: lsd'
     exit 1
     {{ end }}
 fi
