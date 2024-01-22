@@ -58,6 +58,7 @@ typora = false
 vlc = false
 wezterm = false
 wget = false
+wireguard = false
 wireshark = false
 xld = false
 yate = false

@@ -79,6 +79,10 @@ brew "tree"
 brew "wget"
 {{- end }}
 
+{{- if .install.wireguard }}
+brew "wireguard-tools"
+{{- end }}
+
 {{- if .install.xclip }}
 brew "xclip"
 {{- end }}
