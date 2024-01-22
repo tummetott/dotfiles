@@ -79,10 +79,6 @@ brew "tree"
 brew "wget"
 {{- end }}
 
-{{- if .install.wireguard }}
-brew "wireguard-tools"
-{{- end }}
-
 {{- if .install.xclip }}
 brew "xclip"
 {{- end }}
@@ -177,6 +173,10 @@ cask "typora"
 
 {{- if .install.vlc }}
 cask "vlc"
+{{- end }}
+
+{{- if .install.wireguard }}
+mas "WireGuard", id: 1451685025
 {{- end }}
 
 {{- if .install.wireshark }}
