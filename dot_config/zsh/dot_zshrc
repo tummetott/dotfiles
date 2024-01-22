@@ -57,6 +57,12 @@ function zvm_after_init() {
         # remap it to CTRL-g
         bindkey '^G' fzf-file-widget
         bindkey '^T' transpose-chars
+
+        # Because of VIM-TMUX Navigator, I can't kill lines with CTRL-k. I remap
+        # this to CTRL-x
+        bindkey '^X' kill-line
+
+        bindkey '^O' autosuggest-clear
     fi
 }
 
@@ -104,14 +110,6 @@ unsetopt HIST_VERIFY
 # With 'base16-shell', the default 'zsh-autosuggestions' color (color8) closely
 # matches the terminal foreground color, making it hard to distinguish
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
-
-# Scroll history with CTRL-n and CTRL-p
-bindkey '^p' up-line-or-search
-bindkey '^n' down-line-or-search
-
-# Because of VIM-TMUX Navigator, I can't kill lines with CTRL-k. I remap this
-# to CTRL-x
-bindkey '^X' kill-line
 
 # Check if the programm silver searcher 'fd' exists
 if (( $+commands[fd] )); then
