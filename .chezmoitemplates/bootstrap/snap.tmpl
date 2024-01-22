@@ -23,11 +23,6 @@ info 'Press any key to restart!'
 read -n 1 -s -r
 sudo reboot now
 
-# # Update the repeat.hash content with a new SHA hash of the current time.
-# # This action ensures that the install script re-executes after running
-# # 'chezmoi apply' on a rebooted system.
-# date | shasum | awk '{print $1}' > "$XDG_DATA_HOME/chezmoi/.scriptstate/repeat.hash"
-
 {{ else }}
 
 error 'No installation instructions found for: snap'

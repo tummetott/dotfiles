@@ -15,11 +15,10 @@ pushd "$HOME/.local/share/chezmoi"
 git remote set-url origin git@github.com:tummetott/dotfiles.git
 popd
 
-{{ if eq .chezmoi.os "darwin" }}
-    compl 'Installation successful. You should restart now.'
-{{ else if eq .chezmoi.os "linux" }}
-    # Force restart when on linux
-    compl 'Installation successful. Press any key to reboot'
-    read -n 1 -s -r
+compl 'Installation successful. Do you want to reboot? (y/n)'
+read -n 1 -s -r choice
+if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
     sudo reboot now
-{{ end }}
+else
+    echo 'No reboot requested'
+fi

@@ -1,12 +1,8 @@
 # vim: set ft=bash:
 
-info 'Update apt'
+info 'Upgrade and autoremove apt packages'
 log sudo apt -y update
-
-info 'Upgrade apt'
 log sudo apt -y upgrade
-
-info 'Autoremove apt'
 log sudo apt -y autoremove
 
 if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
@@ -14,6 +10,9 @@ if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
     exit 1
 fi
 
-info 'Installing packages from Aptfile'
-log sudo apt -y install \
-    $(grep -vE '^\s*#' "$XDG_CONFIG_HOME/aptitude/Aptfile"  | tr '\n' ' ')
+while read -r line; do
+    if ! has "$line"; then
+        info "Installing $line"
+        log sudo apt -y install "$line"
+    fi
+done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/aptitude/Aptfile")
