@@ -20,5 +20,5 @@ read -n 1 -s -r choice
 if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
     sudo reboot now
 else
-    echo 'No reboot requested'
+    info 'No reboot requested'
 fi
