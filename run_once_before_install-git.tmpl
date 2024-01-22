@@ -16,6 +16,6 @@ trap on_error ERR
     if ! has git; then
         info 'Installing git'
         log sudo apt update
-        log sudo apt -y git
+        log sudo apt -y install git
     fi
 {{ end }}
