@@ -13,8 +13,8 @@
 # Initialize Powerlevel10k instant prompt. Keep this block near the top of zshrc
 # to ensure the prompt appears immediately when a new shell session starts.
 if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" \
-    && ( -n "$TMUX" || -n "$SSH_TTY" ) ]]; then
-  source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+        && ( -n "$TMUX" || -n "$SSH_TTY" ) ]]; then
+    source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Hostname up to the first '.'
@@ -61,8 +61,6 @@ function zvm_after_init() {
         # Because of VIM-TMUX Navigator, I can't kill lines with CTRL-k. I remap
         # this to CTRL-x
         bindkey '^X' kill-line
-
-        bindkey '^O' autosuggest-clear
     fi
 }
 
@@ -93,12 +91,16 @@ autoload -Uz $fpath[1]/*(.:t)
 [[ -s "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] \
     && source "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-[[ -s "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh" ]] \
-    && source "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh"
-
 # Get rid of OMZ. Read all files in oh-my-zsh/lib and extract important cmds
 [[ -s "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh" ]] \
     && source "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh"
+
+# Disable lazy loading. See: https://github.com/jeffreytse/zsh-vi-mode/issues/258
+ZVM_INIT_MODE=sourcing
+
+[[ -s "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh"
+
 
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification
