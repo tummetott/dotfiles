@@ -11,7 +11,7 @@ if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
 fi
 
 while read -r line; do
-    if ! apt list --installed | grep -q "^$line"; then
+    if ! apt list --installed 2>/dev/null | grep -q "^$line"; then
         info "Installing $line"
         log sudo apt -y install "$line"
     fi
