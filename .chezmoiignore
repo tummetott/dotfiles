@@ -1,6 +1,6 @@
 **/.DS_Store
 
-{{- if ne .chezmoi.os "darwin" }}
+{{ if ne .chezmoi.os "darwin" }}
 Library/*
 .config/homebrew
 .config/iterm2
@@ -14,12 +14,12 @@ Library/*
 .local/share/scripts/enable-network-ds-store-files
 .local/share/scripts/enable-ssh-server
 
-{{- else if ne .chezmoi.os "linux" }}
+{{ else if ne .chezmoi.os "linux" }}
 .config/aptitude
 .config/snap
 .config/nushell
-{{- end }}
+{{ end }}
 
-{{- if not (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian")) }}
+{{ if not (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian")) }}
 .ssh/authorized_keys
-{{- end }}
+{{ end }}
