@@ -1,4 +1,4 @@
-# Dots ⊙ 
+# ⊙ dotfiles
 
 ### Prerequisites
 - Remap `CAPSLOCK` to `CTRL`
