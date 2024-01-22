@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+source ~/.local/share/chezmoi/.script-helper
+set -euo pipefail
+trap on_error ERR
+
+# In Pi OS, the swap size is only 100MB. Let's increase it to 2GB
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
+    info 'Increase swap size'
+    log sudo dphys-swapfile swapoff
+    log sudo sed -i 's/^CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2000/' /etc/dphys-swapfile
+    log sudo dphys-swapfile setup
+    log sudo dphys-swapfile swapon
+{{ end }}
