@@ -118,16 +118,17 @@ bindkey '^X' kill-line
 
 # Check if the programm silver searcher 'fd' exists
 if (( $+commands[fd] )); then
-    # Use fd instead of the default find command for listing path & directory
-    # candidates (e.g. for cd **) We could use ripgrep here. However, it does
-    # not support finding directories.
+    # Run by nvim **<tab>
     _fzf_compgen_path() {
-        fd --hidden --follow --exclude ".git" --exclude . "$1"
+        fd --hidden --follow "$1"
     }
+    # Run by cd **<tab>
     _fzf_compgen_dir() {
-        fd --type d --hidden --follow --exclude ".git" . "$1"
+        fd --type d --hidden --follow "$1"
     }
 fi
+# Used by C-t
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
 
 # The plugin 'syntax-highlighting' adds undercores to paths. Let's turn that off
 (( ${+ZSH_HIGHLIGHT_STYLES}  )) || typeset -A ZSH_HIGHLIGHT_STYLES
