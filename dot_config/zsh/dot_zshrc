@@ -94,9 +94,6 @@ autoload -Uz $fpath[1]/*(.:t)
 [[ -s "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh" ]] \
     && source "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh"
 
-# oh-my-zsh enables shared-history. I don't want that
-unsetopt share_history
-
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification
 unsetopt HIST_VERIFY
