@@ -1,4 +1,4 @@
-#  Dots
+# ⊙ Dots
 
 ### Prerequisites
 - Remap `CAPSLOCK` to `CTRL`
