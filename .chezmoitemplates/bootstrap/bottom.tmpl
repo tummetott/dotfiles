@@ -11,17 +11,16 @@ if ! (has btm || has bottom); then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
-    if has snap; then
-        info 'Installing bottom'
-        log sudo snap install bottom
-        log sudo snap connect bottom:mount-observe
-        log sudo snap connect bottom:hardware-observe
-        log sudo snap connect bottom:system-observe
-        log sudo snap connect bottom:process-control
-    else
+    if ! has snap; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi
 
+    info 'Installing bottom'
+    log sudo snap install bottom
+    log sudo snap connect bottom:mount-observe
+    log sudo snap connect bottom:hardware-observe
+    log sudo snap connect bottom:system-observe
+    log sudo snap connect bottom:process-control
 
     {{ else }}
     error 'No installation instructions found for: bottom'

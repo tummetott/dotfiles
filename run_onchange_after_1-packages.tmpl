@@ -29,7 +29,6 @@ sudo true
         (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
     {{ template "bootstrap/aptitude-packages.tmpl" . }}
-    {{ template "bootstrap/snap-packages.tmpl" . }}
 {{ end }}
 
 {{ if .install.flatpak }}
@@ -86,4 +85,8 @@ sudo true
 
 {{ if .install.nushell }}
     {{ template "bootstrap/nushell.tmpl" . }}
+{{ end }}
+
+{{ if .install.signal }}
+    {{ template "bootstrap/signal.tmpl" . }}
 {{ end }}

@@ -11,12 +11,11 @@ if ! has nvim; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
-    if has snap; then
-        info 'Installing neovim'
-        log sudo snap install nvim --classic
-    else
+    if ! has snap; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi
+    info 'Installing neovim'
+    log sudo snap install nvim --classic
 
     # We need a c compiler for treesitter
     log sudo apt -y update
