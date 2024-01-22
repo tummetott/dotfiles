@@ -17,7 +17,7 @@ trap on_error ERR
         info 'Installing git'
         log sudo apt update
         log sudo apt -y install git
-        warn "Chezmoi must pick up the installed git executable. Run '~/.local/bin/chezmoi apply' to continue with the installation."
+        warn "Chezmoi must pick up the installed git executable. Run 'chezmoi apply' to continue with the installation."
         exit 1
     fi
 {{ end }}

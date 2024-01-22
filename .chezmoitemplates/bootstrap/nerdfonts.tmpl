@@ -19,7 +19,7 @@ log brew install --cask 'font-meslo-lg-nerd-font'
     if ! has fc-cache; then
         info 'Installing fontconfig'
         log sudo apt update
-        log sudo apt -y fontconfig
+        log sudo apt -y install fontconfig
     fi
     info 'Update font cache'
     log fc-cache -f -v
