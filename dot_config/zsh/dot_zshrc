@@ -117,11 +117,11 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
 if [[ $commands =~ '/(fd|fdfind) ' ]]; then
     # Run by nvim **<tab>
     _fzf_compgen_path() {
-        "$match" --hidden --follow "$1"
+        "$match" --type f --hidden --follow "$1"
     }
     # Run by cd **<tab>
     _fzf_compgen_dir() {
-        "$match" --type d --hidden --follow "$1"
+        "$match" --type d --hidden --follow --exclude '.git' "$1"
     }
     # Used by C-t
     export FZF_CTRL_T_COMMAND="$match --type f --hidden --follow"
