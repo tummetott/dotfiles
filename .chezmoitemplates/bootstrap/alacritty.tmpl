@@ -10,23 +10,22 @@ if ! has alacritty; then
         (eq .chezmoi.osRelease.id "ubuntu")
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "kali")) }}
-    if ! has rust; then
+    if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
+    else
+        info 'Update rustup'
+        log rustup update stable
     fi
     info 'Installing dependencies for alacritty'
     log sudo apt update
     log sudo apt -y install cmake pkg-config libfreetype6-dev \
         libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 
-    # Make sure to have the right rust compiler isntalled
-    log rustup override set stable
-    log rustup update stable
-
     info 'Installing alacritty'
     tempdir="$(mktemp -d)"
     log git clone 'https://github.com/alacritty/alacritty.git' "$tempdir"
     pushd "$tempdir"
-    log cargo build --release
+    log cargo +stable build --release
     sudo cp target/release/alacritty /usr/local/bin
 
     # Create desktop entry

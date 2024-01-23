@@ -11,16 +11,18 @@ if ! has nu; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
-    if ! has cargo; then
+    if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
+    else
+        info 'Update rustup'
+        log rustup update stable
     fi
     info 'Installing dependencies for nushell'
     log sudo apt -y update
     log sudo apt -y install pkg-config libssl-dev build-essential
 
     info 'Installing nushell'
-    log rustup update
-    log cargo install nu
+    log cargo +stable install nu
 
     {{ else }}
     error 'No installation instructions found for: nushell'

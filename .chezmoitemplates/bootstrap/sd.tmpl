@@ -13,10 +13,12 @@ if ! has sd; then
         (eq .chezmoi.osRelease.id "kali")) }}
     if ! has rust; then
         {{ template "bootstrap/rust.tmpl" . }}
+    else
+        info 'Update rustup'
+        log rustup update stable
     fi
     info 'Installing sd'
-    log rustup update
-    log cargo install sd
+    log cargo +stable install sd
 
     {{ else }}
     error 'No installation instructions found for: sd'

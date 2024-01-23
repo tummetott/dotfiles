@@ -11,14 +11,16 @@ if ! has fd; then
         (eq .chezmoi.osRelease.id "pop")
         (eq .chezmoi.osRelease.id "debian")
         (eq .chezmoi.osRelease.id "kali")) }}
-    if ! has rust; then
+    if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
+    else
+        info 'Update rustup'
+        log rustup update stable
     fi
     info 'Installing fd'
     log sudo apt update
     log sudo apt -y install build-essential
-    log rustup update
-    log cargo install fd-find
+    log cargo +stable install fd-find
 
     {{ else }}
     error 'No installation instructions found for: fd'
