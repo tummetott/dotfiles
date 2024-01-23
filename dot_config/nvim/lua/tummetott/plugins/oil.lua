@@ -23,8 +23,12 @@ return {
         },
         view_options = {
             show_hidden = true,
-            is_always_hidden = function(name, bufnr)
-                if vim.tbl_contains({ '..', '.DS_Store' }, name) then
+            is_always_hidden = function(name, _)
+                if vim.tbl_contains({
+                    '..',
+                    '.DS_Store',
+                    '.git',
+                }, name) then
                     return true
                 end
                 return false
