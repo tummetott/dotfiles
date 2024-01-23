@@ -1,7 +1,7 @@
 **/.DS_Store
 
 {{ if ne .chezmoi.os "darwin" }}
-Library/*
+Library
 .config/homebrew
 .config/iterm2
 .config/shell/functions/clean-clipboard
