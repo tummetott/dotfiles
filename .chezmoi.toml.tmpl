@@ -107,6 +107,7 @@ flatpak = false
 fzf = true
 gnome_tweaks = false
 go = false
+iproute2 = true
 kitty = false
 lf = false
 lsd = true
@@ -122,6 +123,47 @@ python = false
 ripgrep = true
 ruby = false
 rust = false
+sd = false
+shellcheck = false
+signal = false
+starship = true
+tldr = true
+tmux = true
+tree = true
+wezterm = true
+wget = true
+zsh = true
+{{- end }}
+
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
+alacritty = true
+bat = true
+bottom = true
+build_essential = true
+cmake = false
+conda = false
+fd = true
+flatpak = false
+fzf = true
+gnome_tweaks = true
+go = false
+iproute2 = true
+kitty = false
+lf = false
+lsd = true
+meld = false
+neofetch = false
+neovim = true
+ninja = false
+nmap = false
+node = false
+nushell = false
+perl = false
+python = false
+ripgrep = true
+ruby = false
+rust = false
+sd = false
 shellcheck = false
 signal = false
 starship = true
@@ -145,6 +187,7 @@ flatpak = true
 fzf = true
 gnome_tweaks = false
 go = false
+iproute2 = true
 kitty = false
 lf = false
 lsd = true
@@ -160,6 +203,7 @@ python = false
 ripgrep = true
 ruby = false
 rust = false
+sd = false
 shellcheck = false
 signal = false
 starship = true
@@ -171,9 +215,6 @@ wget = true
 zsh = true
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-{{- end }}
-
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
 bat = false
 bottom = false
@@ -182,7 +223,7 @@ cmake = false
 fd = false
 fzf = true
 go = false
-iproute2 = false
+iproute2 = true
 lf = false
 lsd = true
 neofetch = false

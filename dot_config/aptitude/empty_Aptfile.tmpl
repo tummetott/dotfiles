@@ -20,6 +20,10 @@ gnome-tweaks
 golang-go
 {{- end }}
 
+{{- if .install.iproute2 }}
+iproute2
+{{- end }}
+
 {{- if .install.kitty }}
 kitty
 {{- end }}
