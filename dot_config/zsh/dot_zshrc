@@ -113,18 +113,18 @@ unsetopt HIST_VERIFY
 # matches the terminal foreground color, making it hard to distinguish
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
 
-# If 'fd' exists, we use it instead of the default 'find' cmd.
-if [[ $commands =~ '/(fd|fdfind) ' ]]; then
+# FZF should use 'fd' instead of the default 'find'
+if (( $+commands[fd] )); then
     # Run by nvim **<tab>
     _fzf_compgen_path() {
-        "$match" --type f --hidden --follow "$1"
+        fd --type f --hidden --follow "$1"
     }
     # Run by cd **<tab>
     _fzf_compgen_dir() {
-        "$match" --type d --hidden --follow --exclude '.git' "$1"
+        fd --type d --hidden --follow "$1"
     }
     # Used by C-t
-    export FZF_CTRL_T_COMMAND="$match --type f --hidden --follow"
+    export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
 fi
 
 # The plugin 'syntax-highlighting' adds undercores to paths. Let's turn that off

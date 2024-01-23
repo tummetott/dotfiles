@@ -55,6 +55,10 @@ sudo true
     {{ template "bootstrap/fzf.tmpl" . }}
 {{ end }}
 
+{{ if .install.fd }}
+    {{ template "bootstrap/fd.tmpl" . }}
+{{ end }}
+
 {{ if .install.bottom }}
     {{ template "bootstrap/bottom.tmpl" . }}
 {{ end }}

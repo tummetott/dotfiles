@@ -1,0 +1,29 @@
+# vim: set ft=bash:
+
+if ! has fd; then
+    {{ if eq .chezmoi.os "darwin" }}
+    info 'Installing fd'
+    log brew update
+    log brew install fd
+
+    {{ else if and (eq .chezmoi.os "linux") (or
+        (eq .chezmoi.osRelease.id "ubuntu")
+        (eq .chezmoi.osRelease.id "pop")
+        (eq .chezmoi.osRelease.id "debian")
+        (eq .chezmoi.osRelease.id "kali")) }}
+    if ! has rust; then
+        {{ template "bootstrap/rust.tmpl" . }}
+    fi
+    info 'Installing fd'
+    tempdir="$(mktemp -d)"
+    log git clone 'https://github.com/sharkdp/fd' "$tempdir"
+    pushd "$tempdir"
+    log cargo build
+    log cargo install --path .
+    popd && rm -rf "$tempdir"
+
+    {{ else }}
+    error 'No installation instructions found for: fd'
+    exit 1
+    {{ end }}
+fi
