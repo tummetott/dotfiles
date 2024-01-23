@@ -15,6 +15,7 @@ if ! has sd; then
         {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing sd'
+    log rustup update
     log cargo install sd
 
     {{ else }}

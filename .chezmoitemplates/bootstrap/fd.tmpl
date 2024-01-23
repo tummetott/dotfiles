@@ -15,12 +15,10 @@ if ! has fd; then
         {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing fd'
-    tempdir="$(mktemp -d)"
-    log git clone 'https://github.com/sharkdp/fd' "$tempdir"
-    pushd "$tempdir"
-    log cargo build
-    log cargo install --path .
-    popd && rm -rf "$tempdir"
+    log sudo apt update
+    log sudo apt -y install build-essential
+    log rustup update
+    log cargo install fd-find
 
     {{ else }}
     error 'No installation instructions found for: fd'

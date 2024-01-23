@@ -15,6 +15,7 @@ if ! has lsd; then
         {{ template "bootstrap/rust.tmpl" . }}
     fi
     info 'Installing lsd'
+    log rustup update
     log cargo install lsd
 
     {{ else }}

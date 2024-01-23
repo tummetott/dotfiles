@@ -19,6 +19,7 @@ if ! has nu; then
     log sudo apt -y install pkg-config libssl-dev build-essential
 
     info 'Installing nushell'
+    log rustup update
     log cargo install nu
 
     {{ else }}
