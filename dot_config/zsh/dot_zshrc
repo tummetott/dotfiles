@@ -114,7 +114,7 @@ unsetopt HIST_VERIFY
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
 
 # If 'fd' exists, we use it instead of the default 'find' cmd.
-if [[ $commands =~ (fdfind|fd) ]]; then
+if [[ $commands =~ '/(fd|fdfind) ' ]]; then
     # Run by nvim **<tab>
     _fzf_compgen_path() {
         "$match" --hidden --follow "$1"
