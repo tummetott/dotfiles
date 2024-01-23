@@ -131,7 +131,6 @@ table.insert(M, {
 table.insert(M, {
     'tummetott/gruvbox.nvim',
     enabled = false,
-    dev = true,
     config = function()
         require('gruvbox').setup({
 

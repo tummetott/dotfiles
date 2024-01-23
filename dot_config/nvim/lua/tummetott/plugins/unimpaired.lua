@@ -4,7 +4,6 @@ table.insert(M, {
     'tummetott/unimpaired.nvim',
     enabled = true,
     event = 'VeryLazy',
-    dev = true,
     opts = {
         keymaps = {
             cprevious = false,

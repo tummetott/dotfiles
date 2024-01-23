@@ -1,7 +1,6 @@
 return {
     'tummetott/reticle.nvim',
     enabled = true,
-    dev = true,
     event = 'VeryLazy',
     opts = {
         on_startup = {
