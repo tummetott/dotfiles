@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 # vim: set ft=bash:
 
-# This script is set to re-execute under two conditions: either there's a change
-# in the chezmoi.toml configuration, or the installer signals re-execution by
-# updating the repeat.hash file. Including the hash values from the .scriptstate
-# directory allows the script to detect changes in these critical files,
-# ensuring it runs again whenever necessary to reflect any new configurations or
-# installation requirements.
+# This script is set to re-execute when there's a change in the chezmoi.toml
+# configuration. Including the hash value from the .scriptstate directory allows
+# the script to detect changes in this file, ensuring it runs again whenever
+# necessary to reflect any new configurations or installation requirements.
 # {{ include ".scriptstate/chezmoi.toml.hash" }} 
-# {{ include ".scriptstate/repeat.hash" }} 
 
 source ~/.local/share/chezmoi/.script-helper
 set -euo pipefail
@@ -43,10 +40,6 @@ sudo true
     {{ template "bootstrap/zsh.tmpl" . }}
 {{ end }}
 
-{{ if .install.neovim }}
-    {{ template "bootstrap/neovim.tmpl" . }}
-{{ end }}
-
 {{ if .install.tmux }}
     {{ template "bootstrap/tmux.tmpl" . }}
 {{ end }}
@@ -61,10 +54,6 @@ sudo true
 
 {{ if .install.sd }}
     {{ template "bootstrap/sd.tmpl" . }}
-{{ end }}
-
-{{ if .install.bottom }}
-    {{ template "bootstrap/bottom.tmpl" . }}
 {{ end }}
 
 {{ if .install.rust }}
@@ -97,4 +86,12 @@ sudo true
 
 {{ if .install.signal }}
     {{ template "bootstrap/signal.tmpl" . }}
+{{ end }}
+
+{{ if .install.neovim }}
+    {{ template "bootstrap/neovim.tmpl" . }}
+{{ end }}
+
+{{ if .install.bottom }}
+    {{ template "bootstrap/bottom.tmpl" . }}
 {{ end }}
