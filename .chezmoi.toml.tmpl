@@ -19,7 +19,9 @@ BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
 [data]
 {{- if eq .chezmoi.os "darwin" }}
 fontsize = 17.0
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+{{- else if and (eq .chezmoi.os "linux") (or 
+    (eq .chezmoi.osRelease.id "ubuntu")
+    (eq .chezmoi.osRelease.id "pop")) }}
 fontsize = 13.0
 {{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
 fontsize = 12.0
@@ -95,7 +97,9 @@ zoom = false
 zsh = true
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") }}
+{{- if and (eq .chezmoi.os "linux") (or 
+    (eq .chezmoi.osRelease.id "ubuntu")
+    (eq .chezmoi.osRelease.id "pop")) }}
 alacritty = true
 bat = true
 bottom = true
@@ -106,46 +110,6 @@ fd = true
 flatpak = false
 fzf = true
 gnome_tweaks = false
-go = false
-iproute2 = true
-kitty = false
-lf = false
-lsd = true
-meld = false
-neofetch = false
-neovim = true
-ninja = false
-nmap = false
-node = false
-nushell = false
-perl = false
-python = false
-ripgrep = true
-ruby = false
-rust = false
-sd = false
-shellcheck = false
-signal = false
-starship = true
-tldr = true
-tmux = true
-tree = true
-wezterm = true
-wget = true
-zsh = true
-{{- end }}
-
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "pop") }}
-alacritty = true
-bat = true
-bottom = true
-build_essential = true
-cmake = false
-conda = false
-fd = true
-flatpak = false
-fzf = true
-gnome_tweaks = true
 go = false
 iproute2 = true
 kitty = false
