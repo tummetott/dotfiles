@@ -3,7 +3,7 @@
 # I don't print any output because the code is run even when nerdfonts are
 # installed. I don't know how to check this in a potable way.
 
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .osid "darwin" }}
 log brew update
 log brew install --cask 'font-fira-code-nerd-font'
 log brew install --cask 'font-meslo-lg-nerd-font'
@@ -11,16 +11,16 @@ log brew install --cask 'font-meslo-lg-nerd-font'
 
 # Nerdfonts for linux are installed as external source
 
-{{ if and (eq .chezmoi.os "linux") (or
-        (eq .chezmoi.osRelease.id "ubuntu")
-        (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "debian")
-        (eq .chezmoi.osRelease.id "kali")) }}
-    if ! has fc-cache; then
-        info 'Installing fontconfig'
-        log sudo apt update
-        log sudo apt -y install fontconfig
-    fi
-    info 'Update font cache'
-    log fc-cache -f -v
+{{ if or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "pi")
+    (eq .osid "kali") }}
+if ! has fc-cache; then
+    info 'Installing fontconfig'
+    log sudo apt update
+    log sudo apt -y install fontconfig
+fi
+info 'Update font cache'
+log fc-cache -f -v
 {{ end }}

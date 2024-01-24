@@ -8,16 +8,16 @@ trap on_error ERR
 # Git is a dependency for chezmoi. We need it for the external sources,
 # therefore it must be installed before they are downloaded. macOS has git
 # installed by default.
-{{ if and (eq .chezmoi.os "linux") (or
-        (eq .chezmoi.osRelease.id "ubuntu")
-        (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "debian")
-        (eq .chezmoi.osRelease.id "kali")) }}
-    if ! has git; then
-        info 'Installing git'
-        log sudo apt update
-        log sudo apt -y install git
-        warn "Chezmoi must pick up the installed git executable. Run 'chezmoi apply' to continue with the installation."
-        exit 1
-    fi
+{{ if or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "pi")
+    (eq .osid "kali") }}
+if ! has git; then
+    info 'Installing git'
+    log sudo apt update
+    log sudo apt -y install git
+    warn "Chezmoi must pick up the installed git executable. Run 'chezmoi apply' to continue with the installation."
+    exit 1
+fi
 {{ end }}

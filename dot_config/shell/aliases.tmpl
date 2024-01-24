@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 # vim: set ft=bash:
 
-{{- if and (eq .chezmoi.os "linux") (or
-    (eq .chezmoi.osRelease.id "ubuntu")
-    (eq .chezmoi.osRelease.id "pop")
-    (eq .chezmoi.osRelease.id "debian")
-    (eq .chezmoi.osRelease.id "kali")) }}
+{{- if or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "pi")
+    (eq .osid "kali") }}
 alias bat='batcat'
 alias btm='bottom'
 alias lf='lfm'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 {{- end }}
 
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .osid "darwin" }}
 alias pwdf='finder-path'
 alias cdf='cd "$(finder-path)"'
 alias sudoedit='sudo -e'

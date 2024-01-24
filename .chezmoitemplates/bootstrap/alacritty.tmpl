@@ -1,15 +1,12 @@
 # vim: set ft=bash:
 
 if ! has alacritty; then
-    {{ if eq .chezmoi.os "darwin" }}
+    {{ if eq .osid "darwin" }}
     info 'Installing alacritty'
     log brew update
     log brew install --cask alacritty
 
-    {{ else if and (eq .chezmoi.os "linux") (or
-        (eq .chezmoi.osRelease.id "ubuntu")
-        (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "kali")) }}
+    {{ else if or (eq .osid "ubuntu") (eq .osid "pop") (eq .osid "kali") }}
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else

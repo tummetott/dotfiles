@@ -16,15 +16,15 @@ source ~/.config/shell/env
 info "Please enter your computer's password"
 sudo true
 
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .osid "darwin" }}
     {{ template "bootstrap/brew-packages.tmpl" . }}
 {{ end }}
 
-{{ if and (eq .chezmoi.os "linux") (or 
-        (eq .chezmoi.osRelease.id "ubuntu")
-        (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "debian")
-        (eq .chezmoi.osRelease.id "kali")) }}
+{{ if or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "pi")
+    (eq .osid "kali") }}
     {{ template "bootstrap/aptitude-packages.tmpl" . }}
 {{ end }}
 

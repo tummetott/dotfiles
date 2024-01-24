@@ -1,4 +1,4 @@
-{{ if and (eq .chezmoi.os "linux") .nerdfonts }}
+{{ if and (ne .osid "darwin") .nerdfonts }}
 ['.local/share/fonts/FiraCode']
 type = 'archive'
 url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz'

@@ -1,21 +1,20 @@
 # vim: set ft=bash:
 
 if ! has tmux; then
-    {{ if eq .chezmoi.os "darwin" }}
+    {{ if eq .osid "darwin" }}
     info 'Installing tmux'
     log brew update
     log brew install tmux
 
-    {{ else if and (eq .chezmoi.os "linux") (or
-        (eq .chezmoi.osRelease.id "ubuntu")
-        (eq .chezmoi.osRelease.id "pop")
-        (eq .chezmoi.osRelease.id "kali")) }}
+    {{ else if or
+        (eq .osid "ubuntu")
+        (eq .osid "pop")
+        (eq .osid "kali") }}
     info 'Installing tmux'
     log sudo apt -y update
     log sudo apt -y install tmux
 
-    {{ else if and (eq .chezmoi.os "linux") 
-        (eq .chezmoi.osRelease.id "debian") }}
+    {{ else if eq .osid "pi" }}
     info 'Installing dependencies for tmux'
     log sudo apt update
     log sudo apt -y install automake libevent-dev ncurses-dev build-essential \

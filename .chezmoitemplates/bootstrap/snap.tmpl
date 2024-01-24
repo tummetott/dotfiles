@@ -1,20 +1,20 @@
 # vim: set ft=bash:
 
-{{ if and (eq .chezmoi.os "linux") (or
-    (eq .chezmoi.osRelease.id "ubuntu")
-    (eq .chezmoi.osRelease.id "pop")
-    (eq .chezmoi.osRelease.id "debian")
-    (eq .chezmoi.osRelease.id "kali")) }}
+{{ if or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "pi")
+    (eq .osid "kali") }}
 
 info 'Installing snap'
 log sudo apt -y update
 log sudo apt -y install snapd
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{ if eq .osid "kali" }}
 log sudo systemctl enable --now snapd snapd.apparmor
 {{ end }}
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
+{{ if eq .osid "pi" }}
 log sudo snap install core
 {{ end }}
 

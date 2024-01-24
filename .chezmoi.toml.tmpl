@@ -1,13 +1,13 @@
 # vim: set ft=toml:
 
-encryption = 'age'
+encryption = "age"
 
 [age]
-identity = '{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt'
-recipient = 'age1py04fpx5dan88dsvz5thm37aaj4p93jrasqj7lfxw8u4r7w0capswq8zcv'
+identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+recipient = "age1py04fpx5dan88dsvz5thm37aaj4p93jrasqj7lfxw8u4r7w0capswq8zcv"
 
 [merge]
-command = 'nvimdiff'
+command = "nvimdiff"
 
 [scriptEnv]
 XDG_CONFIG_HOME = "{{ .chezmoi.homeDir }}/.config"
@@ -17,13 +17,21 @@ XDG_CACHE_HOME = "{{ .chezmoi.homeDir }}/.cache"
 BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
 
 [data]
-{{- if eq .chezmoi.os "darwin" }}
+{{- $osid := .chezmoi.os }}
+{{- if hasKey .chezmoi.osRelease "id" }}
+    {{- if and (eq .chezmoi.osRelease.id "debian") (glob "/boot/config.txt") }}
+        {{- $osid = "pi" }}
+    {{- else }}
+        {{- $osid = .chezmoi.osRelease.id }}
+    {{- end }}
+{{- end }}
+osid = {{ $osid | quote }}
+
+{{- if eq $osid "darwin" }}
 fontsize = 17.0
-{{- else if and (eq .chezmoi.os "linux") (or 
-    (eq .chezmoi.osRelease.id "ubuntu")
-    (eq .chezmoi.osRelease.id "pop")) }}
+{{- else if or (eq $osid "ubuntu") (eq $osid "pop") }}
 fontsize = 13.0
-{{- else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{- else if eq $osid "kali" }}
 fontsize = 12.0
 {{- end }}
 nerdfonts = true
@@ -35,7 +43,7 @@ state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
 
 [data.install]
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq $osid "darwin" }}
 alacritty = true
 amphetamine = false
 anki = false
@@ -97,9 +105,7 @@ zoom = false
 zsh = true
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (or 
-    (eq .chezmoi.osRelease.id "ubuntu")
-    (eq .chezmoi.osRelease.id "pop")) }}
+{{- if or (eq $osid "ubuntu") (eq $osid "pop") }}
 alacritty = true
 bat = true
 bottom = true
@@ -139,7 +145,7 @@ wget = true
 zsh = true
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "kali") }}
+{{- if eq $osid "kali" }}
 alacritty = true
 bat = true
 bottom = true
@@ -179,7 +185,7 @@ wget = true
 zsh = true
 {{- end }}
 
-{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") }}
+{{- if eq $osid "pi" }}
 bat = false
 bottom = false
 build_essential = false

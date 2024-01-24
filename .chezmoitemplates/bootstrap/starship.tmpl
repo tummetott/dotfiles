@@ -2,7 +2,7 @@
 
 if ! has starship; then
 
-    {{ if eq .chezmoi.os "darwin" }}
+    {{ if eq .osid "darwin" }}
     info 'Installing starship'
     log brew update
     log brew install starship

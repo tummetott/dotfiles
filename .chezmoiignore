@@ -1,6 +1,6 @@
 **/.DS_Store
 
-{{ if ne .chezmoi.os "darwin" }}
+{{ if ne .osid "darwin" }}
 Library
 .config/homebrew
 .config/iterm2
@@ -13,12 +13,18 @@ Library
 .local/share/scripts/enable-ftp-server
 .local/share/scripts/enable-network-ds-store-files
 .local/share/scripts/enable-ssh-server
-
-{{ else if ne .chezmoi.os "linux" }}
-.config/aptitude
+{{ else }}
 .config/nushell
 {{ end }}
 
-{{ if not (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian")) }}
+{{ if not (or
+    (eq .osid "ubuntu")
+    (eq .osid "pop")
+    (eq .osid "kali")
+    (eq .osid "pi")) }}
+.config/aptitude
+{{ end }}
+
+{{ if ne .osid "pi" }}
 .ssh/authorized_keys
 {{ end }}
