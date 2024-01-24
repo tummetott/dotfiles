@@ -75,6 +75,14 @@ vim.keymap.set(
     { desc = 'Select previous pasted text' }
 )
 
+-- Change word with BS
+vim.keymap.set(
+    'n',
+    '<bs>',
+    'ciw',
+    { desc = 'Change word' }
+)
+
 -- Jump to end of line with CTRL-e in insert mode. I don't use <c-o> to prevent
 -- cursor flickering.
 vim.keymap.set(
