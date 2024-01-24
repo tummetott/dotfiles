@@ -266,7 +266,30 @@
 				<string>telnet</string>
 			</array>
 			<key>Keyboard Map</key>
-			<dict/>
+			<dict>
+				<key>0x69-0x40000-0x22</key>
+				<dict>
+					<key>Action</key>
+					<integer>12</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>\x1b[555;0~\x1b[105;5u</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
+				<key>0x6d-0x40000-0x2e</key>
+				<dict>
+					<key>Action</key>
+					<integer>12</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>\x1b[555;0~\x1b[109;5u</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
+			</dict>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
