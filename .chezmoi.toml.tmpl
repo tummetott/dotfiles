@@ -10,6 +10,11 @@
     {{- else }}
         {{- $osid = .chezmoi.osRelease.id }}
     {{- end }}
+    {{- if lookPath "systemd-detect-virt" }}
+        {{- if not (output "systemd-detect-virt" | trim | eq "none") }}
+            {{- $osid = printf "%s-vm" $osid }}
+        {{- end }}
+    {{- end }}
 {{- end }}
 
 encryption = "age"
