@@ -1,6 +1,6 @@
 **/.DS_Store
 
-{{ if ne .osid "darwin" }}
+{{ if not (contains "darwin" .osid) }}
 Library
 .config/homebrew
 .config/iterm2

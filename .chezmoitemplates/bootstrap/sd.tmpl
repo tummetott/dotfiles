@@ -1,7 +1,7 @@
 # vim: set ft=bash:
 
 if ! has sd; then
-    {{ if eq .osid "darwin" }}
+    {{ if contains "darwin" .osid }}
     info 'Installing sd'
     log brew update
     log brew install sd

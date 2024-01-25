@@ -48,7 +48,7 @@ state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
 
 [data.install]
-{{- if eq $osid "darwin" }}
+{{- if contains "darwin" $osid }}
 alacritty = true
 amphetamine = false
 anki = false

@@ -16,7 +16,7 @@ source ~/.config/shell/env
 info "Please enter your computer's password"
 sudo true
 
-{{ if eq .osid "darwin" }}
+{{ if contains "darwin" .osid }}
     {{ template "bootstrap/brew-packages.tmpl" . }}
 {{ end }}
 

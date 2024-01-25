@@ -65,7 +65,7 @@ tmux set -g status-right "#[\
     bg=colour0,fg=colour1]#{?#{!=:#{selection_present},}, im COPY MODE ,}#[\
     bg=colour0,fg=colour6]#{?window_zoomed_flag, 󰍉 ZOOM ENABLED ,}#[\
     bg=colour0,fg=${surface}]#[\
-{{- if eq .osid "darwin" }}
+{{- if contains "darwin" .osid }}
     bg=${surface},fg=${text}]  #W   #(scutil --get ComputerName)   %H:%M  󰄷 #S #[\
 {{- else }}
     bg=${surface},fg=${text}]  #W   #h   %H:%M  󰄷 #S #[\
@@ -84,7 +84,7 @@ tmux setw -g window-status-current-format "#[bg=${surface},fg=colour4,bold]  #I 
 tmux set -g status-right "#[\
     bg=colour0,fg=colour1]#{?#{!=:#{selection_present},}, Vim COPY MODE ,}#[\
     bg=colour0,fg=colour6]#{?window_zoomed_flag, ZOOM ENABLED ,}#[\
-{{- if eq .osid "darwin" }}
+{{- if contains "darwin" .osid }}
     bg=${surface},fg=${text}]  CMD: #W  HOST: #(scutil --get ComputerName)  TIME: %H:%M  SESSION: #S  ";
 {{- else }}
     bg=${surface},fg=${text}]  CMD: #W  HOST: #h  TIME: %H:%M  SESSION: #S  ";

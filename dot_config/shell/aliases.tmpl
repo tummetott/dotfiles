@@ -8,7 +8,7 @@ alias lf='lfm'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 {{- end }}
 
-{{- if eq .osid "darwin" }}
+{{- if contains "darwin" .osid }}
 alias pwdf='finder-path'
 alias cdf='cd "$(finder-path)"'
 alias sudoedit='sudo -e'

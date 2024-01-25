@@ -1,4 +1,4 @@
-{{ if and .nerdfonts (ne .osid "darwin") }}
+{{ if and .nerdfonts (not (contains "darwin" .osid )) }}
 ['.local/share/fonts/FiraCode']
 type = 'archive'
 url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz'

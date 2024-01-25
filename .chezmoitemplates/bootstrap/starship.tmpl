@@ -2,7 +2,7 @@
 
 if ! has starship; then
 
-    {{ if eq .osid "darwin" }}
+    {{ if contains "darwin" .osid }}
     info 'Installing starship'
     log brew update
     log brew install starship

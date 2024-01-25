@@ -10,7 +10,7 @@ is_wezterm_installed() {
 }
 
 if ! is_wezterm_installed; then
-    {{ if eq .osid "darwin" }}
+    {{ if contains "darwin" .osid }}
     info 'Installing wezterm'
     log brew update
     log brew install --cask wezterm

@@ -6,7 +6,7 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-{{ if eq .osid "darwin" }}
+{{ if contains "darwin" .osid }}
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
