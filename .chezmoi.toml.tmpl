@@ -29,7 +29,7 @@ osid = {{ $osid | quote }}
 
 {{- if eq $osid "darwin" }}
 fontsize = 17.0
-{{- else if regexMatch .osid "ubuntu|pop" }}
+{{- else if regexMatch $osid "ubuntu|pop" }}
 fontsize = 13.0
 {{- else if eq $osid "kali" }}
 fontsize = 12.0
@@ -105,7 +105,7 @@ zoom = false
 zsh = true
 {{- end }}
 
-{{- if regexMatch .osid "ubuntu|pop" }}
+{{- if regexMatch $osid "ubuntu|pop" }}
 alacritty = true
 bat = true
 bottom = true
