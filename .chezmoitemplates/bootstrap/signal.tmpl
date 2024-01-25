@@ -6,10 +6,7 @@ if ! has signal-desktop && [ ! -d '/Applications/Signal.app/' ]; then
     log brew update
     log brew install --cask signal 
 
-    {{ else if or
-        (eq .osid "ubuntu")
-        (eq .osid "pop")
-        (eq .osid "kali") }}
+    {{ else if regexMatch .osid "ubuntu|pop|kali" }}
     if ! has snap; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi

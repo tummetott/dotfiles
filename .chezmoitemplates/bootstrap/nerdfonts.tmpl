@@ -11,11 +11,7 @@ log brew install --cask 'font-meslo-lg-nerd-font'
 
 # Nerdfonts for linux are installed as external source
 
-{{ if or
-    (eq .osid "ubuntu")
-    (eq .osid "pop")
-    (eq .osid "pi")
-    (eq .osid "kali") }}
+{{ if regexMatch .osid "ubuntu|pop|pi|kali" }}
 if ! has fc-cache; then
     info 'Installing fontconfig'
     log sudo apt update

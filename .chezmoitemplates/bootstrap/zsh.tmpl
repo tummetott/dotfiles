@@ -6,11 +6,7 @@ if ! has zsh; then
     log brew update
     log brew install zsh
 
-    {{ else if or
-        (eq .osid "ubuntu")
-        (eq .osid "pop")
-        (eq .osid "pi")
-        (eq .osid "kali") }}
+    {{ else if regexMatch .osid "ubuntu|pop|pi|kali" }}
     info 'Installing zsh'
     log sudo apt -y update
     log sudo apt -y install zsh

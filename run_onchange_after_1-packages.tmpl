@@ -20,11 +20,7 @@ sudo true
     {{ template "bootstrap/brew-packages.tmpl" . }}
 {{ end }}
 
-{{ if or
-    (eq .osid "ubuntu")
-    (eq .osid "pop")
-    (eq .osid "pi")
-    (eq .osid "kali") }}
+{{ if regexMatch .osid "ubuntu|pop|pi|kali" }}
     {{ template "bootstrap/aptitude-packages.tmpl" . }}
 {{ end }}
 

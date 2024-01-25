@@ -1,11 +1,7 @@
 #!/usr/bin/env sh
 # vim: set ft=bash:
 
-{{- if or
-    (eq .osid "ubuntu")
-    (eq .osid "pop")
-    (eq .osid "pi")
-    (eq .osid "kali") }}
+{{- if regexMatch .osid "ubuntu|pop|pi|kali" }}
 alias bat='batcat'
 alias btm='bottom'
 alias lf='lfm'

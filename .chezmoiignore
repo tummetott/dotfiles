@@ -17,11 +17,7 @@ Library
 .config/nushell
 {{ end }}
 
-{{ if not (or
-    (eq .osid "ubuntu")
-    (eq .osid "pop")
-    (eq .osid "kali")
-    (eq .osid "pi")) }}
+{{ if not (regexMatch .osid "ubuntu|pop|pi|kali") }}
 .config/aptitude
 {{ end }}
 

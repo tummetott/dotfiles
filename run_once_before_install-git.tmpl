@@ -8,11 +8,7 @@ trap on_error ERR
 # Git is a dependency for chezmoi. We need it for the external sources,
 # therefore it must be installed before they are downloaded. macOS has git
 # installed by default.
-{{ if or
-    (eq .osid "ubuntu")
-    (eq .osid "pop")
-    (eq .osid "pi")
-    (eq .osid "kali") }}
+{{ if regexMatch .osid "ubuntu|pop|pi|kali" }}
 if ! has git; then
     info 'Installing git'
     log sudo apt update
