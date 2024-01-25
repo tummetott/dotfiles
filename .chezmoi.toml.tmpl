@@ -11,7 +11,7 @@
         {{- $osid = .chezmoi.osRelease.id }}
     {{- end }}
     {{- if lookPath "systemd-detect-virt" }}
-        {{- if not (output "systemd-detect-virt" | trim | eq "none") }}
+        {{- if not output "systemd-detect-virt" }}
             {{- $osid = printf "%s-vm" $osid }}
         {{- end }}
     {{- end }}
