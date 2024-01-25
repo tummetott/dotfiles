@@ -1,4 +1,16 @@
 # vim: set ft=toml:
+{{- $osid := .chezmoi.os }}
+{{- if eq $osid "darwin" }}
+    {{- if output "system_profiler" "SPHardwareDataType" | regexMatch "Virtual" }}
+        {{- $osid = "darwin-vm" }}
+    {{- end }}
+{{- else if hasKey .chezmoi.osRelease "id" }}
+    {{- if and (eq .chezmoi.osRelease.id "debian") (glob "/boot/config.txt") }}
+        {{- $osid = "pi" }}
+    {{- else }}
+        {{- $osid = .chezmoi.osRelease.id }}
+    {{- end }}
+{{- end }}
 
 encryption = "age"
 
@@ -17,19 +29,12 @@ XDG_CACHE_HOME = "{{ .chezmoi.homeDir }}/.cache"
 BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
 
 [data]
-{{- $osid := .chezmoi.os }}
-{{- if hasKey .chezmoi.osRelease "id" }}
-    {{- if and (eq .chezmoi.osRelease.id "debian") (glob "/boot/config.txt") }}
-        {{- $osid = "pi" }}
-    {{- else }}
-        {{- $osid = .chezmoi.osRelease.id }}
-    {{- end }}
-{{- end }}
 osid = {{ $osid | quote }}
-
-{{- if eq $osid "darwin" }}
+{{- if eq "darwin" $osid }}
 fontsize = 17.0
-{{- else if regexMatch $osid "ubuntu|pop" }}
+{{- else if eq "darwin-vm" $osid }}
+fontsize = 21.0
+{{- else if regexMatch "ubuntu|pop" $osid }}
 fontsize = 13.0
 {{- else if eq $osid "kali" }}
 fontsize = 12.0
@@ -105,7 +110,7 @@ zoom = false
 zsh = true
 {{- end }}
 
-{{- if regexMatch $osid "ubuntu|pop" }}
+{{- if regexMatch "ubuntu|pop" $osid }}
 alacritty = true
 bat = true
 bottom = true

@@ -6,7 +6,7 @@ if ! (has btm || has bottom); then
     log brew update
     log brew install bottom
 
-    {{ else if regexMatch .osid "ubuntu|pop|pi|kali" }}
+    {{ else if regexMatch "ubuntu|pop|pi|kali" .osid }}
     if ! has snap; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi

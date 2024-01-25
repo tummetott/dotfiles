@@ -15,7 +15,7 @@ if ! is_wezterm_installed; then
     log brew update
     log brew install --cask wezterm
 
-    {{ else if regexMatch .osid "ubuntu|pop|kali" }}
+    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
     if ! has flatpak; then
         {{ template "bootstrap/flatpak.tmpl" . }}
     fi

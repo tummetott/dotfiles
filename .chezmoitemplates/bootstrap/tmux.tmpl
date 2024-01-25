@@ -6,7 +6,7 @@ if ! has tmux; then
     log brew update
     log brew install tmux
 
-    {{ else if regexMatch .osid "ubuntu|pop|kali" }}
+    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
     info 'Installing tmux'
     log sudo apt -y update
     log sudo apt -y install tmux

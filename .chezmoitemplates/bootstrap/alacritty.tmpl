@@ -6,7 +6,7 @@ if ! has alacritty; then
     log brew update
     log brew install --cask alacritty
 
-    {{ else if regexMatch .osid "ubuntu|pop|kali" }}
+    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else

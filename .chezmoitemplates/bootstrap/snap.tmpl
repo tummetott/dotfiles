@@ -1,6 +1,6 @@
 # vim: set ft=bash:
 
-{{ if regexMatch .osid "ubuntu|pop|pi|kali" }}
+{{ if regexMatch "ubuntu|pop|pi|kali" .osid }}
 
 info 'Installing snap'
 log sudo apt -y update

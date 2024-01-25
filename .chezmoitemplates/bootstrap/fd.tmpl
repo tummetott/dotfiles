@@ -6,7 +6,7 @@ if ! has fd; then
     log brew update
     log brew install fd
 
-    {{ else if regexMatch .osid "ubuntu|pop|pi|kali" }}
+    {{ else if regexMatch "ubuntu|pop|pi|kali" .osid }}
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
