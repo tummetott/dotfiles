@@ -10,7 +10,6 @@ if ! has sd; then
     if ! has rust; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
-        info 'Update rustup'
         log rustup update stable
     fi
     info 'Installing sd'

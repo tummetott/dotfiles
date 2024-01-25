@@ -10,7 +10,6 @@ if ! has lsd; then
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
-        info 'Update rustup'
         log rustup update stable
     fi
     info 'Installing lsd'

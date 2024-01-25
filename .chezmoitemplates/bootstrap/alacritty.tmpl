@@ -10,7 +10,6 @@ if ! has alacritty; then
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
-        info 'Update rustup'
         log rustup update stable
     fi
     info 'Installing dependencies for alacritty'
