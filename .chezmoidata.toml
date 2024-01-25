@@ -60,6 +60,7 @@ wezterm = false
 wget = false
 wireguard = false
 wireshark = false
+xclip = false
 xld = false
 yate = false
 zoom = false
