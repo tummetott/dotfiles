@@ -6,7 +6,7 @@
     {{- end }}
 {{- else if hasKey .chezmoi.osRelease "id" }}
     {{- if and (eq .chezmoi.osRelease.id "debian") (glob "/boot/config.txt") }}
-        {{- $osid = "pi" }}
+        {{- $osid = "raspberrypi" }}
     {{- else }}
         {{- $osid = .chezmoi.osRelease.id }}
     {{- end }}
@@ -36,7 +36,7 @@ fontsize = 17.0
 fontsize = 21.0
 {{- else if regexMatch "ubuntu|pop" $osid }}
 fontsize = 13.0
-{{- else if eq $osid "kali" }}
+{{- else if contains "kali" $osid }}
 fontsize = 12.0
 {{- end }}
 nerdfonts = true
@@ -150,7 +150,7 @@ wget = true
 zsh = true
 {{- end }}
 
-{{- if eq $osid "kali" }}
+{{- if contains "kali" $osid }}
 alacritty = true
 bat = true
 bottom = true
@@ -190,7 +190,7 @@ wget = true
 zsh = true
 {{- end }}
 
-{{- if eq $osid "pi" }}
+{{- if contains "raspberrypi" $osid }}
 bat = false
 bottom = false
 build_essential = false

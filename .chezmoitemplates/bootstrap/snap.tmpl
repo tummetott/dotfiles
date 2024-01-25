@@ -1,16 +1,16 @@
 # vim: set ft=bash:
 
-{{ if regexMatch "ubuntu|pop|pi|kali" .osid }}
+{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
 
 info 'Installing snap'
 log sudo apt -y update
 log sudo apt -y install snapd
 
-{{ if eq .osid "kali" }}
+{{ if contains "kali" .osid }}
 log sudo systemctl enable --now snapd snapd.apparmor
 {{ end }}
 
-{{ if eq .osid "pi" }}
+{{ if contains "raspberrypi" .osid }}
 log sudo snap install core
 {{ end }}
 

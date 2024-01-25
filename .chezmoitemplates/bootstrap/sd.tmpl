@@ -6,7 +6,7 @@ if ! has sd; then
     log brew update
     log brew install sd
 
-    {{ else if regexMatch "ubuntu|pop|pi|kali" .osid }}
+    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
     if ! has rust; then
         {{ template "bootstrap/rust.tmpl" . }}
     else

@@ -11,7 +11,7 @@ if ! has tmux; then
     log sudo apt -y update
     log sudo apt -y install tmux
 
-    {{ else if eq .osid "pi" }}
+    {{ else if contains "raspberrypi" .osid }}
     info 'Installing dependencies for tmux'
     log sudo apt update
     log sudo apt -y install automake libevent-dev ncurses-dev build-essential \

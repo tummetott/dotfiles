@@ -6,7 +6,7 @@ if ! has zsh; then
     log brew update
     log brew install zsh
 
-    {{ else if regexMatch "ubuntu|pop|pi|kali" .osid }}
+    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
     info 'Installing zsh'
     log sudo apt -y update
     log sudo apt -y install zsh

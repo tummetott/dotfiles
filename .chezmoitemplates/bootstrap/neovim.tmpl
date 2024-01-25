@@ -6,7 +6,7 @@ if ! has nvim; then
     log brew update
     log brew install neovim
 
-    {{ else if regexMatch "ubuntu|pop|pi|kali" .osid }}
+    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
     if ! has snap; then
         {{ template "bootstrap/snap.tmpl" . }}
     fi

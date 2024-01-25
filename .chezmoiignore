@@ -17,10 +17,10 @@ Library
 .config/nushell
 {{ end }}
 
-{{ if not (regexMatch "ubuntu|pop|pi|kali" .osid) }}
+{{ if not (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
 .config/aptitude
 {{ end }}
 
-{{ if ne .osid "pi" }}
+{{ if ne .osid "raspberrypi" }}
 .ssh/authorized_keys
 {{ end }}
