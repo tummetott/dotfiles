@@ -28,10 +28,6 @@ sudo true
     {{ template "bootstrap/flatpak.tmpl" . }}
 {{ end }}
 
-{{ if .nerdfonts }}
-    {{ template "bootstrap/nerdfonts.tmpl" . }}
-{{ end }}
-
 {{ if .install.zsh }}
     {{ template "bootstrap/zsh.tmpl" . }}
 {{ end }}

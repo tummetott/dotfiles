@@ -79,6 +79,11 @@ brew "xclip"
 mas "Amphetamine", id: 937984704
 {{- end }}
 
+{{- if .nerdfonts }}
+cask "font-fira-code-nerd-font"
+cask "font-meslo-lg-nerd-font"
+{{- end }}
+
 {{- if .install.anki }}
 cask "anki"
 {{- end }}
