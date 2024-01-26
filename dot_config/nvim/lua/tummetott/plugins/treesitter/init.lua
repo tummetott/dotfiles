@@ -57,6 +57,8 @@ table.insert(M, {
         'TSEditQueryUserAfter',
     },
     event = { 'LazyFile', 'VeryLazy' },
+    -- TODO: nvim 0.10 don't let me lazy load treesitter
+    lazy = false,
 })
 
 table.insert(M, {
