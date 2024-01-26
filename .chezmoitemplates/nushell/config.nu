@@ -22,6 +22,7 @@ $env.PROMPT_COMMAND_RIGHT = {||
          --terminal-width (term size).columns
     )
 }
+$env.TRANSIENT_PROMPT_COMMAND = { || starship module character }
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
@@ -648,3 +649,22 @@ $env.config = {
         }
     ]
 }
+
+alias ll = ls -l
+alias la = ls -a
+
+alias ga = git add
+alias gcm = git commit -m
+alias gst = git status
+alias gd = git diff
+alias gp = git push
+
+alias ta = tmux attach -t
+alias tn = tmux new-session -s
+alias tl = tmux list-sessions
+alias tks = tmux kill-server
+alias td = tmux kill-session -t
+
+alias cm = chezmoi
+alias c = cd ~/.local/share/chezmoi
+alias n = cd ~/.local/share/chezmoi/dot_config/nvim/lua/tummetott/
