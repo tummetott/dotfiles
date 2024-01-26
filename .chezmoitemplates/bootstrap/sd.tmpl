@@ -6,7 +6,7 @@ if ! has sd; then
     log brew update
     log brew install sd
 
-    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+    {{ else }}
     if ! has rust; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
@@ -14,9 +14,5 @@ if ! has sd; then
     fi
     info 'Installing sd'
     log cargo +stable install sd
-
-    {{ else }}
-    error 'No installation instructions found for: sd'
-    exit 1
     {{ end }}
 fi
