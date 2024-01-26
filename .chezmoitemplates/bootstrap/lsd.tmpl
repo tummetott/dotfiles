@@ -6,7 +6,7 @@ if ! has lsd; then
     log brew update
     log brew install lsd
 
-    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+    {{ else }}
     if ! has rustup; then
         {{ template "bootstrap/rust.tmpl" . }}
     else
