@@ -17,6 +17,11 @@ if ! has nvim; then
     log sudo apt -y update
     log sudo apt -y install build-essential
 
+    {{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
+    url='https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
+    log download $url ~/.local/bin/
+    chmod u+x nvim.appimage
+
     {{ else }}
     error 'No installation instructions found for: neovim'
     exit 1
