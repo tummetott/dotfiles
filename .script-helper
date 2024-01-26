@@ -67,7 +67,7 @@ download() {
         error "No HTTP download program (curl, wget, fetch) found"
         return 1
     fi
-    $cmd # This does not work in zsh
+    log $cmd
 }
 
 get_latest_from_github() {
