@@ -6,7 +6,7 @@
 # interactive login shells. Assuming bash is the default shell, bash_profile is
 # executed once on Linux but for every new shell on macOS.
 
-{{- if hasPrefix .chezmoi.hostname "gruenau" }}
+{{- if contains "gruenau" .chezmoi.hostname }}
 
 # Given that I don't have the permission to change the default shell to zsh on
 # gruenau, zsh is executed manually as a workaround.
