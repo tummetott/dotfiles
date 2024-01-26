@@ -19,8 +19,10 @@ if ! has nvim; then
 
     {{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
     url='https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
-    log download $url ~/.local/bin/
-    chmod u+x nvim.appimage
+    log download $url ~/.local/bin/nvim
+    pushd "$url"
+    chmod u+x nvim
+    popd
 
     {{ else }}
     error 'No installation instructions found for: neovim'
