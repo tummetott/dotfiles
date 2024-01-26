@@ -21,6 +21,6 @@ Library
 .config/aptitude
 {{ end }}
 
-{{ if ne .osid "raspberrypi" }}
+{{ if not (or (eq "raspberrypi" .osid ) (contains "gruenau" .chezmoi.hostname)) }}
 .ssh/authorized_keys
 {{ end }}
