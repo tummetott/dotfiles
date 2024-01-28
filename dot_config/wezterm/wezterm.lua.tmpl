@@ -34,6 +34,11 @@ config.keys = {
         action = wezterm.action { SendString = '\x1b[47;5u' },
     },
     {
+        key = '[',
+        mods = 'CTRL',
+        action = wezterm.action { SendString = '\x1b' },
+    },
+    {
         key = '0',
         mods = 'CTRL',
         action = wezterm.action { SendString = '\x1b[48;5u' },
