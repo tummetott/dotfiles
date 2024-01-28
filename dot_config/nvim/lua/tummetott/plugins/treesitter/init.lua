@@ -17,6 +17,7 @@ table.insert(M, {
             'java',
             'json',
             'lua',
+            'markdown',
             'nu',
             'python',
             'rust',

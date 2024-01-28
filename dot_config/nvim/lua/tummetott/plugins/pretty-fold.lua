@@ -28,7 +28,26 @@ return {
             -- in the initial line of the folded content.
             global = {
                 sections = {
-                    left = { 'content' },
+                    -- The left/right dictonary is designed to hold functions
+                    -- (that return a string), literal strings or special
+                    -- strings like 'content', that call plugin internal
+                    -- function of that name. I can't use 'content' as second
+                    -- item because the content module prepends a blank
+                    -- character. I call the content function manually and cut
+                    -- away the leading whitespace.
+                    left = {
+                        function(config)
+                            local prefix = ''
+                            local indent = vim.fn.indent(vim.v.foldstart)
+                            if indent and indent > 0 then
+                                prefix = string.rep(' ', indent)
+                            end
+                            local content = require('pretty-fold.components')['content'](config)
+                            -- Cut the leading whitespace
+                            content = content:gsub('^%s*', '')
+                            return prefix .. content
+                        end,
+                    },
                     right = {
                         ' ',
                         number_of_folded_lines,
@@ -36,6 +55,7 @@ return {
                         scrollbar_padding,
                     },
                 },
+                keep_indentation = false,
                 fill_char = '⋅',
                 remove_fold_markers = false,
                 process_comment_signs = false,
