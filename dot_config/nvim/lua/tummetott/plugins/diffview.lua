@@ -105,7 +105,7 @@ return {
                     ibl.setup_buffer(0, { enabled = true })
                 end
 
-                -- Disable scrollbar
+                -- Enable scrollbar
                 local ok, scrollbar = pcall(require, 'scrollbar.utils')
                 if ok then
                     scrollbar.show()
