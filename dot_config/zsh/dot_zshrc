@@ -74,6 +74,10 @@ if [ -d $XDG_DATA_HOME/zsh/zsh-completions ]; then
     fpath=( $XDG_DATA_HOME/zsh/zsh-completions "${fpath[@]}" )
     autoload -Uz $fpath[1]/*(.:t)
 fi
+if type brew &> /dev/null; then
+    fpath=( "$(brew --prefix)/share/zsh/site-functions" "${fpath[@]}" )
+    autoload -Uz $fpath[1]/*(:t)
+fi
 fpath=( $XDG_DATA_HOME/zsh/custom-completions "${fpath[@]}" )
 autoload -Uz $fpath[1]/*(.:t)
 # Delete compiled completions and recompile them with:
