@@ -115,6 +115,7 @@ autocmd('BufEnter', {
     end
 })
 
+-- Disable diff highlights when in visual mode.
 -- PERF: Check the performance. If the impact is too big, figure out how to
 -- register this autocmds on diff split enter, and clear the group on diff split
 -- exit.
