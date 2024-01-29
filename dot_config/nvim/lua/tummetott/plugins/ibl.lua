@@ -12,6 +12,22 @@ return {
             show_end = false,
         },
     },
+    config = function(_, opts)
+        -- Disable indentation guides in diff mode
+        vim.api.nvim_create_autocmd('OptionSet', {
+            pattern = 'diff',
+            group = vim.api.nvim_create_augroup('DisableIndentGuidesDiff', {}),
+            callback = function()
+                local wins = vim.api.nvim_list_wins()
+                for _, win in ipairs(wins) do
+                    local buf = vim.api.nvim_win_get_buf(win)
+                    local diff = vim.api.nvim_get_option_value('diff', { win = win })
+                    require 'ibl'.setup_buffer(buf, { enabled = not diff })
+                end
+            end,
+        })
+        require('ibl').setup(opts)
+    end,
     event = 'LazyFile',
     keys = {
         {

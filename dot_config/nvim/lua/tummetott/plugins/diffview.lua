@@ -82,12 +82,6 @@ return {
                 vim.opt_local.list = false
                 vim.opt_local.relativenumber = false
 
-                -- Disable local indentation guides
-                local ok, ibl = pcall(require, 'ibl')
-                if ok then
-                    ibl.setup_buffer(bufnr, { enabled = false })
-                end
-
                 -- Disable scrollbar
                 local ok, scrollbar = pcall(require, 'scrollbar.utils')
                 if ok then
@@ -99,7 +93,8 @@ return {
                 vim.schedule(scroll_panel)
             end,
             view_closed = function()
-                -- Enable local indentation guides
+                -- TODO: Enable local indentation guides. This can be deleted
+                -- once ibl allows for window local indentation guides
                 local loaded, ibl = pcall(require, 'ibl')
                 if loaded then
                     ibl.setup_buffer(0, { enabled = true })

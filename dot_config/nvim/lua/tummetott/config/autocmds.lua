@@ -141,3 +141,13 @@ autocmd('ModeChanged', {
         }
     end
 })
+
+-- Autocmds that trigger on the OptionSet diff event should also work when
+-- entering vim. By default, no OptionSet event is fired on startup.
+vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+        vim.schedule(function()
+            vim.cmd.doautocmd('OptionSet diff')
+        end)
+    end
+})
