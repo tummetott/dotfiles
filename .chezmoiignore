@@ -4,6 +4,7 @@
 Library
 .config/homebrew
 .config/iterm2
+.config/karabiner
 .config/shell/functions/clean-clipboard
 .config/shell/functions/finder-path
 .config/shell/functions/show-in-finder
