@@ -124,6 +124,10 @@ cask "iterm2"
 cask "jabref"
 {{- end }}
 
+{{- if .install.karabiner }}
+cask "karabiner-elements"
+{{- end }}
+
 {{- if .install.keka }}
 cask "keka"
 {{- end }}

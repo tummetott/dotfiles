@@ -25,6 +25,7 @@ go = false
 iproute2 = false
 iterm2 = false
 jabref = false
+karabiner = false
 keka = false
 kitty = false
 lf = false

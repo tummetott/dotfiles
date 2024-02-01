@@ -1,7 +1,7 @@
 # ⊙ dotfiles
 
 ### Prerequisites
-- Remap `CAPSLOCK` to `CTRL`
+- Remap `CAPSLOCK` to `CTRL + ESC`
 - macOS: Get the latest system updates
 - macOS: Run `xcode-select --install` or install Xcode via AppStore
 - Ubuntu: Run `ibus-setup`. Go to Emoji tab and remove the `C-;` and `C-.` keymaps
