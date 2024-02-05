@@ -12,6 +12,11 @@ return {
             before = false,
             after = true,
         },
+        prompt = {
+            prefix = {
+                { vim.g.nerdfonts and '⚡' or '# ', 'FlashPromptIcon' },
+            },
+        }
     },
     config = function(_, opts)
         require('flash').setup(opts)

@@ -18,6 +18,38 @@ table.insert(M, {
                 require 'copilot.suggestion'.is_visible()
         end
 
+        -- When empty, the defaults will be used
+        local symbol_map = {}
+        if not vim.g.nerdfonts then
+            symbol_map = {
+                Text = ' ',
+                Method = ' ',
+                Function = ' ',
+                Constructor = ' ',
+                Field = ' ',
+                Variable = ' ',
+                Class = ' ',
+                Interface = ' ',
+                Module = ' ',
+                Property = ' ',
+                Unit = ' ',
+                Value = ' ',
+                Enum = ' ',
+                Keyword = ' ',
+                Snippet = ' ',
+                Color = ' ',
+                File = ' ',
+                Reference = ' ',
+                Folder = ' ',
+                EnumMember = ' ',
+                Constant = ' ',
+                Struct = ' ',
+                Event = ' ',
+                Operator = ' ',
+                TypeParameter = ' ',
+            }
+        end
+
         cmp.setup {
             -- The order in which I specify sources defines the priority
             sources = cmp.config.sources({
@@ -47,6 +79,7 @@ table.insert(M, {
                         ['buffer-lines'] = 'LINE',
                         spell = 'SPELL',
                     },
+                    symbol_map = symbol_map,
                 }),
                 -- Don't show tilde char after snippet
                 expandable_indicator = false,
@@ -57,11 +90,11 @@ table.insert(M, {
             window = {
                 completion = {
                     winhighlight = 'CursorLine:Visual,Search:None',
-                    border = 'rounded',
+                    border = vim.g.nerdfonts and 'rounded' or 'single',
                 },
                 documentation = {
                     winhighlight = 'Error:None,Search:None',
-                    border = 'rounded',
+                    border = vim.g.nerdfonts and 'rounded' or 'single',
                 },
             },
             snippet = {

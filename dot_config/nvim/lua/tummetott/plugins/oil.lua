@@ -1,9 +1,14 @@
 return {
     'stevearc/oil.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+        'nvim-tree/nvim-web-devicons',
+        enabled = vim.g.nerdfonts,
+    },
     opts = {
-        columns = {
+        columns = vim.g.nerdfonts and {
             'icon',
+            'permissions',
+        } or {
             'permissions',
         },
         use_default_keymaps = false,

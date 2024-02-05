@@ -56,7 +56,7 @@ return {
                     },
                 },
                 keep_indentation = false,
-                fill_char = '⋅',
+                fill_char = vim.g.nerdfonts and '⋅' or '·',
                 remove_fold_markers = false,
                 process_comment_signs = false,
                 add_close_pattern = true,

@@ -2,7 +2,7 @@ return {
     'numToStr/FTerm.nvim',
     enabled = true,
     opts = {
-        border = 'rounded',
+        border = vim.g.nerdfonts and 'rounded' or 'single',
         dimensions = { height = 0.9, width = 0.9, },
     },
     keys = {

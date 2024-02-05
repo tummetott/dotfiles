@@ -23,8 +23,13 @@ return {
             ['<leader>'] = '<LEADER>',
         },
         window = {
-            border = 'rounded',
+            border = vim.g.nerdfonts and 'rounded' or 'single',
             padding = { 1, 1, 1, 1 },
+        },
+        icons = {
+            breadcrumb = vim.g.nerdfonts and '»' or '>>',
+            separator = vim.g.nerdfonts and '➜' or '->',
+            group = '+',
         },
         show_help = false,
     },

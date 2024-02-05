@@ -31,6 +31,7 @@ return {
         file_panel = {
             listing_style = 'list',
         },
+        use_icons = vim.g.nerdfonts,
         keymaps = {
             view = {
                 ['<C-\\>'] = function()
@@ -93,8 +94,9 @@ return {
                 vim.schedule(scroll_panel)
             end,
             view_closed = function()
-                -- TODO: Enable local indentation guides. This can be deleted
-                -- once ibl allows for window local indentation guides
+                -- IBL only has buffer local indent guides. We therefore must
+                -- enable the guid of the buffer again when exiting the
+                -- diffview.
                 local loaded, ibl = pcall(require, 'ibl')
                 if loaded then
                     ibl.setup_buffer(0, { enabled = true })

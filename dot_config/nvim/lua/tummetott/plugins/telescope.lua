@@ -6,8 +6,8 @@ table.insert(M, {
     version = '*',
     dependencies = {
         'nvim-lua/plenary.nvim',
-        'nvim-tree/nvim-web-devicons',
         'nvim-telescope/telescope-fzf-native.nvim',
+        { 'nvim-tree/nvim-web-devicons', enabled = vim.g.nerdfonts }
     },
     init = function()
         require('tummetott.utils').which_key_register {
@@ -19,8 +19,8 @@ table.insert(M, {
         local actions = require 'telescope.actions'
         require('telescope').setup {
             defaults = {
-                prompt_prefix = ' ',
-                selection_caret = ' ',
+                prompt_prefix = vim.g.nerdfonts and ' ' or '> ',
+                selection_caret = vim.g.nerdfonts and ' ' or '> ',
                 preview = {
                     hide_on_startup = true,
                 },
@@ -160,7 +160,7 @@ table.insert(M, {
         },
         {
             -- When inside cmdline, search the cmdline history with CTRL-/
-            '<C-_>',
+            '<C-/>',
             function()
                 if vim.fn.getcmdtype() == ':' then
                     require 'telescope.builtin'.command_history()

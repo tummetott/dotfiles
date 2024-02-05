@@ -18,7 +18,7 @@ local diffview_winbar_text = function()
                 rev_label = 'LOCAL'
             elseif rev.type == 2 then
                 local head = vim.trim(vim.fn.system(
-                    {'git', 'rev-parse', '--revs-only', 'HEAD'}))
+                    { 'git', 'rev-parse', '--revs-only', 'HEAD' }))
                 if head == rev.commit then
                     rev_label = 'HEAD'
                 else
@@ -34,11 +34,8 @@ local diffview_winbar_text = function()
             end
         end
     end
-    if rev_label == '' then
-        return path
-    else
-        return string.format('%s 󱞳 %s', path, rev_label)
-    end
+    local icon = vim.g.nerdfonts and '󱞳' or '@'
+    return string.format('%s %s %s', path, icon, rev_label)
 end
 
 M.buff_name = function()
@@ -53,8 +50,10 @@ M.buff_name = function()
 
     if ft == 'oil' then
         local path = string.match(bufname, '^oil://(.*)')
-        local icon = { str = ' ', hl = { fg = '#e68805' } }
-        return vim.fn.fnamemodify(path, ':~'), icon
+        path = vim.fn.fnamemodify(path, ':~')
+        local icon = vim.g.nerdfonts
+            and { str = ' ', hl = { fg = '#e68805' } } or nil
+        return path, icon
     end
 
     if has_diffview() then
@@ -64,25 +63,30 @@ M.buff_name = function()
     -- Trim the full file path relative to our cwd
     local path = vim.fn.fnamemodify(bufname, ':~:.')
 
+    if not vim.g.nerdfonts then
+        return path
+    end
+
     -- Get icon and icon color
     local icon_str, icon_color = require('nvim-web-devicons').get_icon_color(
-            vim.fn.expand('%:t'), nil, { default = true })
-    local icon = { str = icon_str, hl = { fg = icon_color } }
+        vim.fn.expand('%:t'), nil, { default = true })
+    local icon = { str = icon_str .. ' ', hl = { fg = icon_color } }
 
-    return ' ' .. path, icon
+    return path, icon
 end
 
 M.help_file = function()
-    local bufname = vim.api.nvim_buf_get_name(0)
-    return vim.fn.fnamemodify(bufname, ':t'), '󰈙 '
+    local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t')
+    local icon = vim.g.nerdfonts and '󰈙 ' or nil
+    return bufname, icon
 end
 
 M.buff_modified = function()
     local modified_icon = ''
     if vim.bo.modified then
-        modified_icon = '●'
+        modified_icon = vim.g.nerdfonts and '●' or '*'
     elseif vim.bo.readonly or not vim.bo.modifiable then
-        modified_icon = ''
+        modified_icon = vim.g.nerdfonts and '' or '#'
     end
     return modified_icon
 end
@@ -90,7 +94,8 @@ end
 M.trailing = false
 M.trailing_whitespace = function()
     M.trailing = vim.fn.search('\\s$', 'nwc') ~= 0
-    return M.trailing and 'TW' or '', '󱁐 '
+    local icon = vim.g.nerdfonts and '󱁐 ' or nil
+    return M.trailing and 'TW' or '', icon
 end
 
 M.mixed = false
@@ -100,22 +105,28 @@ M.indent = function()
     local tabs = vim.fn.search('^ *\t *', 'nwc') ~= 0
     local indent = ''
     if (spaces and tabs) then
-        indent = 'MIX'
+        indent = 'Mix'
         M.mixed = true
     elseif spaces then
-        indent = 'SPC'
+        indent = 'Spaces'
     elseif tabs then
-        indent = 'TAB'
+        indent = 'Tab'
     end
-    return indent, '󰉶 '
+    local icon = vim.g.nerdfonts and '󰉶 ' or 'INDENT: '
+    return indent, icon
 end
 
 M.filetype = function()
     local ft = vim.bo.filetype
-    local opts = { default = true }
-    local icon, _ = require("nvim-web-devicons").get_icon(nil, ft, opts)
-    ft = ft:upper()
-    return ft, icon .. ' '
+    local icon
+    if vim.g.nerdfonts then
+        local opts = { default = true }
+        icon, _ = require('nvim-web-devicons').get_icon(nil, ft, opts)
+        icon = icon .. ' '
+    else
+        icon = 'FT: '
+    end
+    return ft, icon
 end
 
 M.bufname_by_filetype = function()
@@ -126,19 +137,22 @@ end
 
 M.conda_environment = function()
     local env = os.getenv('CONDA_DEFAULT_ENV')
-    return env or '', '󰆧 '
+    local icon = vim.g.nerdfonts and '󰆧 ' or 'CONDA: '
+    return env or '', icon
 end
 
 M.columns = function()
     local col = vim.fn.col('.')
     local cols = vim.fn.col('$')
-    return string.format('%2d/%2d', col, cols), ' '
+    local icon = vim.g.nerdfonts and ' ' or 'CN: '
+    return string.format('%2d/%2d', col, cols), icon
 end
 
 M.lines = function()
     local line = vim.fn.line('.')
     local lines = vim.fn.line('$')
-    return string.format('%3d/%3d', line, lines), ' '
+    local icon = vim.g.nerdfonts and ' ' or 'LN: '
+    return string.format('%3d/%3d', line, lines), icon
 end
 
 M.searchcount = function()
@@ -153,17 +167,31 @@ M.searchcount = function()
         flag = '+'
     end
     local count = string.format('%d/%d%s', search.current, total, flag)
-    return count, ' '
+    local icon = vim.g.nerdfonts and ' ' or 'SEARCH: '
+    return count, icon
 end
 
 M.lsp_attached = function()
-    local attached = require('feline.providers.lsp').is_lsp_attached()
-    if attached then return ' LSP' else return '' end
+    local servers = {}
+    for _, lsp in pairs(vim.lsp.get_clients()) do
+        table.insert(servers, lsp.name)
+    end
+    local str = ''
+    for i, v in ipairs(servers) do
+        str = str .. v
+        if i < #servers then
+            str = str .. ', '
+        end
+    end
+    local icon = vim.g.nerdfonts and ' ' or 'LSP: '
+    return str, icon
 end
 
 M.git_conflict = function()
     local conflicts = vim.fn.search('^[<>|]\\{7} \\|=\\{7}$', 'nwc')
-    return conflicts > 0 and 'CONFLICT' or '', ' '
+    local str = conflicts > 0 and 'CONFLICT' or ''
+    local icon = vim.g.nerdfonts and  ' ' or 'GIT '
+    return str, icon
 end
 
 return M

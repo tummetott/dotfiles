@@ -58,6 +58,7 @@ table.insert(M, {
                 GitSignsChange = { fg = c.blue },
                 TroubleIndent = { link = 'Whitespace' },
                 TroubleText = { fg = c.text },
+                TroubleFoldIcon = { fg = c.surface1 },
                 LazyReasonCmd = { fg = c.surface1 },
                 LazyReasonEvent = { link = 'LazyReasonCmd' },
                 LazyReasonFt = { link = 'LazyReasonCmd' },

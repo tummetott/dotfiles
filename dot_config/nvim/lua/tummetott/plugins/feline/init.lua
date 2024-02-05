@@ -4,6 +4,7 @@ return {
     enabled = true,
     dependencies = {
         'nvim-tree/nvim-web-devicons',
+        enabled = vim.g.nerdfonts,
     },
     event = 'VimEnter',
     init = function()

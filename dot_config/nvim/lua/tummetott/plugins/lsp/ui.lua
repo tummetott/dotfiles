@@ -1,7 +1,12 @@
 ---@diagnostic disable: duplicate-set-field
 
 -- Define diagnostic icons
-local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+local signs = {
+    Error = vim.g.nerdfonts and '' or 'E',
+    Warn = vim.g.nerdfonts and '' or 'W',
+    Hint = vim.g.nerdfonts and '' or 'H',
+    Info = vim.g.nerdfonts and '' or 'I',
+}
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = nil })
@@ -22,7 +27,7 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
     -- Rounded border
-    opts.border = opts.border or 'rounded'
+    opts.border = vim.g.nerdfonts and 'rounded' or 'single'
     -- Make windows not focusable
     -- opts.focusable = opts.focusable or false
     local bufnr, winnr = orig_util_open_floating_preview(contents, syntax, opts, ...)

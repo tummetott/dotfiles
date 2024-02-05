@@ -36,7 +36,7 @@ return {
         }
         local image = {
             type = 'text',
-            val = vim.env.NO_NERDFONTS and cat2 or cat,
+            val = vim.g.nerdfonts and cat or cat2,
             opts = {
                 position = 'center',
                 hl = 'AlphaHeader',

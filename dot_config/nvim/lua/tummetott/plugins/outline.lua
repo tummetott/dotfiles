@@ -10,6 +10,11 @@ return {
                 String = { icon = '', hl = '@string' },
                 Array = { icon = '', hl = '@constant' },
             },
+            icon_fetcher = not vim.g.nerdfonts
+                and function(_) return '' end or nil,
+        },
+        symbol_folding = {
+            markers = vim.g.nerdfonts and { '', '' } or { '>', 'v' },
         },
     },
     cmd = { 'Outline', 'OutlineOpen' },

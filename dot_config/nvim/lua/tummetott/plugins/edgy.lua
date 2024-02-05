@@ -10,6 +10,10 @@ return {
         keys = {
             ['<c-q>'] = false,
         },
+        icons = {
+            closed = vim.g.nerdfonts and ' ' or '> ',
+            open = vim.g.nerdfonts and ' ' or 'v ',
+        },
         bottom = {
             {
                 title = 'HELP',

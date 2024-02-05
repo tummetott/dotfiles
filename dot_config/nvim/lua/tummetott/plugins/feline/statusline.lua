@@ -10,7 +10,6 @@ local right_special = {}
 -- Vim Mode
 table.insert(left, {
     provider = 'vi_mode',
-    short_provider = '',
     icon = '',
     hl = function()
         return {
@@ -19,9 +18,11 @@ table.insert(left, {
         }
     end,
     left_sep = {
-        {
+        vim.g.nerdfonts and {
             str = 'left_rounded',
             hl = { fg = 'bg', bg = 'base' },
+        } or {
+            str = ' '
         },
         { str = ' ' },
     },
@@ -116,9 +117,6 @@ table.insert(right, {
         update = { 'FileType', 'BufNewFile' },
         opts = { filetype_icon = true },
     },
-    icon = {
-        hl = { fg = 'fg' },
-    },
     right_sep = '  ',
 })
 
@@ -175,7 +173,7 @@ table.insert(right, {
 -- Encoding
 table.insert(right, {
     provider = 'file_encoding',
-    icon = ' ',
+    icon = vim.g.nerdfonts and ' ' or 'ENCODING: ',
     right_sep = '  ',
 })
 
@@ -196,12 +194,14 @@ table.insert(right, {
 
 table.insert(right, {
     provider = 'line_percentage',
-    icon = ' ',
+    icon = vim.g.nerdfonts and ' ' or 'LINES: ',
     right_sep = {
         { str = ' ' },
-        {
+        vim.g.nerdfonts and {
             str = 'right_rounded',
             hl = { fg = 'bg', bg = 'base' },
+        } or {
+            str = ' '
         },
     },
 })
@@ -211,8 +211,12 @@ table.insert(right, {
 table.insert(left_special, {
     provider = ' ',
     left_sep = {
-        str = 'left_rounded',
-        hl = { fg = 'bg', bg = 'base' },
+        vim.g.nerdfonts and {
+            str = 'left_rounded',
+            hl = { fg = 'bg', bg = 'base' },
+        } or {
+            str = ' '
+        }
     }
 })
 
@@ -268,8 +272,12 @@ table.insert(right_special, {
 table.insert(right_special, {
     provider = ' ',
     right_sep = {
-        str = 'right_rounded',
-        hl = { fg = 'bg', bg = 'base' },
+        vim.g.nerdfonts and {
+            str = 'right_rounded',
+            hl = { fg = 'bg', bg = 'base' },
+        } or {
+            str = ' '
+        }
     },
 })
 

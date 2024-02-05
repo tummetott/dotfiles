@@ -16,6 +16,7 @@ return {
         group = true,
         -- Add an extra new line on top of the list
         padding = true,
+        icons = vim.g.nerdfonts,
         action_keys = {
             -- Close the list
             close = 'q',
@@ -40,7 +41,13 @@ return {
         -- result
         auto_jump = { 'lsp_definitions' },
         -- Enabling this will use the signs defined in your lsp client
-        use_diagnostic_signs = true
+        use_diagnostic_signs = true,
+        -- This is the fallback sign
+        signs = {
+            other = vim.g.nerdfonts and '' or '*'
+        },
+        fold_open = vim.g.nerdfonts and '' or 'v',
+        fold_closed = vim.g.nerdfonts and '' or '>',
     },
     cmd = {
         'Trouble',

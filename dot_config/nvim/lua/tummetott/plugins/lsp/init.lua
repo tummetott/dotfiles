@@ -46,7 +46,9 @@ table.insert(M, {
     'williamboman/mason.nvim',
     enabled = true,
     opts = {
-        ui = { border = 'rounded' },
+        ui = {
+            border = vim.g.nerdfonts and 'rounded' or 'single',
+        },
     },
     cmd = {
         'Mason',
@@ -65,7 +67,9 @@ table.insert(M, {
     event = 'VeryLazy',
     opts = {
         progress = {
-            display = { done_icon = '' }
+            display = {
+                done_icon = vim.g.nerdfonts and '' or 'OK',
+            }
         },
     }
 })

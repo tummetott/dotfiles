@@ -7,9 +7,11 @@ table.insert(right, {
         update = { 'BufWinEnter' }
     },
     left_sep = {
-        {
+        vim.g.nerdfonts and {
             str = 'left_rounded',
             hl = { fg = 'bg', bg = 'base' },
+        } or {
+            str = ' '
         },
         { str = ' ' }
     },
@@ -23,8 +25,12 @@ table.insert(right, {
 table.insert(right, {
     provider = ' ',
     right_sep = {
-        str = 'right_rounded',
-        hl = { fg = 'bg', bg = 'base' }
+        vim.g.nerdfonts and {
+            str = 'right_rounded',
+            hl = { fg = 'bg', bg = 'base' }
+        } or {
+            str = ' '
+        }
     },
 })
 
