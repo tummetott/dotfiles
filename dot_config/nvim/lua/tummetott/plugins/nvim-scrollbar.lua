@@ -5,7 +5,7 @@ return {
     event = 'VeryLazy',
     opts = {
         handle = {
-            text = '▐',
+            text = vim.g.nerdfonts and '▐' or '█',
         },
         handlers = {
             handle = true,
