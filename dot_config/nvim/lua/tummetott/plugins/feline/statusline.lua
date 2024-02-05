@@ -32,6 +32,7 @@ table.insert(left, {
 -- Git branch
 table.insert(left, {
     provider = 'git_branch',
+    icon = not vim.g.nerdfonts and '' or nil,
     short_provider = '',
     left_sep = '  ',
     priority = 5,
@@ -40,6 +41,7 @@ table.insert(left, {
 -- Git added
 table.insert(left, {
     provider = 'git_diff_added',
+    icon = not vim.g.nerdfonts and '+' or nil,
     short_provider = '',
     left_sep = ' ',
     priority = 3,
@@ -48,6 +50,7 @@ table.insert(left, {
 -- Git removed
 table.insert(left, {
     provider = 'git_diff_removed',
+    icon = not vim.g.nerdfonts and '-' or nil,
     short_provider = '',
     left_sep = ' ',
     priority = 3,
@@ -56,7 +59,7 @@ table.insert(left, {
 -- Git changed
 table.insert(left, {
     provider = 'git_diff_changed',
-    icon = '  ',
+    icon = not vim.g.nerdfonts and '~' or '  ',
     short_provider = '',
     left_sep = ' ',
     priority = 3,
@@ -65,6 +68,7 @@ table.insert(left, {
 -- LSP error
 table.insert(mid, {
     provider = 'diagnostic_errors',
+    icon = not vim.g.nerdfonts and 'E' or nil,
     short_provider = '',
     hl = { fg = 'red' },
     left_sep = '  ',
@@ -74,6 +78,7 @@ table.insert(mid, {
 -- LSP warning
 table.insert(mid, {
     provider = 'diagnostic_warnings',
+    icon = not vim.g.nerdfonts and 'W' or nil,
     short_provider = '',
     hl = { fg = 'orange' },
     left_sep = '  ',
@@ -83,6 +88,7 @@ table.insert(mid, {
 -- LSP hint
 table.insert(mid, {
     provider = 'diagnostic_hints',
+    icon = not vim.g.nerdfonts and 'H' or nil,
     short_provider = '',
     hl = { fg = 'yellow' },
     left_sep = '  ',
@@ -92,6 +98,7 @@ table.insert(mid, {
 -- LSP info
 table.insert(mid, {
     provider = 'diagnostic_info',
+    icon = not vim.g.nerdfonts and 'I' or nil,
     short_provider = '',
     hl = { fg = 'blue' },
     left_sep = '  ',
