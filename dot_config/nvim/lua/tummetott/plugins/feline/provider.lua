@@ -176,6 +176,9 @@ M.lsp_attached = function()
     for _, lsp in pairs(vim.lsp.get_clients()) do
         table.insert(servers, lsp.name)
     end
+    if vim.tbl_isempty(servers) then
+        return ''
+    end
     local str = ''
     for i, v in ipairs(servers) do
         str = str .. v
