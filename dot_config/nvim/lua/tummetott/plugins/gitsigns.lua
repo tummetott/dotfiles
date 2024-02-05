@@ -16,7 +16,7 @@ return {
             }
         },
         preview_config = {
-            border = vim.g.nerdfonts and 'rounded' or 'single',
+            border = 'rounded',
         },
         -- Untracked files are not shown by gitsigns. You need to manually add a
         -- file with 'git add' before gitsigns works

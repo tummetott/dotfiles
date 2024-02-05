@@ -27,7 +27,7 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
     -- Rounded border
-    opts.border = vim.g.nerdfonts and 'rounded' or 'single'
+    opts.border = 'rounded'
     -- Make windows not focusable
     -- opts.focusable = opts.focusable or false
     local bufnr, winnr = orig_util_open_floating_preview(contents, syntax, opts, ...)

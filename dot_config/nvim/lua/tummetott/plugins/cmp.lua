@@ -90,11 +90,11 @@ table.insert(M, {
             window = {
                 completion = {
                     winhighlight = 'CursorLine:Visual,Search:None',
-                    border = vim.g.nerdfonts and 'rounded' or 'single',
+                    border = 'rounded',
                 },
                 documentation = {
                     winhighlight = 'Error:None,Search:None',
-                    border = vim.g.nerdfonts and 'rounded' or 'single',
+                    border = 'rounded',
                 },
             },
             snippet = {

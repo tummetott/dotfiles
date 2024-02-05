@@ -46,9 +46,7 @@ table.insert(M, {
     'williamboman/mason.nvim',
     enabled = true,
     opts = {
-        ui = {
-            border = vim.g.nerdfonts and 'rounded' or 'single',
-        },
+        ui = { border = 'rounded' },
     },
     cmd = {
         'Mason',

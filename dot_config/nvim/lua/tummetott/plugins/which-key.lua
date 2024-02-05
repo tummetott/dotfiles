@@ -23,7 +23,7 @@ return {
             ['<leader>'] = '<LEADER>',
         },
         window = {
-            border = vim.g.nerdfonts and 'rounded' or 'single',
+            border = 'rounded',
             padding = { 1, 1, 1, 1 },
         },
         icons = {
