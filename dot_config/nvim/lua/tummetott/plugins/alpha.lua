@@ -22,10 +22,21 @@ return {
             '⠀⠀⠀⠀⠀⠀⠏⢴⣷⡦⠌⠙⠻⢿⡿⠿⠿⠿⠿⠿⠃⠀   ',
             '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ',
         }
-
+        local cat2 = {
+            [[   ,_     _         ]],
+            [[   |\\_,-~/         ]],
+            [[   / _  _ |    ,--. ]],
+            [[  (  @  @ )   / ,-' ]],
+            [[   \  _T_/-._( (    ]],
+            [[   /         `. \   ]],
+            [[  |         _  \ |  ]],
+            [[   \ \ ,  /      |  ]],
+            [[    || |-_\__   /   ]],
+            [[   ((_/`(____,-'    ]],
+        }
         local image = {
             type = 'text',
-            val = cat,
+            val = vim.env.NO_NERDFONTS and cat2 or cat,
             opts = {
                 position = 'center',
                 hl = 'AlphaHeader',
