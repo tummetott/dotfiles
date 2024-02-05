@@ -70,7 +70,7 @@ vim.keymap.set(
 -- gV selects the previous paste
 vim.keymap.set(
     'n',
-    '<leader>v',
+    'gV',
     '`[v`]',
     { desc = 'Select previous pasted text' }
 )
