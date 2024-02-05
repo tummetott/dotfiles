@@ -40,6 +40,7 @@ HYPHEN_INSENSITIVE='true' # Treat '-' and '_' the same for completion purposes
 DISABLE_AUTO_TITLE='true' # Disable auto-setting terminal title
 COMPLETION_WAITING_DOTS='true' # Show red dots while waiting for completion
 ZSH_DISABLE_COMPFIX='true'
+DISABLE_AUTO_UPDATE='true'
 
 # Update the highlight color of ZVM. Must be defined before ZVM is loaded
 function zvm_config() {
