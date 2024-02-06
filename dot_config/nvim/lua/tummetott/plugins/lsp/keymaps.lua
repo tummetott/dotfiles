@@ -42,7 +42,12 @@ M.register = function(_, bufnr)
         'n',
         'gd',
         function()
-            vim.lsp.buf.definition({ on_list = on_list_handler })
+            local ok, trouble = pcall(require, 'trouble')
+            if ok then
+                trouble.toggle('lsp_definitions')
+            else
+                vim.lsp.buf.definition()
+            end
         end,
         { desc = 'Go to definition', buffer = bufnr }
     )
@@ -62,7 +67,12 @@ M.register = function(_, bufnr)
         'n',
         '<Leader>lt',
         function()
-            vim.lsp.buf.type_definition({ on_list = on_list_handler })
+            local ok, trouble = pcall(require, 'trouble')
+            if ok then
+                trouble.toggle('lsp_type_definitions')
+            else
+                vim.lsp.buf.type_definition()
+            end
         end,
         { desc = 'Go to type definition', buffer = bufnr }
     )

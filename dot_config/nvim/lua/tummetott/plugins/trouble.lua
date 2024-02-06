@@ -39,7 +39,10 @@ return {
         auto_fold = false,
         -- For the given modes, automatically jump if there is only a single
         -- result
-        auto_jump = { 'lsp_definitions' },
+        auto_jump = {
+            'lsp_definitions',
+            'lsp_type_definitions',
+        },
         -- Enabling this will use the signs defined in your lsp client
         use_diagnostic_signs = true,
         -- This is the fallback sign
