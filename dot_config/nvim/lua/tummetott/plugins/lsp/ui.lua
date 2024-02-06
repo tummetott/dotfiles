@@ -19,23 +19,23 @@ vim.diagnostic.config {
     underline = false,
     update_in_insert = false,
     severity_sort = true,
+    float = {
+        focusable = true,
+        border = 'rounded',
+    },
 }
 
--- Global UI overwrites for all LSP popup windows (hover, diagnostics,
--- signature help)
-local open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = 'rounded'
-    -- Triggering vim.lsp.buf.signature_help() twice in an autocmd for automatic
-    -- signature help opening can unintentionally focus the float. To avoid
-    -- inadvertently shifting focus to the float while typing in insert mode,
-    -- the automatic focusing is disabled disabled.
-    if opts.focus_id == 'textDocument/signatureHelp' then
-        opts.focus_id = nil
-    end
-    -- Make windows not focusable
-    -- opts.focusable = opts.focusable or false
-    local bufnr, winnr = open_floating_preview(contents, syntax, opts, ...)
-    return bufnr, winnr
-end
+-- Overwrite default signature help and hover handlers to display floating
+-- windows with rounded borders.
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help, {
+        focusable = true,
+        border = 'rounded'
+    }
+)
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+        focusable = true,
+        border = 'rounded'
+    }
+)
