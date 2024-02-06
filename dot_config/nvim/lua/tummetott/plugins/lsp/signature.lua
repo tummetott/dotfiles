@@ -10,6 +10,8 @@ local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
 -- single floating window.
 local handler = function(_, result, ctx, config)
     config = config or {}
+    config.focusable = true
+    config.border = 'rounded'
     if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
         -- Ignore result since buffer changed. This happens for slow language servers.
         return

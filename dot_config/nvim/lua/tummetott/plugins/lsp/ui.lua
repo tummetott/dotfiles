@@ -1,15 +1,15 @@
----@diagnostic disable: duplicate-set-field
-
 -- Define diagnostic icons
-local signs = {
-    Error = vim.g.nerdfonts and '' or 'E',
-    Warn = vim.g.nerdfonts and '' or 'W',
-    Hint = vim.g.nerdfonts and '' or 'H',
-    Info = vim.g.nerdfonts and '' or 'I',
-}
-for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = nil })
+if vim.g.nerdfonts then
+    local signs = {
+        Error = '',
+        Warn = '',
+        Hint = '',
+        Info = '',
+    }
+    for type, icon in pairs(signs) do
+        local hl = 'DiagnosticSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = nil })
+    end
 end
 
 -- Set global options for all diagnostics
