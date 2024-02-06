@@ -13,8 +13,9 @@ table.insert(M, {
             auto_trigger = false,
             debounce = 75,
             keymap = {
-                -- Disable the default <CR> mapping
-                accept = false,
+                -- Accept the whole suggestion
+                accept = '<C-CR>',
+                -- Disable the default accept line keymap
                 accept_line = false,
                 -- Once a copilot suggestion is visible, they can be cycled with
                 -- CTRL-n / CTRL-p

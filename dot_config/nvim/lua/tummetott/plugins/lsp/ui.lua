@@ -23,18 +23,19 @@ vim.diagnostic.config {
 
 -- Global UI overwrites for all LSP popup windows (hover, diagnostics,
 -- signature help)
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+local open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
-    -- Rounded border
     opts.border = 'rounded'
+    -- Triggering vim.lsp.buf.signature_help() twice in an autocmd for automatic
+    -- signature help opening can unintentionally focus the float. To avoid
+    -- inadvertently shifting focus to the float while typing in insert mode,
+    -- the automatic focusing is disabled disabled.
+    if opts.focus_id == 'textDocument/signatureHelp' then
+        opts.focus_id = nil
+    end
     -- Make windows not focusable
     -- opts.focusable = opts.focusable or false
-    local bufnr, winnr = orig_util_open_floating_preview(contents, syntax, opts, ...)
-    -- Don't highlight possible errors in LSP floats
-    -- vim.api.nvim_set_option_value('winhl', 'Error:None', {
-    --     scope = 'local',
-    --     win = winnr,
-    -- })
+    local bufnr, winnr = open_floating_preview(contents, syntax, opts, ...)
     return bufnr, winnr
 end

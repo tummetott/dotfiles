@@ -1,4 +1,4 @@
----@diagnostic disable: param-type-mismatch
+local utils = require 'tummetott.utils'
 
 -- Pressing J in visual mode moves the entire line down and corrects the indent
 vim.keymap.set(
@@ -36,7 +36,7 @@ vim.keymap.set(
     '<C-f>',
     function()
         if active_suggestion() then
-            require('copilot.suggestion').accept()
+            require('copilot.suggestion').accept_word()
         else
             vim.api.nvim_input('<Right>')
         end
@@ -83,21 +83,28 @@ vim.keymap.set(
     { desc = 'Change word' }
 )
 
--- Jump to end of line with CTRL-e in insert mode. I don't use <c-o> to prevent
--- cursor flickering.
+-- Jump to end of line or close LSP floating window.
 vim.keymap.set(
     'i',
     '<C-e>',
-    '<cmd>norm A<cr>',
+    function()
+        -- Try to close a floating window.
+        local win = vim.api.nvim_get_current_win()
+        if utils.close_lsp_float(win) then
+            return
+        end
+        -- If no float is present, move to end of the line.
+        local key = vim.api.nvim_replace_termcodes('<End>', true, false, true)
+        vim.api.nvim_feedkeys(key, 'i', false)
+    end,
     { desc = 'Jump to end of line' }
 )
 
--- Jump to start of line with CTRL-a in insert mode. I don't use <c-o> to prevent
--- cursor flickering.
+-- Jump to start of line.
 vim.keymap.set(
     'i',
     '<C-a>',
-    '<Cmd>norm 0<CR>',
+    '<Home>',
     { desc = 'Jump to start of line' }
 )
 
@@ -109,12 +116,20 @@ vim.keymap.set(
     { desc = 'Jump to start of line' }
 )
 
--- ESC disables hlsearch until next search and clear the cmdline
+-- Various clearing cmds on escape
 vim.keymap.set(
     'n',
     '<esc>',
-    '<cmd>nohlsearch | echo ""<cr>',
-    { desc = 'Clear search highlights' }
+    function()
+        -- Disable highlights temporarily (until next search)
+        vim.cmd('nohlsearch')
+        -- Clear the cmdline
+        vim.cmd('echo ""')
+        -- Close the LSP floating window if present
+        local win = vim.api.nvim_get_current_win()
+        utils.close_lsp_float(win)
+    end,
+    { desc = 'Clear search highlights, cmdline and close floats' }
 )
 
 -- Disable ex mode. This mode is useless and it's annoying to quit out of it
@@ -137,8 +152,7 @@ vim.keymap.set(
     { desc = 'Jump to previous trailing whitespace' }
 )
 
--- When deleting a char with x, don't yank it into a register -- copy it into
--- the black hole register
+-- When deleting a char with x, don't yank it into a register.
 vim.keymap.set(
     'n',
     'x',
@@ -186,16 +200,18 @@ vim.keymap.set(
 )
 
 -- Navigate through previous commands in the command line, restrict the search
--- to locate matches that commence with the characters already entered.
+-- to locate matches that commence with the characters already entered. If a
+-- completion window is open, C-n and C-p navigate within it. Pressing C-e
+-- closes this window, allowing the keymaps to also navigate command history.
 vim.keymap.set(
     'c',
-    '<C-j>',
+    '<C-n>',
     '<down>',
     { desc = 'Next command' }
 )
 vim.keymap.set(
     'c',
-    '<C-k>',
+    '<C-p>',
     '<up>',
     { desc = 'Previous command' }
 )
@@ -217,7 +233,7 @@ vim.keymap.set(
         vim.opt.expandtab = true
         local view = vim.fn.winsaveview()
         vim.cmd('keepjumps normal! gg=G')
-        vim.fn.winrestview(view)
+        if view then vim.fn.winrestview(view) end
     end,
     { desc = 'Indent with 2 spaces' }
 )
@@ -230,7 +246,7 @@ vim.keymap.set(
         vim.opt.expandtab = true
         local view = vim.fn.winsaveview()
         vim.cmd('keepjumps normal! gg=G')
-        vim.fn.winrestview(view)
+        if view then vim.fn.winrestview(view) end
     end,
     { desc = 'Indent with 4 spaces' }
 )
@@ -246,12 +262,12 @@ vim.keymap.set(
         local pattern = string.format([[\v^( {%d})+]], vim.o.tabstop)
         local replace = string.format([[\=repeat("\t", len(submatch(0))/%d)]], vim.o.tabstop)
         vim.cmd('silent! %s:' .. pattern .. ':' .. replace)
-        vim.fn.winrestview(view)
+        if view then vim.fn.winrestview(view) end
     end,
     { desc = 'Indent with tab' }
 )
 
-require('tummetott.utils').which_key_register {
+utils.which_key_register {
     ['<leader>i'] = { name = 'Indent' }
 }
 

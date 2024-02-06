@@ -28,7 +28,8 @@ M.register = function(_, bufnr)
         { desc = 'Go to previous diagnostic', buffer = bufnr }
     )
 
-    -- Hover information
+    -- Hover information. NOTE: This keymap is not really necessary as 'K' does
+    -- the same already.
     vim.keymap.set(
         'n',
         '<Leader><Leader>',
