@@ -61,10 +61,9 @@ local add_triggers = function(client, buffer)
     end
 end
 
--- Test if the current char is a trigger char. On success, open the signature
--- help floating window.
--- PERF: An impoved approch involves utilizing treesitter to verify if the
--- current cursor is located within a function signature node.
+--- Test if the char under the cursor is a trigger char. On success, open the
+--- signature help floating window.
+---@param buffer string The buffer number as a string
 local on_text_change = function(buffer)
     local triggers = trigger_storage[buffer]
     local line = vim.api.nvim_get_current_line()
