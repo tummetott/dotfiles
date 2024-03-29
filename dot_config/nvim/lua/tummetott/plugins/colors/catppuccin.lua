@@ -50,15 +50,16 @@ table.insert(M, {
                 CmpItemAbbrMatchFuzzy = { fg = c.blue },
                 CmpItemMenu = { fg = c.surface1 }, -- Cmp source
                 CmpItemAbbr = { fg = c.subtext0 }, -- Item
-                PmenuThumb = { bg = c.surface1 }, -- Scrollbar of popup windows
+                PmenuThumb = { bg = c.surface1 },  -- Scrollbar of popup windows
                 IblIndent = { link = 'Whitespace' },
                 IblScope = { fg = c.surface2 },
                 WhichKeyDesc = { fg = c.sapphire },
                 WhichKeyGroup = { fg = c.mauve },
                 GitSignsChange = { fg = c.blue },
-                TroubleIndent = { link = 'Whitespace' },
                 TroubleText = { fg = c.text },
-                TroubleFoldIcon = { fg = c.surface1 },
+                TroubleIndent = { link = 'Whitespace' },
+                TroubleIndentFoldOpen = { fg = c.surface2 },
+                TroubleIndentFoldClosed = { link = 'TroubleIndentFoldOpen' },
                 LazyReasonCmd = { fg = c.surface1 },
                 LazyReasonEvent = { link = 'LazyReasonCmd' },
                 LazyReasonFt = { link = 'LazyReasonCmd' },
