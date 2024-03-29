@@ -38,19 +38,10 @@ table.insert(M, {
                         ['<C-x>'] = false,
                         -- Copy fuzzy result to cmdline but don't execute it
                         ['<C-z>'] = actions.edit_command_line,
-                        -- Don't use the 'telescope trouble' action because
-                        -- 'smart_send_to_qflist' has better results
-                        ['<C-q>'] = function(buffer)
-                            -- Send selected items to the quickfix list; if none
-                            -- selected, send all items to the quickfix list.
-                            actions.smart_send_to_qflist(buffer)
-                            local ok, trouble = pcall(require, 'trouble')
-                            if ok then
-                                trouble.open('quickfix')
-                            else
-                                actions.open_qflist(buffer)
-                            end
-                        end,
+                        -- Open selected entries in trouble
+                        ['<C-q>'] = require("trouble.sources.telescope").open,
+                        -- Append selected entries to trouble
+                        ['<C-y>'] = require("trouble.sources.telescope").add,
                     },
                 }
             },

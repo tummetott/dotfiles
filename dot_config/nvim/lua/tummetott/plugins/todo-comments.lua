@@ -46,7 +46,7 @@ return {
         {
             '<Leader>to',
             '<Cmd>TodoTrouble<CR>',
-            desc = 'open todos',
+            desc = 'toggle todo list',
         },
         {
             '<Leader>ft',

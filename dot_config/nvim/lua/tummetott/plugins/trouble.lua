@@ -12,8 +12,9 @@ return {
     opts = {
         auto_close = true,    -- auto close when there are no items
         auto_open = false,    -- auto open when there are items
-        auto_preview = false,  -- automatically open preview when on an item
-        auto_refresh = true,  -- auto refresh when open
+        auto_preview = false, -- automatically open preview when on an item
+        auto_refresh = false, -- auto refresh when open
+        restore = true,       -- restores the last location in the list when opening
         focus = false,        -- Focus the window when opened
         follow = false,       -- Follow the current item
         indent_guides = true, -- show indent guides
@@ -50,6 +51,18 @@ return {
             P = 'toggle_preview',
         },
         modes = {
+            telescope = {
+                sort = { "pos", "filename", "severity", "message" },
+            },
+            quickfix = {
+                sort = { "pos", "filename", "severity", "message" },
+            },
+            loclist = {
+                sort = { "pos", "filename", "severity", "message" },
+            },
+            todo = {
+                sort = { "pos", "filename", "severity", "message"}
+            },
             symbols = {
                 desc = 'document symbols',
                 mode = 'lsp_document_symbols',
@@ -133,6 +146,11 @@ return {
             '<Leader>tl',
             function() require('trouble').toggle('loclist') end,
             desc = 'toggle location list',
+        },
+        {
+            '<Leader>tt',
+            function() require('trouble').toggle('telescope') end,
+            desc = 'toggle telescope list',
         },
         {
             '<Leader>ts',

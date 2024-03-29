@@ -32,21 +32,52 @@ return {
                 ft = 'FTerm',
             },
             {
-                title = 'QUICKFIX LIST',
+                title = 'NATIVE QUICKFIX',
                 filter = function(_, win)
                     return vim.fn.getwininfo(win)[1]['loclist'] ~= 1
                 end,
                 ft = 'qf',
             },
             {
-                title = 'LOCATION LIST',
+                title = 'NATIVE LOCLIST',
                 filter = function(_, win)
                     return vim.fn.getwininfo(win)[1]['loclist'] == 1
                 end,
                 ft = 'qf',
             },
             {
-                title = 'TROUBLE',
+                title = 'QUICKFIX',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'quickfix'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'LOCLIST',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'loclist'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'TELESCOPE',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'telescope'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'DIAGNOSTICS',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'diagnostics'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'TODO LIST',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'todo'
+                end,
                 ft = 'trouble',
             },
             {
