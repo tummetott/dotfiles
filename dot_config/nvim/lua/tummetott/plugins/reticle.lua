@@ -23,7 +23,7 @@ return {
                 'NvimSeparator',
                 'NvimTree',
                 'TelescopePrompt',
-                'Trouble',
+                'trouble',
             },
         },
     },

@@ -47,7 +47,7 @@ return {
             },
             {
                 title = 'TROUBLE',
-                ft = 'Trouble',
+                ft = 'trouble',
             },
             {
                 title = 'DIFFVIEW FILES',
