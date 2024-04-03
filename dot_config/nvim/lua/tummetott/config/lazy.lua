@@ -25,7 +25,9 @@ require('lazy').setup {
         { import = 'tummetott.plugins' },
     },
     ui = {
+        wrap = false,
         border = 'rounded',
+        backdrop = 100,
         icons = {
             cmd = vim.g.nerdfonts and ' ' or '',
             config = vim.g.nerdfonts and '' or '',

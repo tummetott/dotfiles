@@ -22,12 +22,5 @@ vim.api.nvim_create_autocmd('User', {
     end,
 })
 
--- Set global variables
-if vim.env.NO_NERDFONTS then
-    vim.g.nerdfonts = false
-else
-    vim.g.nerdfonts = true
-end
-
 -- Return a dummy plugin spec representing lazy itself
 return { 'folke/lazy.nvim', version = '*' }
