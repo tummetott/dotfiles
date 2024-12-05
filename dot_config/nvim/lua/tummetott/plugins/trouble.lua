@@ -52,7 +52,7 @@ return {
         },
         modes = {
             telescope = {
-                sort = { "pos", "filename", "severity", "message" },
+                sort = { "filename", "pos" },
             },
             quickfix = {
                 sort = { "pos", "filename", "severity", "message" },

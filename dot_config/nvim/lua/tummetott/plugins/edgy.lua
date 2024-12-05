@@ -74,7 +74,14 @@ return {
                 ft = 'trouble',
             },
             {
-                title = 'TODO LIST',
+                title = 'DEFINITIONS',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'lsp_definitions'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'TODOS',
                 filter = function(_, win)
                     return vim.w[win].trouble.mode == 'todo'
                 end,
