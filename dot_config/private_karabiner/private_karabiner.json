@@ -96,12 +96,20 @@
                         "description": "Ctrl-w to delete word backward",
                         "manipulators": [
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.kovidgoyal.kitty$",
+                                            "^org.alacritty$",
+                                            "^com.googlecode.iterm2$",
+                                            "^com.github.wez.wezterm$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "w",
-                                    "modifiers": {
-                                        "mandatory": ["control"]
-                                    }
+                                    "modifiers": { "mandatory": ["control"] }
                                 },
                                 "to": [
                                     {
@@ -109,17 +117,7 @@
                                         "modifiers": ["option"]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "type": "frontmost_application_unless",
-                                        "bundle_identifiers": [
-                                            "^net.kovidgoyal.kitty$",
-                                            "^org.alacritty$",
-                                            "^com.googlecode.iterm2$",
-                                            "^com.github.wez.wezterm$"
-                                        ]
-                                    }
-                                ]
+                                "type": "basic"
                             }
                         ]
                     },
@@ -127,12 +125,20 @@
                         "description": "Ctrl-u to delete backward to beginning of the line",
                         "manipulators": [
                             {
-                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^net.kovidgoyal.kitty$",
+                                            "^org.alacritty$",
+                                            "^com.googlecode.iterm2$",
+                                            "^com.github.wez.wezterm$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "u",
-                                    "modifiers": {
-                                        "mandatory": ["control"]
-                                    }
+                                    "modifiers": { "mandatory": ["control"] }
                                 },
                                 "to": [
                                     {
@@ -140,17 +146,7 @@
                                         "modifiers": ["command"]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "type": "frontmost_application_unless",
-                                        "bundle_identifiers": [
-                                            "^net.kovidgoyal.kitty$",
-                                            "^org.alacritty$",
-                                            "^com.googlecode.iterm2$",
-                                            "^com.github.wez.wezterm$"
-                                        ]
-                                    }
-                                ]
+                                "type": "basic"
                             }
                         ]
                     }
@@ -160,7 +156,7 @@
             "selected": true,
             "virtual_hid_keyboard": {
                 "country_code": 0,
-                "keyboard_type_v2": "iso"
+                "keyboard_type_v2": "ansi"
             }
         }
     ]
