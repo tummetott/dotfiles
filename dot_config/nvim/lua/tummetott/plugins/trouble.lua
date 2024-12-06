@@ -3,7 +3,6 @@
 return {
     'folke/trouble.nvim',
     enabled = true,
-    branch = 'dev',
     init = function()
         require('tummetott.utils').which_key_register {
             ['<leader>t'] = { name = 'Trouble' }

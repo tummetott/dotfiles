@@ -39,7 +39,7 @@ table.insert(M, {
                         -- Copy fuzzy result to cmdline but don't execute it
                         ['<C-z>'] = actions.edit_command_line,
                         -- Open selected entries in trouble
-                        ['<C-q>'] = require("trouble.sources.telescope").open,
+                        ['<C-t>'] = require("trouble.sources.telescope").open,
                         -- Append selected entries to trouble
                         ['<C-y>'] = require("trouble.sources.telescope").add,
                     },
