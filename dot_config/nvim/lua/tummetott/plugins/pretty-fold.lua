@@ -1,5 +1,7 @@
 return {
-    'anuvyklack/pretty-fold.nvim',
+    -- FIX: 'anuvyklack/pretty-fold.nvim' is broken with Neovim 0.10 and may not
+    -- be maintained. Need a better fold plugin on long term.
+    'bbjornstad/pretty-fold.nvim',
     enabled = true,
     -- The fold text breaks when this plugin is lazily loaded, especially noticeable
     -- when using 'vim -d' to diff two random files.
