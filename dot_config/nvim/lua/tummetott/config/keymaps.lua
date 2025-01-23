@@ -267,8 +267,8 @@ vim.keymap.set(
     { desc = 'Indent with tab' }
 )
 
-utils.which_key_register {
-    ['<leader>i'] = { name = 'Indent' }
+require('which-key').add {
+    { "<leader>i", group = "Indent" },
 }
 
 -- Replicate the 'gn' keymap of normal mode in visual mode

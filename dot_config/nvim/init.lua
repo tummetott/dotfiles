@@ -1,4 +1,4 @@
-local version = '0.9'
+local version = '0.10'
 if vim.fn.has('nvim-' .. version) ~= 1 then
     print('NVIM version ' .. version .. ' or newer is required for this config!')
     return

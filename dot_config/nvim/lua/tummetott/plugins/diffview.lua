@@ -23,8 +23,8 @@ return {
     'sindrets/diffview.nvim',
     enabled = true,
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<leader>d'] = { name = 'Diff' }
+        require('which-key').add {
+            { "<leader>d", group = "Diff" },
         }
     end,
     opts = {
@@ -141,12 +141,12 @@ return {
         {
             '<Leader>da',
             '<Cmd>DiffviewFileHistory<CR>',
-            desc = 'history for all files',
+            desc = 'History for all files',
         },
         {
             '<Leader>dc',
             '<Cmd>DiffviewFileHistory %<CR>',
-            desc = 'history for current file',
+            desc = 'History for current file',
         },
         {
             '<Leader>dl',
@@ -156,7 +156,7 @@ return {
         {
             '<Leader>dq',
             '<Cmd>DiffviewClose<CR>',
-            desc = 'quit diffview',
+            desc = 'Quit diffview',
         },
     },
 }

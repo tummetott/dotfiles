@@ -13,8 +13,8 @@ table.insert(M, {
         }
     },
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['yo'] = { name = 'Toggle option' },
+        require('which-key').add {
+            { "yo", group = "Toggle option" },
         }
     end,
 })

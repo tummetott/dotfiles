@@ -46,12 +46,12 @@ return {
         {
             '<Leader>to',
             '<Cmd>TodoTrouble<CR>',
-            desc = 'toggle todo list',
+            desc = 'Toggle todo list',
         },
         {
             '<Leader>ft',
             '<Cmd>TodoTelescope keywords=TODO,FIX,PERF<CR>',
-            desc = 'todos',
+            desc = 'Todos',
         },
     },
 }

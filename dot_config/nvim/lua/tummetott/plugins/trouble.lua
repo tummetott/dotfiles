@@ -4,8 +4,8 @@ return {
     'folke/trouble.nvim',
     enabled = true,
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<leader>t'] = { name = 'Trouble' }
+        require('which-key').add {
+            { "<leader>t", group = "Trouble" },
         }
     end,
     opts = {
@@ -63,7 +63,7 @@ return {
                 sort = { "pos", "filename", "severity", "message"}
             },
             symbols = {
-                desc = 'document symbols',
+                desc = 'Document symbols',
                 mode = 'lsp_document_symbols',
                 focus = false,
                 win = { position = 'right' },
@@ -139,22 +139,22 @@ return {
         {
             '<Leader>tq',
             function() require('trouble').toggle('quickfix') end,
-            desc = 'toggle quickfix list',
+            desc = 'Toggle quickfix list',
         },
         {
             '<Leader>tl',
             function() require('trouble').toggle('loclist') end,
-            desc = 'toggle location list',
+            desc = 'Toggle location list',
         },
         {
             '<Leader>tt',
             function() require('trouble').toggle('telescope') end,
-            desc = 'toggle telescope list',
+            desc = 'Toggle telescope list',
         },
         {
             '<Leader>ts',
             function() require('trouble').toggle('symbols') end,
-            desc = 'toggle symbols',
+            desc = 'Toggle symbols',
         },
         {
             '<tab>',
@@ -174,6 +174,7 @@ return {
                     trouble.prev({ jump = true })
                 end
             end,
+            desc = 'Previous Trouble entry',
         },
         {
             '[c',

@@ -24,8 +24,8 @@ return {
         trouble = true,
     },
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<Leader>g'] = { name = 'Gitsigns' }
+        require('which-key').add {
+            { "<Leader>g", group = "Gitsigns" }
         }
     end,
     keys = {
@@ -50,7 +50,7 @@ return {
         {
             '<Leader>gs',
             function() require 'gitsigns'.stage_hunk() end,
-            desc = 'stage hunk',
+            desc = 'Stage hunk',
         },
         {
             '<Leader>gS',
@@ -60,49 +60,49 @@ return {
         {
             '<Leader>gu',
             function() require 'gitsigns'.undo_stage_hunk() end,
-            desc = 'undo stage hunk'
+            desc = 'Undo stage hunk'
         },
         {
             '<Leader>gr',
             function() require 'gitsigns'.reset_hunk() end,
-            desc = 'reset hunk'
+            desc = 'Reset hunk'
         },
         {
             '<Leader>gR',
             function() require 'gitsigns'.reset_buffer() end,
-            desc = 'reset buffer'
+            desc = 'Reset buffer'
         },
         {
             '<Leader>gp',
             function() require 'gitsigns'.preview_hunk() end,
-            desc = 'preview hunk'
+            desc = 'Preview hunk'
         },
         {
             '<Leader>gb',
             function() require 'gitsigns'.blame_line() end,
-            desc = 'blame current line'
+            desc = 'Blame current line'
         },
         {
             '<Leader>gl',
             function() require 'gitsigns'.toggle_current_line_blame() end,
-            desc = 'toggle current line blame'
+            desc = 'Toggle current line blame'
         },
         {
             '<Leader>gv',
             function() require 'gitsigns'.toggle_deleted() end,
-            desc = 'toggle virtual text diff'
+            desc = 'Toggle virtual text diff'
         },
         {
             '<Leader>gs',
             ':Gitsigns stage_hunk<CR>',
             mode = 'v',
-            desc = 'stage selected',
+            desc = 'Stage selected',
         },
         {
             '<Leader>gr',
             '<Cmd>Gitsigns reset_hunk<CR>',
             mode = 'v',
-            desc = 'reset selected',
+            desc = 'Reset selected',
         },
         {
             'yog',
@@ -113,7 +113,7 @@ return {
             'ih',
             ':<C-u>Gitsigns select_hunk<CR>',
             mode = { 'o', 'x' },
-            desc = 'inner hunk',
+            desc = 'Inner hunk',
         }
     }
 }

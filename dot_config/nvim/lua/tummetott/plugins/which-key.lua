@@ -1,8 +1,12 @@
 return {
     'folke/which-key.nvim',
     enabled = true,
-    event = 'VeryLazy',
+    -- No lazy loading! Many plugins add keymap descriptions during startup.
+    -- Caching them to load at the 'VeryLazy' event adds unnecessary complexity
+    -- for only a 0.6ms startup improvement.
+    lazy = false,
     opts = {
+        preset = 'classic',
         plugins = {
             marks = true,
             registers = true,
@@ -12,50 +16,45 @@ return {
             presets = {
                 operators = true,
                 motions = false,
-                nav = false,
-            },
+                text_objects = true,
+                windows = true,
+                nav = true,
+                z = true,
+                g = true,
+            }
         },
-        key_labels = {
-            ['<NL>'] = '<C-J>',
-            ['<C-_>'] = '<C-/>',
-            ['<C-Bslash>'] = '<C-\\>',
-            ['<c-w>'] = '<C-W>',
-            ['<leader>'] = '<LEADER>',
-        },
-        window = {
+        win = {
             border = 'rounded',
-            padding = { 1, 1, 1, 1 },
+            padding = { 1, 1 },
         },
         icons = {
             breadcrumb = vim.g.nerdfonts and '»' or '>>',
             separator = vim.g.nerdfonts and '➜' or '->',
             group = '+',
+            ellipsis = vim.g.nerdfonts and '…' or '...',
+            -- Disable icons on the rhs of mappings
+            mappings = false,
         },
-        show_help = false,
-    },
-    config = function(_, opts)
-        local wk = require('which-key')
-        wk.setup(opts)
-
         -- Build-in commands are already documented. However, some descriptions
         -- are missing.
-        wk.register {
-            z = {
-                j = 'Go to next fold',
-                k = 'Go to previous fold',
-            },
-            g = {
-                v = 'Select last selected text',
-            },
-            ['&'] = 'Repeat substitute on current line',
-            ['<C-O>'] = 'Older position in jump list',
-            ['<C-I>'] = 'Newer position in jump list',
-        }
-        -- Register all labels from the queue
-        local queue = require('tummetott.utils').which_key_queue
-        if queue and queue ~= {} then
-            wk.register(queue)
-            queue = {}
-        end
-    end
+        spec = {
+            { '&', desc = 'Repeat substitute on current line' },
+            { '%', mode = { 'n', 'x' }, desc = 'Jump to matching pair' },
+            { 'a%', mode = { 'o', 'x' }, desc = 'Around matching pair' },
+            { 'i%', mode = { 'o', 'x' }, desc = 'Inside matching pair' },
+            { '@', desc = 'Execute macro' },
+            { '*', desc = 'Search forward for word under cursor' },
+            { '#', desc = 'Search backward for word under cursor' },
+            { '*', mode = 'x', desc = 'Search forward for current selection' },
+            { '#', mode = 'x', desc = 'Search backward for current selection' },
+            { '@', mode = 'x', desc = 'Execute linewise macro' },
+            { '<C-i>', desc = 'Newer position in jump list' },
+            { '<C-o>', desc = 'Older position in jump list' },
+            { 'zj', desc = 'Go to next fold' },
+            { 'zk', desc = 'Go to previous fold' },
+            { 'gQ', hidden = true },
+        },
+        show_help = true,
+        show_key = true,
+    },
 }

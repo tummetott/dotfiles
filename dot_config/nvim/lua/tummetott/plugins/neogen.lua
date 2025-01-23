@@ -3,8 +3,8 @@ return {
     enabled = true,
     dependencies = 'nvim-treesitter/nvim-treesitter',
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<leader>a'] = { name = 'Annotation' }
+        require('which-key').add {
+            { '<leader>a', group = 'Annotation' },
         }
     end,
     opts = {
@@ -17,28 +17,28 @@ return {
             function()
                 require('neogen').generate({ type = 'func' })
             end,
-            desc = 'function annotaton',
+            desc = 'Function annotaton',
         },
         {
             '<leader>ac',
             function()
                 require('neogen').generate({ type = 'class' })
             end,
-            desc = 'class annotaton',
+            desc = 'Class annotaton',
         },
         {
             '<leader>at',
             function()
                 require('neogen').generate({ type = 'type' })
             end,
-            desc = 'type annotaton',
+            desc = 'Type annotaton',
         },
         {
             '<leader>ai',
             function()
                 require('neogen').generate({ type = 'file' })
             end,
-            desc = 'file annotaton',
+            desc = 'File annotaton',
         },
     }
 }

@@ -12,7 +12,7 @@ function cycle_base16 {
     }
 
     colortest() {
-        "$BASE16_SHELL_PATH/colortest" "${1}" dummy_string
+        "$BASE16_SHELL_PATH/colortest" "base16-${1}" dummy_string
     }
 
     if [ -z "$BASE16_SHELL_PATH" ]; then

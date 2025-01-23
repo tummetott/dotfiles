@@ -176,9 +176,10 @@ M.register = function(_, bufnr)
     )
 
     -- Add wich-key group label
-    require 'which-key'.register({
-        ['<leader>l'] = { name = 'Lsp' },
-    }, { buffer = bufnr })
+    require 'which-key'.add {
+        { "<leader>l", buffer = bufnr, group = "Lsp" },
+        { 'K', desc = 'Show LSP hover info' },
+    }
 end
 
 return M

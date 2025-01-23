@@ -17,17 +17,6 @@ function M.is_loaded(plugin)
         lazy_config.plugins[plugin]._.loaded ~= nil
 end
 
-M.which_key_queue = {}
-
---- Add a mapping to the which-key queue. The whole queue is registered as soon
---- which key is loaded
----@param mappings any A dict with which-key mapping
-function M.which_key_register(mappings)
-    for k,v in pairs(mappings) do
-        M.which_key_queue[k] = v
-    end
-end
-
 --- Closes LSP floating windows (diagnostics, signature help or hover windows).
 ---@param base_win_id window id of the underlying base window
 ---@return boolean closed Whether a window was closed

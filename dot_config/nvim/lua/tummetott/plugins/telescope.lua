@@ -10,8 +10,8 @@ table.insert(M, {
         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.nerdfonts }
     },
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<leader>f'] = { name = 'Find' }
+        require('which-key').add {
+            { "<leader>f", group = "Find" },
         }
     end,
     config = function()
@@ -67,52 +67,52 @@ table.insert(M, {
         {
             '<Leader>ff',
             function() require 'telescope.builtin'.find_files() end,
-            desc = 'file'
+            desc = 'File'
         },
         {
             '<Leader>fg',
             function() require 'telescope.builtin'.live_grep() end,
-            desc = 'grep',
+            desc = 'Grep',
         },
         {
             '<Leader>fw',
             function() require 'telescope.builtin'.grep_string() end,
-            desc = 'word under cursor',
+            desc = 'Word under cursor',
         },
         {
             '<Leader>fb',
             function() require 'telescope.builtin'.buffers() end,
-            desc = 'buffer',
+            desc = 'Buffer',
         },
         {
             '<Leader>fh',
             function() require 'telescope.builtin'.help_tags() end,
-            desc = 'help',
+            desc = 'Help',
         },
         {
             '<Leader>fo',
             function() require 'telescope.builtin'.oldfiles() end,
-            desc = 'oldfile',
+            desc = 'Oldfile',
         },
         {
             '<Leader>fm',
             function() require 'telescope.builtin'.man_pages() end,
-            desc = 'man page',
+            desc = 'Man page',
         },
         {
             '<Leader>fs',
             function() require 'telescope.builtin'.spell_suggest() end,
-            desc = 'spell suggest',
+            desc = 'Spell suggest',
         },
         {
             '<Leader>fc',
             function() require 'telescope.builtin'.colorscheme() end,
-            desc = 'colorscheme',
+            desc = 'Colorscheme',
         },
         {
             '<Leader>fi',
             function() require 'telescope.builtin'.git_commits() end,
-            desc = 'git commit',
+            desc = 'Git commit',
         },
         {
             '<Leader>fr',
@@ -122,7 +122,7 @@ table.insert(M, {
         {
             '<Leader>f/',
             function() require 'telescope.builtin'.search_history() end,
-            desc = 'search history',
+            desc = 'Search history',
         },
         {
             '<Leader>fd',
@@ -132,22 +132,22 @@ table.insert(M, {
                     prompt_title = 'Find Dotfiles',
                 })
             end,
-            desc = 'dotfile',
+            desc = 'Dotfile',
         },
         {
             '<Leader>fq',
             function() require 'telescope.builtin'.quickfixhistory() end,
-            desc = 'quickfix history',
+            desc = 'Quickfix history',
         },
         {
             '<Leader>fa',
             function() require 'telescope.builtin'.autocommands() end,
-            desc = 'autocommands',
+            desc = 'Autocommands',
         },
         {
             '<Leader>fk',
             function() require 'telescope.builtin'.keymaps() end,
-            desc = 'keymaps',
+            desc = 'Keymaps',
         },
         {
             -- When inside cmdline, search the cmdline history with CTRL-/
@@ -157,7 +157,7 @@ table.insert(M, {
                     require 'telescope.builtin'.command_history()
                 end
             end,
-            desc = 'cmdline history',
+            desc = 'Cmdline history',
             mode = 'c',
         },
     },
@@ -186,7 +186,7 @@ table.insert(M, {
         {
             '<leader>fu',
             function() require('telescope').extensions.undo.undo() end,
-            desc = 'undotree',
+            desc = 'Undotree',
         }
     }
 })

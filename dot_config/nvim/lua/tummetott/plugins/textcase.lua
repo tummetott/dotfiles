@@ -2,8 +2,8 @@ return {
     'johmsalas/text-case.nvim',
     enabled = true,
     init = function()
-        require('tummetott.utils').which_key_register {
-            ['<leader>c'] = { name = 'Case' }
+        require('which-key').add {
+            { "<leader>c", group = "Case" },
         }
     end,
     keys = {
