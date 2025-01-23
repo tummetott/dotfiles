@@ -52,7 +52,7 @@ return {
             { '*', mode = 'x', desc = 'Search forward for current selection' },
             { '#', mode = 'x', desc = 'Search backward for current selection' },
             { '@', mode = 'x', desc = 'Execute linewise macro' },
-            -- Fix: https://github.com/folke/which-key.nvim/issues/934
+            -- FIX: https://github.com/folke/which-key.nvim/issues/934
             -- <C-i> and <tab> are not distinguished by which-key
             { '<C-i>', desc = 'Newer position in jump list' },
             { '<C-o>', desc = 'Older position in jump list' },
