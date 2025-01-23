@@ -27,6 +27,10 @@ return {
             border = 'rounded',
             padding = { 1, 1 },
         },
+        keys = {
+            scroll_down = "<Down>",
+            scroll_up = "<Up>",
+        },
         icons = {
             breadcrumb = vim.g.nerdfonts and '»' or '>>',
             separator = vim.g.nerdfonts and '➜' or '->',

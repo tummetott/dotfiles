@@ -31,8 +31,12 @@ table.insert(M, {
                         -- a keybinding to toggle the preview window
                         ['<C-h>'] = layout.toggle_preview,
                         -- Telescope mapps <C-u> to scroll up in my preview window.
-                        -- Let's unmap this in order to get my delete line behavior back
+                        -- Let's unmap this in order to get my delete line behavior back.
+                        ['<C-d>'] = false,
                         ['<C-u>'] = false,
+                        -- Scroll with the arrow keys
+                        ['<Up>'] = actions.preview_scrolling_up,
+                        ['<Down>'] = actions.preview_scrolling_down,
                         -- I prefer to open a file in a horizontal split with C-s instead of C-x
                         ['<C-s>'] = actions.select_horizontal,
                         ['<C-x>'] = false,
