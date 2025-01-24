@@ -25,4 +25,8 @@ M.efm = {
     filetypes = { 'bash', 'sh' },
 }
 
+M.java_language_server = {
+    cmd = { vim.fn.expand("$XDG_DATA_HOME/nvim/mason/packages/java-language-server/dist/lang_server_mac.sh") },
+}
+
 return M

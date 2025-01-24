@@ -26,6 +26,9 @@ table.insert(M, {
                 end,
                 -- Next would come dedicated handler for specific servers.
                 -- See ':h mason-lspconfig-dynamic-server-setup'
+                ['java_language_server'] = function ()
+                    -- Don't use it for now
+                end
             }
         }
     end,
