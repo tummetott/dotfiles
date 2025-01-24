@@ -21,8 +21,11 @@ table.insert(M, {
                 -- setup for any installed server that doesn't have a dedicated
                 -- configuration handler.
                 function(server)
+                    -- Load the configuration for the server if it exists, otherwise
+                    -- use the base configuration.
                     local configs = require('tummetott.plugins.lsp.configs')
                     local config = configs[server] or configs['base']
+                    -- Setup the server with the configuration.
                     require('lspconfig')[server].setup(config)
                 end,
                 ---
