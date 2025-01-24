@@ -7,6 +7,7 @@ table.insert(M, {
         'williamboman/mason-lspconfig.nvim',
         'folke/neodev.nvim',
         'j-hui/fidget.nvim',
+        'mfussenegger/nvim-jdtls',
     },
     config = function()
         require('neodev').setup()
@@ -20,14 +21,29 @@ table.insert(M, {
                 -- setup for any installed server that doesn't have a dedicated
                 -- configuration handler.
                 function(server)
-                    local conf =
-                        require('tummetott.plugins.lsp.config').get_config(server)
-                    require('lspconfig')[server].setup(conf)
+                    local configs = require('tummetott.plugins.lsp.configs')
+                    local config = configs[server] or configs['base']
+                    require('lspconfig')[server].setup(config)
                 end,
-                -- Next would come dedicated handler for specific servers.
+                ---
+                -- Next come dedicated handler for specific servers.
                 -- See ':h mason-lspconfig-dynamic-server-setup'
-                ['java_language_server'] = function ()
-                    -- Don't use it for now
+                ---
+                -- Deactivated for now in favour for jdtls
+                ['java_language_server'] = function() end,
+                -- Don't let lspconfig manage jdtls, we use the plugin 'nvim-jdtls'.
+                -- It offers additional features.
+                ['jdtls'] = function()
+                    local conf = require('tummetott.plugins.lsp.configs')
+                    local group = vim.api.nvim_create_augroup('java_lsp', { clear = true })
+                    vim.api.nvim_create_autocmd('FileType', {
+                        group = group,
+                        pattern = 'java',
+                        desc = 'Start jdtls',
+                        callback = function()
+                            require('jdtls').start_or_attach(conf['jdtls'])
+                        end,
+                    })
                 end
             }
         }
