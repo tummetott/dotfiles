@@ -48,21 +48,16 @@ function zvm_config() {
     ZVM_VI_HIGHLIGHT_FOREGROUND=0
 }
 
-# To ensure that FZF's keybindings take precedence, we need to source FZF after
-# ZVM, as both have some default keybindings that overlap. Must be defined
-# before ZVM is loaded
+# ZVM overwrites the default keybindings of some plugins. To ensure that certain
+# keybindings take precedence, we need to define them after ZVM is loaded.
 function zvm_after_init() {
-    if [ -f "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]; then
-        source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
-        # FZF default mapping is CTRL-t. I want to keep the transpose-char feature and
-        # remap it to CTRL-g
-        bindkey '^G' fzf-file-widget
-        bindkey '^T' transpose-chars
-
-        # Because of VIM-TMUX Navigator, I can't kill lines with CTRL-k. I remap
-        # this to CTRL-x
-        bindkey '^X' kill-line
+    # Setup keybindings for fzf
+    if command -v fzf >/dev/null 2>&1; then
+        source <(fzf --zsh)
     fi
+
+    # Remap CTRL-k to CTRL-x due to VIM-TMUX Navigator conflict
+    bindkey '^X' kill-line
 }
 
 # Add shell functions to fpath and autoload them
@@ -119,7 +114,7 @@ unsetopt HIST_VERIFY
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
 
 # FZF should use 'fd' instead of the default 'find'
-if (( $+commands[fd] )); then
+if command -v fd >/dev/null 2>&1; then
     # Run by nvim **<tab>
     _fzf_compgen_path() {
         fd --type f --hidden --follow "$1"

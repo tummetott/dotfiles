@@ -15,11 +15,6 @@ refreshPeriod = '168h'
 {{ end }}
 
 {{ if .install.fzf }}
-['.local/share/fzf']
-type = 'git-repo'
-url = 'https://github.com/junegunn/fzf.git'
-refreshPeriod = '168h'
-
 ['.local/share/tinted-theming/base16-fzf']
 type = 'git-repo'
 url = 'https://github.com/tinted-theming/base16-fzf.git'

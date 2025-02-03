@@ -7,7 +7,7 @@
 
 # Source shell-independent environment variables in bashrc instead of
 # bash_profile for better compatibility. The performance impact negligible.
-[ -f ~/.config/shell/env ] && source ~/.config/shell/env
+[ -f "$HOME/.config/shell/env" ] && source "$HOME/.config/shell/env"
 
 # Source alias file
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
@@ -45,12 +45,9 @@ fi
     source "$BASE16_SHELL_PATH/profile_helper.sh"
 
 # Activate FZF
-[ -f "$XDG_CONFIG_HOME/fzf/fzf.bash" ] && source "$XDG_CONFIG_HOME/fzf/fzf.bash"
-
-# Change fzf keymap from C-t to C-g
-bind -r '\C-t'
-bind -m vi-command -x '"\C-g": fzf-file-widget'
-bind -m vi-insert -x '"\C-g": fzf-file-widget'
+if command -v fzf &> /dev/null; then
+    eval "$(fzf --bash)"
+fi
 
 # Load custom shell functions.
 if [ -d "$XDG_CONFIG_HOME/shell/functions" ]; then

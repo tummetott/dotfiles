@@ -38,10 +38,6 @@ sudo true
     {{ template "bootstrap/tmux.tmpl" . }}
 {{ end }}
 
-{{ if .install.fzf }}
-    {{ template "bootstrap/fzf.tmpl" . }}
-{{ end }}
-
 {{ if .install.fd }}
     {{ template "bootstrap/fd.tmpl" . }}
 {{ end }}
