@@ -1,16 +1,5 @@
 local M = {}
 
--- If installed, use trouble instead of the native qflist
-local on_list_handler = function(options)
-    vim.fn.setqflist({}, ' ', options)
-    local ok, trouble = pcall(require, 'trouble')
-    if ok then
-        trouble.open('quickfix')
-    else
-        vim.api.nvim_command('cfirst')
-    end
-end
-
 M.register = function(_, bufnr)
     -- Jump to next diagnostic
     vim.keymap.set(
@@ -42,22 +31,18 @@ M.register = function(_, bufnr)
         'n',
         'gd',
         function()
-            local ok, trouble = pcall(require, 'trouble')
-            if ok then
-                trouble.toggle('lsp_definitions')
-            else
-                vim.lsp.buf.definition()
-            end
+            require('trouble').open('lsp_definitions')
         end,
         { desc = 'Go to definition', buffer = bufnr }
     )
 
-    -- Goto declaration
+    -- Goto declaration. Mostly relevant in C/C++, e.g. when a function is
+    -- declared in a header file
     vim.keymap.set(
         'n',
         'gD',
         function()
-            vim.lsp.buf.declaration({ on_list = on_list_handler })
+            require('trouble').open('lsp_declaration')
         end,
         { desc = 'Go to declaration', buffer = bufnr }
     )
@@ -67,22 +52,18 @@ M.register = function(_, bufnr)
         'n',
         '<Leader>lt',
         function()
-            local ok, trouble = pcall(require, 'trouble')
-            if ok then
-                trouble.toggle('lsp_type_definitions')
-            else
-                vim.lsp.buf.type_definition()
-            end
+            require('trouble').open('lsp_type_definitions')
         end,
         { desc = 'Go to type definition', buffer = bufnr }
     )
 
-    -- Goto implementation
+    -- Goto implementation. Useful in OOP languages like Java, TypeScript, or
+    -- C++ to find where an interface or abstract method is implemented.
     vim.keymap.set(
         'n',
         '<Leader>li',
         function()
-            vim.lsp.buf.implementation({ on_list = on_list_handler })
+            require('trouble').open('lsp_implementations')
         end,
         { desc = 'Go to implementation', buffer = bufnr }
     )
@@ -130,14 +111,9 @@ M.register = function(_, bufnr)
     -- Send diagnostics to quickfix list
     vim.keymap.set(
         'n',
-        '<Leader>lw',
+        '<Leader>ld',
         function()
-            local ok, trouble = pcall(require, 'trouble')
-            if ok then
-                trouble.open('workspace_diagnostics')
-            else
-                vim.diagnostic.setqflist()
-            end
+            require('trouble').open('diagnostics')
         end,
         { desc = 'Workspace diagnostics', buffer = bufnr }
     )
@@ -147,7 +123,7 @@ M.register = function(_, bufnr)
         'n',
         'gr',
         function()
-            vim.lsp.buf.references(nil, { on_list = on_list_handler })
+            require('trouble').open('lsp_references')
         end,
         { desc = 'Goto references', buffer = bufnr }
     )

@@ -12,7 +12,7 @@ return {
         auto_close = true,    -- auto close when there are no items
         auto_open = false,    -- auto open when there are items
         auto_preview = false, -- automatically open preview when on an item
-        auto_refresh = false, -- auto refresh when open
+        auto_refresh = true,  -- auto refresh when open
         restore = true,       -- restores the last location in the list when opening
         focus = false,        -- Focus the window when opened
         follow = false,       -- Follow the current item
@@ -37,14 +37,12 @@ return {
             ['<2-leftmouse>'] = 'jump',
             ['<c-s>'] = 'jump_split',
             ['<c-v>'] = 'jump_vsplit',
-            -- go down to next item (accepts count)
-            -- j = "next",
             ['}'] = 'next',
             [']]'] = 'next',
-            -- go up to prev item (accepts count)
-            -- k = "prev",
             ['{'] = 'prev',
             ['[['] = 'prev',
+            dd = "delete",
+            d = { action = "delete", mode = "v" },
             i = 'inspect',
             p = 'preview',
             P = 'toggle_preview',
@@ -52,17 +50,71 @@ return {
         modes = {
             telescope = {
                 sort = { "filename", "pos" },
+                title = false,
+                groups = {
+                    { "filename", format = "{file_icon}{filename} {count}" },
+                },
+            },
+            telescope_files = {
+                sort = { "filename", "pos" },
+                title = false,
+                format = "{file_icon}{filename}",
             },
             quickfix = {
                 sort = { "pos", "filename", "severity", "message" },
+                groups = {
+                    { "filename", format = "{file_icon}{filename} {count}" },
+                },
+                format = "{text:ts} {pos}",
             },
             loclist = {
                 sort = { "pos", "filename", "severity", "message" },
+                groups = {
+                    { "filename", format = "{file_icon}{filename} {count}" },
+                },
+                format = "{text:ts} {pos}",
             },
             todo = {
-                sort = { "pos", "filename", "severity", "message"}
+                sort = { "pos", "filename", "severity", "message"},
+                groups = {
+                    { "filename", format = "{file_icon}{filename} {count}" },
+                },
+                format = "{todo_icon}{text} {pos}",
             },
-            symbols = {
+            diagnostics = {
+                groups = {
+                    { "filename", format = "{file_icon}{basename} {count}" },
+                },
+                sort = { "severity", "filename", "pos", "message" },
+                format = "{severity_icon}{message:md} {item.source} {code} {pos}",
+            },
+            -- Base settings for: 
+            -- lsp_definitions, lsp_references, lsp_implementations
+            -- lsp_type_definitions, lsp_declarations, lsp_command
+            lsp_base = {
+                groups = {
+                    { "filename", format = "{file_icon}{filename} {count}" },
+                },
+            },
+            lsp_definitions = {
+                title = false,
+            },
+            lsp_type_definitions = {
+                title = false,
+            },
+            lsp_references = {
+                title = false,
+                params = {
+                    include_declaration = false,
+                },
+            },
+            lsp_implementations = {
+                title = false,
+            },
+            lsp_declarations = {
+                title = false,
+            },
+            lsp_document_symbols = {
                 desc = 'Document symbols',
                 mode = 'lsp_document_symbols',
                 focus = false,
@@ -153,7 +205,7 @@ return {
         },
         {
             '<Leader>ts',
-            function() require('trouble').toggle('symbols') end,
+            function() require('trouble').toggle('lsp_document_symbols') end,
             desc = 'Toggle symbols',
         },
         {

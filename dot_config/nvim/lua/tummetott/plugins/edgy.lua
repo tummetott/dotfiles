@@ -45,6 +45,25 @@ return {
                 end,
                 ft = 'qf',
             },
+            -- TODO: make PR to add buf and win to the title function call
+            -- {
+            --     title = function(_, win)
+            --         local mode = vim.w[win].trouble.mode
+            --         return mode == 'quickfix' and 'QUICKFIX'
+            --             or mode == 'loclist' and 'LOCLIST'
+            --             or mode == 'telescope' and 'TELESCOPE'
+            --             or mode == 'telescope_files' and 'TELESCOPE'
+            --             or mode == 'diagnostics' and 'DIAGNOSTICS'
+            --             or mode == 'lsp_definitions' and 'DEFINITIONS'
+            --             or mode == 'lsp_type_definitions' and 'TYPE DEFINITIONS'
+            --             or mode == 'lsp_references' and 'REFERENCES'
+            --             or mode == 'lsp_implementations' and 'IMPLEMENTATIONS'
+            --             or mode == 'lsp_declarations' and 'DECLARATIONS'
+            --             or mode == 'todo' and 'TODOS'
+            --             or 'TROUBLE'
+            --     end,
+            --     ft = 'trouble',
+            -- },
             {
                 title = 'QUICKFIX',
                 filter = function(_, win)
@@ -63,6 +82,7 @@ return {
                 title = 'TELESCOPE',
                 filter = function(_, win)
                     return vim.w[win].trouble.mode == 'telescope'
+                        or vim.w[win].trouble.mode == 'telescope_files'
                 end,
                 ft = 'trouble',
             },
@@ -77,6 +97,34 @@ return {
                 title = 'DEFINITIONS',
                 filter = function(_, win)
                     return vim.w[win].trouble.mode == 'lsp_definitions'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'TYPE DEFINITIONS',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'lsp_type_definitions'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'REFERENCES',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'lsp_references'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'IMPLEMENTATIONS',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'lsp_implementations'
+                end,
+                ft = 'trouble',
+            },
+            {
+                title = 'DECLARATIONS',
+                filter = function(_, win)
+                    return vim.w[win].trouble.mode == 'lsp_declarations'
                 end,
                 ft = 'trouble',
             },

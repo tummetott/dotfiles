@@ -60,6 +60,7 @@ table.insert(M, {
                 TroubleIndent = { link = 'Whitespace' },
                 TroubleIndentFoldOpen = { fg = c.surface2 },
                 TroubleIndentFoldClosed = { link = 'TroubleIndentFoldOpen' },
+                TroubleCount= { fg = c.base, bg = c.surface1 },
                 LazyReasonCmd = { fg = c.surface1 },
                 LazyReasonEvent = { link = 'LazyReasonCmd' },
                 LazyReasonFt = { link = 'LazyReasonCmd' },
