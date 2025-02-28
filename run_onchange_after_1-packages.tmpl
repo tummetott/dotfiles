@@ -12,11 +12,9 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-{{ if not (contains "gruenau" .chezmoi.hostname) }}
 # Cache the sudo password for subsequent sudo commands within this script
 info "Please enter your computer's password"
 sudo true
-{{ end }}
 
 {{ if contains "darwin" .osid }}
     {{ template "bootstrap/brew-packages.tmpl" . }}

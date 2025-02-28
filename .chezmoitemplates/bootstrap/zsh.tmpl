@@ -17,9 +17,7 @@ if ! has zsh; then
     {{ end }}
 fi
 
-{{ if not (contains "gruenau" .chezmoi.hostname) }}
 if ! echo "$SHELL" | grep -q 'zsh'; then
     info 'Set zsh as default shell'
     log sudo chsh -s "$(which zsh)" "$USER"
 fi
-{{ end }}
