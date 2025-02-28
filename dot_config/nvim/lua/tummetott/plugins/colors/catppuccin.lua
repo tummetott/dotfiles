@@ -40,6 +40,7 @@ table.insert(M, {
                 DiffChange = { link = 'Cursorline' },
                 DiffDelete = { fg = c.surface0, bg = c.base },
                 TabbyTab = { fg = c.surface2, bg = c.base },
+                TabLineFill = { bg = c.base },
                 AlphaHeader = { fg = c.blue },
                 AlphaFooter = { fg = c.subtext0 },
                 TelescopeBorder = { link = 'WinSeparator' },
