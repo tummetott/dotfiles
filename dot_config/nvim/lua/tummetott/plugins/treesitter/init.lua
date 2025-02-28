@@ -21,6 +21,7 @@ table.insert(M, {
             'nu',
             'python',
             'rust',
+            'toml',
             'vim',
             'vimdoc',
             'yaml',
