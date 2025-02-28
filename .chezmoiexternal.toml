@@ -44,6 +44,7 @@ url = 'https://github.com/zsh-users/zsh-completions/archive/refs/tags/{{ $tag }}
 exact = true
 stripComponents = 2
 include = ['*/src/_*']
+refreshPeriod = '168h'
 
 ['.local/share/zsh/zsh-autosuggestions']
 type = 'git-repo'
