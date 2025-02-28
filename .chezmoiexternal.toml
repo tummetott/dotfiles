@@ -15,6 +15,13 @@ refreshPeriod = '168h'
 {{ end }}
 
 {{ if .install.fzf }}
+['.local/bin']
+type = 'archive'
+{{ $asset := printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch }}
+url = '{{ gitHubLatestReleaseAssetURL "junegunn/fzf" $asset }}'
+extract = true
+refreshPeriod = '168h'
+
 ['.local/share/tinted-theming/base16-fzf']
 type = 'git-repo'
 url = 'https://github.com/tinted-theming/base16-fzf.git'
