@@ -3,12 +3,8 @@ return {
     enabled = true,
     event = 'TabNew',
     config = function()
-        local icon1 = ''
-        local icon2 = ''
-        if not vim.g.nerdfonts then
-            icon1 = '*'
-            icon2 = 'o'
-        end
+        local icon1 = vim.g.nerdfonts and '' or '*'
+        local icon2 = vim.g.nerdfonts and '' or 'o'
         local function render_function(line)
             return {
                 line.spacer(),
