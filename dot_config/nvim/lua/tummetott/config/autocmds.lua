@@ -128,6 +128,9 @@ autocmd('ModeChanged', {
             ['DiffText'] = 'None',
             ['DiffChange'] = 'None',
         }
+        -- Disable hlsearch in visual mode because when both hlsearch and Visual
+        -- mode are active, overlapping highlights cause readability issues
+        vim.opt.hlsearch = false
     end
 })
 autocmd('ModeChanged', {
