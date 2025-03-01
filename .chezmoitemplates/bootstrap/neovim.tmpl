@@ -1,34 +1,20 @@
 # vim: set ft=bash:
 
-if ! has nvim; then
-    {{ if contains "darwin" .osid }}
-    info 'Installing neovim'
-    log brew update
-    log brew install neovim
+# Neovim is installed and updated as chezmoiexternal. This script only runs
+# additional tasks that have to be done only once
 
-    {{ else if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
-    if ! has snap; then
-        {{ template "bootstrap/snap.tmpl" . }}
-    fi
-    info 'Installing neovim'
-    log sudo snap install nvim --classic
+# Symlink the nvim executable to PATH
+NVIM_EXECUTABLE="$HOME/.local/share/nvim-app/bin/nvim"
+if [ -x "$NVIM_EXECUTABLE" ]; then
+    mkdir -p "$HOME/.local/bin"
+    ln -sf "$NVIM_EXECUTABLE" "$HOME/.local/bin/nvim"
+fi
 
-    # We need a c compiler for treesitter
+{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+    # We need a c compiler for treesitter. On macOS its pre-installed
     log sudo apt -y update
     log sudo apt -y install build-essential
-
-    {{ else if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
-    url='https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
-    download $url ~/.local/bin/nvim
-    pushd ~/.local/bin/
-    chmod u+x nvim
-    popd
-
-    {{ else }}
-    error 'No installation instructions found for: neovim'
-    exit 1
-    {{ end }}
-fi
+{{ end }}
 
 if has nvim; then
     if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then

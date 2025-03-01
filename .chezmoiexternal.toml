@@ -14,6 +14,20 @@ include = ['*.ttf']
 refreshPeriod = '168h'
 {{ end }}
 
+{{ if .install.neovim }}
+['.local/share/nvim-app']
+type = 'archive'
+{{ $arch := .chezmoi.arch }}
+{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+{{ $os := .chezmoi.os }}
+{{ if eq $os "darwin" }}{{ $os = "macos" }}{{ end }}
+{{ $asset := printf "nvim-%s-%s.tar.gz" $os $arch }}
+url = '{{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset }}'
+extract = true
+stripComponents = 1
+refreshPeriod = '168h'
+{{ end }}
+
 {{ if .install.fzf }}
 ['.local/bin']
 type = 'archive'
