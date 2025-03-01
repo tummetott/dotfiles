@@ -1,6 +1,6 @@
 -- Statusline and winbar plugin
 return {
-    'freddiehaddad/feline.nvim',
+    'famiu/feline.nvim',
     enabled = true,
     dependencies = {
         'nvim-tree/nvim-web-devicons',
