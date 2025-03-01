@@ -11,7 +11,8 @@ source ~/.config/shell/env
 {{ end }}
 
 {{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
-sudo locale-gen "en_US.UTF-8"
+info 'Generate locale'
+log sudo locale-gen "en_US.UTF-8"
 {{ end }}
 
 info 'Change dotfile repository from HTTPS to SSH'
