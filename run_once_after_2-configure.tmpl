@@ -10,6 +10,10 @@ source ~/.config/shell/env
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
+{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+sudo locale-gen "en_US.UTF-8"
+{{ end }}
+
 info 'Change dotfile repository from HTTPS to SSH'
 pushd "$HOME/.local/share/chezmoi"
 git remote set-url origin git@github.com:tummetott/dotfiles.git
