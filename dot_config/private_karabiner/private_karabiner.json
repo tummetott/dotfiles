@@ -102,7 +102,9 @@
                                             "^net.kovidgoyal.kitty$",
                                             "^org.alacritty$",
                                             "^com.googlecode.iterm2$",
-                                            "^com.github.wez.wezterm$"
+                                            "^com.github.wez.wezterm$",
+                                            "^com.utmapp.UTM$",
+                                            "^com.riotgames.LeagueofLegends.GameClient$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -131,7 +133,9 @@
                                             "^net.kovidgoyal.kitty$",
                                             "^org.alacritty$",
                                             "^com.googlecode.iterm2$",
-                                            "^com.github.wez.wezterm$"
+                                            "^com.github.wez.wezterm$",
+                                            "^com.utmapp.UTM$",
+                                            "^com.riotgames.LeagueofLegends.GameClient$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
