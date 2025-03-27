@@ -33,13 +33,13 @@ local handler = function(_, result, ctx, config)
     if hl then
         -- Highlight the second line if the signature is wrapped in a Markdown code block.
         local line = vim.startswith(lines[1], '```') and 1 or 0
-        vim.api.nvim_buf_add_highlight(fbuf, -1, 'LspSignatureActiveParameter', line, unpack(hl))
+        vim.api.nvim_buf_add_highlight(fbuf, -1, 'LspSignatureActiveParameter', line, hl[2], hl[4])
     end
     return fbuf, fwin
 end
 
 local open_signature_help = function()
-    local params = vim.lsp.util.make_position_params()
+    local params = vim.lsp.util.make_position_params(0, 'utf-8')
     vim.lsp.buf_request(0, method, params, handler)
 end
 
@@ -108,7 +108,7 @@ end
 --         vim.api.nvim_clear_autocmds({ group = 'LspSignature' })
 --         trigger_store = {}
 --         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
---             local clients = vim.lsp.get_active_clients { buffer = bufnr }
+--             local clients = vim.lsp.get_clients { buffer = bufnr }
 --             for _, client in ipairs(clients) do
 --                 print('reload: ' .. client.name)
 --                 M.setup(client, bufnr)
