@@ -141,6 +141,9 @@ vim.opt.timeoutlen = 1000
 -- Copy to system clipboard
 vim.opt.clipboard = 'unnamedplus'
 
+-- Use rounded borders for floating windows
+vim.opt.winborder = 'rounded'
+
 -- Don't complain about missing providers in checkhealth
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
