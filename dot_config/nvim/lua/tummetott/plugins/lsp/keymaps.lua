@@ -5,7 +5,7 @@ M.register = function(_, bufnr)
     vim.keymap.set(
         'n',
         ']d',
-        function() vim.diagnostic.goto_next() end,
+        function() vim.diagnostic.jump({ count = 1, float = true }) end,
         { desc = 'Go to next diagnostic', buffer = bufnr }
     )
 
@@ -13,7 +13,7 @@ M.register = function(_, bufnr)
     vim.keymap.set(
         'n',
         '[d',
-        function() vim.diagnostic.goto_prev() end,
+        function() vim.diagnostic.jump({ count = -1, float = true }) end,
         { desc = 'Go to previous diagnostic', buffer = bufnr }
     )
 
