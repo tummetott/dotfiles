@@ -25,17 +25,10 @@ vim.diagnostic.config {
     },
 }
 
--- Overwrite default signature help and hover handlers to display floating
--- windows with rounded borders.
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help, {
-        focusable = true,
-        border = 'rounded'
-    }
-)
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    vim.lsp.handlers.hover, {
-        focusable = true,
-        border = 'rounded'
-    }
-)
+-- Overwrite all LSP floating windows to display rounded borders.
+local original_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or "rounded"
+    return original_open_floating_preview(contents, syntax, opts, ...)
+end

@@ -173,7 +173,7 @@ end
 
 M.lsp_attached = function()
     local servers = {}
-    for _, lsp in pairs(vim.lsp.get_active_clients()) do
+    for _, lsp in pairs(vim.lsp.get_clients()) do
         table.insert(servers, lsp.name)
     end
     if vim.tbl_isempty(servers) then
