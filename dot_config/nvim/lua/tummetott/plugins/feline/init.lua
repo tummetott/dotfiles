@@ -51,7 +51,6 @@ return {
                 },
             },
             disable = {
-                filetypes = { 'alpha' },
                 buftypes = { 'terminal' },
             },
         }
@@ -61,7 +60,7 @@ return {
                 filetypes = {
                     'Outline',
                     'NvimTree',
-                    'alpha',
+                    'snacks_dashboard',
                 }
             }
         }

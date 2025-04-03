@@ -18,12 +18,12 @@ return {
         },
         ignore = {
             cursorline = {
-                'alpha',
                 'FTerm',
                 'NvimSeparator',
                 'NvimTree',
                 'TelescopePrompt',
                 'trouble',
+                'snacks_dashboard'
             },
         },
     },

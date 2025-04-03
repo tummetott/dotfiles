@@ -19,7 +19,6 @@ return {
             'TelescopeResults',
             'NvimTree',
             'DressingInput',
-            'alpha',
             'cmp_menu',
             'cmp_docs',
             'Outline',
