@@ -9,6 +9,7 @@ autocmd('CmdlineLeave', {
     command = 'echo ""',
 })
 
+-- Turn on hlsearch when typing the search
 autocmd('CmdlineEnter', {
     group = group,
     pattern = { '/', '\\?' },
@@ -17,7 +18,7 @@ autocmd('CmdlineEnter', {
     end,
 })
 
--- Turn of search highlights when jumping to a search
+-- Turn off hlsearch when jumping to a search
 autocmd('CmdlineLeave', {
     group = group,
     pattern = { '/', '\\?' },
@@ -116,17 +117,14 @@ autocmd('BufEnter', {
 })
 
 -- Disable diff highlights when in visual mode.
--- PERF: Check the performance. If the impact is too big, figure out how to
--- register this autocmds on diff split enter, and clear the group on diff split
--- exit.
 autocmd('ModeChanged', {
     -- Entering any visual mode (\22 is visual block mode).
     pattern = '*:[v\22]',
     callback = function()
         vim.opt_local.winhl:append {
-            ['DiffAdd'] = 'None',
-            ['DiffText'] = 'None',
-            ['DiffChange'] = 'None',
+            DiffAdd = 'None',
+            DiffText = 'None',
+            DiffChange = 'None',
         }
         -- Disable hlsearch in visual mode because when both hlsearch and Visual
         -- mode are active, overlapping highlights cause readability issues
@@ -142,16 +140,6 @@ autocmd('ModeChanged', {
             'DiffText',
             'DiffChange',
         }
-    end
-})
-
--- Autocmds that trigger on the OptionSet diff event should also work when
--- entering vim. By default, no OptionSet event is fired on startup.
-vim.api.nvim_create_autocmd('VimEnter', {
-    callback = function()
-        vim.schedule(function()
-            vim.cmd.doautocmd('OptionSet diff')
-        end)
     end
 })
 
