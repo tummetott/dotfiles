@@ -37,7 +37,11 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-        -- bigfile = { enabled = true },
+        -- TODO: feline is very slow on big files. Also foldexpr slows down the
+        -- loading of bigfiles
+        bigfile = {
+            enabled = true,
+        },
         dashboard = {
             enabled = true,
             sections = {
