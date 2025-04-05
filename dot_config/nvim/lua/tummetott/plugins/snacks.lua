@@ -37,10 +37,10 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-        -- TODO: feline is very slow on big files. Also foldexpr slows down the
-        -- loading of bigfiles
+        -- TODO: feline is very slow on big files
         bigfile = {
             enabled = true,
+            notify = true,
         },
         dashboard = {
             enabled = true,

@@ -117,7 +117,6 @@ vim.opt.foldlevelstart = 99
 
 -- Use treesitter to define folds automatically
 vim.opt.foldmethod = 'expr'
--- PERF: this slows down the loading of big files
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- Don't show the foldcolumn

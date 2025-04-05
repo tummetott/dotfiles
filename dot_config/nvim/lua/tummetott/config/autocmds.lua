@@ -154,3 +154,17 @@ vim.api.nvim_create_autocmd('VimEnter', {
         end)
     end
 })
+
+-- Disable treesitter folding for files > 1.5MB because of performance
+autocmd('BufReadPre', {
+    group = group,
+    callback = function(ctx)
+        local bufname = vim.api.nvim_buf_get_name(ctx.buf)
+        local size = vim.fn.getfsize(bufname)
+        if size < 0 or size > 1.5 * 1024 * 1024 then
+            vim.opt.foldmethod = 'manual'
+        else
+            vim.opt.foldmethod = 'expr'
+        end
+    end
+})
