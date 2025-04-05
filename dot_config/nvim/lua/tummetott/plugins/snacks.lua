@@ -81,7 +81,22 @@ return {
             }
         },
         -- explorer = { enabled = true },
-        -- indent = { enabled = true },
+        -- ISSUE: https://github.com/folke/snacks.nvim/issues/1692
+        -- indent = {
+        --     enabled = true,
+        --     animate = {
+        --         enabled = false,
+        --     },
+        --     scope = {
+        --         enabled = false,
+        --     },
+        --     filter = function(buf)
+        --         return vim.g.snacks_indent ~= false and
+        --             vim.b[buf].snacks_indent ~= false and
+        --             vim.bo[buf].buftype == '' and
+        --             vim.bo[buf].diff == false
+        --     end
+        -- },
         -- input = { enabled = true },
         -- picker = { enabled = true },
         -- notifier = { enabled = true },
