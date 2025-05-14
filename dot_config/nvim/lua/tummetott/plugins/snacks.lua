@@ -37,10 +37,9 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-        -- TODO: feline is very slow on big files
         bigfile = {
             enabled = true,
-            notify = true,
+            notify = false,
         },
         dashboard = {
             enabled = true,
