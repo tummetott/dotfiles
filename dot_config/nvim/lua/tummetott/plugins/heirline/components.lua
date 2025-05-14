@@ -86,9 +86,9 @@ M.mode = {
 M.git = {
     condition = conditions.is_git_repo,
     static = {
-        added_icon = vim.g.nerdfonts and ' ' or '+',
-        removed_icon = vim.g.nerdfonts and ' ' or '-',
-        changed_icon = vim.g.nerdfonts and ' ' or '~',
+        added_icon = '+',
+        removed_icon = '-',
+        changed_icon = '~',
         branch_icon = vim.g.nerdfonts and ' ' or 'GIT: ',
     },
     init = function(self)
@@ -99,24 +99,24 @@ M.git = {
             return '  ' .. self.branch_icon .. self.status_dict.head
         end,
     },
-    { -- Added
-        provider = function(self)
-            local count = self.status_dict.added or 0
-            return count > 0 and ('  ' .. self.added_icon .. count)
-        end,
-    },
-    { -- Removed
-        provider = function(self)
-            local count = self.status_dict.removed or 0
-            return count > 0 and ('  ' .. self.removed_icon .. count)
-        end,
-    },
-    { -- Changed
-        provider = function(self)
-            local count = self.status_dict.changed or 0
-            return count > 0 and ('  ' .. self.changed_icon .. count)
-        end,
-    },
+    -- { -- Added
+    --     provider = function(self)
+    --         local count = self.status_dict.added or 0
+    --         return count > 0 and ('  ' .. self.added_icon .. count)
+    --     end,
+    -- },
+    -- { -- Removed
+    --     provider = function(self)
+    --         local count = self.status_dict.removed or 0
+    --         return count > 0 and ('  ' .. self.removed_icon .. count)
+    --     end,
+    -- },
+    -- { -- Changed
+    --     provider = function(self)
+    --         local count = self.status_dict.changed or 0
+    --         return count > 0 and ('  ' .. self.changed_icon .. count)
+    --     end,
+    -- },
     update = {
         'User',
         pattern = 'GitSignsUpdate',
@@ -272,8 +272,13 @@ M.indent = {
     update = { 'BufReadPost', 'BufWritePost', 'CursorHold', 'InsertLeave' },
 }
 
-M.percentage = {
-    provider = '   %P'
+M.progress = {
+    static = {
+        icon = vim.g.nerdfonts and '' or 'PRG:'
+    },
+    provider = function(self)
+        return '  ' .. self.icon .. ' %P'
+    end
 }
 
 M.search_count = {
@@ -467,7 +472,7 @@ M.default_statusline = {
     M.encoding,
     M.indent,
     M.search_count,
-    M.percentage,
+    M.progress,
 }
 
 M.special_statusline = {
@@ -503,7 +508,7 @@ M.special_statusline = {
             })
         end,
         M.search_count,
-        M.percentage,
+        M.progress,
     }
 }
 
