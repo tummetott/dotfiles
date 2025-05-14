@@ -93,30 +93,45 @@ M.git = {
     },
     init = function(self)
         self.status_dict = vim.b.gitsigns_status_dict
+        self.has_changes = self.status_dict.added ~= 0
+            or self.status_dict.removed ~= 0
+            or self.status_dict.changed ~= 0
     end,
     { -- Branch name
         provider = function(self)
             return '  ' .. self.branch_icon .. self.status_dict.head
         end,
     },
-    -- { -- Added
-    --     provider = function(self)
-    --         local count = self.status_dict.added or 0
-    --         return count > 0 and ('  ' .. self.added_icon .. count)
-    --     end,
-    -- },
-    -- { -- Removed
-    --     provider = function(self)
-    --         local count = self.status_dict.removed or 0
-    --         return count > 0 and ('  ' .. self.removed_icon .. count)
-    --     end,
-    -- },
-    -- { -- Changed
-    --     provider = function(self)
-    --         local count = self.status_dict.changed or 0
-    --         return count > 0 and ('  ' .. self.changed_icon .. count)
-    --     end,
-    -- },
+    {
+        condition = function(self)
+            return self.has_changes
+        end,
+        provider = ' ('
+    },
+    { -- Added
+        provider = function(self)
+            local count = self.status_dict.added or 0
+            return count > 0 and ('+' .. count)
+        end,
+    },
+    { -- Removed
+        provider = function(self)
+            local count = self.status_dict.removed or 0
+            return count > 0 and ('-' .. count)
+        end,
+    },
+    { -- Changed
+        provider = function(self)
+            local count = self.status_dict.changed or 0
+            return count > 0 and ('~' .. count)
+        end,
+    },
+    {
+        condition = function(self)
+            return self.has_changes
+        end,
+        provider = ')',
+    },
     update = {
         'User',
         pattern = 'GitSignsUpdate',
