@@ -92,14 +92,17 @@ M.git = {
         branch_icon = vim.g.nerdfonts and ' ' or 'GIT: ',
     },
     init = function(self)
-        self.status_dict = vim.b.gitsigns_status_dict
-        self.has_changes = self.status_dict.added ~= 0
-            or self.status_dict.removed ~= 0
-            or self.status_dict.changed ~= 0
+        self.git = vim.b.gitsigns_status_dict
+        self.git.added = self.git.added or 0
+        self.git.removed = self.git.removed or 0
+        self.git.changed = self.git.changed or 0
+        self.has_changes = self.git.added ~= 0
+            or self.git.removed ~= 0
+            or self.git.changed ~= 0
     end,
     { -- Branch name
         provider = function(self)
-            return '  ' .. self.branch_icon .. self.status_dict.head
+            return '  ' .. self.branch_icon .. self.git.head
         end,
     },
     {
@@ -110,20 +113,17 @@ M.git = {
     },
     { -- Added
         provider = function(self)
-            local count = self.status_dict.added or 0
-            return count > 0 and ('+' .. count)
+            return self.git.added > 0 and ('+' .. self.git.added)
         end,
     },
     { -- Removed
         provider = function(self)
-            local count = self.status_dict.removed or 0
-            return count > 0 and ('-' .. count)
+            return self.git.removed > 0 and ('-' .. self.git.removed)
         end,
     },
     { -- Changed
         provider = function(self)
-            local count = self.status_dict.changed or 0
-            return count > 0 and ('~' .. count)
+            return self.git.changed > 0 and ('~' .. self.git.changed)
         end,
     },
     {
