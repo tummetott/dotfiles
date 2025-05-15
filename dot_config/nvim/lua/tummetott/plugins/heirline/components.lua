@@ -383,32 +383,68 @@ M.bufname = {
     static = {
         oil_icon = vim.g.nerdfonts and ' ' or ''
     },
-    provider = function(self)
+    init = function(self)
         local bufname = vim.api.nvim_buf_get_name(0)
         local ft = vim.bo.filetype
         if bufname == '' then
-            return '[No File]'
+            self.bufname = '[No File]'
+            self.icon = ''
+            return
         elseif ft == 'oil' then
             bufname = bufname:gsub('^oil://', '')
-            bufname = vim.fn.fnamemodify(bufname, ':~')
-            return self.oil_icon .. bufname
+            self.bufname = vim.fn.fnamemodify(bufname, ':~')
+            self.icon = self.oil_icon
+            self.icon_color = '#e68805'
+            return
         elseif bufname:match('^diffview://') then
             if bufname == 'diffview://null' then
-                return '[Empty Diffview]'
+                self.bufname = '[Empty Diffview]'
+                self.icon = ''
+                return
             end
             bufname = bufname:gsub('^diffview://', '')
             bufname = bufname:gsub('%.git/[^/]+/', '')
         end
-        -- Trim the full file path relative to our CWD
-        bufname = vim.fn.fnamemodify(bufname, ':~:.')
-        return bufname
+        self.bufname = vim.fn.fnamemodify(bufname, ':~:.')
+        if vim.g.nerdfonts then
+            self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(
+                vim.fn.expand('%:t'), nil, { default = true })
+            self.icon = self.icon .. ' '
+        end
     end,
+    {
+        provider = function(self)
+            return self.icon
+        end,
+        hl = function(self)
+            return { fg = self.icon_color }
+        end,
+    },
+    {
+        flexible = true,
+        {
+            provider = function(self)
+                return self.bufname
+            end
+        },
+        {
+            provider = function(self)
+                return vim.fn.pathshorten(self.bufname, 2)
+            end
+        },
+        {
+            provider = function(self)
+                return vim.fn.pathshorten(self.bufname)
+            end
+        },
+    },
     update = {
         'BufEnter',
         'BufFilePost',
         'DirChanged',
         'FileType',
         'BufWritePost',
+        'VimResized',
     }
 }
 
