@@ -474,19 +474,27 @@ M.special_bufname = {
 
 -------------------------------------------------------
 
+local function flex(component, priority)
+    return {
+        flexible = priority,
+        component,
+        { provider = '' }
+    }
+end
+
 M.default_statusline = {
     M.mode,
-    M.git,
-    M.diagnostics,
+    flex(M.git, 12),
+    flex(M.diagnostics, 11),
     M.align,
-    M.git_conflict,
-    M.trailing_whitespace,
-    M.filetype,
-    M.venv,
-    M.lsp,
-    M.encoding,
-    M.indent,
-    M.search_count,
+    flex(M.git_conflict, 6),
+    flex(M.trailing_whitespace, 5),
+    flex(M.filetype, 13),
+    flex(M.venv, 8),
+    flex(M.lsp, 10),
+    flex(M.encoding, 7),
+    flex(M.indent, 9),
+    flex(M.search_count, 14),
     M.progress,
 }
 
