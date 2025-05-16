@@ -1,6 +1,7 @@
 local M = {}
 local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
+local spinner = require('tummetott.plugins.heirline.spinner')
 
 M.align = { provider = '%=' }
 
@@ -80,7 +81,13 @@ M.mode = {
         local mode = self.mode:sub(1, 1) -- get only the first mode character
         return { fg = self.mode_colors[mode], bold = true, }
     end,
-    update = 'ModeChanged',
+    update = {
+        'ModeChanged',
+        pattern = '*:*',
+        callback = vim.schedule_wrap(function()
+            vim.cmd('redrawstatus')
+        end),
+    },
 }
 
 M.git = {
@@ -231,15 +238,23 @@ M.lsp = {
     static = {
         icon = vim.g.nerdfonts and ' ' or 'LSP: '
     },
-    provider = function(self)
-        local names = {}
-        for _, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
-            table.insert(names, server.name)
-        end
-        return '  ' .. self.icon .. table.concat(names, ' ')
-    end,
-    -- TODO: progress in statusline. replace nvim-navic
-    update = { 'LspAttach', 'LspDetach' },
+    {
+        provider = function(self)
+            local names = {}
+            for _, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+                table.insert(names, server.name)
+            end
+            return '  ' .. self.icon .. table.concat(names, ' ')
+        end,
+        update = { 'LspAttach' ,'LspDetach' },
+    },
+    {
+        condition = spinner.spinner_active,
+        provider = function()
+            return ' ' .. require('snacks.util').spinner()
+        end,
+        update = { 'User', pattern = 'LspSpinner' }
+    },
 }
 
 M.encoding = {

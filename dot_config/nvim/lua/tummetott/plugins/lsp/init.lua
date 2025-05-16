@@ -2,11 +2,11 @@ M = {}
 
 -- TODO: wait for issue https://github.com/neovim/nvim-lspconfig/issues/3494
 -- local configs = {}
--- for _, v in ipairs(vim.api.nvim_get_runtime_file('lsp/*', true)) do  
---     local name = vim.fn.fnamemodify(v, ':t:r')  
---     configs[name] = true  
+-- for _, v in ipairs(vim.api.nvim_get_runtime_file('lsp/*', true)) do
+--     local name = vim.fn.fnamemodify(v, ':t:r')
+--     configs[name] = true
 -- end
--- vim.lsp.enable(vim.tbl_keys(configs))  
+-- vim.lsp.enable(vim.tbl_keys(configs))
 
 table.insert(M, {
     'neovim/nvim-lspconfig',
@@ -91,7 +91,7 @@ table.insert(M, {
 -- Fancy LSP load progress
 table.insert(M, {
     'j-hui/fidget.nvim',
-    enabled = true,
+    enabled = false,
     event = 'VeryLazy',
     opts = {
         progress = {

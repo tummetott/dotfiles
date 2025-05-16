@@ -1,7 +1,7 @@
 -- Statusline and winbar plugin
 return {
     'famiu/feline.nvim',
-    enabled = true,
+    enabled = false,
     dependencies = {
         'nvim-tree/nvim-web-devicons',
         enabled = vim.g.nerdfonts,

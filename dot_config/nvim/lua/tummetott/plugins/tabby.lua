@@ -1,6 +1,6 @@
 return {
     'nanozuki/tabby.nvim',
-    enabled = true,
+    enabled = false,
     event = 'TabNew',
     config = function()
         local icon1 = vim.g.nerdfonts and '' or '*'

@@ -1,5 +1,6 @@
 return {
     'folke/todo-comments.nvim',
+    -- TODO: dont load for bigfile? or does it not load automatically?
     enabled = true,
     opts = {
         keywords = {
