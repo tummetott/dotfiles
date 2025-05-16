@@ -14,7 +14,6 @@ table.insert(M, {
     dependencies = {
         'williamboman/mason-lspconfig.nvim',
         'folke/neodev.nvim',
-        'j-hui/fidget.nvim',
         'mfussenegger/nvim-jdtls',
     },
     config = function()
@@ -85,20 +84,6 @@ table.insert(M, {
         'MasonUninstall',
         'MasonUninstallAll',
         'MasonLog',
-    }
-})
-
--- Fancy LSP load progress
-table.insert(M, {
-    'j-hui/fidget.nvim',
-    enabled = false,
-    event = 'VeryLazy',
-    opts = {
-        progress = {
-            display = {
-                done_icon = vim.g.nerdfonts and '' or 'OK',
-            }
-        },
     }
 })
 
