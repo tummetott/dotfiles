@@ -8,25 +8,27 @@ table.insert(M, {
     end,
     dependencies = { 'nushell/tree-sitter-nu' },
     opts = {
+        -- The following parsers are pre-installed with nvim:
+        -- c, lua, markdown, vim, vimdoc
         ensure_installed = {
             'bash',
-            'c',
             'cpp',
             'dockerfile',
             'html',
             'java',
             'json',
-            'lua',
-            'markdown',
             'nu',
             'python',
             'rust',
             'toml',
-            'vim',
-            'vimdoc',
             'yaml',
         },
-        highlight = { enable = true },
+        highlight = {
+            enable = true,
+            disable = function()
+                return vim.bo.filetype == 'bigfile'
+            end,
+        },
         indent = { enable = true },
         incremental_selection = {
             enable = true,
