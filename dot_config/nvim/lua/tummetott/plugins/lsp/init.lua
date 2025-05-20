@@ -1,90 +1,78 @@
 M = {}
 
--- TODO: wait for issue https://github.com/neovim/nvim-lspconfig/issues/3494
--- local configs = {}
--- for _, v in ipairs(vim.api.nvim_get_runtime_file('lsp/*', true)) do
---     local name = vim.fn.fnamemodify(v, ':t:r')
---     configs[name] = true
--- end
--- vim.lsp.enable(vim.tbl_keys(configs))
+-- Global options for all diagnostics
+vim.diagnostic.config({
+    virtual_text = false,
+    underline = false,
+    update_in_insert = false,
+    severity_sort = true,
+    signs = vim.g.nerdfonts and {
+        text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.HINT] = '',
+            [vim.diagnostic.severity.INFO] = '',
+        },
+    } or true,
+})
+
+-- Configs for all language-servers
+vim.lsp.config('*', {
+    on_attach = function(client, bufnr)
+        -- Setup my LSP keymaps
+        require('tummetott.plugins.lsp.keymaps').register(client, bufnr)
+        -- Show signature help automatically
+        require('tummetott.plugins.lsp.signature').setup(client, bufnr)
+        -- Autocmd to reset document highlights as soon as the cursor holds
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            callback = vim.lsp.buf.clear_references,
+            group = vim.api.nvim_create_augroup('document_hl', { clear = true }),
+            buffer = bufnr,
+        })
+    end,
+    capabilities = (function()
+        local loaded, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+        if loaded then
+            return cmp_nvim_lsp.default_capabilities()
+        end
+    end)(),
+})
 
 table.insert(M, {
-    'neovim/nvim-lspconfig',
-    enabled = true,
-    dependencies = {
-        'williamboman/mason-lspconfig.nvim',
-        'folke/neodev.nvim',
-        'mfussenegger/nvim-jdtls',
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {
+        library = {
+            -- Load luvit types when the `vim.uv` word is found
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
     },
-    config = function()
-        require('neodev').setup()
-        require('tummetott.plugins.lsp.ui')
-        require('mason-lspconfig').setup {
-            ensure_installed = { 'lua_ls' },
-            handlers = {
-                -- This function simplifies the process of configuring language
-                -- servers installed via Mason. Instead of manually adding each
-                -- server to your Neovim setup, this function automates the
-                -- setup for any installed server that doesn't have a dedicated
-                -- configuration handler.
-                function(server)
-                    -- Load the configuration for the server if it exists, otherwise
-                    -- use the base configuration.
-                    local configs = require('tummetott.plugins.lsp.configs')
-                    local config = configs[server] or configs['base']
-                    -- Setup the server with the configuration.
-                    require('lspconfig')[server].setup(config)
-                end,
-                ---
-                -- Next come dedicated handler for specific servers.
-                -- See ':h mason-lspconfig-dynamic-server-setup'
-                ---
-                -- Deactivated for now in favour for jdtls
-                ['java_language_server'] = function() end,
-                -- Don't let lspconfig manage jdtls, we use the plugin 'nvim-jdtls'.
-                -- It offers additional features.
-                ['jdtls'] = function()
-                    local conf = require('tummetott.plugins.lsp.configs')
-                    local group = vim.api.nvim_create_augroup('java_lsp', { clear = true })
-                    vim.api.nvim_create_autocmd('FileType', {
-                        group = group,
-                        pattern = 'java',
-                        desc = 'Start jdtls',
-                        callback = function()
-                            require('jdtls').start_or_attach(conf['jdtls'])
-                        end,
-                    })
-                end
+})
+
+table.insert(M, {
+    'mason-org/mason-lspconfig.nvim',
+    enabled = true,
+    opts = {
+        ensure_installed = { 'lua_ls' },
+        automatic_enable = {
+            exclude = {
+                'jdtls',
             }
         }
-    end,
-    cmd = {
-        'LspStart',
-        'LspStop',
-        'LspRestart',
-        'LspInfo',
-        'LspLog',
-        'LspInstall',
-        'LspUninstall',
+    },
+    dependencies = {
+        { 'mason-org/mason.nvim', opts = {} },
+        'neovim/nvim-lspconfig',
     },
     event = 'LazyFile',
 })
 
--- Package manager for language servers, linters, fomatters and DAP servers
+-- The java language server has a separate plugin which is loaded by ftplugin
 table.insert(M, {
-    'williamboman/mason.nvim',
+    'mfussenegger/nvim-jdtls',
     enabled = true,
-    opts = {
-        ui = { border = 'rounded' },
-    },
-    cmd = {
-        'Mason',
-        'MasonUpdate',
-        'MasonInstall',
-        'MasonUninstall',
-        'MasonUninstallAll',
-        'MasonLog',
-    }
+    lazy = true,
+    ft = 'java',
 })
 
 return M
