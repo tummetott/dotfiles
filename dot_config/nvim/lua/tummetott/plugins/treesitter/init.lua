@@ -154,32 +154,19 @@ table.insert(M, {
 table.insert(M, {
     'RRethy/nvim-treesitter-textsubjects',
     enabled = true,
-    opts = {
-        textsubjects = {
-            enable = true,
-            keymaps = {
-                -- Only for visual mode
-                ['<CR>'] = {
-                    'textsubjects-smart',
-                    desc = 'Smart selection',
-                },
-            },
-        },
-    },
-    main = 'nvim-treesitter.configs',
+    -- Lazy loading does not work for some reason
+    lazy = false,
     keys = {
-        { '<cr>', mode = 'x', desc = 'Smart selection' }
+        { '.', mode = 'x', desc = 'Smart selection' },
+        { ',', mode = 'x', desc = 'Previous smart selection' },
     }
 })
 
 table.insert(M, {
     'RRethy/nvim-treesitter-endwise',
     enabled = true,
-    event = 'VeryLazy',
-    opts = {
-        endwise = { enable = true },
-    },
-    main = 'nvim-treesitter.configs',
+    -- Lazy loading does not work for some reason
+    lazy = false,
 })
 
 return M
