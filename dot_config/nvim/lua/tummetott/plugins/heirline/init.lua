@@ -1,5 +1,3 @@
-local comp = require('tummetott.plugins.heirline.components')
-
 local colors = {}
 local ok, catppuccin = pcall(require, 'catppuccin.palettes')
 if ok then
@@ -24,6 +22,7 @@ return {
     lazy = false,
     dependencies = 'lewis6991/gitsigns.nvim',
     config = function()
+        local comp = require('tummetott.plugins.heirline.components')
         require('heirline').setup {
             statusline = comp.statusline,
             winbar = comp.winbar,
