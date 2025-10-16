@@ -15,7 +15,6 @@ sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply tummetott
 ### Post-Installation
 
 - macOS: Open `Karabiner-Elements` manually and grant all required permissions in System Settings. This enables correct CAPSLOCK behaviour
-- Reboot
 
 ### Usage
 
