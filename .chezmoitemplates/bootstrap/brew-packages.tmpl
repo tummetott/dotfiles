@@ -7,7 +7,6 @@ if ! has brew; then
     # Add brew to path so we can use it
     eval "$(/opt/homebrew/bin/brew shellenv)"
     log brew update
-    log brew tap 'homebrew/bundle'
 fi
 
 info 'Installing formulas from Brewfile'
