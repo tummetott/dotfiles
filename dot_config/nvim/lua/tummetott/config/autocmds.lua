@@ -156,3 +156,16 @@ autocmd('BufReadPre', {
         end
     end
 })
+
+-- FIX: Snacks reuses its dashboard buffer when opening a file (via :edit,
+-- Telescope, etc.). Since the buffer already exists, Neovim skips
+-- BufRead/BufNewFile events, leaving no filetype. This hook re-detects the
+-- filetype for any buffer missing one, restoring syntax highlighting and LSP
+-- setup.
+autocmd('BufEnter', {
+  callback = function()
+    if vim.bo.filetype == '' and vim.fn.expand('%:e') ~= '' then
+      vim.cmd('silent! filetype detect')
+    end
+  end,
+})
