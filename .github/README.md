@@ -15,6 +15,7 @@ sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply tummetott
 ### Post-Installation
 
 - macOS: Open `Karabiner-Elements` manually and grant all required permissions in System Settings. This enables correct CAPSLOCK behaviour
+- macOS: Disable the *Ctrl* + *Space* shortcut under `System Settings` -> `Keyboard` -> `Keyboard Shortcuts` -> `Input Sources` -> `Select the previous input source`. Otherwise, macOS intercepts my `tmux` prefix mapping
 
 ### Usage
 
