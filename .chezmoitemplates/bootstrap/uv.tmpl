@@ -3,8 +3,9 @@
 if ! has uv; then
 
     info 'Installing uv'
-    # The log function does not work gere because of the piping
-    UV_NO_MODIFY_PATH=1 curl -LsSf https://astral.sh/uv/install.sh \
+    # The log function does not work here because of the piping
+    export UV_NO_MODIFY_PATH=1
+    curl -LsSf https://astral.sh/uv/install.sh \
         | sh -s -- -q >> "$BOOTSTRAP_LOG_FILE" 2>&1
 
 fi
