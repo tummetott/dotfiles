@@ -14,7 +14,7 @@ table.insert(M, {
             local darken = require 'catppuccin.utils.colors'.darken
             return {
                 NormalFloat = { link = 'Normal' },
-                FloatBorder = { fg = c.surface2 },
+                FloatBorder = { fg = c.surface2, bg = c.base },
                 WinSeparator = { fg = c.surface1 },
                 Whitespace = { fg = c.surface0 },
                 NonText = { link = 'Whitespace' },
