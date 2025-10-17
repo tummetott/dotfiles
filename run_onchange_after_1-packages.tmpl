@@ -56,6 +56,10 @@ sudo true
     {{ template "bootstrap/starship.tmpl" . }}
 {{ end }}
 
+{{ if .install.uv }}
+    {{ template "bootstrap/uv.tmpl" . }}
+{{ end }}
+
 {{ if .install.lsd }}
     {{ template "bootstrap/lsd.tmpl" . }}
 {{ end }}

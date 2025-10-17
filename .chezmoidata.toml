@@ -55,6 +55,7 @@ tmux = false
 transmission = false
 tree = false
 typora = false
+uv = false
 vlc = false
 wezterm = false
 wget = false
