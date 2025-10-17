@@ -150,10 +150,5 @@ if (( $+commands[tmux] )); then
     autostart-tmux
 fi
 
-# Init pyenv
-if (( $+commands[pyenv] )); then
-    eval "$(pyenv init - zsh)"
-fi
-
 # Return with exit code 0
 true
