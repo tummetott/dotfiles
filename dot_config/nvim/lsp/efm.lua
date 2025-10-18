@@ -1,3 +1,4 @@
+-- shellcheck must be in PATH. Install with Mason
 return {
     settings = {
         rootMarkers = { '.git/' },

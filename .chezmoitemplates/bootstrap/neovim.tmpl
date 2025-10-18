@@ -20,10 +20,5 @@ if has nvim; then
     if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then
         info 'Installing Nvim plugins'
         log nvim --headless -c 'Lazy! sync'  -c 'qa'
-
-        info 'Installing Mason LSP servers'
-        log nvim --headless \
-            -c 'MasonInstall lua-language-server efm-langserver shellcheck' \
-            -c 'qa'
     fi
 fi
