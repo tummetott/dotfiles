@@ -59,6 +59,7 @@ return {
             { 'zj', desc = 'Go to next fold' },
             { 'zk', desc = 'Go to previous fold' },
             { 'gQ', hidden = true },
+            { '<leader>l', group = 'Lsp' },
         },
         show_help = true,
         show_key = true,

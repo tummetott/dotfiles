@@ -18,8 +18,12 @@ fi
 
 if has nvim; then
     if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then
-        info 'Installing nvim plugins'
-        # TODO: this command does not install all neovim plugins.
-        log nvim --headless '+Lazy! sync' +qa
+        info 'Installing Nvim plugins'
+        log nvim --headless -c 'Lazy! sync'  -c 'qa'
+
+        info 'Installing Mason LSP servers'
+        log nvim --headless \
+            -c 'MasonInstall lua-language-server efm-langserver shellcheck' \
+            -c 'qa'
     fi
 fi
