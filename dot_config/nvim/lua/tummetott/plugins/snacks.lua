@@ -96,8 +96,12 @@ return {
         --             vim.bo[buf].diff == false
         --     end
         -- },
-        -- input = { enabled = true },
-        -- picker = { enabled = true },
+        input = {
+            enabled = true,
+        },
+        picker = {
+            enabled = true,
+        },
         -- notifier = { enabled = true },
         -- quickfile = { enabled = true },
         -- scope = { enabled = true },
