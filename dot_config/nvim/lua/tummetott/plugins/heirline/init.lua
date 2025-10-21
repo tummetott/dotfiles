@@ -46,6 +46,7 @@ return {
                             'DiffviewFiles',
                             'DiffviewFileHistory',
                             'qf',
+                            'sidekick_terminal',
                         },
                     }, args.buf)
                 end,
