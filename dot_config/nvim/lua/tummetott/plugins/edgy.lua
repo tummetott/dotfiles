@@ -165,11 +165,6 @@ return {
                 title = 'MANPAGE',
                 ft = 'man',
             },
-            {
-                title = 'LSP INFO',
-                ft = 'lspinfo',
-                size = { height = 0.4 },
-            },
         },
         left = {
             {

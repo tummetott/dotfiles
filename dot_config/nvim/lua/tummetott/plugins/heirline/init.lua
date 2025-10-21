@@ -31,8 +31,22 @@ return {
                 colors = colors,
                 disable_winbar_cb = function(args)
                     return require('heirline.conditions').buffer_matches({
-                        buftype = { 'nofile', 'prompt', 'help', 'quickfix' },
-                        filetype = { 'Trouble' },
+                        buftype = {
+                            'nofile',
+                            'prompt',
+                            'help',
+                            'quickfix',
+                        },
+                        filetype = {
+                            'trouble',
+                            'FTerm',
+                            'help',
+                            'NvimTree',
+                            'man',
+                            'DiffviewFiles',
+                            'DiffviewFileHistory',
+                            'qf',
+                        },
                     }, args.buf)
                 end,
             }
