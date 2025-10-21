@@ -2,7 +2,7 @@ local M = {}
 
 table.insert(M, {
     'zbirenbaum/copilot.lua',
-    enabled = true,
+    enabled = false,
     cmd = 'Copilot',
     opts = {
         panel = {

@@ -35,7 +35,8 @@ table.insert(M, {
             keymaps = {
                 -- TODO: Keymap descriptions are not configurable. Treesitter
                 -- v1.0 will remove this syntax soon.
-                init_selection = '<cr>',
+                -- TODO: conflicts with sidekick. supercharge this key
+                -- init_selection = '<cr>',
                 node_incremental = '<C-n>',
                 node_decremental = '<C-p>',
             }

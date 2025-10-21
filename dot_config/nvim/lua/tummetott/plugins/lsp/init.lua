@@ -54,6 +54,7 @@ vim.lsp.enable({
     'clangd',
     'rust_analyzer',
     'efm', -- Also install 'shellcheck'
+    'copilot',
 })
 
 -- lspconfig is still included even though we use the new vim.lsp.config API. It

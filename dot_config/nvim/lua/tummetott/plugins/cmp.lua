@@ -145,7 +145,17 @@ table.insert(M, {
                         fallback()
                     end
                 end),
-                ['<CR>'] = mapping(mapping.confirm { select = false }, { 'i' }),
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    local sidekick_ok, sidekick_nes = pcall(require, 'sidekick.nes')
+
+                    if cmp.visible() and cmp.get_selected_entry() then
+                        cmp.confirm({ select = false })
+                    elseif sidekick_ok and sidekick_nes.have() then
+                        sidekick_nes.apply()
+                    else
+                        fallback() -- fallback to newline
+                    end
+                end, { 'i', 's' }),
                 ['<TAB>'] = mapping {
                     i = mapping.confirm { select = false },
                     c = mapping.select_next_item { behavior = cmp.SelectBehavior.insert },
