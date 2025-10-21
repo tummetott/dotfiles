@@ -28,6 +28,7 @@ table.insert(M, {
                 CursorLineNr = { fg = c.lavender, style = { 'bold' } },
                 Folded = { fg = c.overlay0, bg = c.base },
                 StatusLine = { bg = '' },
+                StatusLineNC = { bg = '' },
                 DiagnosticError = { fg = c.red },
                 DiagnosticWarn = { fg = c.peach },
                 DiagnosticHint = { fg = c.yellow },

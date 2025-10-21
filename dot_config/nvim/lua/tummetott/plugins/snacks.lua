@@ -77,7 +77,7 @@ return {
                     action = '<CMD>quit<CR>',
                     hidden = true
                 }
-            }
+            },
         },
         -- explorer = { enabled = true },
         -- ISSUE: https://github.com/folke/snacks.nvim/issues/1692

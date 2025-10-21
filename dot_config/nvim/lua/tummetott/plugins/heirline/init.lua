@@ -47,6 +47,7 @@ return {
                             'DiffviewFileHistory',
                             'qf',
                             'sidekick_terminal',
+                            'snacks_dashboard',
                         },
                     }, args.buf)
                 end,
