@@ -1,8 +1,13 @@
 # vim: set ft=ini:
 
 [user]
+{{- if eq .chezmoi.hostname "Catch" }}
+    name = jonas
+    email = jonas@srlabs.de
+{{- else }}
     name = Tummetott
     email = 19708025+Tummetott@users.noreply.github.com
+{{- end }}
 
 [pull]
     rebase = false
