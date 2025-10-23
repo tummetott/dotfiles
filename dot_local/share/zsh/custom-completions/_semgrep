@@ -1,0 +1,139 @@
+#compdef semgrep
+
+_semgrep() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  _arguments -C \
+    '1: :->command' \
+    '*::arg:->args'
+
+  case $state in
+    command)
+      _values 'semgrep command' \
+        'scan[Run Semgrep rules on local folders or files]' \
+        'ci[Run Semgrep on a git diff (for use in CI)]' \
+        'install-semgrep-pro[Install the Semgrep Pro Engine]' \
+        'login[Obtain and save credentials for semgrep.dev]' \
+        'logout[Remove locally stored credentials to semgrep.dev]' \
+        'lsp[Start the Semgrep LSP server (useful for IDEs)]' \
+        'publish[Upload rule to semgrep.dev]' \
+        'show[Show various types of information]' \
+        'test[Test the rules]' \
+        'validate[Validate the rules]' \
+        'mcp[Start the Semgrep MCP server]'
+      ;;
+    args)
+      case $line[1] in
+        scan)
+          _semgrep_scan
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_semgrep_scan() {
+  _arguments \
+    '(-c --config -f)'{-c,--config,-f}'[YAML configuration file or directory]:config file:_files -g "*.{yml,yaml}"' \
+    '(-a --autofix)'{-a,--autofix}'[Apply autofix patches]' \
+    '--allow-local-builds[Allow building projects in repository]' \
+    '--allow-untrusted-validators[Allow validators from non-semgrep.dev origins]' \
+    '--baseline-commit=[Only show results not in commit hash]:commit hash:' \
+    '(-d --dump-command-for-core)'{-d,--dump-command-for-core}'[Internal use only]' \
+    '--dataflow-traces[Explain how non-local values reach findings]' \
+    '--debug[Verbose output with debugging information]' \
+    '--develop[Living on the edge]' \
+    '--disable-nosem[Negates --enable-nosem]' \
+    '--disable-version-check[Negates --enable-version-check]' \
+    '--dryrun[Print autofix changes without writing]' \
+    '--dump-ast[Show AST of input file]' \
+    '--dump-engine-path[Internal use only]' \
+    '(-e --pattern)'{-e,--pattern}'=[Code search pattern]:pattern:' \
+    '--emacs[Output in Emacs single-line format]' \
+    '--emacs-output=[Write emacs output to file or URL]:output:_files' \
+    '--enable-nosem[Enable nosem comments (default)]' \
+    '--enable-version-check[Check for latest version]' \
+    '--error[Exit 1 if there are findings]' \
+    '--exclude=[Skip files matching pattern]:pattern:' \
+    '--exclude-minified-files[Skip minified files]' \
+    '--exclude-rule=[Skip rule with given id]:rule id:' \
+    '--experimental[Enable experimental features]' \
+    '--files-with-matches[Output only filenames with matches]' \
+    '--force-color[Always include ANSI color]' \
+    '--gitlab-sast[Output in GitLab SAST format]' \
+    '--gitlab-sast-output=[Write GitLab SAST output]:output:_files' \
+    '--gitlab-secrets[Output in GitLab Secrets format]' \
+    '--gitlab-secrets-output=[Write GitLab Secrets output]:output:_files' \
+    '--historical-secrets[Scan git history with Secrets rules]' \
+    '--include=[Only scan files matching pattern]:pattern:' \
+    '--incremental-output[Output results incrementally]' \
+    '--interfile-timeout=[Max time for interfile analysis]:timeout:' \
+    '(-j --jobs)'{-j,--jobs}'=[Number of parallel subprocesses]:jobs:' \
+    '--json[Output in JSON format]' \
+    '--json-output=[Write JSON output to file or URL]:output:_files' \
+    '--junit-xml[Output in JUnit XML format]' \
+    '--junit-xml-output=[Write JUnit XML output]:output:_files' \
+    '(-l --lang)'{-l,--lang}'=[Parse in specified language]:language:' \
+    '--legacy[Prefer legacy behavior]' \
+    '--matching-explanations[Add debugging info to JSON output]' \
+    '--max-chars-per-line=[Max characters per line]:chars:(160)' \
+    '--max-lines-per-finding=[Max lines per finding]:lines:(10)' \
+    '--max-log-list-entries=[Max log entries]:entries:(100)' \
+    '--max-memory=[Max memory in MiB]:memory:(0)' \
+    '--max-target-bytes=[Max file size to scan]:bytes:(1000000)' \
+    '--metrics=[Configure usage metrics]:metrics:(auto on off)' \
+    '--no-autofix[Negates --autofix]' \
+    '--no-dryrun[Negates --dryrun]' \
+    '--no-error[Negates --error]' \
+    '--no-exclude-minified-files[Negates --exclude-minified-files]' \
+    '--no-force-color[Negates --force-color]' \
+    '--no-git-ignore[Negates --use-git-ignore]' \
+    '--no-rewrite-rule-ids[Negates --rewrite-rule-ids]' \
+    '--no-secrets-validation[Disable secret validation]' \
+    '--no-strict[Negates --strict]' \
+    '--no-test-ignore-todo[Negates --test-ignore-todo]' \
+    '--no-time[Negates --time]' \
+    '--no-trace[Negates --trace]' \
+    '--novcs[Assume project not under version control]' \
+    '(-o --output)'{-o,--output}'=[Save results to file or URL]:output:_files' \
+    '--optimizations=[Turn optimizations on/off]:optimizations:(all none)' \
+    '--oss-only[Run using only OSS engine]' \
+    '--pro[Inter-file analysis and Pro languages]' \
+    '--pro-intrafile[Intra-file inter-procedural taint analysis]' \
+    '--pro-languages[Enable Pro languages]' \
+    '--pro-path-sensitive[Path sensitivity]' \
+    '--profile[Undocumented]' \
+    '--project-root=[Force specific project root]:path:_directories' \
+    '(-q --quiet)'{-q,--quiet}'[Only output findings]' \
+    '--remote=[Scan remote git repository]:repo url:' \
+    '--replacement=[Autofix expression for --pattern]:expression:' \
+    '--rewrite-rule-ids[Rewrite rule ids in nested subdirectories]' \
+    '--sarif[Output in SARIF format]' \
+    '--sarif-output=[Write SARIF output]:output:_files' \
+    '--scan-unknown-extensions[Bypass language detection for CLI files]' \
+    '--secrets[Run Semgrep Secrets product]' \
+    '--semgrepignore-v2[Deprecated]' \
+    '--severity=[Report only specified severity]:severity:(INFO WARNING ERROR)' \
+    '--show-supported-languages[Print supported languages list]' \
+    '--skip-unknown-extensions[Negates --scan-unknown-extensions]' \
+    '--strict[Nonzero exit on WARN errors]' \
+    '--test[Run test suite]' \
+    '--test-ignore-todo[Ignore rules marked todoruleid]' \
+    '--text[Output in text format]' \
+    '--text-output=[Write text output]:output:_files' \
+    '--time[Include timing summary]' \
+    '--timeout=[Max time per rule per file]:timeout:(5.0)' \
+    '--timeout-threshold=[Max rules that can timeout]:threshold:(3)' \
+    '--trace[Record traces for debugging]' \
+    '--trace-endpoint=[OpenTelemetry trace endpoint]:endpoint:' \
+    '--use-git-ignore[Use git ignore (default)]' \
+    '(-v --verbose)'{-v,--verbose}'[Show more details]' \
+    '--validate[Validate configuration files]' \
+    '--version[Show version and exit]' \
+    '--vim[Output in vim single-line format]' \
+    '--vim-output=[Write vim output]:output:_files' \
+    '*:target directory or file:_files'
+}
+
+_semgrep "$@"
