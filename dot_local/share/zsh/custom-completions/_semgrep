@@ -4,6 +4,18 @@ _semgrep() {
   local curcontext="$curcontext" state line
   typeset -A opt_args
 
+  # Check if first argument is a known subcommand
+  local -a subcommands
+  subcommands=(scan ci install-semgrep-pro login logout lsp publish show test validate mcp)
+  
+  if (( CURRENT > 1 )) && [[ -z ${subcommands[(r)$words[2]]} ]]; then
+    # No subcommand given, default to scan
+    shift words
+    (( CURRENT-- ))
+    _semgrep_scan
+    return
+  fi
+
   _arguments -C \
     '1: :->command' \
     '*::arg:->args'
@@ -28,6 +40,9 @@ _semgrep() {
         scan)
           _semgrep_scan
           ;;
+        test)
+          _semgrep_test
+          ;;
       esac
       ;;
   esac
@@ -35,7 +50,7 @@ _semgrep() {
 
 _semgrep_scan() {
   _arguments \
-    '(-c --config -f)'{-c,--config,-f}'[YAML configuration file or directory]:config file:_files -g "*.{yml,yaml}"' \
+    '(-c --config -f)'{-c,--config,-f}'[YAML configuration file or directory]:config file:_files' \
     '(-a --autofix)'{-a,--autofix}'[Apply autofix patches]' \
     '--allow-local-builds[Allow building projects in repository]' \
     '--allow-untrusted-validators[Allow validators from non-semgrep.dev origins]' \
@@ -133,6 +148,20 @@ _semgrep_scan() {
     '--version[Show version and exit]' \
     '--vim[Output in vim single-line format]' \
     '--vim-output=[Write vim output]:output:_files' \
+    '*:target directory or file:_files'
+}
+
+_semgrep_test() {
+  _arguments \
+    '(-c --config -f)'{-c,--config,-f}'[YAML configuration file or directory]:config file:_files' \
+    '--debug[Verbose output with debugging information]' \
+    '(-v --verbose)'{-v,--verbose}'[Show more details]' \
+    '(-q --quiet)'{-q,--quiet}'[Only output findings]' \
+    '--json[Output in JSON format]' \
+    '--test-ignore-todo[Ignore rules marked todoruleid]' \
+    '--no-test-ignore-todo[Negates --test-ignore-todo]' \
+    '--strict[Nonzero exit on WARN errors]' \
+    '--no-strict[Negates --strict]' \
     '*:target directory or file:_files'
 }
 
