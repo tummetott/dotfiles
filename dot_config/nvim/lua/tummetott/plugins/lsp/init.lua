@@ -2,6 +2,7 @@ M = {}
 
 -- Loading this module automatically registers all global LSP-related keymaps
 local keymaps = require("tummetott.plugins.lsp.keymaps")
+
 local signature = require("tummetott.plugins.lsp.signature")
 local doc_hl_grp = vim.api.nvim_create_augroup("document_hl", {})
 
@@ -21,29 +22,15 @@ vim.diagnostic.config({
     } or true,
 })
 
-local function on_attach_handler(client, bufnr)
-    -- Register only buffer-local keymaps that override useful built-in Vim
-    -- commands
-    keymaps.register_buffer_keymaps(client, bufnr)
-    signature.setup(client, bufnr)
-
-    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        callback = vim.lsp.buf.clear_references,
-        group = doc_hl_grp,
-        buffer = bufnr,
-    })
-end
-
-local function get_capabilities()
+local function create_capabilities()
     local ok, cmp = pcall(require, 'cmp_nvim_lsp')
     return ok and cmp.default_capabilities()
         or vim.lsp.protocol.make_client_capabilities()
 end
 
--- Set default config for all servers
+-- TODO: Check if this is still needed with blink and nvim 0.11
 vim.lsp.config('*', {
-    on_attach = on_attach_handler,
-    capabilities = get_capabilities(),
+    capabilities = create_capabilities(),
 })
 
 -- Enable language servers
@@ -57,9 +44,34 @@ vim.lsp.enable({
     'copilot',
 })
 
--- lspconfig is still included even though we use the new vim.lsp.config API. It
--- now only provides the built-in server configuration files (under lsp/), which
--- Neovim automatically merges when a server is enabled.
+-- Use the LspAttach event instead of overwriting vim.lsp.config's on_attach,
+-- since lspconfig may define its own on_attach callbacks for certain servers.
+-- This ensures those callbacks are extended rather than replaced.
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local bufnr = args.buf
+
+        -- Register buffer-local keymaps
+        keymaps.register_buffer_keymaps(client, bufnr)
+
+        -- Setup signature help
+        signature.setup(client, bufnr)
+
+        -- Clear references on cursor hold
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            callback = vim.lsp.buf.clear_references,
+            group = doc_hl_grp,
+            buffer = bufnr,
+        })
+    end,
+})
+
+-- nvim-lspconfig provides the default configurations for most language servers.
+-- Neovim merges these defaults with any additional settings defined via the new
+-- LSP API 'vim.lsp.config()' and with any files located under the runtime path
+-- in 'lsp/<server>.lua'. In short, lspconfig defines the base setup, while the
+-- LSP API extend or override parts of that configuration.
 table.insert(M, {
     enabled = true,
     'neovim/nvim-lspconfig',
