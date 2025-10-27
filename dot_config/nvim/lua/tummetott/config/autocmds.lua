@@ -163,9 +163,21 @@ autocmd('BufReadPre', {
 -- filetype for any buffer missing one, restoring syntax highlighting and LSP
 -- setup.
 autocmd('BufEnter', {
-  callback = function()
-    if vim.bo.filetype == '' and vim.fn.expand('%:e') ~= '' then
-      vim.cmd('silent! filetype detect')
-    end
-  end,
+    group = group,
+    callback = function()
+        if vim.bo.filetype == '' and vim.fn.expand('%:e') ~= '' then
+            vim.cmd('silent! filetype detect')
+        end
+    end,
+})
+
+-- Prevent accidentally saving a file named '\'.
+-- When typing ":w\" by mistake, automatically do ":w" instead
+vim.api.nvim_create_autocmd('BufWriteCmd', {
+    pattern = [[\\]],
+    group = group,
+    callback = function()
+        vim.cmd('write')
+    end,
+    desc = "Prevent accidentally saving a file named '\\'"
 })
