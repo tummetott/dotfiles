@@ -1,0 +1,8 @@
+layout {
+    pane {
+        command "zsh"
+        args "-c" "chezmoi apply || read -r"
+        cwd "~"
+        close_on_exit true
+    }
+}

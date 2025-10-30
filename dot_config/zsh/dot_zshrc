@@ -145,9 +145,9 @@ if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
     source "$CONDA_HOME/etc/profile.d/conda.sh"
 fi
 
-# Autostart tmux
-if (( $+commands[tmux] )); then
-    autostart-tmux
+# Auto-start Zellij only if installed, not in SSH
+if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]]; then
+    eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
 # Return with exit code 0
