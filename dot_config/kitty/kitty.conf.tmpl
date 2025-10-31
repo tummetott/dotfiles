@@ -13,8 +13,14 @@ font_size {{ .fontsize }}
 # by the same amount. Increasing the baseline raises glyphs inside the cell and
 # decreasing it lowers them. Decreasing the cell size might cause rendering
 # artifacts, so use with care.
- modify_font cell_height 85%
- modify_font baseline 3
+modify_font cell_height 85%
+modify_font baseline 3
+
+# I dont want CTRL+SHFIT keymaps to be consumed by kitty
+clear_all_shortcuts yes
+map cmd+equal change_font_size all +1.0
+map cmd+minus change_font_size all -1.0
+map cmd+q quit
 
 # Kitty-scrollback controls kitty via a UNIX socket
 allow_remote_control socket-only
@@ -70,40 +76,3 @@ shell_integration enabled
 # default, kitty will stay running, even with no open windows, as is the
 # expected behavior on macOS.
 macos_quit_when_last_window_closed yes
-
-# HACK: Given that tmux lacks support for kitty's keyboard protocol, we find
-# ourselves in the position of manually defining the appropriate 'CSI u'
-# sequences that tmux understands.
-map ctrl+0 send_text all \e[48;5u
-map ctrl+1 send_text all \e[49;5u
-map ctrl+2 send_text all \e[50;5u
-map ctrl+3 send_text all \e[51;5u
-map ctrl+4 send_text all \e[52;5u
-map ctrl+5 send_text all \e[53;5u
-map ctrl+6 send_text all \e[54;5u
-map ctrl+7 send_text all \e[55;5u
-map ctrl+8 send_text all \e[56;5u
-map ctrl+9 send_text all \e[57;5u
-map ctrl+. send_text all \e[46;5u
-map ctrl+, send_text all \e[44;5u
-map ctrl+; send_text all \e[59;5u
-map ctrl+/ send_text all \e[47;5u
-map shift+enter send_text all \e[13;2u
-map ctrl+enter send_text all \e[13;5u
-
-# HACK: tmux struggles to differentiate between TAB and C-i, as well as CR and
-# C-m. Even when sending the correct 'CSI u' sequence for C-i and C-m, tmux
-# v3.3a may incorrectly interpret these as TAB or CR. To address this issue, a
-# workaround involves sending a custom escape sequence (\e[555;0) before the
-# 'CSI u' sequence for the key in question. Within the tmux.conf, this custom
-# sequence serves as a modifier to indicate that the subsequent sequence should
-# not be interpreted as TAB or CR but as C-i or C-m.
-# One drawback of this approach arises when tmux is not in use. In such cases,
-# the custom sequence, which precedes the 'CSI u' sequence, is also transmitted
-# to the terminal program. While most terminal programs ignore unknown custom
-# sequences (like nvim), some may exhibit unexpected behavior. For instance, zsh
-# does not ignore the preceding custom sequence when creating a keymap on C-i.
-# However, this is a minor side effect since I do not use the keys C-i and C-m
-# in zsh.
-map ctrl+i send_text all \e[555;0~\e[105;5u
-map ctrl+m send_text all \e[555;0~\e[109;5u

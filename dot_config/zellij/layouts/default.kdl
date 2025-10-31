@@ -1,11 +1,30 @@
 layout {
     default_tab_template {
+        // Show which-key like tabbar
         // pane size=1 borderless=true {
         //     plugin location="status-bar"
         // }
         children
+        // Show statusbar
         pane size=1 borderless=true {
             plugin location="zjstatus"
+        }
+    }
+    swap_floating_layout {
+        // Layout when there is one floating pane: center it and make it large
+        floating_panes max_panes=1 {
+            pane x="10%" y="10%" width="80%" height="80%"
+        }
+        // Layout when there are two floating panes: place them side by side
+        floating_panes max_panes=2 {
+            pane x=0 y="10%" height="80%"
+            pane x="50%" y="10%" height="80%"
+        }
+        // Layout when there are three floating panes: stack them
+        floating_panes max_panes=3 {
+            pane x=0 y=0 height="50%"
+            pane x="50%" y=0 height="50%"
+            pane x="5%" y="50%" height="50%" width="90%"
         }
     }
 }

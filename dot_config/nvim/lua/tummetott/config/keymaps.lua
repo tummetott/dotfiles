@@ -302,29 +302,64 @@ vim.keymap.set(
     { desc = 'Open Lazy' }
 )
 
+-- vim.api.nvim_create_user_command('DebugKeymaps', function()
+--     vim.keymap.set('n', '<c-i>', '<cmd>echo "C-i"<cr>')
+--     vim.keymap.set('n', '<tab>', '<cmd>echo "Tab"<cr>')
+--     vim.keymap.set('n', '<c-m>', '<cmd>echo "C-m"<cr>')
+--     vim.keymap.set('n', '<cr>', '<cmd>echo "CR"<cr>')
+--     vim.keymap.set('n', '<s-cr>', '<cmd>echo "S-CR"<cr>')
+--     vim.keymap.set('n', '<c-cr>', '<cmd>echo "C-CR"<cr>')
+--     vim.keymap.set('n', '<c-j>', '<cmd>echo "C-j"<cr>')
+--     vim.keymap.set('n', '<c-k>', '<cmd>echo "C-k"<cr>')
+--     vim.keymap.set('n', '<c-l>', '<cmd>echo "C-l"<cr>')
+--     vim.keymap.set('n', '<c-h>', '<cmd>echo "C-h"<cr>')
+--     vim.keymap.set('n', '<c-;>', '<cmd>echo "C-;"<cr>')
+--     vim.keymap.set('n', '<c-,>', '<cmd>echo "C-,"<cr>')
+--     vim.keymap.set('n', '<c-.>', '<cmd>echo "C-."<cr>')
+--     vim.keymap.set('n', '<c-/>', '<cmd>echo "C-/"<cr>')
+--     vim.keymap.set('n', '<c-1>', '<cmd>echo "C-1"<cr>')
+--     vim.keymap.set('n', '<c-2>', '<cmd>echo "C-2"<cr>')
+--     vim.keymap.set('n', '<c-3>', '<cmd>echo "C-3"<cr>')
+--     vim.keymap.set('n', '<c-4>', '<cmd>echo "C-4"<cr>')
+--     vim.keymap.set('n', '<c-5>', '<cmd>echo "C-5"<cr>')
+--     vim.keymap.set('n', '<c-6>', '<cmd>echo "C-6"<cr>')
+--     vim.keymap.set('n', '<c-7>', '<cmd>echo "C-7"<cr>')
+--     vim.keymap.set('n', '<c-8>', '<cmd>echo "C-8"<cr>')
+--     vim.keymap.set('n', '<c-9>', '<cmd>echo "C-9"<cr>')
+--     vim.keymap.set('n', '<c-0>', '<cmd>echo "C-0"<cr>')
+-- end, { desc = 'Print out the pressed keymap for debugging purpose' })
+
+
 vim.api.nvim_create_user_command('DebugKeymaps', function()
-    vim.keymap.set('n', '<c-i>', '<cmd>echo "C-i"<cr>')
-    vim.keymap.set('n', '<tab>', '<cmd>echo "Tab"<cr>')
-    vim.keymap.set('n', '<c-m>', '<cmd>echo "C-m"<cr>')
-    vim.keymap.set('n', '<cr>', '<cmd>echo "CR"<cr>')
-    vim.keymap.set('n', '<s-cr>', '<cmd>echo "S-CR"<cr>')
-    vim.keymap.set('n', '<c-cr>', '<cmd>echo "C-CR"<cr>')
-    vim.keymap.set('n', '<c-j>', '<cmd>echo "C-j"<cr>')
-    vim.keymap.set('n', '<c-k>', '<cmd>echo "C-k"<cr>')
-    vim.keymap.set('n', '<c-l>', '<cmd>echo "C-l"<cr>')
-    vim.keymap.set('n', '<c-h>', '<cmd>echo "C-h"<cr>')
-    vim.keymap.set('n', '<c-;>', '<cmd>echo "C-;"<cr>')
-    vim.keymap.set('n', '<c-,>', '<cmd>echo "C-,"<cr>')
-    vim.keymap.set('n', '<c-.>', '<cmd>echo "C-."<cr>')
-    vim.keymap.set('n', '<c-/>', '<cmd>echo "C-/"<cr>')
-    vim.keymap.set('n', '<c-1>', '<cmd>echo "C-1"<cr>')
-    vim.keymap.set('n', '<c-2>', '<cmd>echo "C-2"<cr>')
-    vim.keymap.set('n', '<c-3>', '<cmd>echo "C-3"<cr>')
-    vim.keymap.set('n', '<c-4>', '<cmd>echo "C-4"<cr>')
-    vim.keymap.set('n', '<c-5>', '<cmd>echo "C-5"<cr>')
-    vim.keymap.set('n', '<c-6>', '<cmd>echo "C-6"<cr>')
-    vim.keymap.set('n', '<c-7>', '<cmd>echo "C-7"<cr>')
-    vim.keymap.set('n', '<c-8>', '<cmd>echo "C-8"<cr>')
-    vim.keymap.set('n', '<c-9>', '<cmd>echo "C-9"<cr>')
-    vim.keymap.set('n', '<c-0>', '<cmd>echo "C-0"<cr>')
-end, { desc = 'Print out the pressed keymap for debugging purpose' })
+    local function map(lhs, desc)
+        pcall(vim.keymap.set, 'n', lhs, function()
+            vim.print(string.format('Pressed: %s', lhs))
+        end, { desc = desc })
+    end
+
+    local keys = {
+        -- letters and numbers
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        -- punctuation & symbols
+        ';', ',', '.', '/', '-', '=', '[', ']', '`', "'", '~', '_', '+',
+        -- navigation & control
+        'Tab', 'CR', 'Enter', 'Esc', 'Bslash', 'Space',
+        'Up', 'Down', 'Left', 'Right', 'Home', 'End', 'PageUp', 'PageDown',
+    }
+
+    for _, key in ipairs(keys) do
+        map('<' .. key .. '>', key)
+        map('<C-' .. key .. '>', 'Ctrl+' .. key)
+        map('<A-' .. key .. '>', 'Alt+' .. key)
+        map('<C-S-' .. key .. '>', 'Ctrl+Shift+' .. key)
+    end
+    for _, key in ipairs({'Tab', 'Left', 'Right', 'Up', 'Down', 'Home', 'End', 'PageUp', 'PageDown'}) do
+        map('<S-' .. key .. '>', 'Shift+' .. key)
+    end
+
+    vim.notify('DebugKeymaps active — press any key to test.')
+end, { desc = 'Register debug mappings for all common keys' })

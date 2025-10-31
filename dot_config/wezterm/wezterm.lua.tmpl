@@ -16,78 +16,14 @@ config.colors = {
 -- The default term is 'xterm-256color'. I could change that to wezterms own
 -- terminfo with the following cmd:
 -- config.term = 'wezterm'
-config.enable_csi_u_key_encoding = true
+config.enable_kitty_keyboard = true
+config.disable_default_key_bindings = true
 config.keys = {
-    {
-        key = 'i',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[555;0~\x1b[105;5u' }
-    },
-    {
-        key = 'm',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[555;0~\x1b[109;5u' },
-    },
-    {
-        key = '/',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[47;5u' },
-    },
-    {
-        key = '[',
-        mods = 'CTRL',
-        action = wezterm.action.Nop,
-    },
-    {
-        key = '0',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[48;5u' },
-    },
-    {
-        key = '1',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[49;5u' },
-    },
-    {
-        key = '2',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[50;5u' },
-    },
-    {
-        key = '3',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[51;5u' },
-    },
-    {
-        key = '4',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[52;5u' },
-    },
-    {
-        key = '5',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[53;5u' },
-    },
-    {
-        key = '6',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[54;5u' },
-    },
-    {
-        key = '7',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[55;5u' },
-    },
-    {
-        key = '8',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[56;5u' },
-    },
-    {
-        key = '9',
-        mods = 'CTRL',
-        action = wezterm.action { SendString = '\x1b[57;5u' },
-    },
+    { key = "=", mods = "CMD", action = wezterm.action.IncreaseFontSize },
+    { key = "-", mods = "CMD", action = wezterm.action.DecreaseFontSize },
+    { key = "q", mods = "CMD", action = wezterm.action.QuitApplication },
+    { key = 'c', mods = 'CMD', action = wezterm.action.CopyTo 'Clipboard' },
+    { key = 'v', mods = 'CMD', action = wezterm.action.PasteFrom 'Clipboard' },
 }
 
 return config
