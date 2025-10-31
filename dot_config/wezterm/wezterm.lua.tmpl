@@ -24,6 +24,10 @@ config.keys = {
     { key = "q", mods = "CMD", action = wezterm.action.QuitApplication },
     { key = 'c', mods = 'CMD', action = wezterm.action.CopyTo 'Clipboard' },
     { key = 'v', mods = 'CMD', action = wezterm.action.PasteFrom 'Clipboard' },
+    -- WezTerm fully supports the Kitty keyboard protocol, but `Ctrl -` currently
+    -- doesn't emit a CSI-u sequence as expected. Manually send the correct
+    -- escape code so it behaves consistently across terminals.
+    { key = "-", mods = "CTRL", action = wezterm.action.SendString("\x1b[45;5u") },
 }
 
 return config
