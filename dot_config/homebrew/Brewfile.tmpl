@@ -72,6 +72,10 @@ brew "wget"
 brew "xclip"
 {{- end }}
 
+{{- if .install.zellij }}
+brew "zellij"
+{{- end }}
+
 {{- if .install.amphetamine }}
 mas "Amphetamine", id: 937984704
 {{- end }}

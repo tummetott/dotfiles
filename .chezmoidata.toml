@@ -64,5 +64,6 @@ wireshark = false
 xclip = false
 xld = false
 yate = false
+zellij = false
 zoom = false
 zsh = false

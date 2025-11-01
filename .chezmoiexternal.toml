@@ -28,6 +28,19 @@ stripComponents = 1
 refreshPeriod = '168h'
 {{ end }}
 
+{{ if and .install.zellij (not (contains "darwin" .osid )) }}
+{{ $arch := .chezmoi.arch }}
+{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+{{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+{{ $asset := printf "zellij-%s-unknown-linux-musl.tar.gz" $arch }}
+['.local/bin/zellij']
+    type = 'archive-file'
+    url = '{{ gitHubLatestReleaseAssetURL "zellij-org/zellij" $asset }}'
+    executable = true
+    path = "zellij"
+    refreshPeriod = '168h'
+{{ end }}
+
 {{ if .install.fzf }}
 ['.local/bin']
 type = 'archive'
