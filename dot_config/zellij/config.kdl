@@ -1,7 +1,3 @@
-// TODO:
-// bind "Alt p" { TogglePaneInGroup; }
-// bind "Alt Shift p" { ToggleGroupMarking; }
-
 keybinds clear-defaults=true {
     normal {
         bind "q" "Ctrl q" { Quit; }
@@ -43,7 +39,6 @@ keybinds clear-defaults=true {
         bind "\\" "Ctrl \\" { NewPane "right"; SwitchToMode "locked"; }
         bind "s" "Ctrl s" { NewPane "stacked"; SwitchToMode "locked"; }
         bind "r" "Ctrl r" { SwitchToMode "renamepane"; PaneNameInput 0; }
-        bind "f" "Ctrl z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         // Mnemonic: Toggle Breakout
         bind "b" "Ctrl b" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
     }
@@ -79,8 +74,8 @@ keybinds clear-defaults=true {
         bind "l" "Ctrl l" { MovePane "right"; }
         bind "n" "Ctrl n" { MovePane; }
         bind "p" "Ctrl p" { MovePaneBackwards; }
-        bind "Shift Ctrl h" { MoveTab "right"; }
-        bind "Shift Ctrl l" { MoveTab "left"; }
+        bind "Shift Ctrl h" { MoveTab "left"; }
+        bind "Shift Ctrl l" { MoveTab "right"; }
         bind "[" "Ctrl [" { PreviousSwapLayout; }
         bind "]" "Ctrl ]" { NextSwapLayout; }
     }
@@ -90,7 +85,7 @@ keybinds clear-defaults=true {
         bind "p" { Search "up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "w" { SearchToggleOption "Wrap"; }
-        bind "o" { SearchToggleOption "WholeWord"; } // TODO:
+        bind "o" { SearchToggleOption "WholeWord"; }
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "e" { EditScrollback; SwitchToMode "locked"; }
         bind "PageDown" { PageScrollDown; }
@@ -139,13 +134,15 @@ keybinds clear-defaults=true {
         bind "Ctrl k" { MoveFocus "up"; SwitchToMode "locked"; }
         bind "Ctrl s" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "Ctrl =" "Ctrl +" { Resize "Increase"; SwitchToMode "locked"; }
-        // TODO: does not work in wezterm
         bind "Ctrl -" "Ctrl _" { Resize "Decrease"; SwitchToMode "locked"; }
         bind "Super t" { NewTab; SwitchToMode "locked"; }
         bind "Super d" { NewPane; SwitchToMode "locked"; }
         bind "Super w" { CloseFocus; SwitchToMode "locked"; }
         bind "Super [" { GoToPreviousTab; SwitchToMode "locked"; }
         bind "Super ]" { GoToNextTab; SwitchToMode "locked"; }
+        bind "Super Alt Left" { GoToPreviousTab; SwitchToMode "locked"; }
+        bind "Super Alt Right" { GoToNextTab; SwitchToMode "locked"; }
+        bind "Ctrl Tab" { ToggleTab; SwitchToMode "locked"; }
         // TODO: make this case sensitive by default. PR needed
         bind "Super f" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "Super 1" { GoToTab 1; SwitchToMode "locked"; }
@@ -159,6 +156,9 @@ keybinds clear-defaults=true {
         bind "Super 9" { GoToTab 9; SwitchToMode "locked"; }
         // Clear zellij's scrollback and redraw prompt
         bind "Super k" { Clear; WriteChars "clear\n"; SwitchToMode "locked"; }
+        bind "Super Enter" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+        bind "Shift Ctrl h" { MoveTab "left"; }
+        bind "Shift Ctrl l" { MoveTab "right"; }
     }
 }
 
@@ -213,8 +213,6 @@ plugins {
 }
 
 // Plugins to load in the background when a new session starts
-// eg. "file:/path/to/my-plugin.wasm"
-// eg. "https://example.com/my-plugin.wasm"
 load_plugins {
 }
 web_client {
@@ -229,13 +227,9 @@ web_client {
 // simplified_ui true
  
 // Choose the theme that is specified in the themes section.
-// Default: default
-// 
 theme "catppuccin-frappe"
  
 // Choose the base input mode of zellij.
-// Default: normal
-// 
 default_mode "locked"
  
 // Choose the path to the default shell that zellij will use for opening new panes

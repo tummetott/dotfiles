@@ -72,74 +72,94 @@ y = 10
 [[keyboard.bindings]]
 key = "T"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action new-tab >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action new-tab"] }
 
 [[keyboard.bindings]]
 key = "W"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action close-pane >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action close-pane"] }
 
 [[keyboard.bindings]]
 key = "["
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-previous-tab >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-previous-tab"] }
 
 [[keyboard.bindings]]
 key = "]"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-next-tab >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-next-tab"] }
 
 [[keyboard.bindings]]
 key = "K"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action clear-screen >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action clear-screen"] }
 
 [[keyboard.bindings]]
 key = "D"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action new-pane >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action new-pane"] }
 
 [[keyboard.bindings]]
 key = "Key1"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 1 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 1"] }
 
 [[keyboard.bindings]]
 key = "Key2"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 2 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 2"] }
 
 [[keyboard.bindings]]
 key = "Key3"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 3 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 3"] }
 
 [[keyboard.bindings]]
 key = "Key4"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 4 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 4"] }
 
 [[keyboard.bindings]]
 key = "Key5"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 5 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 5"] }
 
 [[keyboard.bindings]]
 key = "Key6"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 6 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 6"] }
 
 [[keyboard.bindings]]
 key = "Key7"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 7 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 7"] }
 
 [[keyboard.bindings]]
 key = "Key8"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 8 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 8"] }
 
 [[keyboard.bindings]]
 key = "Key9"
 mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "command -v zellij >/dev/null 2>&1 && zellij action go-to-tab 9 >/dev/null 2>&1"] }
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 9"] }
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action clear && zellij action write-chars 'clear\n'"] }
+
+[[keyboard.bindings]]
+key = "F"
+mods = "Command"
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action switch-mode entersearch"] }
+
+[[keyboard.bindings]]
+key = "H"
+mods = "Command|Shift"
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action move-tab-left"] }
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Command|Shift"
+command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action move-tab-right"] }
