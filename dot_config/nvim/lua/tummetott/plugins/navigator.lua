@@ -1,7 +1,7 @@
 -- Navigate tmux and vim splits with the same shortcuts
 return {
     'numToStr/Navigator.nvim',
-    enabled = true,
+    enabled = false,
     config = true,
     keys = {
         {

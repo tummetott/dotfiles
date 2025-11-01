@@ -1,6 +1,10 @@
 // vim: set ft=kdl:
 
 keybinds clear-defaults=true {
+    // Acts as a prefix mode, similar to tmux. Pressing Ctrl-Space enters this
+    // mode, from which all other Zellij modes (pane, tab, move, resize, etc.)
+    // can be accessed.  This keeps normal and locked modes clean for regular
+    // shell or editor input.
     tmux {
         bind "q" "Ctrl q" { Quit; }
         bind "d" "Ctrl d" { Detach; }
@@ -13,61 +17,55 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
-            // SwitchToMode "locked"
-        }
-        bind "x" "Ctrl x"{
-            LaunchOrFocusPlugin "zellij:share" {
-                floating true
-                move_to_focused_tab true
-            }
-            // SwitchToMode "locked"
         }
         bind "Z" "Ctrl Z"{
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }
-            // SwitchToMode "locked"
+        }
+        bind "x" "Ctrl x"{
+            LaunchOrFocusPlugin "zellij:share" {
+                floating true
+                move_to_focused_tab true
+            }
         }
         bind "a" "Ctrl a" {
             NewTab { layout "chezmoi-apply"; }
-            // SwitchToMode "locked";
         }
     }
+    // When the active pane is not running Neovim, the autolock plugin
+    // automatically switches Zellij from locked to normal mode
     normal {
-        // Intercept `Enter`.
         bind "Enter" {
-            // Passthru `Enter`.
+            // Passthru 'Enter'.
             WriteChars "\u{000D}";
-            // Invoke autolock to immediately assess proper lock state.
-            // (This provides a snappier experience compared to
-            // solely relying on `reaction_seconds` to elapse.)
+            // Invoke autolock to immediately assess proper lock state. This
+            // provides a snappier experience compared to solely relying on
+            // `reaction_seconds` to elapse.
             MessagePlugin "autolock" {};
         }
-        bind "Ctrl h" { MoveFocus "left"; SwitchToMode "locked"; }
-        bind "Ctrl l" { MoveFocus "right"; SwitchToMode "locked"; }
-        bind "Ctrl j" { MoveFocus "down"; SwitchToMode "locked"; }
-        bind "Ctrl k" { MoveFocus "up"; SwitchToMode "locked"; }
-    }
-    shared_except "tmux" {
-        bind "Ctrl Space" { SwitchToMode "tmux"; }
+        bind "Ctrl h" { MoveFocus "left"; }
+        bind "Ctrl l" { MoveFocus "right"; }
+        bind "Ctrl j" { MoveFocus "down"; }
+        bind "Ctrl k" { MoveFocus "up"; }
     }
     pane {
-        bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "locked"; }
-        bind "_" "Ctrl _" { NewPane "down"; SwitchToMode "locked"; }
-        bind "|" "Ctrl |" { NewPane "right"; SwitchToMode "locked"; }
-        bind "\\" "Ctrl \\" { NewPane "right"; SwitchToMode "locked"; }
-        bind "s" "Ctrl s" { NewPane "stacked"; SwitchToMode "locked"; }
+        bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "normal"; }
+        bind "_" "Ctrl _" { NewPane "down"; SwitchToMode "normal"; }
+        bind "|" "Ctrl |" { NewPane "right"; SwitchToMode "normal"; }
+        bind "\\" "Ctrl \\" { NewPane "right"; SwitchToMode "normal"; }
+        bind "s" "Ctrl s" { NewPane "stacked"; SwitchToMode "normal"; }
         bind "r" "Ctrl r" { SwitchToMode "renamepane"; PaneNameInput 0; }
         // Mnemonic: Toggle Breakout
-        bind "b" "Ctrl b" { TogglePaneEmbedOrFloating; SwitchToMode "locked"; }
+        bind "b" "Ctrl b" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
     }
     tab {
         bind "r" "Ctrl r" { SwitchToMode "renametab"; TabNameInput 0; }
-        bind "s" "Ctrl s" { ToggleActiveSyncTab; SwitchToMode "locked"; }
-        bind "[" "Ctrl [" { BreakPaneLeft; SwitchToMode "locked"; }
-        bind "]" "Ctrl ]" { BreakPaneRight; SwitchToMode "locked"; }
-        bind "b" "Ctrl b" { BreakPane; SwitchToMode "locked"; }
+        bind "s" "Ctrl s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
+        bind "[" "Ctrl [" { BreakPaneLeft; SwitchToMode "normal"; }
+        bind "]" "Ctrl ]" { BreakPaneRight; SwitchToMode "normal"; }
+        bind "b" "Ctrl b" { BreakPane; SwitchToMode "normal"; }
     }
     resize {
         bind "left" { Resize "Increase left"; }
@@ -94,8 +92,6 @@ keybinds clear-defaults=true {
         bind "l" "Ctrl l" { MovePane "right"; }
         bind "n" "Ctrl n" { MovePane; }
         bind "p" "Ctrl p" { MovePaneBackwards; }
-        bind "Shift Ctrl h" { MoveTab "left"; }
-        bind "Shift Ctrl l" { MoveTab "right"; }
         bind "[" "Ctrl [" { PreviousSwapLayout; }
         bind "]" "Ctrl ]" { NextSwapLayout; }
     }
@@ -120,8 +116,8 @@ keybinds clear-defaults=true {
         bind "k" { ScrollUp; }
         bind "Ctrl f" { PageScrollDown; }
         bind "Ctrl b" { PageScrollUp; }
-        bind "Ctrl c" { ScrollToBottom; SwitchToMode "locked"; }
-        bind "Esc" { ScrollToBottom; SwitchToMode "locked"; }
+        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "Esc" { ScrollToBottom; SwitchToMode "normal"; }
         bind "d" "Ctrl d" { HalfPageScrollDown; }
         bind "u" "Ctrl u" { HalfPageScrollUp; }
     }
@@ -129,24 +125,24 @@ keybinds clear-defaults=true {
         // TODO: I want to clear the line with Ctrl-u. Create issue
         bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
     }
+    shared_except "entersearch" "normal" "locked" {
+        bind "enter" { SwitchToMode "normal"; }
+    }
+    shared_except "tmux" {
+        bind "Ctrl Space" { SwitchToMode "tmux"; }
+    }
     renametab {
-        bind "Esc" { UndoRenameTab; SwitchToMode "locked"; }
-        bind "Ctrl c" { UndoRenameTab; SwitchToMode "locked"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "normal"; }
+        bind "Ctrl c" { UndoRenameTab; SwitchToMode "normal"; }
     }
     renamepane {
-        bind "Esc" { UndoRenamePane; SwitchToMode "locked"; }
-        bind "Ctrl c" { UndoRenamePane; SwitchToMode "locked"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "normal"; }
+        bind "Ctrl c" { UndoRenamePane; SwitchToMode "normal"; }
     }
-    shared_except "locked" "entersearch" {
-        bind "enter" { SwitchToMode "locked"; }
+    shared_except "search" "renametab" "renamepane" "normal" "locked" {
+        bind "Esc" { SwitchToMode "normal"; }
+        bind "Ctrl c" { SwitchToMode "normal"; }
     }
-    shared_except "locked" "search" "renametab" "renamepane" {
-        bind "Esc" { SwitchToMode "locked"; }
-        bind "Ctrl c" { SwitchToMode "locked"; }
-    }
-    // shared_except "normal" {
-    //     bind "Ctrl Space" { SwitchToMode "normal"; }
-    // }
     shared_among "locked" "normal" {
         bind "Ctrl s" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "Ctrl =" "Ctrl +" { Resize "Increase"; SwitchToMode "locked"; }
@@ -228,6 +224,9 @@ plugins {
         tab_truncate_end_format "#[fg=$white] ..."
         tab_truncate_start_format "#[fg=$white]... "
     }
+    // zellij-autolock is an Zellij plugin that automatically switches between
+    // Zellij's "Normal" and "Locked" modes by inspecting the command running
+    // within the focused Zellij pane.
     autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
         // Enabled at start?
         is_enabled true
