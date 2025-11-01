@@ -1,7 +1,7 @@
 // vim: set ft=kdl:
 
 keybinds clear-defaults=true {
-    normal {
+    tmux {
         bind "q" "Ctrl q" { Quit; }
         bind "d" "Ctrl d" { Detach; }
         bind "p" "Ctrl p" { SwitchToMode "pane"; }
@@ -13,26 +13,44 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "locked"
+            // SwitchToMode "locked"
         }
         bind "x" "Ctrl x"{
             LaunchOrFocusPlugin "zellij:share" {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "locked"
+            // SwitchToMode "locked"
         }
         bind "Z" "Ctrl Z"{
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "locked"
+            // SwitchToMode "locked"
         }
         bind "a" "Ctrl a" {
             NewTab { layout "chezmoi-apply"; }
-            SwitchToMode "locked";
+            // SwitchToMode "locked";
         }
+    }
+    normal {
+        // Intercept `Enter`.
+        bind "Enter" {
+            // Passthru `Enter`.
+            WriteChars "\u{000D}";
+            // Invoke autolock to immediately assess proper lock state.
+            // (This provides a snappier experience compared to
+            // solely relying on `reaction_seconds` to elapse.)
+            MessagePlugin "autolock" {};
+        }
+        bind "Ctrl h" { MoveFocus "left"; SwitchToMode "locked"; }
+        bind "Ctrl l" { MoveFocus "right"; SwitchToMode "locked"; }
+        bind "Ctrl j" { MoveFocus "down"; SwitchToMode "locked"; }
+        bind "Ctrl k" { MoveFocus "up"; SwitchToMode "locked"; }
+    }
+    shared_except "tmux" {
+        bind "Ctrl Space" { SwitchToMode "tmux"; }
     }
     pane {
         bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "locked"; }
@@ -126,14 +144,10 @@ keybinds clear-defaults=true {
         bind "Esc" { SwitchToMode "locked"; }
         bind "Ctrl c" { SwitchToMode "locked"; }
     }
-    shared_except "normal" {
-        bind "Ctrl space" { SwitchToMode "normal"; }
-    }
+    // shared_except "normal" {
+    //     bind "Ctrl Space" { SwitchToMode "normal"; }
+    // }
     shared_among "locked" "normal" {
-        bind "Ctrl h" { MoveFocus "left"; SwitchToMode "locked"; }
-        bind "Ctrl l" { MoveFocus "right"; SwitchToMode "locked"; }
-        bind "Ctrl j" { MoveFocus "down"; SwitchToMode "locked"; }
-        bind "Ctrl k" { MoveFocus "up"; SwitchToMode "locked"; }
         bind "Ctrl s" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "Ctrl =" "Ctrl +" { Resize "Increase"; SwitchToMode "locked"; }
         bind "Ctrl -" "Ctrl _" { Resize "Decrease"; SwitchToMode "locked"; }
@@ -141,7 +155,7 @@ keybinds clear-defaults=true {
         bind "Super d" { NewPane; SwitchToMode "locked"; }
         bind "Super w" { CloseFocus; SwitchToMode "locked"; }
         bind "Super [" { GoToPreviousTab; SwitchToMode "locked"; }
-        bind "Super ]" { GoToNextTab; SwitchToMode "locked"; }
+        bind "Super ]" { GoToNextTab; SwitchToMode "normal"; }
         bind "Super Alt Left" { GoToPreviousTab; SwitchToMode "locked"; }
         bind "Super Alt Right" { GoToNextTab; SwitchToMode "locked"; }
         bind "Ctrl Tab" { ToggleTab; SwitchToMode "locked"; }
@@ -181,6 +195,8 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    // TODO: consider managing them in chezmoi externals and access via local
+    // "file:<path>"
     zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
         color_base "0"
         color_blue "4"
@@ -212,45 +228,57 @@ plugins {
         tab_truncate_end_format "#[fg=$white] ..."
         tab_truncate_start_format "#[fg=$white]... "
     }
+    autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
+        // Enabled at start?
+        is_enabled true
+        // Lock when any open these programs open.
+        triggers "nvim|vim"
+        // Reaction to input occurs after this many seconds. (default=0.3)
+        // (An existing scheduled reaction prevents additional reactions.)
+        reaction_seconds "0.3"
+        // Print to Zellij log?
+        print_to_log true
+    }
 }
 
 // Plugins to load in the background when a new session starts
 load_plugins {
+    autolock
 }
 
 // Web client configuration
 web_client {
     font "monospace"
 }
- 
+
 // Use a simplified UI without special fonts (arrow glyphs)
 {{- if .nerdfonts }}
 simplified_ui false
 {{- else }}
 simplified_ui true
 {{- end }}
- 
+
 // Choose the theme that is specified in the themes section.
 theme "catppuccin-frappe"
- 
+
 // Choose the base input mode of zellij.
-default_mode "locked"
- 
+// default_mode "locked"
+
 // Choose the path to override cwd that zellij will use for opening new panes
 // default_cwd "/tmp"
- 
+
 // The name of the default layout to load on startup
 // default_layout "compact"
- 
+
 // Toggle having pane frames around the panes
 pane_frames false
- 
+
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
 // or should each user have their own cursor (false)
 // (Requires restart)
 mirror_session false
- 
+
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
 // eg. when terminal window with an active zellij session is closed
 // (Requires restart)
@@ -258,14 +286,14 @@ mirror_session false
 //   - detach (Default)
 //   - quit
 on_force_close "detach"
- 
+
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
 // buffer. Excess number of lines are discarded in a FIFO fashion.
 // (Requires restart)
 // Valid values: positive integers
 scroll_buffer_size 10000
- 
+
 // Provide a command to execute when copying text. The text will be piped to
 // the stdin of the program to perform the copy. This can be used with
 // terminal emulators which do not support the OSC 52 ANSI control sequence
@@ -274,53 +302,53 @@ scroll_buffer_size 10000
 // copy_command "xclip -selection clipboard" // x11
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
- 
+
 // Choose the destination for copied text. Allows using the primary selection
 // buffer (on x11/wayland) instead of the system clipboard. Does not apply when
 // using copy_command. Options: system, primary
 copy_clipboard "system"
- 
+
 // Enable automatic copying (and clearing) of selection when releasing mouse
 copy_on_select true
- 
+
 // A fixed name to always give the Zellij session.
 // Consider also setting `attach_to_session true,`
 // otherwise this will error if such a session exists.
 // Default: <RANDOM>
 session_name "Default"
- 
+
 // When `session_name` is provided, attaches to that session
 // if it is already running or creates it otherwise.
 attach_to_session true
- 
+
 // Toggle between having Zellij lay out panes according to a predefined set of
 // layouts whenever possible
 auto_layout true
- 
+
 // Whether sessions should be serialized to the cache folder (including their
 // tabs/panes, cwds and running commands) so that they can later be resurrected
 session_serialization true
- 
+
 // Whether pane viewports are serialized along with the session, default is false
 serialize_pane_viewport false
- 
+
 // Scrollback lines to serialize along with the pane viewport when serializing
 // sessions, 0 defaults to the scrollback size. If this number is higher than
 // the scrollback size, it will also default to the scrollback size. This does
 // nothing if `serialize_pane_viewport` is not true.
 scrollback_lines_to_serialize 0
- 
+
 // Enable or disable the rendering of styled and colored underlines (undercurl).
 // May need to be disabled for certain unsupported terminals
 styled_underlines true
- 
+
 // How often in seconds sessions are serialized
 // serialization_interval 10000
- 
+
 // Enable or disable writing of session metadata to disk (if disabled, other
 // sessions might not know metadata info on this session)
 disable_session_metadata false
- 
+
 // Enable or disable support for the enhanced Kitty Keyboard Protocol (the host
 // terminal must also support it)
 support_kitty_keyboard_protocol true
@@ -356,21 +384,21 @@ web_sharing "off"
 // Whether to enforce https connections to the web server when it is bound to
 // localhost (127.0.0.0/8). Note: https is ALWAYS enforced when bound to
 // non-local interfaces enforce_https_for_localhost false
- 
+
 // Whether to stack panes when resizing beyond a certain size
 stacked_resize true
- 
+
 // Whether to show tips on startup
 show_startup_tips false
- 
+
 // Whether to show release notes on first version run
 show_release_notes true
- 
+
 // Whether to enable mouse hover effects and pane grouping functionality
 advanced_mouse_actions true
- 
+
 // The ip address the web server should listen on when it starts
 // web_server_ip "127.0.0.1"
- 
+
 // The port the web server should listen on when it starts
 // web_server_port 8083
