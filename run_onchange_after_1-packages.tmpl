@@ -12,6 +12,7 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
+{{ if .sudo }}
 if command -v sudo >/dev/null 2>&1 && id -nG "$USER" | grep -qE '\b(sudo|admin)\b'; then
     if sudo -n true 2>/dev/null; then
         info "Sudo credentials already cached."
@@ -36,6 +37,7 @@ else
     info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs."
     exit 1
 fi
+{{ end }}
 
 {{ if contains "darwin" .osid }}
     {{ template "bootstrap/brew-packages.tmpl" . }}
