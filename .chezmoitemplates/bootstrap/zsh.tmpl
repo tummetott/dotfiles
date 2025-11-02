@@ -7,7 +7,7 @@ if has zsh; then
             # Sudo password is cached
             log sudo chsh -s "$(which zsh)" "$USER"
         {{ else }}
-        warn "Could not make zsh the default shell. No sudo"
+        warn "Could not make zsh the default shell (missing sudo)"
         {{ end }}
     fi
 fi
