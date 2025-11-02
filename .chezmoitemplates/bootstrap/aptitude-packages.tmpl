@@ -1,18 +1,23 @@
 # vim: set ft=bash:
 
-info 'Upgrade and autoremove apt packages'
-log sudo apt -y update
-log sudo apt -y upgrade
-log sudo apt -y autoremove
+{{ if .sudo }}
+    info 'Upgrade and autoremove apt packages'
+    log sudo apt -y update
+    log sudo apt -y upgrade
+    log sudo apt -y autoremove
 
-if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
-    error 'Could not find Aptfile'
-    exit 1
-fi
-
-while read -r line; do
-    if ! apt list --installed 2>/dev/null | grep -q "^$line"; then
-        info "Installing $line"
-        log sudo apt -y install "$line"
+    if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
+        error 'Could not find Aptfile'
+        exit 1
     fi
-done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/aptitude/Aptfile")
+
+    while read -r line; do
+        if ! apt list --installed 2>/dev/null | grep -q "^$line"; then
+            info "Installing $line"
+            log sudo apt -y install "$line"
+        fi
+    done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/aptitude/Aptfile")
+{{ else }}
+    warn "Skipping apt installation (missing sudo)"
+{{ end }}
+

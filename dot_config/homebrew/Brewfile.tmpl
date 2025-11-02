@@ -8,8 +8,20 @@ brew "mas"
 brew "bat"
 {{- end }}
 
+{{- if .install.bottom }}
+brew "bottom"
+{{- end }}
+
 {{- if .install.cmake }}
 brew "cmake"
+{{- end }}
+
+{{- if .install.fd }}
+brew "fd"
+{{- end }}
+
+{{- if .install.fzf }}
+brew "fzf"
 {{- end }}
 
 {{- if .install.go }}
@@ -24,8 +36,16 @@ brew "iproute2mac"
 brew "lf"
 {{- end }}
 
+{{- if .install.lsd }}
+brew "lsd"
+{{- end }}
+
 {{- if .install.neofetch }}
 brew "neofetch"
+{{- end }}
+
+{{- if .install.neovim }}
+brew "neovim"
 {{- end }}
 
 {{- if .install.ninja }}
@@ -40,6 +60,10 @@ brew "nmap"
 brew "node"
 {{- end }}
 
+{{- if .install.nushell }}
+brew "nushell"
+{{- end }}
+
 {{- if .install.perl }}
 brew "perl"
 {{- end }}
@@ -52,12 +76,24 @@ brew "ripgrep"
 brew "ruby"
 {{- end }}
 
+{{- if .install.sd }}
+brew "sd"
+{{- end }}
+
 {{- if .install.shellcheck }}
 brew "shellcheck"
 {{- end }}
 
+{{- if .install.starship }}
+brew "starship"
+{{- end }}
+
 {{- if .install.tldr }}
 brew "tealdeer"
+{{- end }}
+
+{{- if .install.tmux }}
+brew "tmux"
 {{- end }}
 
 {{- if .install.tree }}
@@ -76,6 +112,10 @@ brew "xclip"
 brew "zellij"
 {{- end }}
 
+{{- if .install.zsh }}
+brew "zsh"
+{{- end }}
+
 {{- if .install.amphetamine }}
 mas "Amphetamine", id: 937984704
 {{- end }}
@@ -83,6 +123,10 @@ mas "Amphetamine", id: 937984704
 {{- if .nerdfonts }}
 cask "font-fira-code-nerd-font"
 cask "font-meslo-lg-nerd-font"
+{{- end }}
+
+{{- if .install.alacritty }}
+cask "alacritty"
 {{- end }}
 
 {{- if .install.anki }}
@@ -171,6 +215,10 @@ cask "typora"
 
 {{- if .install.vlc }}
 cask "vlc"
+{{- end }}
+
+{{- if .install.wezterm }}
+cask "wezterm"
 {{- end }}
 
 {{- if .install.wireguard }}

@@ -1,48 +1,42 @@
 # vim: set ft=bash:
 
 if ! has alacritty; then
-    {{ if contains "darwin" .osid }}
-    info 'Installing alacritty'
-    log brew update
-    log brew install --cask alacritty
+    {{ if and .sudo (regexMatch "ubuntu|pop|kali" .osid) }}
+        if ! has rustup; then
+            {{ template "bootstrap/rust.tmpl" . }}
+        else
+            log rustup update stable
+        fi
+        info 'Installing dependencies for alacritty'
+        log sudo apt update
+        log sudo apt -y install cmake pkg-config libfreetype6-dev \
+            libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 
-    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
-    if ! has rustup; then
-        {{ template "bootstrap/rust.tmpl" . }}
-    else
-        log rustup update stable
-    fi
-    info 'Installing dependencies for alacritty'
-    log sudo apt update
-    log sudo apt -y install cmake pkg-config libfreetype6-dev \
-        libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+        info 'Installing alacritty'
+        tempdir="$(mktemp -d)"
+        log git clone 'https://github.com/alacritty/alacritty.git' "$tempdir"
+        pushd "$tempdir"
+        log cargo +stable build --release
+        sudo cp target/release/alacritty /usr/local/bin
 
-    info 'Installing alacritty'
-    tempdir="$(mktemp -d)"
-    log git clone 'https://github.com/alacritty/alacritty.git' "$tempdir"
-    pushd "$tempdir"
-    log cargo +stable build --release
-    sudo cp target/release/alacritty /usr/local/bin
+        # Create desktop entry
+        sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+        sudo desktop-file-install extra/linux/Alacritty.desktop
+        sudo update-desktop-database
 
-    # Create desktop entry
-    sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-    sudo desktop-file-install extra/linux/Alacritty.desktop
-    sudo update-desktop-database
+        # Add zsh completions
+        cp extra/completions/_alacritty ~/.local/share/zsh/custom-completions/_alacritty
 
-    # Add zsh completions
-    cp extra/completions/_alacritty ~/.local/share/zsh/custom-completions/_alacritty
+        # Create terminfo
+        if ! infocmp alacritty &> /dev/null; then
+            info 'Create terminfo entry for alacritty'
+            sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+        fi
 
-    # Create terminfo
-    if ! infocmp alacritty &> /dev/null; then
-        info 'Create terminfo entry for alacritty'
-        sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-    fi
-
-    # Cleanup
-    popd && rm -rf "$tempdir"
-
+        # Cleanup
+        popd && rm -rf "$tempdir"
     {{ else }}
-    error 'No installation instructions found for: alacritty'
-    exit 1
+        error 'No installation instructions found for: alacritty'
+        exit 1
     {{ end }}
 fi

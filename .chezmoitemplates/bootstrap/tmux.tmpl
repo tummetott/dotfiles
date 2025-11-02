@@ -1,37 +1,28 @@
 # vim: set ft=bash:
 
 if ! has tmux; then
-    {{ if contains "darwin" .osid }}
-    info 'Installing tmux'
-    log brew update
-    log brew install tmux
 
-    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
-    info 'Installing tmux'
-    log sudo apt -y update
-    log sudo apt -y install tmux
+    {{ if and .sudo (contains "raspberrypi" .osid) }}
+        info 'Installing dependencies for tmux'
+        log sudo apt update
+        log sudo apt -y install automake libevent-dev ncurses-dev build-essential \
+            bison pkg-config
 
-    {{ else if contains "raspberrypi" .osid }}
-    info 'Installing dependencies for tmux'
-    log sudo apt update
-    log sudo apt -y install automake libevent-dev ncurses-dev build-essential \
-        bison pkg-config
-
-    info 'Installing tmux'
-    tempdir="$(mktemp -d)"
-    log git clone 'https://github.com/tmux/tmux.git' "$tempdir"
-    pushd "$tempdir"
-    log sh autogen.sh
-    log ./configure
-    log make
-    log sudo make install
-    popd && rm -rf "$tempdir"
-
+        info 'Installing tmux'
+        tempdir="$(mktemp -d)"
+        log git clone 'https://github.com/tmux/tmux.git' "$tempdir"
+        pushd "$tempdir"
+        log sh autogen.sh
+        log ./configure
+        log make
+        log sudo make install
+        popd && rm -rf "$tempdir"
     {{ else }}
-    error 'No installation instructions found for: tmux'
-    exit 1
+        error 'No installation instructions found for: tmux'
+        exit 1
     {{ end }}
 fi
+
 
 # Create the 'tmux-256color' terminfo entry if it is missing. Many systems are
 # operating with older 'ncurses' versions (pre-6.3), which do not have the

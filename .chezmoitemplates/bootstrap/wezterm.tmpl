@@ -10,12 +10,7 @@ is_wezterm_installed() {
 }
 
 if ! is_wezterm_installed; then
-    {{ if contains "darwin" .osid }}
-    info 'Installing wezterm'
-    log brew update
-    log brew install --cask wezterm
-
-    {{ else if regexMatch "ubuntu|pop|kali" .osid }}
+    {{ if regexMatch "ubuntu|pop|kali" .osid }}
     if ! has flatpak; then
         {{ template "bootstrap/flatpak.tmpl" . }}
     fi

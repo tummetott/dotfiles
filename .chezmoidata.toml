@@ -1,5 +1,6 @@
 fontsize = 17.0
 nerdfonts = false
+sudo = false
 
 [install]
 alacritty = false
@@ -47,6 +48,7 @@ sd = false
 seafile = false
 shellcheck = false
 signal = false
+snap = false
 starship = false
 sublime = false
 texifier = false

@@ -1,17 +1,10 @@
 # vim: set ft=bash:
 
+{{ if not (contains "darwin" .osid) }}
 if ! has starship; then
-
-    {{ if contains "darwin" .osid }}
-    info 'Installing starship'
-    log brew update
-    log brew install starship
-
-    {{ else }}
     info 'Installing starship'
     # The log function does not work gere because of the piping
     curl -fsSL https://starship.rs/install.sh \
         | sh -s -- -y --bin-dir ~/.local/bin >> "$BOOTSTRAP_LOG_FILE" 2>&1
-
-    {{ end }}
 fi
+{{ end }}

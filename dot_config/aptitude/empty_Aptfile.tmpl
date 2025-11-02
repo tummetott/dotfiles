@@ -70,8 +70,16 @@ ruby-full
 shellcheck
 {{- end }}
 
+{{- if .install.snap }}
+snapd
+{{- end }}
+
 {{- if .install.tldr }}
 tldr
+{{- end }}
+
+{{- if .install.tmux }}
+tmux
 {{- end }}
 
 {{- if .install.tree }}
@@ -80,4 +88,8 @@ tree
 
 {{- if .install.wget }}
 wget
+{{- end }}
+
+{{- if .install.zsh }}
+zsh
 {{- end }}

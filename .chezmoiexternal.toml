@@ -1,54 +1,164 @@
-{{ if and .nerdfonts (not (contains "darwin" .osid )) }}
-['.local/share/fonts/FiraCode']
-type = 'archive'
-url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz'
-extract = true
-include = ['*.ttf']
-refreshPeriod = '168h'
+# Macos packages are installed with brew
+{{ if not (contains "darwin" .osid ) }}
+    {{ if .nerdfonts }}
+    ['.local/share/fonts/FiraCode']
+    type = 'archive'
+    url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz'
+    extract = true
+    include = ['*.ttf']
+    refreshPeriod = '168h'
 
-['.local/share/fonts/Meslo']
-type = 'archive'
-url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.tar.xz'
-extract = true
-include = ['*.ttf']
-refreshPeriod = '168h'
-{{ end }}
+    ['.local/share/fonts/Meslo']
+    type = 'archive'
+    url = 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.tar.xz'
+    extract = true
+    include = ['*.ttf']
+    refreshPeriod = '168h'
+    {{ end }}
 
-{{ if .install.neovim }}
-['.local/share/nvim-app']
-type = 'archive'
-{{ $arch := .chezmoi.arch }}
-{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-{{ $os := .chezmoi.os }}
-{{ if eq $os "darwin" }}{{ $os = "macos" }}{{ end }}
-{{ $asset := printf "nvim-%s-%s.tar.gz" $os $arch }}
-url = '{{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset }}'
-extract = true
-stripComponents = 1
-refreshPeriod = '168h'
-{{ end }}
+    {{ if .install.neovim }}
+    ['.local/share/nvim-app']
+    type = 'archive'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ if eq $os "darwin" }}{{ $os = "macos" }}{{ end }}
+    {{ $asset := printf "nvim-%s-%s.tar.gz" $os $arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset }}'
+    extract = true
+    stripComponents = 1
+    refreshPeriod = '168h'
+    {{ end }}
 
-{{ if and .install.zellij (not (contains "darwin" .osid )) }}
-{{ $arch := .chezmoi.arch }}
-{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-{{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-{{ $asset := printf "zellij-%s-unknown-linux-musl.tar.gz" $arch }}
-['.local/bin/zellij']
+    {{ if .install.zellij }}
+    ['.local/bin/zellij']
     type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "zellij-%s-apple-darwin.tar.gz" $arch }}
+    {{ else if eq $os "linux" }}
+      {{ $asset = printf "zellij-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
     url = '{{ gitHubLatestReleaseAssetURL "zellij-org/zellij" $asset }}'
     executable = true
     path = "zellij"
+    refreshPeriod = "168h"
+    {{ end }}
+
+    {{ if .install.fd }}
+    ['.local/bin/fd']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "fd-v*-%s-apple-darwin.tar.gz" $arch }}
+    {{ else }}
+      {{ $asset = printf "fd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
+    url = '{{ gitHubLatestReleaseAssetURL "sharkdp/fd" $asset }}'
+    executable = true
+    path = "fd"
+    stripComponents = 1
+    refreshPeriod = "168h"
+    {{ end }}
+
+    {{ if .install.sd }}
+    ['.local/bin/sd']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "sd-v*-%s-apple-darwin.tar.gz" $arch }}
+    {{ else }}
+      {{ $asset = printf "sd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
+    url = '{{ gitHubLatestReleaseAssetURL "chmln/sd" $asset }}'
+    executable = true
+    path = "sd"
+    stripComponents = 1
+    refreshPeriod = "168h"
+    {{ end }}
+
+    {{ if .install.lsd }}
+    ['.local/bin/lsd']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "lsd-v*-%s-apple-darwin.tar.gz" $arch }}
+    {{ else }}
+      {{ $asset = printf "lsd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
+    url = '{{ gitHubLatestReleaseAssetURL "lsd-rs/lsd" $asset }}'
+    executable = true
+    path = "lsd"
+    stripComponents = 1
+    refreshPeriod = "168h"
+    {{ end }}
+
+    {{ if .install.bottom }}
+    ['.local/bin/btm']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "bottom_%s-apple-darwin.tar.gz" $arch }}
+    {{ else }}
+      {{ $asset = printf "bottom_%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
+    url = '{{ gitHubLatestReleaseAssetURL "ClementTsang/bottom" $asset }}'
+    executable = true
+    path = "btm"
+    refreshPeriod = "168h"
+    {{ end }}
+
+    {{ if .install.fzf }}
+    ['.local/bin']
+    type = 'archive'
+    {{ $asset := printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "junegunn/fzf" $asset }}'
+    extract = true
     refreshPeriod = '168h'
+    {{ end }}
+
+    {{ if .install.nushell }}
+    ['.local/bin/nu']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $os := .chezmoi.os }}
+    {{ $asset := "" }}
+    {{ if eq $os "darwin" }}
+      {{ $asset = printf "nu-*-%s-apple-darwin.tar.gz" $arch }}
+    {{ else }}
+      {{ $asset = printf "nu-*-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ end }}
+    url = '{{ gitHubLatestReleaseAssetURL "nushell/nushell" $asset }}'
+    path = "nu"
+    stripComponents = 1
+    executable = true
+    refreshPeriod = "168h"
+    {{ end }}
 {{ end }}
 
 {{ if .install.fzf }}
-['.local/bin']
-type = 'archive'
-{{ $asset := printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch }}
-url = '{{ gitHubLatestReleaseAssetURL "junegunn/fzf" $asset }}'
-extract = true
-refreshPeriod = '168h'
-
 ['.local/share/tinted-theming/base16-fzf']
 type = 'git-repo'
 url = 'https://github.com/tinted-theming/base16-fzf.git'

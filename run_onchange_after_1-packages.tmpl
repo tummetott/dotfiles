@@ -12,9 +12,30 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-# Cache the sudo password for subsequent sudo commands within this script
-info "Please enter your computer's password"
-sudo true
+if command -v sudo >/dev/null 2>&1 && id -nG "$USER" | grep -qE '\b(sudo|admin)\b'; then
+    if sudo -n true 2>/dev/null; then
+        info "Sudo credentials already cached."
+    else
+        info "Requesting your password to enable sudo access..."
+        trap - ERR
+        set +e
+        sudo -v
+        rc=$?
+        set -e
+        trap on_error ERR
+        if [ "$rc" -eq 0 ]; then
+            info "Sudo access granted and cached."
+        else
+            error "Sudo authentication failed or was cancelled. Aborting setup."
+            info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs."
+            exit 1
+        fi
+    fi
+else
+    error "This user has no sudo or admin privileges. Aborting setup."
+    info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs."
+    exit 1
+fi
 
 {{ if contains "darwin" .osid }}
     {{ template "bootstrap/brew-packages.tmpl" . }}
@@ -36,14 +57,6 @@ sudo true
     {{ template "bootstrap/tmux.tmpl" . }}
 {{ end }}
 
-{{ if .install.fd }}
-    {{ template "bootstrap/fd.tmpl" . }}
-{{ end }}
-
-{{ if .install.sd }}
-    {{ template "bootstrap/sd.tmpl" . }}
-{{ end }}
-
 {{ if .install.rust }}
     {{ template "bootstrap/rust.tmpl" . }}
 {{ end }}
@@ -60,10 +73,6 @@ sudo true
     {{ template "bootstrap/uv.tmpl" . }}
 {{ end }}
 
-{{ if .install.lsd }}
-    {{ template "bootstrap/lsd.tmpl" . }}
-{{ end }}
-
 {{ if .install.wezterm }}
     {{ template "bootstrap/wezterm.tmpl" . }}
 {{ end }}
@@ -72,18 +81,10 @@ sudo true
     {{ template "bootstrap/alacritty.tmpl" . }}
 {{ end }}
 
-{{ if .install.nushell }}
-    {{ template "bootstrap/nushell.tmpl" . }}
-{{ end }}
-
 {{ if .install.signal }}
     {{ template "bootstrap/signal.tmpl" . }}
 {{ end }}
 
 {{ if .install.neovim }}
     {{ template "bootstrap/neovim.tmpl" . }}
-{{ end }}
-
-{{ if .install.bottom }}
-    {{ template "bootstrap/bottom.tmpl" . }}
 {{ end }}
