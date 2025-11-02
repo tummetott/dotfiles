@@ -10,9 +10,9 @@ source ~/.config/shell/env
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
-{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
-info 'Generate locale'
-log sudo locale-gen "en_US.UTF-8"
+{{ if and .sudo (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
+    info 'Generate locale'
+    log sudo locale-gen "en_US.UTF-8"
 {{ end }}
 
 info 'Change dotfile repository from HTTPS to SSH'
