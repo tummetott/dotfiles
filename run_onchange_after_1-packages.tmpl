@@ -25,16 +25,16 @@ if command -v sudo >/dev/null 2>&1 && id -nG "$USER" | grep -qE '\b(sudo|admin)\
         set -e
         trap on_error ERR
         if [ "$rc" -eq 0 ]; then
-            info "Sudo access granted and cached."
+            info "Sudo access granted and cached"
         else
             error "Sudo authentication failed or was cancelled. Aborting setup."
-            info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs."
+            info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs"
             exit 1
         fi
     fi
 else
     error "This user has no sudo or admin privileges. Aborting setup."
-    info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs."
+    info "Tip: Disable sudo in "~/.config/chezmoi/chezmoi.toml" to skip sudo-dependent installs"
     exit 1
 fi
 {{ end }}

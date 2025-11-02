@@ -18,7 +18,7 @@ Define what applications to install by editing the `chezmoi.toml` file
 vim ~/.config/chezmoi/chezmoi.toml
 ```
 
-Install dotfiles and applications
+Install dotfiles and applications (chezmoi not in PATH yet)
 ```sh
 ~/.local/bin/chezmoi apply
 
