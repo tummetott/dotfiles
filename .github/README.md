@@ -8,8 +8,20 @@
 
 ### Install
 
+Clone dotfiles and init chezmoi
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply tummetott
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init tummetott
+```
+
+Define what applications to install by editing the `chezmoi.toml` file
+```sh
+vim ~/.config/chezmoi/chezmoi.toml
+```
+
+Install dotfiles and applications
+```sh
+chezmoi apply
+
 ```
 
 ### Post-Installation
