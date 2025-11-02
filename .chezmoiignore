@@ -32,7 +32,7 @@ Library
 .ssh/id_ed25519_srlabs.pub
 {{ end }}
 
-{{ if ne .chezmoi.hostname "Void" }}
+{{ if and (ne .chezmoi.hostname "Void") (ne .chezmoi.hostname "Catch") }}
 .ssh/id_ed25519
 .ssh/id_ed25519.pub
 {{ end }}
