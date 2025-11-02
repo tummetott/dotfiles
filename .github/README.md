@@ -20,7 +20,7 @@ vim ~/.config/chezmoi/chezmoi.toml
 
 Install dotfiles and applications
 ```sh
-chezmoi apply
+~/.local/bin/chezmoi apply
 
 ```
 
