@@ -22,20 +22,6 @@ map cmd+equal change_font_size all +1.0
 map cmd+minus change_font_size all -1.0
 map cmd+q quit
 
-# Kitty-scrollback controls kitty via a UNIX socket
-allow_remote_control socket-only
-listen_on unix:/tmp/kitty
-
-# Create an alias for the kitten
-action_alias scrollback_nvim kitten
-    \ $HOME/.local/share/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
-    \ --nvim-args -u ~/.config/nvim/lua/tummetott/plugins/kitty-scrollback/scrollback-conf.lua
-
-# Keymap to browse the whole scrollback buffer
-map kitty_mod+enter scrollback_nvim
-# map kitty_mod+g scrollback_nvim --config last_cmd
-# map kitty_mod+ scrollback_nvim --config last_visited_cmd
-
 # Open the a URL with ctrl+left click
 mouse_map cmd+left release grabbed,ungrabbed mouse_handle_click link
 
