@@ -3,8 +3,8 @@
 if ! has flatpak; then
     {{ if and .sudo (regexMatch "ubuntu|pop|kali" .osid) }}
         info 'Installing flatpak'
-        log sudo apt -y update
-        log sudo apt -y install flatpak
+        log sudo apt-get -q update
+        log sudo apt-get -qy install flatpak
         URL='https://dl.flathub.org/repo/flathub.flatpakrepo'
         log flatpak remote-add --user --if-not-exists flathub "$URL"
 

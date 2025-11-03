@@ -8,8 +8,8 @@ if ! has alacritty; then
             log rustup update stable
         fi
         info 'Installing dependencies for alacritty'
-        log sudo apt update
-        log sudo apt -y install cmake pkg-config libfreetype6-dev \
+        log sudo apt-get -q update
+        log sudo apt-get -qy install cmake pkg-config libfreetype6-dev \
             libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 
         info 'Installing alacritty'

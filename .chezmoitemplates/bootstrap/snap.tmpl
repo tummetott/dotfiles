@@ -3,8 +3,8 @@
 {{ if and .sudo (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
 
     info 'Installing snap'
-    log sudo apt -y update
-    log sudo apt -y install snapd
+    log sudo apt-get -q update
+    log sudo apt-get -qy install snapd
 
     {{ if contains "kali" .osid }}
         log sudo systemctl enable --now snapd snapd.apparmor

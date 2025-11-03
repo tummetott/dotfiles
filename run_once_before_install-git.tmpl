@@ -11,7 +11,7 @@ trap on_error ERR
 {{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
 if ! has git; then
     info 'Installing git'
-    log sudo apt update
-    log sudo apt -y install git
+    log sudo apt-get -q update
+    log sudo apt-get -qy install git
 fi
 {{ end }}
