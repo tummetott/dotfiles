@@ -141,6 +141,34 @@ vim.opt.timeoutlen = 1000
 -- Copy to system clipboard
 vim.opt.clipboard = 'unnamedplus'
 
+local function paste()
+    return {
+        vim.fn.split(vim.fn.getreg(''), '\n'),
+        vim.fn.getregtype(''),
+    }
+end
+
+-- When connected to a remote server over SSH, use OSC 52 to copy text from
+-- Neovim on the remote side into the clipboard of the local machine running the
+-- terminal
+if vim.env.SSH_TTY ~= nil then
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        -- Use OSC 52 for copy
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        -- Do not use OSC 52 for paste: most terminals cannot read clipboard
+        -- contents back from the host. Fall back to Neovim’s internal registers
+        -- instead
+        paste = {
+            ['+'] = paste,
+            ['*'] = paste,
+        },
+    }
+end
+
 -- Use rounded borders for floating windows
 vim.opt.winborder = 'rounded'
 
