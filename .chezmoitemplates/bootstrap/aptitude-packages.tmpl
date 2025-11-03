@@ -2,9 +2,14 @@
 
 {{ if .sudo }}
     info 'Upgrade and autoremove apt packages'
-    log sudo apt -y update
-    log sudo apt -y upgrade
-    log sudo apt -y autoremove
+
+    export DEBIAN_FRONTEND=noninteractive
+    export DEBIAN_PRIORITY=critical
+    log sudo -E apt-get -qy update
+    log sudo -E apt-get -qy \
+        -o Dpkg::Options::="--force-confdef" \
+        -o Dpkg::Options::="--force-confold" upgrade
+    log sudo -E apt-get -qy autoremove
 
     if [ ! -f "$XDG_CONFIG_HOME/aptitude/Aptfile" ]; then
         error 'Could not find Aptfile'
@@ -14,7 +19,7 @@
     while read -r line; do
         if ! apt list --installed 2>/dev/null | grep -q "^$line"; then
             info "Installing $line"
-            log sudo apt -y install "$line"
+            log sudo -E apt-get -qy install "$line"
         fi
     done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/aptitude/Aptfile")
 {{ else }}
