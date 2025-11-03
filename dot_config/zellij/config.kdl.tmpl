@@ -12,6 +12,7 @@ keybinds clear-defaults=true {
         bind "t" "Ctrl t" { SwitchToMode "tab"; }
         bind "m" "Ctrl m" { SwitchToMode "move"; }
         bind "r" "Ctrl r" { SwitchToMode "resize"; }
+        bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "z" "Ctrl z" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
