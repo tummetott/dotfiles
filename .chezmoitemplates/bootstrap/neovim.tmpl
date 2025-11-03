@@ -10,12 +10,14 @@ if [ -x "$NVIM_EXECUTABLE" ]; then
     ln -sf "$NVIM_EXECUTABLE" "$HOME/.local/bin/nvim"
 fi
 
-{{ if and .sudo (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
-    # We need a c compiler for treesitter. On macOS its pre-installed
-    log sudo apt-get -q update
-    log sudo apt-get -qy install build-essential
-{{ else }}
-    warn 'Could not install build-essential (missing sudo)'
+{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+    {{ if .sudo }}
+        # We need a c compiler for treesitter. On macOS its pre-installed
+        log sudo apt-get -q update
+        log sudo apt-get -qy install build-essential
+    {{ else }}
+        warn 'Could not install build-essential (missing sudo)'
+    {{ end }}
 {{ end }}
 
 if has nvim; then
