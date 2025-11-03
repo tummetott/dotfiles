@@ -24,6 +24,8 @@ Install dotfiles and applications (chezmoi not in PATH yet)
 
 ```
 
+**Note**: If GitHub rate-limits your API requests, create a [personal access token](https://github.com/settings/tokens) and make it available to chezmoi by exporting it as an environment variable: `export GITHUB_TOKEN="<token>"`
+
 ### Post-Installation
 
 - macOS: Open `Karabiner-Elements` manually and grant all required permissions in System Settings. This enables correct CAPSLOCK behaviour
