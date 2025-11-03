@@ -15,9 +15,11 @@ source ~/.config/shell/env
     log sudo locale-gen "en_US.UTF-8"
 {{ end }}
 
+{{ if or (eq .chezmoi.hostname "Void") (eq .chezmoi.hostname "Catch") -}}
 info 'Change dotfile repository from HTTPS to SSH'
 pushd "$HOME/.local/share/chezmoi"
 git remote set-url origin git@github.com:tummetott/dotfiles.git
 popd
+{{ end -}}
 
 compl 'Installation successful. You should reboot now!'
