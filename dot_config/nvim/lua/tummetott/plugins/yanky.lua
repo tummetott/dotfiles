@@ -1,3 +1,5 @@
+-- TODO: OSC 52 breaks yanky. Check issue once the following PR is merged
+-- https://github.com/gbprod/yanky.nvim/issues/213
 return {
     'gbprod/yanky.nvim',
     enabled = true,
