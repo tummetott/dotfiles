@@ -10,11 +10,13 @@ source ~/.config/shell/env
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
-{{ if and .sudo (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
-    info 'Generate locale'
-    log sudo locale-gen "en_US.UTF-8"
-{{ else }}
-    warn 'Could not generate locale (missing sudo)'
+{{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
+    {{ if .sudo }}
+        info 'Generate locale'
+        log sudo locale-gen "en_US.UTF-8"
+    {{ else }}
+        warn 'Could not generate locale (missing sudo)'
+    {{ end }}
 {{ end }}
 
 {{ if or (eq .chezmoi.hostname "Void") (eq .chezmoi.hostname "Catch") -}}
