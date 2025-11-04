@@ -18,6 +18,7 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # os_icon               # os identifier
+    ssh_indicator
     dir                     # current directory
     vcs                     # git status
     prompt_char             # prompt symbol
@@ -900,6 +901,16 @@
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   # Custom icon.
   # typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
+
+  #########################################[ ssh indicator ]###################################
+  function prompt_ssh_indicator() {
+      if [[ -n $SSH_CONNECTION ]]; then
+          p10k segment -f 1 -t " SSH "
+      fi
+  }
+  typeset -g POWERLEVEL9K_SSH_INDICATOR_FOREGROUND=15
+  typeset -g POWERLEVEL9K_SSH_INDICATOR_BACKGROUND=0
+  typeset -g POWERLEVEL9K_SSH_INDICATOR_VISUAL_IDENTIFIER_EXPANSION=''
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
