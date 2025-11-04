@@ -905,10 +905,10 @@
   #########################################[ ssh indicator ]###################################
   function prompt_ssh_indicator() {
       if [[ -n $SSH_CONNECTION ]]; then
-          p10k segment -f 1 -t " SSH "
+          p10k segment -f 1 -t " ssh "
       fi
   }
-  typeset -g POWERLEVEL9K_SSH_INDICATOR_FOREGROUND=15
+  typeset -g POWERLEVEL9K_SSH_INDICATOR_FOREGROUND=5
   typeset -g POWERLEVEL9K_SSH_INDICATOR_BACKGROUND=0
   typeset -g POWERLEVEL9K_SSH_INDICATOR_VISUAL_IDENTIFIER_EXPANSION=''
 
