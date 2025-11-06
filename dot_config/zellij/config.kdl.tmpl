@@ -12,6 +12,10 @@ keybinds clear-defaults=true {
         bind "t" "Ctrl t" { SwitchToMode "tab"; }
         bind "m" "Ctrl m" { SwitchToMode "move"; }
         bind "r" "Ctrl r" { SwitchToMode "resize"; }
+        bind "h" "Ctrl h" { MoveFocus "left"; SwitchToMode "normal"; }
+        bind "l" "Ctrl l" { MoveFocus "right"; SwitchToMode "normal"; }
+        bind "j" "Ctrl j" { MoveFocus "down"; SwitchToMode "normal"; }
+        bind "k" "Ctrl k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "z" "Ctrl z" {
             LaunchOrFocusPlugin "plugin-manager" {
@@ -47,10 +51,6 @@ keybinds clear-defaults=true {
             // `reaction_seconds` to elapse.
             MessagePlugin "autolock" {};
         }
-        bind "Ctrl h" { MoveFocus "left"; }
-        bind "Ctrl l" { MoveFocus "right"; }
-        bind "Ctrl j" { MoveFocus "down"; }
-        bind "Ctrl k" { MoveFocus "up"; }
     }
     pane {
         bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "normal"; }
@@ -145,12 +145,14 @@ keybinds clear-defaults=true {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Ctrl c" { SwitchToMode "normal"; }
     }
+    // TODO: remove autolock as soon as i'm sure i want to switch panes with
+    // <prefix>h/j/k/l
     shared_among "locked" "normal" {
-        bind "Ctrl s" { ToggleFloatingPanes; SwitchToMode "locked"; }
+        bind "Ctrl enter" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "Ctrl =" "Ctrl +" { Resize "Increase"; SwitchToMode "locked"; }
         bind "Ctrl -" "Ctrl _" { Resize "Decrease"; SwitchToMode "locked"; }
         bind "Super t" { NewTab; SwitchToMode "locked"; }
-        bind "Super d" { NewPane; SwitchToMode "locked"; }
+        bind "Super \\" { NewPane; SwitchToMode "locked"; }
         bind "Super w" { CloseFocus; SwitchToMode "locked"; }
         bind "Super [" { GoToPreviousTab; SwitchToMode "locked"; }
         bind "Super ]" { GoToNextTab; SwitchToMode "normal"; }

@@ -42,23 +42,23 @@ COMPLETION_WAITING_DOTS='true' # Show red dots while waiting for completion
 ZSH_DISABLE_COMPFIX='true'
 DISABLE_AUTO_UPDATE='true'
 
-# Update the highlight color of ZVM. Must be defined before ZVM is loaded
-function zvm_config() {
-    ZVM_VI_HIGHLIGHT_BACKGROUND=8
-    ZVM_VI_HIGHLIGHT_FOREGROUND=0
-}
+# # Update the highlight color of ZVM. Must be defined before ZVM is loaded
+# function zvm_config() {
+#     ZVM_VI_HIGHLIGHT_BACKGROUND=8
+#     ZVM_VI_HIGHLIGHT_FOREGROUND=0
+# }
 
-# ZVM overwrites the default keybindings of some plugins. To ensure that certain
-# keybindings take precedence, we need to define them after ZVM is loaded.
-function zvm_after_init() {
-    # Setup keybindings for fzf
-    if command -v fzf >/dev/null 2>&1; then
-        source <(fzf --zsh)
-    fi
-
-    # Remap CTRL-k to CTRL-x due to VIM-TMUX Navigator conflict
-    bindkey '^X' kill-line
-}
+# # ZVM overwrites the default keybindings of some plugins. To ensure that certain
+# # keybindings take precedence, we need to define them after ZVM is loaded.
+# function zvm_after_init() {
+#     # Setup keybindings for fzf
+#     if command -v fzf >/dev/null 2>&1; then
+#         source <(fzf --zsh)
+#     fi
+#
+#     # Remap CTRL-k to CTRL-x due to VIM-TMUX Navigator conflict
+#     bindkey '^X' kill-line
+# }
 
 # Add shell functions to fpath and autoload them
 fpath=( $XDG_CONFIG_HOME/shell/functions "${fpath[@]}" )
@@ -95,12 +95,19 @@ autoload -Uz $fpath[1]/*(.:t)
 [[ -s "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh" ]] \
     && source "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh"
 
-# Disable lazy loading. See: https://github.com/jeffreytse/zsh-vi-mode/issues/258
-ZVM_INIT_MODE=sourcing
+# # Disable lazy loading. See: https://github.com/jeffreytse/zsh-vi-mode/issues/258
+# ZVM_INIT_MODE=sourcing
+#
+# [[ -s "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh" ]] \
+#     && source "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh"
 
-[[ -s "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh" ]] \
-    && source "$XDG_DATA_HOME/zsh/zsh-vi-mode/zsh-vi-mode.zsh"
+# Setup keybindings for fzf. Source this after OMZ and zsh-syntax-highlighting
+if command -v fzf >/dev/null 2>&1; then
+    source <(fzf --zsh)
+fi
 
+# Set cursor style to steady bar
+echo -ne '\e[6 q'
 
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification

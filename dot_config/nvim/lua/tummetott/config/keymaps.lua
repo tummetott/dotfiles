@@ -83,6 +83,31 @@ vim.keymap.set(
     { desc = 'Change word' }
 )
 
+vim.keymap.set(
+    'n',
+    '<C-h>',
+    '<C-w>h',
+    { desc = 'Jump to left window' }
+)
+vim.keymap.set(
+    'n',
+    '<C-j>',
+    '<C-w>j',
+    { desc = 'Jump to below window' }
+)
+vim.keymap.set(
+    'n',
+    '<C-k>',
+    '<C-w>k',
+    { desc = 'Jump to above window' }
+)
+vim.keymap.set(
+    'n',
+    '<C-l>',
+    '<C-w>l',
+    { desc = 'Jump to right window' }
+)
+
 -- Jump to end of line or close LSP floating window.
 vim.keymap.set(
     'i',
@@ -106,6 +131,30 @@ vim.keymap.set(
     '<C-a>',
     '<Home>',
     { desc = 'Jump to start of line' }
+)
+
+-- Jump one word back (emacs style)
+vim.keymap.set(
+    'i',
+    '<M-b>',
+    function() vim.cmd('normal! b') end,
+    {
+        noremap = true,
+        silent = true,
+        desc = 'Jump to previous word'
+    }
+)
+
+-- Jump one word forward (emacs style)
+vim.keymap.set(
+    'i',
+    '<M-f>',
+    function() vim.cmd('normal! w') end,
+    {
+        noremap = true,
+        silent = true,
+        desc = 'Jump to next word'
+    }
 )
 
 -- Jump to start of line with CTRL-a in command mode
@@ -301,34 +350,6 @@ vim.keymap.set(
     '<cmd>Lazy<cr>',
     { desc = 'Open Lazy' }
 )
-
--- vim.api.nvim_create_user_command('DebugKeymaps', function()
---     vim.keymap.set('n', '<c-i>', '<cmd>echo "C-i"<cr>')
---     vim.keymap.set('n', '<tab>', '<cmd>echo "Tab"<cr>')
---     vim.keymap.set('n', '<c-m>', '<cmd>echo "C-m"<cr>')
---     vim.keymap.set('n', '<cr>', '<cmd>echo "CR"<cr>')
---     vim.keymap.set('n', '<s-cr>', '<cmd>echo "S-CR"<cr>')
---     vim.keymap.set('n', '<c-cr>', '<cmd>echo "C-CR"<cr>')
---     vim.keymap.set('n', '<c-j>', '<cmd>echo "C-j"<cr>')
---     vim.keymap.set('n', '<c-k>', '<cmd>echo "C-k"<cr>')
---     vim.keymap.set('n', '<c-l>', '<cmd>echo "C-l"<cr>')
---     vim.keymap.set('n', '<c-h>', '<cmd>echo "C-h"<cr>')
---     vim.keymap.set('n', '<c-;>', '<cmd>echo "C-;"<cr>')
---     vim.keymap.set('n', '<c-,>', '<cmd>echo "C-,"<cr>')
---     vim.keymap.set('n', '<c-.>', '<cmd>echo "C-."<cr>')
---     vim.keymap.set('n', '<c-/>', '<cmd>echo "C-/"<cr>')
---     vim.keymap.set('n', '<c-1>', '<cmd>echo "C-1"<cr>')
---     vim.keymap.set('n', '<c-2>', '<cmd>echo "C-2"<cr>')
---     vim.keymap.set('n', '<c-3>', '<cmd>echo "C-3"<cr>')
---     vim.keymap.set('n', '<c-4>', '<cmd>echo "C-4"<cr>')
---     vim.keymap.set('n', '<c-5>', '<cmd>echo "C-5"<cr>')
---     vim.keymap.set('n', '<c-6>', '<cmd>echo "C-6"<cr>')
---     vim.keymap.set('n', '<c-7>', '<cmd>echo "C-7"<cr>')
---     vim.keymap.set('n', '<c-8>', '<cmd>echo "C-8"<cr>')
---     vim.keymap.set('n', '<c-9>', '<cmd>echo "C-9"<cr>')
---     vim.keymap.set('n', '<c-0>', '<cmd>echo "C-0"<cr>')
--- end, { desc = 'Print out the pressed keymap for debugging purpose' })
-
 
 vim.api.nvim_create_user_command('DebugKeymaps', function()
     local function map(lhs, desc)
