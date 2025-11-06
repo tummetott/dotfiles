@@ -34,7 +34,7 @@ return {
         use_icons = vim.g.nerdfonts,
         keymaps = {
             view = {
-                ['<C-\\>'] = function()
+                ['<C-s>'] = function()
                     vim.cmd('DiffviewToggleFiles')
                     scroll_panel()
                 end,
@@ -47,7 +47,7 @@ return {
                 ['q'] = '<cmd>DiffviewClose<cr>',
             },
             file_panel = {
-                ['<C-\\>'] = '<CMD>DiffviewToggleFiles<CR>',
+                ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
                 [']c'] = function()
                     require('diffview.config').actions.select_next_entry()
                 end,
@@ -56,7 +56,7 @@ return {
                 end,
             },
             file_history_panel = {
-                ['<C-\\>'] = '<CMD>DiffviewToggleFiles<CR>',
+                ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
                 [']c'] = function()
                     require('diffview.config').actions.select_next_entry()
                 end,
