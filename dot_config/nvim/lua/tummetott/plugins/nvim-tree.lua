@@ -36,7 +36,7 @@ return {
     },
     keys = {
         {
-            '<C-m>',
+            '<C-s>',
             '<Cmd>NvimTreeToggle<CR>',
             desc = 'Toggle NvimTree',
         }
