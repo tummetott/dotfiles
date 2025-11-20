@@ -75,7 +75,11 @@ snapd
 {{- end }}
 
 {{- if .install.tldr }}
+{{- if regexMatch "^kali" .osid }}
+tealdeer
+{{- else }}
 tldr
+{{- end}}
 {{- end }}
 
 {{- if .install.tmux }}
