@@ -2,7 +2,7 @@
 vim.opt.number = true
 
 -- Use relative numbers
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 -- Show signcolumn when necessary with a column of maximum 1 char
 vim.opt.signcolumn = 'auto:1'
