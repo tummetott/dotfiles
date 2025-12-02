@@ -2,48 +2,60 @@ return {
     'folke/sidekick.nvim',
     enabled = true,
     event = 'VeryLazy',
-    -- config = function(_, opts)
-    --     require('sidekick').setup(opts)
-    --
-    --     -- Send one NES update shortly after startup.
-    --     -- Reason: Copilot's Next Edit Suggestions (NES) won't respond to the
-    --     -- very first manual update call unless the LSP has already received a
-    --     -- valid text synchronization event. This deferred update "warms up"
-    --     -- Copilot so the first <C-CR> trigger works without requiring a manual
-    --     -- edit beforehand.
-    --     vim.defer_fn(function()
-    --         pcall(function()
-    --             require('sidekick.nes').update()
-    --         end)
-    --     end, 1000)
-    -- end,
+    config = function(_, opts)
+        require('sidekick').setup(opts)
+
+        -- Send one NES update shortly after startup.
+        -- Reason: Copilot's Next Edit Suggestions (NES) won't respond to the
+        -- very first manual update call unless the LSP has already received a
+        -- valid text synchronization event. This deferred update "warms up"
+        -- Copilot so the first <C-,> trigger works without requiring a manual
+        -- edit beforehand.
+        vim.defer_fn(function()
+            pcall(function()
+                require('sidekick.nes').update()
+            end)
+        end, 1000)
+    end,
     opts = {
         nes = {
             enabled = true,
             trigger = {
                 -- Enable automatic triggers
                 events = {
-                    'ModeChanged *:n',
+                    -- 'ModeChanged *:n',
                     'TextChanged',
                     'User SidekickNesDone',
                 },
             },
-        }
+        },
+        cli = {
+            win = {
+                keys = {
+                    prompt = {
+                        '<c-o>',
+                        'prompt',
+                        mode = 't',
+                        desc = 'insert prompt or context',
+                    },
+                }
+            }
+        },
     },
     keys = {
-        -- {
-        --     '<c-cr>',
-        --     function()
-        --         -- Close the cmp window if a copilot suggestion is fetched
-        --         local ok, cmp = pcall(require, 'cmp')
-        --         if ok and cmp.visible() then
-        --             cmp.close()
-        --         end
-        --         require('sidekick.nes').update()
-        --     end,
-        --     desc = 'Get a copilot suggestion',
-        --     mode = { 'n', 'i' },
-        -- },
+        {
+            '<c-,>',
+            function()
+                -- Close the cmp window if a copilot suggestion is fetched
+                local ok, cmp = pcall(require, 'cmp')
+                if ok and cmp.visible() then
+                    cmp.close()
+                end
+                require('sidekick.nes').update()
+            end,
+            desc = 'Get a copilot suggestion',
+            mode = { 'n', 'i' },
+        },
         {
             '<cr>',
             function()
