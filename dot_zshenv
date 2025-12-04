@@ -8,11 +8,5 @@
 # However, macOS sources it as expected.
 ZDOTDIR="$HOME/.config/zsh"
 
-# Ensure that non-interactive terminals are aware of the installation path for
-# programs installed by brew. This is important for programs like Neovide.
-if test -x '/opt/homebrew/bin/brew'; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # Also add the path for custom installed programs.
 export PATH="$HOME/.local/bin:$PATH"
