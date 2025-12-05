@@ -18,7 +18,6 @@ return {
             'prompt',
             'TelescopeResults',
             'NvimTree',
-            'DressingInput',
             'Outline',
             'blink-cmp-menu',
             'blink-cmp-cmdline',

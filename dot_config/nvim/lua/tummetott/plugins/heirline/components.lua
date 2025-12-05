@@ -511,7 +511,6 @@ M.special_bufname = {
         bufnames = {
             ['NvimTree'] = 'NVIMTREE',
             ['TelescopePrompt'] = 'TELESCOPE',
-            ['DressingInput'] = 'INPUT',
             ['lazy'] = 'LAZY',
             ['Outline'] = 'OUTLINE',
         }
@@ -578,7 +577,7 @@ M.special_statusline = {
         -- Don't show search count and percentage for some special files
         condition = function()
             return not conditions.buffer_matches({
-                filetype = { 'TelescopePrompt', 'DressingInput' },
+                filetype = { 'TelescopePrompt' },
             })
         end,
         M.search_count,
