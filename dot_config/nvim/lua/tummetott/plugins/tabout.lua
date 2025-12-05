@@ -1,6 +1,6 @@
 return {
     'abecodes/tabout.nvim',
-    enabled = true,
+    enabled = false,
     dependencies = 'nvim-treesitter/nvim-treesitter',
     opts = {
         tabkey = '<Tab>',

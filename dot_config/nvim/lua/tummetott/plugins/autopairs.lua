@@ -8,8 +8,6 @@ return {
         local npairs        = require 'nvim-autopairs'
         local Rule          = require 'nvim-autopairs.rule'
         local cond          = require 'nvim-autopairs.conds'
-        local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-
         npairs.setup {
             check_ts = true,
             ts_config = {
@@ -66,11 +64,5 @@ return {
             :with_del(cond.none())
             :use_key(']'),
         }
-
-        -- This command connects the autopairs with the cmp
-        local loaded, cmp = pcall(require, 'cmp')
-        if loaded then
-            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-        end
     end,
 }

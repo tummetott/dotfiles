@@ -19,9 +19,11 @@ return {
             'TelescopeResults',
             'NvimTree',
             'DressingInput',
-            'cmp_menu',
-            'cmp_docs',
             'Outline',
+            'blink-cmp-menu',
+            'blink-cmp-cmdline',
+            'blink-cmp-signature',
+            'blink-cmp-documentation',
         },
         set_highlights = false,
     }
