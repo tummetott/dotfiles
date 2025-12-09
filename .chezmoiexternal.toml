@@ -151,11 +151,6 @@ type = 'git-repo'
 url = 'https://github.com/ohmyzsh/ohmyzsh.git'
 refreshPeriod = '168h'
 
-['.local/share/zsh/custom-completions/_conda']
-type = 'file'
-url = 'https://raw.githubusercontent.com/conda-incubator/conda-zsh-completion/master/_conda'
-refreshPeriod = '168h'
-
 ['.local/share/zsh/zsh-completions']
 type = 'archive'
 {{ $tag := (gitHubLatestRelease "zsh-users/zsh-completions").TagName }}

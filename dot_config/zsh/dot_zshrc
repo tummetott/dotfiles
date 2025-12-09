@@ -147,11 +147,6 @@ ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
 # Source my aliases file
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
 
-# Initialize conda
-if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
-    source "$CONDA_HOME/etc/profile.d/conda.sh"
-fi
-
 # Init fnm
 eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 

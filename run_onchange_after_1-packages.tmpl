@@ -63,10 +63,6 @@ fi
     {{ template "bootstrap/rust.tmpl" . }}
 {{ end }}
 
-{{ if .install.conda }}
-    {{ template "bootstrap/conda.tmpl" . }}
-{{ end }}
-
 {{ if .install.starship }}
     {{ template "bootstrap/starship.tmpl" . }}
 {{ end }}
