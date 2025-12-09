@@ -12,6 +12,7 @@ bottom = false
 build_essential = false
 chrome = false
 cmake = false
+codex = false
 discord = false
 docker = false
 etcher = false

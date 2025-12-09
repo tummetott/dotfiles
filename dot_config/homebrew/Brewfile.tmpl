@@ -137,6 +137,10 @@ cask "anki"
 cask "appcleaner"
 {{- end }}
 
+{{- if .install.codex }}
+cask "codex"
+{{- end }}
+
 {{- if .install.chrome }}
 cask "google-chrome"
 {{- end }}
