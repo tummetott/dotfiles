@@ -152,6 +152,9 @@ if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
     source "$CONDA_HOME/etc/profile.d/conda.sh"
 fi
 
+# Init fnm
+eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
+
 # Auto-start Zellij only if installed, not in SSH
 if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]]; then
     eval "$(zellij setup --generate-auto-start zsh)"

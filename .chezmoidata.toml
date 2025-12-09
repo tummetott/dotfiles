@@ -19,6 +19,7 @@ etcher = false
 fd = false
 firefox = false
 flatpak = false
+fnm = false
 folx = false
 fzf = false
 gnome_tweaks = false

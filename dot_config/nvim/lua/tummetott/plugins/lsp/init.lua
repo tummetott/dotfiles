@@ -42,6 +42,7 @@ vim.lsp.enable({
     'rust_analyzer',
     'efm', -- Also install 'shellcheck'
     'copilot',
+    'vtsls',
 })
 
 -- Use the LspAttach event instead of overwriting vim.lsp.config's on_attach,

@@ -156,6 +156,19 @@
     executable = true
     refreshPeriod = "168h"
     {{ end }}
+
+    {{ if .install.fnm }}
+    ['.local/bin/fnm']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    # fnm has a very strange release naming scheme
+    {{ if eq $arch "amd64" }}{{ $arch = "linux" }}{{ end }}
+    {{ $asset := printf "fnm-%s.zip" $arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "Schniz/fnm" $asset }}'
+    executable = true
+    path = "fnm"
+    refreshPeriod = "168h"
+    {{ end }}
 {{ end }}
 
 {{ if .install.fzf }}
