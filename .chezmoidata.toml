@@ -17,7 +17,6 @@ discord = false
 docker = false
 etcher = false
 fd = false
-firefox = false
 flatpak = false
 fnm = false
 folx = false
