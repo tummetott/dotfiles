@@ -127,7 +127,9 @@ ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
 
 # Init fnm
-eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
+if (( $+commands[fnm] )); then
+    eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
+fi
 
 # Auto-start Zellij only if installed, not in SSH
 if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]]; then
