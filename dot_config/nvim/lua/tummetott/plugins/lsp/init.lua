@@ -22,17 +22,6 @@ vim.diagnostic.config({
     } or true,
 })
 
-local function create_capabilities()
-    local ok, cmp = pcall(require, 'cmp_nvim_lsp')
-    return ok and cmp.default_capabilities()
-        or vim.lsp.protocol.make_client_capabilities()
-end
-
--- TODO: Check if this is still needed with blink and nvim 0.11
-vim.lsp.config('*', {
-    capabilities = create_capabilities(),
-})
-
 -- Enable language servers
 -- NOTE: They must all be installed with Mason
 vim.lsp.enable({

@@ -46,10 +46,10 @@ return {
         {
             '<c-,>',
             function()
-                -- Close the cmp window if a copilot suggestion is fetched
-                local ok, cmp = pcall(require, 'cmp')
-                if ok and cmp.visible() then
-                    cmp.close()
+                -- Close the blink window if a copilot suggestion is fetched
+                local ok, blink = pcall(require, 'blink.cmp')
+                if ok and blink.is_menu_visible() then
+                    blink.cancel()
                 end
                 require('sidekick.nes').update()
             end,

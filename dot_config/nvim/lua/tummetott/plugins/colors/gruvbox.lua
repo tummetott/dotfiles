@@ -47,11 +47,6 @@ local overwrites = function()
         ['WinBarNC'] = {},
         ['TabLineFill'] = {},
         ['TabbyTab'] = { fg = c.bg5, bg = c.bg0 },
-        -- TODO: add missing cmp highlights
-        ['CmpItemAbbr'] = { fg = c.fg0 }, -- item
-        ['CmpItemMenu'] = { fg = c.bg3 }, -- source
-        ['CmpItemAbbrMatch'] = { fg = c.blue },
-        ['CmpItemAbbrMatchFuzzy'] = { fg = c.blue },
         -- ['DiffviewFilePanelTitle'] = { link = 'Title' },
         -- ['DiffviewFilePanelFileName'] = { link = 'Normal' },
         -- ['DiffviewFilePanelPath'] = { link = 'Normal' },

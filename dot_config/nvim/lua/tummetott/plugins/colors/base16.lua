@@ -39,8 +39,6 @@ local function overwrite()
         ['TabbyTab'] = { fg = c.base00, bg = c.base02 },
         ['TabbyTabCurrent'] = { fg = c.base00, bg = c.base0D },
         ['TabbyBackground'] = { bg = c.base00 },
-        ['CmpItemAbbr'] = {},
-        ['CmpItemMenu'] = { fg = c.base03 },
         ['DiffviewFilePanelTitle'] = { link = 'Title' },
         ['DiffviewFilePanelFileName'] = { link = 'Normal' },
         ['DiffviewFilePanelPath'] = { link = 'Normal' },
@@ -107,7 +105,7 @@ return {
         require('base16-colorscheme').with_config({
             telescope = false,
             indentblankline = false,
-            cmp = true,
+            cmp = false,
         })
         -- Whenever the colorscheme changes, apply my overwrites
         vim.api.nvim_create_autocmd('ColorScheme', {

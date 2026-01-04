@@ -102,7 +102,7 @@ table.insert(M, {
         end,
         integrations = {
             alpha = false,
-            cmp = true,
+            cmp = false,
             flash = false,
             gitsigns = false,
             indent_blankline = false,
