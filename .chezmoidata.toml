@@ -52,6 +52,7 @@ snap = false
 starship = false
 sublime = false
 texifier = false
+tinty = false
 tldr = false
 tmux = false
 transmission = false

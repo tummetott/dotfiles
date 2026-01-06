@@ -1,0 +1,46 @@
+default-scheme = "base16-catppuccin-frappe"
+# TODO: make issue to cycle dark OR light schemes
+preferred-schemes = [
+    # Dark themes
+    "base16-catppuccin-frappe",
+    "base16-gruvbox-material-dark-medium",
+    "base16-tomorrow-night-eighties",
+    "base16-gruvbox-dark-soft",
+    "base16-decaf",
+
+    # Light themes
+    "base16-catppuccin-latte",
+    "base16-one-light",
+    "base16-harmonic16-light",
+]
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-terminal"
+themes-dir = "themes/wezterm"
+supported-systems = ["base16", "base24"]
+# The 'touch' cmd reloads WezTerm config
+hook = """
+SRC=$HOME/.local/share/tinted-theming/tinty/repos/tinted-terminal/themes/wezterm
+WEZTERM_DIR="$HOME/.config/wezterm"
+if [ -d "$SRC" ]; then
+    mkdir -p "$WEZTERM_DIR"
+    ln -sfn "$SRC" "$WEZTERM_DIR/colors"
+    if [ -f "$WEZTERM_DIR/wezterm.lua" ]; then
+        touch "$WEZTERM_DIR/wezterm.lua"
+    fi
+fi
+"""
+
+[[items]]
+path = "~/.local/share/tinted-theming/tinty/repos/tinted-terminal"
+name = "tinted-terminal-alacritty"
+themes-dir = "themes/alacritty"
+hook = "cp -f $TINTY_THEME_FILE_PATH ~/.config/alacritty/colors.toml && touch ~/.config/alacritty/alacritty.toml"
+supported-systems = ["base16", "base24"]
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-fzf"
+name = "tinted-fzf"
+themes-dir = "sh"
+supported-systems = ["base16", "base24"]

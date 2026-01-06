@@ -1,4 +1,0 @@
-#compdef _cycle_base16 cycle_base16
-local -a subcmds
-subcmds=('dark' 'light')
-_describe 'command' subcmds

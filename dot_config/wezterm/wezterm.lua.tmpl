@@ -1,21 +1,32 @@
 -- vim: set ft=lua:
 
+local function read_file(path)
+    local f = io.open(path, "r")
+    if not f then return nil end
+    local s = f:read("*l")
+    f:close()
+    return s
+end
+
+local function current_tinty_scheme()
+    local path = os.getenv("HOME") .. "/.local/share/tinted-theming/tinty/artifacts/current_scheme"
+    local s = read_file(path)
+    if not s or s == "" then return end
+    return s
+end
+
 local wezterm = require 'wezterm'
 local config = {}
 
+-- The default term is 'xterm-256color'. I could change that to wezterms own
+-- terminfo with the following cmd:
+-- config.term = 'wezterm'
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 ---@diagnostic disable-next-line: malformed-number
 config.font_size = {{ .fontsize }}
 config.enable_tab_bar = false
 config.audible_bell = 'Disabled'
-config.colors = {
-    cursor_fg = 'black',
-    cursor_bg = '#c6d0f6',
-    cursor_border = '#c6d0f6',
-}
--- The default term is 'xterm-256color'. I could change that to wezterms own
--- terminfo with the following cmd:
--- config.term = 'wezterm'
+config.color_scheme = current_tinty_scheme() or 'tokyonight'
 config.enable_kitty_keyboard = true
 config.keys = {
     -- Disable some default keymaps that collide with zellij
@@ -49,6 +60,7 @@ config.keys = {
     -- These are conventional macOS keymaps
     { key = 'f', mods = 'CMD|CTRL', action = wezterm.action.ToggleFullScreen },
     { key = 'h', mods = 'CMD', action = wezterm.action.HideApplication },
+    -- { key = 'r', mods = 'CMD', action = wezterm.action.ReloadConfiguration },
 }
 
 return config

@@ -40,14 +40,14 @@ if command -v starship &> /dev/null; then
     eval "$(starship init bash)"
 fi
 
-# Base16-shell colors
-[ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
-    source "$BASE16_SHELL_PATH/profile_helper.sh"
-
 # Activate FZF
 if command -v fzf &> /dev/null; then
     eval "$(fzf --bash)"
 fi
+
+# tinted-theming for fzf
+[[ -s "$XDG_DATA_HOME/tinted-theming/tinty/artifacts/tinted-fzf-sh-file.sh" ]] \
+    && source "$XDG_DATA_HOME/tinted-theming/tinty/artifacts/tinted-fzf-sh-file.sh" 
 
 # Load custom shell functions.
 if [ -d "$XDG_CONFIG_HOME/shell/functions" ]; then

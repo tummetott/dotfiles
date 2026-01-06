@@ -1,4 +1,4 @@
-# Color settings for lsd assume that base16-shell is installed.
+# LSD uses ANSI colors. They are controlled by tinted-terminal
 user: 7 # white
 group: 8 # grey
 permission:

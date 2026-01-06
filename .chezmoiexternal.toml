@@ -133,18 +133,6 @@
     {{ end }}
 {{ end }}
 
-{{ if .install.fzf }}
-['.local/share/tinted-theming/base16-fzf']
-type = 'git-repo'
-url = 'https://github.com/tinted-theming/base16-fzf.git'
-refreshPeriod = '168h'
-{{ end }}
-
-['.local/share/tinted-theming/base16-shell']
-type = 'git-repo'
-url = 'https://github.com/tinted-theming/base16-shell.git'
-refreshPeriod = '168h'
-
 {{ if .install.zsh }}
 ['.local/share/zsh/oh-my-zsh']
 type = 'git-repo'
@@ -174,4 +162,23 @@ refreshPeriod = '168h'
 type = 'git-repo'
 url = 'https://github.com/romkatv/powerlevel10k.git'
 refreshPeriod = '168h'
+{{ end }}
+
+{{ if .install.tinty }}
+['.local/bin/tinty']
+type = 'archive-file'
+{{ $arch := .chezmoi.arch }}
+{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}
+{{ else if eq $arch "arm64" }}{{ $arch = "aarch64" }}
+{{ end }}
+{{ $asset := "" }}
+{{ if eq .chezmoi.os "darwin" }}
+    {{ $asset = printf "tinty-%s-apple-darwin.tar.gz" $arch }}
+{{ else if eq .chezmoi.os "linux" }}
+    {{ $asset = printf "tinty-%s-unknown-linux-gnu.tar.gz" $arch }}
+{{ end }}
+url = '{{ gitHubLatestReleaseAssetURL "tinted-theming/tinty" $asset }}'
+path = "tinty"
+executable = true
+refreshPeriod = "168h"
 {{ end }}

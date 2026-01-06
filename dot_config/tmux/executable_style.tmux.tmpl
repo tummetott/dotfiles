@@ -1,17 +1,17 @@
 #!/usr/bin/env sh
 # vim: set ft=bash:
 
-theme=$(cat "$BASE16_CONFIG_PATH/theme_name")
+theme=$(cat "$XDG_DATA_HOME/tinted-theming/tinty/artifacts/current_scheme")
 
-if [ "$theme" = 'catppuccin-frappe' ]; then
+if [ "$theme" = 'base16-catppuccin-frappe' ]; then
     text='#a5adce'
     text2='#626880'
     surface='#414559'
-elif [ "$theme" = 'catppuccin-latte' ]; then
+elif [ "$theme" = 'base16-catppuccin-latte' ]; then
     text='#6c6f85'
     text2='#6c6f85'
     surface='#ccd0da'
-elif [ "$theme" = 'gruvbox-material-dark-medium' ]; then
+elif [ "$theme" = 'base16-gruvbox-material-dark-medium' ]; then
     text='#928374'
     text2='#928374'
     surface='#32302f'
