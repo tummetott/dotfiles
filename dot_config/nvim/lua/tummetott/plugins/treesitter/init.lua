@@ -3,6 +3,9 @@ local M = {}
 table.insert(M, {
     'nvim-treesitter/nvim-treesitter',
     enabled = true,
+    -- TODO: The new treesitter implementation is on main, but this requires a
+    -- rewrite of this config
+    branch = 'master',
     build = function()
         pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
