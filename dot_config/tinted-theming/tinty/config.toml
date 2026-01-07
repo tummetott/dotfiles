@@ -16,7 +16,7 @@ preferred-schemes = [
 
 [[items]]
 path = "https://github.com/tinted-theming/tinted-terminal"
-name = "tinted-terminal"
+name = "tinted-wezterm"
 themes-dir = "themes/wezterm"
 supported-systems = ["base16", "base24"]
 # The 'touch' cmd reloads WezTerm config
@@ -33,8 +33,8 @@ fi
 """
 
 [[items]]
-path = "~/.local/share/tinted-theming/tinty/repos/tinted-terminal"
-name = "tinted-terminal-alacritty"
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-alacritty"
 themes-dir = "themes/alacritty"
 hook = "cp -f $TINTY_THEME_FILE_PATH ~/.config/alacritty/colors.toml && touch ~/.config/alacritty/alacritty.toml"
 supported-systems = ["base16", "base24"]
