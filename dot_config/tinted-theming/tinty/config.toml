@@ -11,7 +11,6 @@ preferred-schemes = [
     # Light themes
     "base16-catppuccin-latte",
     "base16-one-light",
-    "base16-harmonic16-light",
 ]
 
 [[items]]
@@ -26,9 +25,7 @@ WEZTERM_DIR="$HOME/.config/wezterm"
 if [ -d "$SRC" ]; then
     mkdir -p "$WEZTERM_DIR"
     ln -sfn "$SRC" "$WEZTERM_DIR/colors"
-    if [ -f "$WEZTERM_DIR/wezterm.lua" ]; then
-        touch "$WEZTERM_DIR/wezterm.lua"
-    fi
+    touch -c "$WEZTERM_DIR/wezterm.lua"
 fi
 """
 
@@ -36,7 +33,10 @@ fi
 path = "https://github.com/tinted-theming/tinted-terminal"
 name = "tinted-alacritty"
 themes-dir = "themes/alacritty"
-hook = "cp -f $TINTY_THEME_FILE_PATH ~/.config/alacritty/colors.toml && touch ~/.config/alacritty/alacritty.toml"
+hook = """
+cp -f $TINTY_THEME_FILE_PATH ~/.config/alacritty/colors.toml
+touch -c $HOME/.config/alacritty/alacritty.toml
+"""
 supported-systems = ["base16", "base24"]
 
 [[items]]

@@ -218,19 +218,19 @@ plugins {
         color_light_white "21" // white < light_white < bright_white
 
         command_hostname_command "hostname"
-        command_hostname_format "#[fg=$white,bg=$darkest_grey] {stdout}  "
+        command_hostname_format "#[fg=$light_grey,bg=$darkest_grey] {stdout}  "
         command_hostname_interval "60"
         command_hostname_rendermode "static"
-        datetime "#[fg=$white,bg=$darkest_grey] {format}  "
+        datetime "#[fg=$light_grey,bg=$darkest_grey] {format}  "
         datetime_format "%H:%M"
         datetime_timezone "Europe/Berlin"
         format_hide_on_overlength true
         format_left "{tabs}"
         format_precedence "lrc"
-        format_right "#[fg=$darkest_grey,bg=$base]#[bg=$darkest_grey] {pipe_prog}{command_hostname}{datetime}#[fg=$white,bg=$darkest_grey]󰄷 {session}#[bg=$darkest_grey] #[fg=$darkest_grey,bg=$base]"
+        format_right "#[fg=$darkest_grey,bg=$base]#[bg=$darkest_grey] {pipe_prog}{command_hostname}{datetime}#[fg=$light_grey,bg=$darkest_grey]󰄷 {session}#[bg=$darkest_grey] #[fg=$darkest_grey,bg=$base]"
         format_space ""
         hide_frame_except_for_search true
-        pipe_prog_format "#[fg=$white,bg=$darkest_grey] {output}  "
+        pipe_prog_format "#[fg=$light_grey,bg=$darkest_grey] {output}  "
         pipe_prog_rendermode "static"
         tab_active "#[fg=$darkest_grey,bg=$base]#[fg=$blue,bg=$darkest_grey,bold] {name}{floating_indicator}{fullscreen_indicator}{sync_indicator} #[fg=$darkest_grey,bg=$base]"
         tab_display_count "10"
@@ -239,8 +239,8 @@ plugins {
         tab_normal "#[fg=$darkest_grey,bg=$base]#[fg=$light_grey,bg=$darkest_grey,bold] {name}{floating_indicator}{fullscreen_indicator}{sync_indicator} #[fg=$darkest_grey,bg=$base]"
         tab_separator " "
         tab_sync_indicator " "
-        tab_truncate_end_format "#[fg=$white] ..."
-        tab_truncate_start_format "#[fg=$white]... "
+        tab_truncate_end_format "#[fg=$light_grey] ..."
+        tab_truncate_start_format "#[fg=$light_grey]... "
     }
     // zellij-autolock is an Zellij plugin that automatically switches between
     // Zellij's "Normal" and "Locked" modes by inspecting the command running
