@@ -91,5 +91,9 @@ return {
         -- This keymap is set here because yanky must be loaded in order to
         -- highlight the yanked text.
         { 'Y', 'y$', desc = 'Yank to end of line' },
+    },
+    highlights = {
+        YankyYanked = { bg = 'dark_grey' },
+        YankyPut = { link = 'YankyYanked' },
     }
 }

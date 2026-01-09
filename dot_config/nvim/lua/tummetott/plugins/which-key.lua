@@ -64,4 +64,8 @@ return {
         show_help = true,
         show_key = true,
     },
+    highlights = {
+        WhichKeyDesc = { fg = 'bright_blue' },
+        WhichKeyGroup = { fg = 'purple' },
+    }
 }

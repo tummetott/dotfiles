@@ -61,4 +61,7 @@ return {
             desc = 'Disable scope guides',
         },
     },
+    highlights = {
+        IblScope = { fg = 'dark_grey' },
+    }
 }

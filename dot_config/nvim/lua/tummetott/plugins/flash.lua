@@ -53,4 +53,7 @@ return {
             desc = 'Toggle Flash Search',
         },
     },
+    highlights = {
+        FlashLabel = { fg = 'background', bg = 'yellow', bold = true },
+    }
 }

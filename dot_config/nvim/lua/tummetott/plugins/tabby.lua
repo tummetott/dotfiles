@@ -1,6 +1,6 @@
 return {
     'nanozuki/tabby.nvim',
-    enabled = false,
+    enabled = true,
     event = 'TabNew',
     config = function()
         local icon1 = vim.g.nerdfonts and '' or '*'
@@ -16,4 +16,8 @@ return {
         end
         require('tabby.tabline').set(render_function)
     end,
+    highlights = {
+        TabbyTab = { fg = 'dark_grey' },
+        TabLineFill = {},
+    },
 }

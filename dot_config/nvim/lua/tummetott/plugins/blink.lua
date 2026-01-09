@@ -203,5 +203,11 @@ return {
             preset = 'luasnip',
         },
     },
-    opts_extend = { 'sources.default' }
+    opts_extend = { 'sources.default' },
+    highlights = {
+        BlinkCmpLabel = { fg = 'bright_grey' },
+        BlinkCmpLabelMatch = { fg = 'blue' },
+        BlinkCmpSource = { fg = 'dark_grey' },
+        BlinkCmpMenuBorder = { link = 'FloatBorder' },
+    },
 }

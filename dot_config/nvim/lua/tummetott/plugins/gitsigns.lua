@@ -5,16 +5,17 @@ return {
     opts = {
         signcolumn = true,
         signs = {
-            add = {
-                text = '│'
-            },
-            change = {
-                text = '│'
-            },
-            untracked = {
-                text = '│'
-            }
+            add = { text = '│' },
+            change = { text = '│' },
+            untracked = { text = '│' },
         },
+        signs_staged = {
+            add          = { text = '│' },
+            change       = { text = '│' },
+        },
+        -- Show separate gutter signs for changes that have been git-staged
+        -- (index vs HEAD)
+        signs_staged_enable = false,
         preview_config = {
             border = 'rounded',
         },
@@ -115,5 +116,11 @@ return {
             mode = { 'o', 'x' },
             desc = 'Inner hunk',
         }
+    },
+    highlights = {
+        GitSignsAdd = { fg = 'green' },
+        GitSignsDelete = { fg = 'red' },
+        GitSignsChange = { fg = 'blue' },
+        GitSignsUntracked = { fg = 'dark_grey' },
     }
 }

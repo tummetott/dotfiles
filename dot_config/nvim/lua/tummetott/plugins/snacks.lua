@@ -109,4 +109,8 @@ return {
         -- statuscolumn = { enabled = true },
         -- words = { enabled = true },
     },
+    highlights = {
+        SnacksDashboardHeader = { fg = 'blue' },
+        SnacksDashboardFooter = { fg = 'dark_grey' },
+    },
 }

@@ -54,4 +54,8 @@ return {
         'NvimTreeCollapse',
         'NvimTreeCollapseKeepBuffers',
     },
+    highlights = {
+        NvimTreeIndentMarker = { link = 'NonText' },
+        NvimTreeRootFolder = { fg = 'cyan' },
+    }
 }

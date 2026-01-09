@@ -66,6 +66,15 @@ table.insert(M, {
     enabled = true,
     'neovim/nvim-lspconfig',
     lazy = false,
+    highlights = {
+        DiagnosticError = { fg = 'red' },
+        DiagnosticWarn = { fg = 'orange' },
+        DiagnosticHint = { fg = 'yellow' },
+        DiagnosticInfo = { fg = 'blue' },
+        -- Used for document highlight
+        LspReferenceRead = { bg = 'dark_grey' },
+        LspReferenceWrite = { bg = 'dark_grey' },
+    },
 })
 
 -- mason.nvim is the plugin manager for language servers

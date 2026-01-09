@@ -75,7 +75,7 @@ return {
                 format = "{text:ts} {pos}",
             },
             todo = {
-                sort = { "pos", "filename", "severity", "message"},
+                sort = { "pos", "filename", "severity", "message" },
                 groups = {
                     { "filename", format = "{file_icon}{filename} {count}" },
                 },
@@ -88,7 +88,7 @@ return {
                 sort = { "severity", "filename", "pos", "message" },
                 format = "{severity_icon}{message:md} {item.source} {code} {pos}",
             },
-            -- Base settings for: 
+            -- Base settings for:
             -- lsp_definitions, lsp_references, lsp_implementations
             -- lsp_type_definitions, lsp_declarations, lsp_command
             lsp_base = {
@@ -273,4 +273,10 @@ return {
             desc = 'Last Trouble entry',
         },
     },
+    highlights = {
+        TroubleIndent = { link = 'NonText' },
+        TroubleIndentFoldOpen = { fg = 'grey' },
+        TroubleIndentFoldClosed = { link = 'TroubleIndentFoldOpen' },
+        TroubleCount = { fg = 'foreground', bg = 'darkest_grey', bold = false },
+    }
 }
