@@ -1,9 +1,8 @@
 return {
     'tummetott/tinted-nvim',
     enabled = true,
-    lazy = true, -- TODO:
+    lazy = false,
     priority = 1000,
-    -- event = 'VeryLazy',
     opts = {
         supports = {
             tinty = true,
@@ -18,7 +17,7 @@ return {
             cmp = false,
             ts_rainbow = false,
             illuminate = false,
-            lsp_semantic = false,
+            lsp_semantic = true,
             mini_completion = false,
             dapui = false,
         }
@@ -56,7 +55,7 @@ return {
         Visual = { bg = 'darkest_grey' },
         Search = {
             fg = 'background',
-            bg = { darken = 'brightest_white', amount = 0.3 } -- TODO:
+            bg = { darken = 'brightest_white', amount = 0.3 }
         },
         CurSearch = { link = 'Search' },
         IncSearch = { bg = 'orange', fg = 'background' },
@@ -82,6 +81,12 @@ return {
         MatchParen = { bg = 'dark_grey' },
         FoldColumn = { link = 'LineNr' },
         TabLineFill = {},
+
+        -- TODO: This should go into tinted-nvim. Make a rewrite of the plugin.
+        -- Use https://github.com/rebelot/kanagawa.nvim as architecture
+        -- inspiration
+        ['@variable'] = { fg = 'foreground' },
+        ['@variable.parameter'] = { fg = 'red' },
 
         -- Lazy has no explicit plugin spec, so this goes in here
         LazyReasonCmd = { fg = 'dark_grey' },
