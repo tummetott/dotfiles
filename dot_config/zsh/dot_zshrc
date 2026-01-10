@@ -82,6 +82,10 @@ if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
 fi
 
+# Remap fzf file widget to CTRL-g. Restore default zsh CTRL-t
+bindkey '^G' fzf-file-widget
+bindkey '^T' transpose-chars
+
 # Set cursor style to steady bar
 function zle-line-init() {
     echo -ne '\e[6 q'
