@@ -46,6 +46,8 @@ return {
             i = 'inspect',
             p = 'preview',
             P = 'toggle_preview',
+            ['<c-n>'] = 'next',
+            ['<c-p>'] = 'prev',
         },
         modes = {
             telescope = {
