@@ -18,7 +18,7 @@ function M.is_loaded(plugin)
 end
 
 --- Closes LSP floating windows (diagnostics, signature help or hover windows).
----@param base_win_id window id of the underlying base window
+---@param base_win_id integer id of the underlying base window
 ---@return boolean closed Whether a window was closed
 function M.close_lsp_float(base_win_id)
     local wins = vim.api.nvim_tabpage_list_wins(0)

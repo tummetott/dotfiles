@@ -19,28 +19,9 @@ vim.keymap.set(
 -- Exclude the insert mode mapping because a special case is needed to make C-f
 -- also accept the copilot suggestion
 vim.keymap.set(
-    { 'c', 's' },
+    { 'i', 'c', 's' },
     '<C-f>',
     '<Right>',
-    { desc = 'Move cursor right' }
-)
-
--- Determine if Copilot is currently visible with an active suggestion
-local active_suggestion = function()
-    return require 'tummetott.utils'.is_loaded('copilot.lua') and
-        require 'copilot.suggestion'.is_visible()
-end
-
-vim.keymap.set(
-    'i',
-    '<C-f>',
-    function()
-        if active_suggestion() then
-            require('copilot.suggestion').accept_word()
-        else
-            vim.api.nvim_input('<Right>')
-        end
-    end,
     { desc = 'Move cursor right' }
 )
 
@@ -112,16 +93,7 @@ vim.keymap.set(
 vim.keymap.set(
     'i',
     '<C-e>',
-    function()
-        -- Try to close a floating window.
-        local win = vim.api.nvim_get_current_win()
-        if utils.close_lsp_float(win) then
-            return
-        end
-        -- If no float is present, move to end of the line.
-        local key = vim.api.nvim_replace_termcodes('<End>', true, false, true)
-        vim.api.nvim_feedkeys(key, 'i', false)
-    end,
+    '<End>',
     { desc = 'Jump to end of line' }
 )
 
@@ -138,11 +110,7 @@ vim.keymap.set(
     'i',
     '<M-b>',
     function() vim.cmd('normal! b') end,
-    {
-        noremap = true,
-        silent = true,
-        desc = 'Jump to previous word'
-    }
+    { desc = 'Jump to previous word' }
 )
 
 -- Jump one word forward (emacs style)
@@ -150,11 +118,7 @@ vim.keymap.set(
     'i',
     '<M-f>',
     function() vim.cmd('normal! w') end,
-    {
-        noremap = true,
-        silent = true,
-        desc = 'Jump to next word'
-    }
+    { desc = 'Jump to next word' }
 )
 
 -- Jump to start of line with CTRL-a in command mode
@@ -184,6 +148,10 @@ vim.keymap.set(
 -- Disable ex mode. This mode is useless and it's annoying to quit out of it
 -- when entered accidentally
 vim.keymap.set('n', 'gQ', '<NOP>', {})
+
+-- I constantly find myself entering this mode by accident. I can still access
+-- it with 'q?'
+vim.keymap.set('n', 'q:', '<NOP>', {})
 
 -- Jump to next trailing whitespace
 vim.keymap.set(
@@ -315,10 +283,6 @@ vim.keymap.set(
     end,
     { desc = 'Indent with tab' }
 )
-
-require('which-key').add {
-    { "<leader>i", group = "Indent" },
-}
 
 -- Replicate the 'gn' keymap of normal mode in visual mode
 vim.keymap.set(

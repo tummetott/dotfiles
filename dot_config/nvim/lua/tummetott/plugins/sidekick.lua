@@ -83,6 +83,18 @@ return {
             desc = 'Apply Copilot Suggestion'
         },
         {
+            '<c-f>',
+            function()
+                if require('sidekick.nes').have() then
+                    require('sidekick.nes').apply()
+                else
+                    vim.api.nvim_input('<Right>')
+                end
+            end,
+            mode = 'i',
+            desc = 'Apply Suggestion or Move Right'
+        },
+        {
             '<c-e>',
             function()
                 if require('sidekick.nes').have() then

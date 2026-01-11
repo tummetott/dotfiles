@@ -60,6 +60,7 @@ return {
             { 'zk', desc = 'Go to previous fold' },
             { 'gQ', hidden = true },
             { '<leader>l', group = 'Lsp' },
+            { '<leader>i', group = 'Indent' },
         },
         show_help = true,
         show_key = true,
