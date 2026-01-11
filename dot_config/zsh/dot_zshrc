@@ -70,9 +70,6 @@ autoload -Uz $fpath[1]/*(.:t)
 [[ -s "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] \
     && source "$XDG_DATA_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-[[ -s "$XDG_DATA_HOME/tinted-theming/tinty/artifacts/tinted-fzf-sh-file.sh" ]] \
-    && source "$XDG_DATA_HOME/tinted-theming/tinty/artifacts/tinted-fzf-sh-file.sh" 
-
 # TODO: Get rid of OMZ. Read all files in oh-my-zsh/lib and extract important cmds
 [[ -s "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh" ]] \
     && source "$XDG_DATA_HOME/zsh/oh-my-zsh/oh-my-zsh.sh"
@@ -98,10 +95,6 @@ unsetopt HIST_VERIFY
 
 # Source the 'powerlevel10k' config
 [ -f ${ZDOTDIR}/p10k.zsh ] && source ${ZDOTDIR}/p10k.zsh
-
-# Use ANSI color 19 to color suggestions. The ANSI color is controled by
-# tinted-terminal
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=19'
 
 # FZF should use 'fd' instead of the default 'find'
 if command -v fd >/dev/null 2>&1; then
