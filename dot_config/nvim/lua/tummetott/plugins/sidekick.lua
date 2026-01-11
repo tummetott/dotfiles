@@ -21,10 +21,9 @@ return {
         nes = {
             enabled = true,
             trigger = {
-                -- Enable automatic triggers
+                -- Trigger 'next suggestion' when i accepted a previous
+                -- suggestion
                 events = {
-                    -- 'ModeChanged *:n',
-                    'TextChanged',
                     'User SidekickNesDone',
                 },
             },
