@@ -1,0 +1,57 @@
+// vim: set ft=kdl:
+
+{{ $c := dict
+  "background" 0
+  "darkest_grey" 18
+  "dark_grey" 19
+  "grey" 8
+  "bright_grey" 20
+  "foreground" 7
+  "bright_white" 21
+  "brightest_white" 15
+  "red" 1
+  "bright_red" 9
+  "orange" 16
+  "yellow" 3
+  "bright_yellow" 11
+  "green" 2
+  "bright_green" 10
+  "cyan" 6
+  "bright_cyan" 14
+  "blue" 4
+  "bright_blue" 12
+  "purple" 5
+  "bright_purple" 13
+  "dark_red" 17
+-}}
+
+themes {
+    tinted {
+        frame_unselected {
+            base {{ $c.dark_grey }}
+            background {{ $c.background }}
+            emphasis_0 {{ $c.background }}
+            emphasis_1 {{ $c.background }}
+            emphasis_2 {{ $c.background }}
+            emphasis_3 {{ $c.background }}
+        }
+
+        frame_selected {
+            base {{ $c.dark_grey }}
+            background {{ $c.background }}
+            emphasis_0 {{ $c.background }}
+            emphasis_1 {{ $c.background }}
+            emphasis_2 {{ $c.background }}
+            emphasis_3 {{ $c.background }}
+        }
+
+        frame_highlight {
+            base {{ $c.foreground }}
+            background {{ $c.background }}
+            emphasis_0 {{ $c.background }}
+            emphasis_1 {{ $c.background }}
+            emphasis_2 {{ $c.background }}
+            emphasis_3 {{ $c.background }}
+        }
+    }
+}
