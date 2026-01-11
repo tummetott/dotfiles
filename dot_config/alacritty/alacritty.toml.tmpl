@@ -6,6 +6,9 @@ general.import = ["~/.config/alacritty/colors.toml"]
 [env]
 TERM = "alacritty"
 
+[hints]
+enabled = []
+
 [font]
 size = {{ .fontsize }}
 
@@ -39,102 +42,3 @@ lines = 33
 [window.padding]
 x = 10
 y = 10
-
-# HACK: Alacritty doesn’t forward “Command” (Super) key events to CLI programs by
-# default. This block works around that limitation by having Alacritty directly
-# call `zellij` actions. See: https://github.com/alacritty/alacritty/issues/4938
-
-[[keyboard.bindings]]
-key = "T"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action new-tab"] }
-
-[[keyboard.bindings]]
-key = "W"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action close-pane"] }
-
-[[keyboard.bindings]]
-key = "["
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-previous-tab"] }
-
-[[keyboard.bindings]]
-key = "]"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-next-tab"] }
-
-[[keyboard.bindings]]
-key = "K"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action clear-screen"] }
-
-[[keyboard.bindings]]
-key = "D"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action new-pane"] }
-
-[[keyboard.bindings]]
-key = "Key1"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 1"] }
-
-[[keyboard.bindings]]
-key = "Key2"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 2"] }
-
-[[keyboard.bindings]]
-key = "Key3"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 3"] }
-
-[[keyboard.bindings]]
-key = "Key4"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 4"] }
-
-[[keyboard.bindings]]
-key = "Key5"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 5"] }
-
-[[keyboard.bindings]]
-key = "Key6"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 6"] }
-
-[[keyboard.bindings]]
-key = "Key7"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 7"] }
-
-[[keyboard.bindings]]
-key = "Key8"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 8"] }
-
-[[keyboard.bindings]]
-key = "Key9"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action go-to-tab 9"] }
-
-[[keyboard.bindings]]
-key = "K"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action clear && zellij action write-chars 'clear\n'"] }
-
-[[keyboard.bindings]]
-key = "F"
-mods = "Command"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action switch-mode entersearch"] }
-
-[[keyboard.bindings]]
-key = "H"
-mods = "Command|Shift"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action move-tab-left"] }
-
-[[keyboard.bindings]]
-key = "L"
-mods = "Command|Shift"
-command = { program = "/bin/zsh", args = ["-c", "(( $+commands[zellij] )) && zellij action move-tab-right"] }

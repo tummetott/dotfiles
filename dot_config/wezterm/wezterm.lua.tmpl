@@ -30,11 +30,6 @@ config.color_scheme = current_tinty_scheme() or 'tokyonight'
 config.enable_kitty_keyboard = true
 config.keys = {
     -- Disable some default keymaps that collide with zellij
-    { key = "t", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "d", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "w", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "[", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "]", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "1", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "2", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "3", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
@@ -44,12 +39,24 @@ config.keys = {
     { key = "7", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "8", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "9", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "Enter", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "k", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
-    { key = "f", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "=", mods = "CTRL", action = wezterm.action.DisableDefaultAssignment },
     { key = "H", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "L", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "J", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "K", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "T", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "W", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "Q", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "Z", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "N", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "P", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "F", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "X", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "+", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "_", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "M", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "R", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
+    { key = "U", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "Tab", mods = "CTRL", action = wezterm.action.DisableDefaultAssignment },
 
     -- WezTerm fully supports the Kitty keyboard protocol, but `Ctrl -` currently
@@ -60,7 +67,6 @@ config.keys = {
     -- These are conventional macOS keymaps
     { key = 'f', mods = 'CMD|CTRL', action = wezterm.action.ToggleFullScreen },
     { key = 'h', mods = 'CMD', action = wezterm.action.HideApplication },
-    -- { key = 'r', mods = 'CMD', action = wezterm.action.ReloadConfiguration },
 }
 
 return config

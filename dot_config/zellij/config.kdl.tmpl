@@ -1,57 +1,66 @@
 // vim: set ft=kdl:
 
 keybinds clear-defaults=true {
-    // Acts as a prefix mode, similar to tmux. Pressing Ctrl-Space enters this
-    // mode, from which all other Zellij modes (pane, tab, move, resize, etc.)
-    // can be accessed.  This keeps normal and locked modes clean for regular
-    // shell or editor input.
-    tmux {
-        bind "q" "Ctrl q" { Quit; }
-        bind "d" "Ctrl d" { Detach; }
-        bind "p" "Ctrl p" { SwitchToMode "pane"; }
-        bind "t" "Ctrl t" { SwitchToMode "tab"; }
-        bind "m" "Ctrl m" { SwitchToMode "move"; }
-        bind "r" "Ctrl r" { SwitchToMode "resize"; }
-        bind "h" "Ctrl h" { MoveFocus "left"; SwitchToMode "normal"; }
-        bind "l" "Ctrl l" { MoveFocus "right"; SwitchToMode "normal"; }
-        bind "j" "Ctrl j" { MoveFocus "down"; SwitchToMode "normal"; }
-        bind "k" "Ctrl k" { MoveFocus "up"; SwitchToMode "normal"; }
-        bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "e" { EditScrollback; SwitchToMode "locked"; }
-        bind "z" "Ctrl z" {
-            LaunchOrFocusPlugin "plugin-manager" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
-        bind "Z" "Ctrl Z"{
-            LaunchOrFocusPlugin "session-manager" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
-        bind "x" "Ctrl x"{
-            LaunchOrFocusPlugin "zellij:share" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
-        bind "a" "Ctrl a" {
+    normal {
+        bind "Ctrl =" { Resize "Increase"; }
+        bind "Ctrl -" { Resize "Decrease"; }
+        bind "Shift Ctrl enter" { ToggleFloatingPanes; }
+        bind "Shift Ctrl t" { NewTab; }
+        bind "Shift Ctrl s" { NewPane; }
+        bind "Shift Ctrl w" { CloseFocus; }
+        bind "Shift Ctrl h" { MoveFocus "left"; }
+        bind "Shift Ctrl l" { MoveFocus "right"; }
+        bind "Shift Ctrl j" { MoveFocus "down"; }
+        bind "Shift Ctrl k" { MoveFocus "up"; }
+        bind "Shift Ctrl p" { GoToPreviousTab; }
+        bind "Shift Ctrl n" { GoToNextTab; }
+        bind "Shift Ctrl b" { ToggleTab; }
+        // TODO: make this case sensitive by default. PR needed
+        bind "Shift Ctrl f" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "Shift Ctrl x" { Clear; WriteChars "clear\n"; }
+        bind "Shift Ctrl o" { ToggleFocusFullscreen; }
+        // bind "Shift Ctrl q" { Quit; }
+        bind "Shift Ctrl d" { Detach; }
+        bind "Shift Ctrl m" { SwitchToMode "move"; }
+        bind "Shift Ctrl r" { SwitchToMode "resize"; }
+        bind "Shift Ctrl /" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "Shift Ctrl e" { EditScrollback; SwitchToMode "normal"; }
+        bind "Shift Ctrl a" {
             NewTab { layout "chezmoi-apply"; }
             SwitchToMode "normal";
         }
-    }
-    // When the active pane is not running Neovim, the autolock plugin
-    // automatically switches Zellij from locked to normal mode
-    normal {
-        bind "Enter" {
-            // Passthru 'Enter'.
-            WriteChars "\u{000D}";
-            // Invoke autolock to immediately assess proper lock state. This
-            // provides a snappier experience compared to solely relying on
-            // `reaction_seconds` to elapse.
-            MessagePlugin "autolock" {};
-        }
+        // This two keys mnemonics are awkward
+        bind "Shift Ctrl u" { SwitchToMode "pane"; }
+        bind "Shift Ctrl i" { SwitchToMode "tab"; }
+
+        bind "Super 1" { GoToTab 1; }
+        bind "Super 2" { GoToTab 2; }
+        bind "Super 3" { GoToTab 3; }
+        bind "Super 4" { GoToTab 4; }
+        bind "Super 5" { GoToTab 5; }
+        bind "Super 6" { GoToTab 6; }
+        bind "Super 7" { GoToTab 7; }
+        bind "Super 8" { GoToTab 8; }
+        bind "Super 9" { GoToTab 9; }
+
+        // bind "Shift Ctrl v" {
+        //     LaunchOrFocusPlugin "plugin-manager" {
+        //         floating true
+        //         move_to_focused_tab true
+        //     }
+        // }
+        // bind "Shift Ctrl u"{
+        //     LaunchOrFocusPlugin "session-manager" {
+        //         floating true
+        //         move_to_focused_tab true
+        //     }
+        // }
+        // bind "Shift Ctrl g"{
+        //     LaunchOrFocusPlugin "zellij:share" {
+        //         floating true
+        //         move_to_focused_tab true
+        //     }
+        // }
     }
     pane {
         bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "normal"; }
@@ -97,6 +106,8 @@ keybinds clear-defaults=true {
         bind "p" "Ctrl p" { MovePaneBackwards; }
         bind "[" "Ctrl [" { PreviousSwapLayout; }
         bind "]" "Ctrl ]" { NextSwapLayout; }
+        // bind "Shift Ctrl h" { MoveTab "left"; }
+        // bind "Shift Ctrl l" { MoveTab "right"; }
     }
     search {
         bind "n" { Search "down"; }
@@ -106,7 +117,7 @@ keybinds clear-defaults=true {
         bind "w" { SearchToggleOption "Wrap"; }
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "e" { EditScrollback; SwitchToMode "locked"; }
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
         bind "PageDown" { PageScrollDown; }
         bind "PageUp" { PageScrollUp; }
         bind "left" { PageScrollUp; }
@@ -124,16 +135,6 @@ keybinds clear-defaults=true {
         bind "d" "Ctrl d" { HalfPageScrollDown; }
         bind "u" "Ctrl u" { HalfPageScrollUp; }
     }
-    entersearch {
-        // TODO: I want to clear the line with Ctrl-u. Create issue
-        bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
-    }
-    shared_except "entersearch" "normal" "locked" {
-        bind "enter" { SwitchToMode "normal"; }
-    }
-    shared_except "tmux" {
-        bind "Ctrl Space" { SwitchToMode "tmux"; }
-    }
     renametab {
         bind "Esc" { UndoRenameTab; SwitchToMode "normal"; }
         bind "Ctrl c" { UndoRenameTab; SwitchToMode "normal"; }
@@ -142,40 +143,16 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenamePane; SwitchToMode "normal"; }
         bind "Ctrl c" { UndoRenamePane; SwitchToMode "normal"; }
     }
-    shared_except "search" "renametab" "renamepane" "normal" "locked" {
+    entersearch {
+        // TODO: I want to clear the line with Ctrl-u. Create issue
+        bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
+    }
+    shared_except "entersearch" "normal" {
+        bind "enter" { SwitchToMode "normal"; }
+    }
+    shared_except "search" "renametab" "renamepane" "normal" {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Ctrl c" { SwitchToMode "normal"; }
-    }
-    // TODO: remove autolock as soon as i'm sure i want to switch panes with
-    // <prefix>h/j/k/l
-    shared_among "locked" "normal" {
-        bind "Ctrl enter" { ToggleFloatingPanes; SwitchToMode "locked"; }
-        bind "Ctrl =" "Ctrl +" { Resize "Increase"; SwitchToMode "locked"; }
-        bind "Ctrl -" "Ctrl _" { Resize "Decrease"; SwitchToMode "locked"; }
-        bind "Super t" { NewTab; SwitchToMode "locked"; }
-        bind "Super \\" { NewPane; SwitchToMode "locked"; }
-        bind "Super w" { CloseFocus; SwitchToMode "locked"; }
-        bind "Super [" { GoToPreviousTab; SwitchToMode "locked"; }
-        bind "Super ]" { GoToNextTab; SwitchToMode "normal"; }
-        bind "Super Alt Left" { GoToPreviousTab; SwitchToMode "locked"; }
-        bind "Super Alt Right" { GoToNextTab; SwitchToMode "locked"; }
-        bind "Ctrl Tab" { ToggleTab; SwitchToMode "locked"; }
-        // TODO: make this case sensitive by default. PR needed
-        bind "Super f" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "Super 1" { GoToTab 1; SwitchToMode "locked"; }
-        bind "Super 2" { GoToTab 2; SwitchToMode "locked"; }
-        bind "Super 3" { GoToTab 3; SwitchToMode "locked"; }
-        bind "Super 4" { GoToTab 4; SwitchToMode "locked"; }
-        bind "Super 5" { GoToTab 5; SwitchToMode "locked"; }
-        bind "Super 6" { GoToTab 6; SwitchToMode "locked"; }
-        bind "Super 7" { GoToTab 7; SwitchToMode "locked"; }
-        bind "Super 8" { GoToTab 8; SwitchToMode "locked"; }
-        bind "Super 9" { GoToTab 9; SwitchToMode "locked"; }
-        // Clear zellij's scrollback and redraw prompt
-        bind "Super k" { Clear; WriteChars "clear\n"; SwitchToMode "locked"; }
-        bind "Super Enter" { ToggleFocusFullscreen; SwitchToMode "locked"; }
-        bind "Shift Ctrl h" { MoveTab "left"; }
-        bind "Shift Ctrl l" { MoveTab "right"; }
     }
 }
 
@@ -196,9 +173,7 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-    // TODO: consider managing them in chezmoi externals and access via local
-    // "file:<path>"
-    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+    zjstatus location="file:~/.local/share/zellij/zjstatus.wasm" {
         color_background "0"
         color_darkest_grey "18"
         color_dark_grey "19"
@@ -247,20 +222,6 @@ plugins {
         tab_truncate_end_format "#[fg=$bright_grey] ..."
         tab_truncate_start_format "#[fg=$bright_grey]... "
     }
-    // zellij-autolock is an Zellij plugin that automatically switches between
-    // Zellij's "Normal" and "Locked" modes by inspecting the command running
-    // within the focused Zellij pane.
-    autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
-        // Enabled at start?
-        is_enabled true
-        // Lock when any open these programs open.
-        triggers "nvim|vim"
-        // Reaction to input occurs after this many seconds. (default=0.3)
-        // (An existing scheduled reaction prevents additional reactions.)
-        reaction_seconds "0.3"
-        // Print to Zellij log?
-        print_to_log true
-    }
 }
 
 // Plugins to load in the background when a new session starts
@@ -284,7 +245,7 @@ simplified_ui true
 theme "tinted"
 
 // Choose the base input mode of zellij.
-// default_mode "locked"
+default_mode "normal"
 
 // Choose the path to override cwd that zellij will use for opening new panes
 // default_cwd "/tmp"
