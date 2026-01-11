@@ -65,8 +65,7 @@ return {
                 end
             end,
             expr = true,
-            -- <cr> in insert mode is defined by my completion plugin
-            mode = { 'n', 'i' },
+            mode = { 'n' }, -- Insert mode mapping in blink.nvim
             desc = 'Apply Copilot Suggestion'
         },
         {
@@ -104,6 +103,7 @@ return {
                 end
             end,
             expr = true,
+            mode = 'n', -- Insert mode mapping in blink.cmp
             desc = 'Clear Copilot Suggestion'
         },
         {

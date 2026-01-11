@@ -1,5 +1,5 @@
 -- Insert or delete brackets, parens, quotes in pair
--- TODO: maybe replace with: https://github.com/altermo/ultimate-autopair.nvim
+-- TODO: maybe replace with: https://github.com/saghen/blink.pairs
 return {
     'windwp/nvim-autopairs',
     enabled = true,

@@ -107,13 +107,6 @@ return {
         keymap = { -- all insert mode mappings
             preset = 'default',
             ['<CR>'] = {
-                -- function(cmp)
-                --     local ok, autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-                --     local cb = ok and autopairs.on_confirm_done() or nil
-                --     return cmp.accept({
-                --         callback = cb,
-                --     })
-                -- end,
                 'accept', -- returns false if comp menu is not selected
                 function()
                     local ok, sidekick = pcall(require, 'sidekick.nes')

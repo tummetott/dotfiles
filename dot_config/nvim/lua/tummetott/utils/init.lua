@@ -17,10 +17,10 @@ function M.is_loaded(plugin)
         lazy_config.plugins[plugin]._.loaded ~= nil
 end
 
---- Closes LSP floating windows (diagnostics, signature help or hover windows).
----@param base_win_id integer id of the underlying base window
+--- Closes floating windows attached to a base window.
+---@param base_win_id integer
 ---@return boolean closed Whether a window was closed
-function M.close_lsp_float(base_win_id)
+function M.close_attached_floats(base_win_id)
     local wins = vim.api.nvim_tabpage_list_wins(0)
     for _, win_id in ipairs(wins) do
         if win_id ~= base_win_id then
