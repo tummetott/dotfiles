@@ -27,6 +27,7 @@
 
 themes {
     tinted {
+        // Border between panes when unselected
         frame_unselected {
             base {{ $c.dark_grey }}
             background {{ $c.background }}
@@ -35,7 +36,7 @@ themes {
             emphasis_2 {{ $c.background }}
             emphasis_3 {{ $c.background }}
         }
-
+        // Border between panes when selected
         frame_selected {
             base {{ $c.dark_grey }}
             background {{ $c.background }}
@@ -44,10 +45,18 @@ themes {
             emphasis_2 {{ $c.background }}
             emphasis_3 {{ $c.background }}
         }
-
+        // Border between panes when not in normal mode
         frame_highlight {
             base {{ $c.foreground }}
             background {{ $c.background }}
+            emphasis_0 {{ $c.background }}
+            emphasis_1 {{ $c.background }}
+            emphasis_2 {{ $c.background }}
+            emphasis_3 {{ $c.background }}
+        }
+        text_selected {
+            base {{ $c.foreground }}
+            background {{ $c.dark_grey }}
             emphasis_0 {{ $c.background }}
             emphasis_1 {{ $c.background }}
             emphasis_2 {{ $c.background }}
