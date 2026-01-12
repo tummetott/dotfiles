@@ -131,6 +131,18 @@
     path = "fnm"
     refreshPeriod = "168h"
     {{ end }}
+
+    {{ if .install.codex }}
+    ['.local/bin/codex']
+    type = 'archive-file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $asset := printf "codex-%s-unknown-linux-musl.tar.gz" $arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "openai/codex" $asset }}'
+    executable = true
+    refreshPeriod = "168h"
+    {{ end }}
 {{ end }}
 
 {{ if .install.zsh }}
