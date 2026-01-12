@@ -141,6 +141,7 @@
     {{ $asset := printf "codex-%s-unknown-linux-musl.tar.gz" $arch }}
     url = '{{ gitHubLatestReleaseAssetURL "openai/codex" $asset }}'
     executable = true
+    path = 'codex-{{ $arch }}-unknown-linux-musl'
     refreshPeriod = "168h"
     {{ end }}
 {{ end }}
