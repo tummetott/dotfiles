@@ -139,7 +139,7 @@ if (( $+commands[fnm] )); then
 fi
 
 # Auto-start Zellij only if installed, not in SSH
-if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]]; then
+if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]] && [[ -z "$TMUX" ]]; then
     eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
