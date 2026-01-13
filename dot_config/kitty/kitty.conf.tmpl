@@ -17,28 +17,45 @@ modify_font cell_height 85%
 modify_font baseline 3
 
 # Clear all default keymaps that collide with zellij
-map cmd+t           no_op
-map cmd+d           no_op
-map cmd+w           no_op
-map cmd+[           no_op
-map cmd+]           no_op
-map cmd+1           no_op
-map cmd+2           no_op
-map cmd+3           no_op
-map cmd+4           no_op
-map cmd+5           no_op
-map cmd+6           no_op
-map cmd+7           no_op
-map cmd+8           no_op
-map cmd+9           no_op
-map cmd+enter       no_op
-map cmd+k           no_op
-map cmd+f           no_op
-map ctrl+tab        no_op
-map ctrl+shift+H    no_op
-map ctrl+shift+L    no_op
+map ctrl+shift+enter
+map ctrl+shift+t
+map ctrl+shift+s
+map ctrl+shift+u
+map ctrl+shift+w
+map ctrl+shift+h
+map ctrl+shift+l
+map ctrl+shift+j
+map ctrl+shift+k
+map ctrl+shift+p
+map ctrl+shift+n
+map ctrl+shift+f
+map ctrl+shift+/
+map ctrl+shift+d
+map ctrl+shift+m
+map ctrl+shift+e
+map ctrl+shift+z
+map ctrl+shift+r
+map ctrl+shift+a
+map ctrl+shift+x
+map ctrl+shift+o
+map ctrl+shift+b
+map ctrl+shift+g
+map ctrl+shift+y
+map ctrl+shift+i
+map cmd+1
+map cmd+2
+map cmd+3
+map cmd+4
+map cmd+5
+map cmd+6
+map cmd+7
+map cmd+8
+map cmd+9
 
-# Open the a URL with ctrl+left click
+# Reload config
+map cmd+r load_config_file
+
+# Open the a URL with ctrl+ click
 mouse_map cmd+left release grabbed,ungrabbed mouse_handle_click link
 
 enable_audio_bell no

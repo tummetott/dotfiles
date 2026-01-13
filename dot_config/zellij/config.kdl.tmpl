@@ -28,7 +28,7 @@ keybinds clear-defaults=true {
             NewTab { layout "chezmoi-apply"; }
             SwitchToMode "normal";
         }
-        bind "Shift Ctrl x" { Clear; WriteChars "clear\n"; }
+        bind "Shift Ctrl x" { Clear; Write 12; } // 12 is byte value for Ctrl l
         bind "Shift Ctrl o" { ToggleFocusFullscreen; } // Mnemonic: open
         bind "Shift Ctrl b" { ToggleTab; } // Mnemonic: back
         bind "Shift Ctrl g" { NewPane "stacked"; } // Mnemonic: group
