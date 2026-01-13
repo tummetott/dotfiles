@@ -34,6 +34,13 @@ name = "tinted-alacritty"
 themes-dir = "themes/alacritty"
 supported-systems = ["base16", "base24"]
 hook = """
-cp -f $TINTY_THEME_FILE_PATH ~/.config/alacritty/colors.toml
 touch -c $HOME/.config/alacritty/alacritty.toml
 """
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-kitty"
+themes-dir = "themes/kitty"
+# Reload kitty
+hook = "[[ -n \"$KITTY_PID\" ]] && kill -USR1 \"$KITTY_PID\""
+supported-systems = ["base16", "base24"]
