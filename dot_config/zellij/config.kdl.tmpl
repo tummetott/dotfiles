@@ -2,11 +2,10 @@
 
 keybinds clear-defaults=true {
     normal {
-        bind "Ctrl =" { Resize "Increase"; }
-        bind "Ctrl -" { Resize "Decrease"; }
-        bind "Shift Ctrl enter" { ToggleFloatingPanes; }
+        bind "Shift Ctrl Enter" { ToggleFloatingPanes; }
         bind "Shift Ctrl t" { NewTab; }
-        bind "Shift Ctrl s" { NewPane; }
+        bind "Shift Ctrl s" { NewPane; } // Mnemonic: split
+        bind "Shift Ctrl u" { NewPane "down"; } // Mnemonic: underneath
         bind "Shift Ctrl w" { CloseFocus; }
         bind "Shift Ctrl h" { MoveFocus "left"; }
         bind "Shift Ctrl l" { MoveFocus "right"; }
@@ -14,25 +13,31 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl k" { MoveFocus "up"; }
         bind "Shift Ctrl p" { GoToPreviousTab; }
         bind "Shift Ctrl n" { GoToNextTab; }
-        bind "Shift Ctrl b" { ToggleTab; }
-        // TODO: make this case sensitive by default. PR needed
-        bind "Shift Ctrl f" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "Shift Ctrl x" { Clear; WriteChars "clear\n"; }
-        bind "Shift Ctrl o" { ToggleFocusFullscreen; }
-        // bind "Shift Ctrl q" { Quit; }
+        // ISSUE: case sensitivity is enabled, however not when typing text
+        bind "Shift Ctrl f" "Shift Ctrl /" { 
+            SwitchToMode "entersearch";
+            SearchToggleOption "CaseSensitivity";
+            SearchInput 0;
+        }
         bind "Shift Ctrl d" { Detach; }
         bind "Shift Ctrl m" { SwitchToMode "move"; }
-        bind "Shift Ctrl r" { SwitchToMode "resize"; }
-        bind "Shift Ctrl /" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "Shift Ctrl e" { EditScrollback; SwitchToMode "normal"; }
+        bind "Shift Ctrl z" { SwitchToMode "resize"; } // Mnemonic: size
+        bind "Shift Ctrl r" { SwitchToMode "renametab"; TabNameInput 0; }
         bind "Shift Ctrl a" {
             NewTab { layout "chezmoi-apply"; }
             SwitchToMode "normal";
         }
-        // This two keys mnemonics are awkward
-        bind "Shift Ctrl u" { SwitchToMode "pane"; }
-        bind "Shift Ctrl i" { SwitchToMode "tab"; }
+        bind "Shift Ctrl x" { Clear; WriteChars "clear\n"; }
+        bind "Shift Ctrl o" { ToggleFocusFullscreen; } // Mnemonic: open
+        bind "Shift Ctrl b" { ToggleTab; } // Mnemonic: back
+        bind "Shift Ctrl g" { NewPane "stacked"; } // Mnemonic: group
+        bind "Shift Ctrl y" { SwitchToMode "tmux"; }
+        bind "Shift Ctrl i" { BreakPane; } // Mnemonic: isolate
+        bind "Shift Ctrl v" { BreakPaneLeft; SwitchToMode "normal"; }
 
+        bind "Ctrl =" { Resize "Increase"; }
+        bind "Ctrl -" { Resize "Decrease"; }
         bind "Super 1" { GoToTab 1; }
         bind "Super 2" { GoToTab 2; }
         bind "Super 3" { GoToTab 3; }
@@ -42,94 +47,62 @@ keybinds clear-defaults=true {
         bind "Super 7" { GoToTab 7; }
         bind "Super 8" { GoToTab 8; }
         bind "Super 9" { GoToTab 9; }
+    }
+    // This mode is similar to tmux prefix mode.
+    // It groups rarely used actions that do not fit into Shift Ctrl key bindings.
+    tmux {
+        bind "q" { Quit; }
+        bind "p" {
+            LaunchOrFocusPlugin "plugin-manager" {
+                floating true
+                move_to_focused_tab true
+            }; SwitchToMode "normal";
 
-        // bind "Shift Ctrl v" {
-        //     LaunchOrFocusPlugin "plugin-manager" {
-        //         floating true
-        //         move_to_focused_tab true
-        //     }
-        // }
-        // bind "Shift Ctrl u"{
-        //     LaunchOrFocusPlugin "session-manager" {
-        //         floating true
-        //         move_to_focused_tab true
-        //     }
-        // }
-        // bind "Shift Ctrl g"{
-        //     LaunchOrFocusPlugin "zellij:share" {
-        //         floating true
-        //         move_to_focused_tab true
-        //     }
-        // }
-    }
-    pane {
-        bind "-" "Ctrl -" { NewPane "down"; SwitchToMode "normal"; }
-        bind "_" "Ctrl _" { NewPane "down"; SwitchToMode "normal"; }
-        bind "|" "Ctrl |" { NewPane "right"; SwitchToMode "normal"; }
-        bind "\\" "Ctrl \\" { NewPane "right"; SwitchToMode "normal"; }
-        bind "s" "Ctrl s" { NewPane "stacked"; SwitchToMode "normal"; }
-        bind "r" "Ctrl r" { SwitchToMode "renamepane"; PaneNameInput 0; }
-        // Mnemonic: Toggle Breakout
-        bind "b" "Ctrl b" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
-    }
-    tab {
-        bind "r" "Ctrl r" { SwitchToMode "renametab"; TabNameInput 0; }
-        bind "s" "Ctrl s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
-        bind "[" "Ctrl [" { BreakPaneLeft; SwitchToMode "normal"; }
-        bind "]" "Ctrl ]" { BreakPaneRight; SwitchToMode "normal"; }
-        bind "b" "Ctrl b" { BreakPane; SwitchToMode "normal"; }
+        }
+        bind "h"{
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }; SwitchToMode "normal";
+        }
+        bind "s"{
+            LaunchOrFocusPlugin "zellij:share" {
+                floating true
+                move_to_focused_tab true
+            }; SwitchToMode "normal";
+        }
     }
     resize {
-        bind "left" { Resize "Increase left"; }
-        bind "down" { Resize "Increase down"; }
-        bind "up" { Resize "Increase up"; }
-        bind "right" { Resize "Increase right"; }
-        bind "+" "Ctrl +" { Resize "Increase"; }
-        bind "=" "Ctrl =" { Resize "Increase"; }
-        bind "-" "Ctrl -" { Resize "Decrease"; }
-        bind "_" "Ctrl _" { Resize "Decrease"; }
-        bind "h" "Ctrl h" { Resize "Increase left"; }
-        bind "j" "Ctrl j" { Resize "Increase down"; }
-        bind "k" "Ctrl k" { Resize "Increase up"; }
-        bind "l" "Ctrl l" { Resize "Increase right"; }
+        bind "h" "left" { Resize "Increase left"; }
+        bind "j" "down" { Resize "Increase down"; }
+        bind "k" "up" { Resize "Increase up"; }
+        bind "l" "right" { Resize "Increase right"; }
+        bind "=" { Resize "Increase"; }
+        bind "-" { Resize "Decrease"; }
     }
     move {
-        bind "left" { MovePane "left"; }
-        bind "down" { MovePane "down"; }
-        bind "up" { MovePane "up"; }
-        bind "right" { MovePane "right"; }
-        bind "h" "Ctrl h" { MovePane "left"; }
-        bind "j" "Ctrl j" { MovePane "down"; }
-        bind "k" "Ctrl k" { MovePane "up"; }
-        bind "l" "Ctrl l" { MovePane "right"; }
-        bind "n" "Ctrl n" { MovePane; }
-        bind "p" "Ctrl p" { MovePaneBackwards; }
-        bind "[" "Ctrl [" { PreviousSwapLayout; }
-        bind "]" "Ctrl ]" { NextSwapLayout; }
-        // bind "Shift Ctrl h" { MoveTab "left"; }
-        // bind "Shift Ctrl l" { MoveTab "right"; }
+        bind "h" "left" { MovePane "left"; }
+        bind "j" "down" { MovePane "down"; }
+        bind "k" "up" { MovePane "up"; }
+        bind "l" "right" { MovePane "right"; }
+        // TODO: create swap layouts
+        bind "p" { PreviousSwapLayout; }
+        bind "n" { NextSwapLayout; }
+        bind "[" { MoveTab "left"; }
+        bind "]" { MoveTab "right"; }
     }
     search {
         bind "n" { Search "down"; }
-        bind "N" { Search "up"; }
-        bind "p" { Search "up"; }
+        bind "p" "N" { Search "up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "w" { SearchToggleOption "Wrap"; }
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
-        bind "PageDown" { PageScrollDown; }
-        bind "PageUp" { PageScrollUp; }
-        bind "left" { PageScrollUp; }
-        bind "down" { ScrollDown; }
-        bind "up" { ScrollUp; }
-        bind "right" { PageScrollDown; }
-        bind "h" { PageScrollUp; }
-        bind "l" { PageScrollDown; }
-        bind "j" { ScrollDown; }
-        bind "k" { ScrollUp; }
-        bind "Ctrl f" { PageScrollDown; }
-        bind "Ctrl b" { PageScrollUp; }
+        bind "k" "up" { ScrollUp; }
+        bind "j" "down" { ScrollDown; }
+        bind "h" "Ctrl b" "left" "PageUp" { PageScrollUp; }
+        bind "l" "Ctrl f" "right" "PageDown" { PageScrollDown; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
         bind "Esc" { ScrollToBottom; SwitchToMode "normal"; }
         bind "d" "Ctrl d" { HalfPageScrollDown; }
@@ -139,12 +112,13 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenameTab; SwitchToMode "normal"; }
         bind "Ctrl c" { UndoRenameTab; SwitchToMode "normal"; }
     }
+    // Currently not used
     renamepane {
         bind "Esc" { UndoRenamePane; SwitchToMode "normal"; }
         bind "Ctrl c" { UndoRenamePane; SwitchToMode "normal"; }
     }
     entersearch {
-        // TODO: I want to clear the line with Ctrl-u. Create issue
+        // ISSUE: Can't clear the line with CTRL-u
         bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
     }
     shared_except "entersearch" "normal" {
@@ -222,11 +196,6 @@ plugins {
         tab_truncate_end_format "#[fg=$bright_grey] ..."
         tab_truncate_start_format "#[fg=$bright_grey]... "
     }
-}
-
-// Plugins to load in the background when a new session starts
-load_plugins {
-    autolock
 }
 
 // Web client configuration
