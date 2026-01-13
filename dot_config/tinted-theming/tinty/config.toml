@@ -44,3 +44,10 @@ themes-dir = "themes/kitty"
 # Reload kitty
 hook = "[[ -n \"$KITTY_PID\" ]] && kill -USR1 \"$KITTY_PID\""
 supported-systems = ["base16", "base24"]
+
+[[items]]
+name = "tinted-shell"
+path = "https://github.com/tinted-theming/tinted-shell"
+themes-dir = "scripts"
+hook = "[ -n \"$ITERM_SESSION_ID\" ] && source \"$TINTY_THEME_FILE_PATH\""
+supported-systems = ["base16", "base24"]

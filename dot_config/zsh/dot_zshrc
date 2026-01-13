@@ -110,6 +110,16 @@ if command -v fd >/dev/null 2>&1; then
     export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
 fi
 
+# iTerm2 cannot configure ANSI colors 16–21, so tinted-terminal does not work
+# there. tinted-shell updates the ANSI palette via OSC escape sequences, but
+# these are blocked when sourced from inside zellij. Workaround: use
+# tinted-terminal everywhere except iTerm2, and source tinted-shell only in
+# iTerm2 from the shell rc (before zellij starts). This yields correct colors
+# for every terminal emulator, but theme changes in iterm require exiting zellij
+# first.
+[ -n "$ITERM_SESSION_ID" ] \
+    && source "$XDG_DATA_HOME/tinted-theming/tinty/tinted-shell-scripts-file.sh"
+
 # The plugin 'syntax-highlighting' adds undercores to paths. Let's turn that off
 (( ${+ZSH_HIGHLIGHT_STYLES}  )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
