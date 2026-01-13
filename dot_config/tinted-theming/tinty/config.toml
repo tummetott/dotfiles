@@ -45,6 +45,13 @@ themes-dir = "themes/kitty"
 hook = "[[ -n \"$KITTY_PID\" ]] && kill -USR1 \"$KITTY_PID\""
 supported-systems = ["base16", "base24"]
 
+# iTerm2 cannot configure ANSI colors 16–21, so tinted-terminal does not work
+# there. tinted-shell updates the ANSI palette via OSC escape sequences, but
+# these are blocked when sourced from inside zellij. Workaround: use
+# tinted-terminal everywhere except iTerm2, and source tinted-shell only in
+# iTerm2 from the shell rc (before zellij starts). This yields correct colors
+# for every terminal emulator, but theme changes in iterm require exiting zellij
+# first.
 [[items]]
 name = "tinted-shell"
 path = "https://github.com/tinted-theming/tinted-shell"
