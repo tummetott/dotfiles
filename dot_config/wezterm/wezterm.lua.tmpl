@@ -58,6 +58,7 @@ config.keys = {
     { key = "+", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "_", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "Tab", mods = "CTRL", action = wezterm.action.DisableDefaultAssignment },
+    { key = "r", mods = "CMD", action = wezterm.action.SendKey { key = "r", mods = "META" } },
 
     -- WezTerm fully supports the Kitty keyboard protocol, but `Ctrl -` currently
     -- doesn't emit a CSI-u sequence as expected. Manually send the correct

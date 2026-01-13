@@ -25,19 +25,19 @@ bright_purple='colour13'
 dark_red='colour17'
 
 # Set the color of the highlighted text in copy-mode
-tmux setw -g mode-style 'fg=${background},bg=${bright_grey}'
+tmux setw -g mode-style "fg=${foreground},bg=${dark_grey}"
 
 # Sets the color of the current match
-tmux setw -g copy-mode-current-match-style 'fg=${background},bg=${orange}'
+tmux setw -g copy-mode-current-match-style "fg=${background},bg=${orange}"
 
 # Sets the color of all matches except the current match
-tmux setw -g copy-mode-match-style 'fg=${background},bg=${bright_grey}'
+tmux setw -g copy-mode-match-style "fg=${background},bg=${bright_grey}"
 
 # Sets the color of tmux messages
-tmux setw -g message-style 'fg=${blue},bg=${background}'
+tmux setw -g message-style "fg=${blue},bg=${background}"
 
-tmux set -g pane-border-style fg='${dark_grey}',bg='${background}'
-tmux set -g pane-active-border-style fg='${dark_grey}',bg='${background}'
+tmux set -g pane-border-style fg="${dark_grey}",bg="${background}"
+tmux set -g pane-active-border-style fg="${dark_grey}",bg="${background}"
 
 # Syntax explanation:
 #   #I = window number
@@ -54,13 +54,13 @@ tmux set -g status-style "fg=${bright_grey},bg=${background}"
 # All window tabs but the current
 tmux setw -g window-status-format "#[\
     bg=${background},fg=${darkest_grey}]#[\
-    bg=${darkest_grey},fg=${bright_grey},bold] #I #[\
+    bg=${darkest_grey},fg=${bright_grey},bold] #I #W #[\
     bg=${background},fg=${darkest_grey}]";
 
 # Current window tab
 tmux setw -g window-status-current-format "#[\
     bg=${background},fg=${darkest_grey}]#[\
-    bg=${darkest_grey},fg=${blue},bold] #I #[\
+    bg=${darkest_grey},fg=${blue},bold] #I #W #[\
     bg=${background},fg=${darkest_grey}]";
 
 # Right side shows the executed command, the hostname, the time and the session
