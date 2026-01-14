@@ -1,0 +1,19 @@
+model: openrouter/openai/gpt-4o
+
+auto-commits: false
+
+# Aider uses prompt_toolkit for color rendering. To force ANSI palette colors
+# instead of hardcoded rgb colors, set this before launching Aider:
+# export PROMPT_TOOLKIT_COLOR_DEPTH=DEPTH_4_BIT
+user-input-color: "blue"
+tool-output-color: "white"
+tool-error-color: "red"
+tool-warning-color: "magenta"
+assistant-output-color: "green"
+completion-menu-color: "white"
+completion-menu-bg-color: "black"
+completion-menu-current-color: "black"
+completion-menu-current-bg-color: "white"
+
+# ISSUE: Aider does not follow the XDG spec. Change the path, once this issue is
+# merged: https://github.com/Aider-AI/aider/issues/216
