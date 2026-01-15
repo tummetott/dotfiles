@@ -9,6 +9,7 @@ preferred-schemes = [
 
     # Light themes
     "base16-catppuccin-latte",
+    "base16-github",
     "base16-one-light",
 ]
 
