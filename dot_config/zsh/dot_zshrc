@@ -87,6 +87,8 @@ bindkey '^T' transpose-chars
 bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3C' forward-word
 
+bindkey '^U' backward-kill-line
+
 # Set cursor style to steady bar
 function zle-line-init() {
     echo -ne '\e[6 q'
