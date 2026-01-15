@@ -83,6 +83,10 @@ fi
 bindkey '^G' fzf-file-widget
 bindkey '^T' transpose-chars
 
+# Jump backward / forward one word with Option <- / ->
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
+
 # Set cursor style to steady bar
 function zle-line-init() {
     echo -ne '\e[6 q'
