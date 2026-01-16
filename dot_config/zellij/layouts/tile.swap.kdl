@@ -1,0 +1,62 @@
+swap_tiled_layout name="vertical" {
+    tab {
+        pane split_direction="vertical" {
+            pane;
+            pane {
+                pane;
+                pane stacked=true {
+                    children
+                }
+            }
+        }
+    }
+}
+swap_tiled_layout name="horizontal" {
+    tab {
+        pane
+        pane split_direction="vertical" {
+            pane
+            pane
+            pane stacked=true {
+                children
+            }
+        }
+    }
+}
+swap_tiled_layout name="stacked" {
+    tab min_panes=6 {
+        pane split_direction="vertical" {
+            pane
+            pane stacked=true { children; }
+        }
+    }
+}
+swap_floating_layout name="abreast"{
+    floating_panes max_panes=1 {
+        pane x="10%" y="10%" width="80%" height="80%"
+    }
+    floating_panes max_panes=2 {
+        pane x=0 y="10%" height="80%"
+        pane x="50%" y="10%" height="80%"
+    }
+    floating_panes max_panes=3 {
+        pane x=0 y=0 height="50%"
+        pane x="50%" y=0 height="50%"
+        pane x="5%" y="50%" height="50%" width="90%"
+    }
+}
+swap_floating_layout name="above" {
+    floating_panes max_panes=1 {
+        pane x="10%" y="10%" width="80%" height="80%"
+    }
+    floating_panes max_panes=2 {
+        pane x="10%" y="10%" width="80%" height="40%"
+        pane x="10%" y="50%" width="80%" height="40%"
+    }
+    floating_panes max_panes=3 {
+        pane x="5%" y="10%" width="55%" height="80%"
+
+        pane x="62%" y="10%" width="33%" height="38%"
+        pane x="62%" y="52%" width="33%" height="38%"
+    }
+}

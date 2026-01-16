@@ -32,7 +32,7 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl o" { ToggleFocusFullscreen; } // Mnemonic: open
         bind "Shift Ctrl b" { ToggleTab; } // Mnemonic: back
         bind "Shift Ctrl g" { NewPane "stacked"; } // Mnemonic: group
-        bind "Shift Ctrl y" { SwitchToMode "tmux"; }
+        bind "Shift Ctrl y" { SwitchToMode "session"; }
         bind "Shift Ctrl i" { BreakPane; } // Mnemonic: isolate
 
         bind "Ctrl =" { Resize "Increase"; }
@@ -48,9 +48,7 @@ keybinds clear-defaults=true {
         bind "Super 8" { GoToTab 8; }
         bind "Super 9" { GoToTab 9; }
     }
-    // This mode is similar to tmux prefix mode.
-    // It groups rarely used actions that do not fit into Shift Ctrl key bindings.
-    tmux {
+    session {
         bind "q" { Quit; }
         bind "p" {
             LaunchOrFocusPlugin "plugin-manager" {
@@ -59,13 +57,13 @@ keybinds clear-defaults=true {
             }; SwitchToMode "normal";
 
         }
-        bind "h"{
+        bind "s"{
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }; SwitchToMode "normal";
         }
-        bind "s"{
+        bind "w"{
             LaunchOrFocusPlugin "zellij:share" {
                 floating true
                 move_to_focused_tab true
@@ -124,7 +122,7 @@ keybinds clear-defaults=true {
     shared_except "entersearch" "normal" {
         bind "enter" { SwitchToMode "normal"; }
     }
-    shared_except "search" "renametab" "renamepane" "normal" {
+    shared_except "search" "renametab" "renamepane" "normal" "session" {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Ctrl c" { SwitchToMode "normal"; }
     }
@@ -220,7 +218,7 @@ default_mode "normal"
 // default_cwd "/tmp"
 
 // The name of the default layout to load on startup
-// default_layout "compact"
+default_layout "tile"
 
 // Toggle having pane frames around the panes
 pane_frames false
@@ -279,7 +277,7 @@ auto_layout true
 
 // Whether sessions should be serialized to the cache folder (including their
 // tabs/panes, cwds and running commands) so that they can later be resurrected
-session_serialization true
+session_serialization false
 
 // Whether pane viewports are serialized along with the session, default is false
 serialize_pane_viewport false

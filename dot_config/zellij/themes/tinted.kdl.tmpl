@@ -24,41 +24,132 @@
 {{- $dark_red := 17 }}
 
 themes {
+    // TODO: investiage when emphasis groups are actually used. Currently, i
+    // just put random colors because i dont see the effect
     tinted {
-        // Border between panes when unselected
-        frame_unselected {
-            base {{ $dark_grey }}
+        text_unselected {
+            base {{ $brightest_white }}
             background {{ $background }}
-            emphasis_0 {{ $background }}
-            emphasis_1 {{ $background }}
-            emphasis_2 {{ $background }}
-            emphasis_3 {{ $background }}
-        }
-        // Border between panes when selected
-        frame_selected {
-            base {{ $dark_grey }}
-            background {{ $background }}
-            emphasis_0 {{ $background }}
-            emphasis_1 {{ $background }}
-            emphasis_2 {{ $background }}
-            emphasis_3 {{ $background }}
-        }
-        // Border between panes when not in normal mode
-        frame_highlight {
-            base {{ $foreground }}
-            background {{ $background }}
-            emphasis_0 {{ $background }}
-            emphasis_1 {{ $background }}
-            emphasis_2 {{ $background }}
-            emphasis_3 {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
         }
         text_selected {
             base {{ $foreground }}
             background {{ $dark_grey }}
-            emphasis_0 {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        ribbon_unselected {
+            base {{ $background }}
+            background {{ $foreground }}
+            emphasis_0 {{ $red }}
+            emphasis_1 {{ $brightest_white }}
+            emphasis_2 {{ $blue }}
+            emphasis_3 {{ $purple }}
+        }
+        ribbon_selected {
+            base {{ $background }}
+            background {{ $green }}
+            emphasis_0 {{ $red }}
+            emphasis_1 {{ $bright_red }}
+            emphasis_2 {{ $purple }}
+            emphasis_3 {{ $blue }}
+        }
+        table_title {
+            base {{ $green }}
+            background {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        table_cell_unselected {
+            base {{ $brightest_white }}
+            background {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        table_cell_selected {
+            base {{ $brightest_white }}
+            background {{ $darkest_grey }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        list_unselected {
+            base {{ $brightest_white }}
+            background {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        list_selected {
+            base {{ $brightest_white }}
+            background {{ $darkest_grey }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $green }}
+            emphasis_3 {{ $purple }}
+        }
+        frame_selected {
+            base {{ $dark_grey }}
+            background {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $purple }}
+            emphasis_3 {{ $background }}
+        }
+        frame_unselected {
+            base {{ $dark_grey }}
+            background {{ $background }}
+            emphasis_0 {{ $bright_red }}
+            emphasis_1 {{ $cyan }}
+            emphasis_2 {{ $purple }}
+            emphasis_3 {{ $background }}
+        }
+        frame_highlight {
+            base {{ $foreground }}
+            background {{ $background }}
+            emphasis_0 {{ $purple }}
+            emphasis_1 {{ $bright_red }}
+            emphasis_2 {{ $bright_red }}
+            emphasis_3 {{ $bright_red }}
+        }
+        exit_code_success {
+            base {{ $green }}
+            background {{ $background }}
+            emphasis_0 {{ $cyan }}
+            emphasis_1 {{ $background }}
+            emphasis_2 {{ $purple }}
+            emphasis_3 {{ $blue }}
+        }
+        exit_code_error {
+            base {{ $red }}
+            background {{ $background }}
+            emphasis_0 {{ $yellow }}
             emphasis_1 {{ $background }}
             emphasis_2 {{ $background }}
             emphasis_3 {{ $background }}
+        }
+        multiplayer_user_colors {
+            player_1 {{ $purple }}
+            player_2 {{ $blue }}
+            player_3 {{ $background }}
+            player_4 {{ $yellow }}
+            player_5 {{ $cyan }}
+            player_6 {{ $background }}
+            player_7 {{ $red }}
+            player_8 {{ $background }}
+            player_9 {{ $background }}
+            player_10 {{ $background }}
         }
     }
 }
