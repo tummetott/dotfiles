@@ -145,5 +145,21 @@ return {
             mode = { 'n', 'x' },
             desc = 'Sidekick Select Prompt',
         },
+        -- Enable <C-n>/<C-p> navigation for Codex selection menus by
+        -- translating them to arrow keys in terminal mode. This overrides
+        -- default nvim terminal-mode behavior globally; verify no other
+        -- terminal workflows rely on these keys.
+        {
+            '<c-n>',
+            '<down>',
+            mode = 't',
+            desc = 'Down',
+        },
+        {
+            '<c-p>',
+            '<up>',
+            mode = 't',
+            desc = 'Up',
+        },
     },
 }

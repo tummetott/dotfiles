@@ -27,10 +27,13 @@ return {
                     return vim.bo[buf].buftype == 'help'
                 end,
             },
-            {
-                title = 'TERMINAL',
-                ft = 'FTerm',
-            },
+            -- {
+            --     title = 'TERMINAL',
+            --     ft = '',
+            --     filter = function(buf, win)
+            --         return vim.bo[buf].buftype == 'terminal'
+            --     end
+            -- },
             {
                 title = 'NATIVE QUICKFIX',
                 filter = function(_, win)

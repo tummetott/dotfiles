@@ -141,6 +141,9 @@ vim.opt.timeoutlen = 1000
 -- Copy to system clipboard
 vim.opt.clipboard = 'unnamedplus'
 
+-- Mode sensitive cursor
+vim.o.guicursor = "n-v-sm:block,i-c-ci-t:ver25,r-cr-o:hor20"
+
 local function paste()
     return {
         vim.fn.split(vim.fn.getreg(''), '\n'),

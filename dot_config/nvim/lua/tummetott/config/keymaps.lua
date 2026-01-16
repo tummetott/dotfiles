@@ -104,6 +104,24 @@ local maps = {
         opts = { desc = 'Jump to start of line' }
     },
     {
+        mode = 'c',
+        lhs = '<M-Left>',
+        rhs = '<S-Left>',
+        opts = { desc = 'Jump word backward' }
+    },
+    {
+        mode = 'c',
+        lhs = '<M-Right>',
+        rhs = '<S-Right>',
+        opts = { desc = 'Jump word forward' }
+    },
+    {
+        mode = 'c',
+        lhs = '<M-Bs>',
+        rhs = '<C-w>',
+        opts = { desc = 'Delete word backward' },
+    },
+    {
         mode = 'n',
         lhs = '<esc>',
         rhs = function()
