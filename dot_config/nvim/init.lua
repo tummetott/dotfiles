@@ -5,11 +5,7 @@ if vim.fn.has('nvim-' .. version) ~= 1 then
 end
 
 -- Detect if nerdfonts are disabled.
-if vim.env.NO_NERDFONTS then
-    vim.g.nerdfonts = false
-else
-    vim.g.nerdfonts = true
-end
+vim.env.NO_NERDFONTS = vim.g.nerdfonts ~= nil
 
 -- Run the plugin manager lazy.nvim
 require('tummetott.config.lazy')
