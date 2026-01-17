@@ -48,7 +48,7 @@ alias cm='chezmoi'
 alias c='cd ~/.local/share/chezmoi'
 alias n='cd ~/.local/share/chezmoi/dot_config/nvim/lua/tummetott/'
 
-{{- if eq .chezmoi.hostname "Void" }}
+{{- if contains "darwin" .osid }}
 
 # Useful to compare with my own nvim config. Must be installed manually before
 alias chad='NVIM_APPNAME=chad nvim'
