@@ -184,12 +184,6 @@ table.insert(M, {
             mode = 'c',
         },
     },
-    highlights = {
-        TelescopeBorder = { link = 'FloatBorder' },
-        TelescopeMatching = { fg = 'blue' },
-        TelescopeTitle = { fg = 'blue' },
-        TelescopeSelectionCaret = { fg = 'dark_red' },
-    },
 })
 
 table.insert(M, {

@@ -68,10 +68,6 @@ table.insert(M, {
     'neovim/nvim-lspconfig',
     lazy = false,
     highlights = {
-        DiagnosticError = { fg = 'red' },
-        DiagnosticWarn = { fg = 'orange' },
-        DiagnosticHint = { fg = 'yellow' },
-        DiagnosticInfo = { fg = 'blue' },
         -- Used for document highlight
         LspReferenceRead = { bg = 'dark_grey' },
         LspReferenceWrite = { bg = 'dark_grey' },

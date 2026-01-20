@@ -62,6 +62,7 @@ return {
         },
     },
     highlights = {
+        IblIndent = { link = 'NonText' },
         IblScope = { fg = 'dark_grey' },
     }
 }
