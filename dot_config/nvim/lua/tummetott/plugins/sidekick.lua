@@ -17,7 +17,7 @@ return {
             end)
         end, 1000)
 
-        -- Find a non-terminal window in the current tabpage (your code window)
+        -- Find a non-terminal window in the current tabpage (code window)
         local function find_window_nr()
             for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
                 local buf = vim.api.nvim_win_get_buf(win)
@@ -27,46 +27,77 @@ return {
             end
         end
 
+        -- Parse a file reference starting at the WORD under the cursor.
+        -- Supports:
+        --   <path>
+        --   <path>:<line>
+        --   <path>:<line>-<range>
+        -- Always jumps to the start line if present.
         local function parse_location(buf)
-            local row = vim.api.nvim_win_get_cursor(0)[1] -- 1-based
+            local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- row 1-based, col 0-based
             local total = vim.api.nvim_buf_line_count(buf)
 
-            -- current line + next two lines (because of possible line wrap)
-            local stop = math.min(row + 2, total)
-            local lines = vim.api.nvim_buf_get_lines(buf, row - 1, stop, false)
+            -- 1. Get current line
+            local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
-            -- Cut of the first two characters of wrapped lines. they are always
-            -- padding
-            for i = 2, #lines do
-                lines[i] = lines[i]:sub(3)
-            end
-
-            local text = table.concat(lines, "")
-            local path, lnum = text:match("([%w%._%-%/]+):(%d+)")
-            if not path or not lnum then
+            -- 2. Find WORD boundaries in current line
+            local before = line:sub(1, col + 1)
+            local word_start = before:find("%S+$")
+            if not word_start then
                 return nil
             end
 
-            return path, tonumber(lnum)
+            -- 3. Cut everything before WORD start
+            local text = line:sub(word_start)
+
+            -- 4. Append next two lines to handle wrapping
+            local stop = math.min(row + 2, total)
+            local next_lines = vim.api.nvim_buf_get_lines(buf, row, stop, false)
+            for _, l in ipairs(next_lines) do
+                -- wrapped lines always have padding; strip first two chars
+                text = text .. l:sub(3)
+            end
+
+            -- 5. Clamp again to a single WORD (cut everything after it)
+            local word = text:match("^(%S+)")
+            if not word then
+                return nil
+            end
+
+            -- 6. Extract path and optional starting line
+            local path, lnum = word:match("^([%w%._%-%/]+):(%d+)")
+            if path then
+                return path, tonumber(lnum)
+            end
+
+            -- 7. Path only (no line)
+            -- Strip trailing non-path characters (e.g. commas)
+            local clean_path = word:match("^([%w%._%-%/]+)")
+            if clean_path and vim.fn.filereadable(clean_path) == 1 then
+                return clean_path, nil
+            end
+
+            return nil
         end
 
         local function jump_to_location(buf)
             local path, lnum = parse_location(buf)
-            local jump = path
-                and lnum
-                and vim.fn.filereadable(path) == 1
-                and find_window_nr()
+            local target_win = path and vim.fn.filereadable(path) == 1 and find_window_nr()
 
-            if not jump then
+            if not target_win then
                 return vim.cmd("normal! <C-]>")
             end
 
-            vim.api.nvim_set_current_win(jump)
+            vim.api.nvim_set_current_win(target_win)
             vim.cmd("edit " .. vim.fn.fnameescape(path))
-            vim.api.nvim_win_set_cursor(jump, { lnum, 0 })
-            vim.cmd("normal! zz")
+
+            if lnum then
+                vim.api.nvim_win_set_cursor(target_win, { lnum, 0 })
+                vim.cmd("normal! zz")
+            end
         end
 
+        -- Enable only in terminal buffers (Sidekick output)
         vim.api.nvim_create_autocmd("TermOpen", {
             callback = function(ctx)
                 vim.keymap.set(
