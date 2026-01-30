@@ -50,12 +50,12 @@ return {
             -- 3. Cut everything before WORD start
             local text = line:sub(word_start)
 
-            -- 4. Append next two lines to handle wrapping
-            local stop = math.min(row + 2, total)
+            -- 4. Append next four lines to handle wrapping
+            local stop = math.min(row + 4, total)
             local next_lines = vim.api.nvim_buf_get_lines(buf, row, stop, false)
             for _, l in ipairs(next_lines) do
-                -- wrapped lines always have padding; strip first two chars
-                text = text .. l:sub(3)
+                -- strip all leading whitespace from wrapped lines
+                text = text .. l:gsub("^%s+", "")
             end
 
             -- 5. Clamp again to a single WORD (cut everything after it)
