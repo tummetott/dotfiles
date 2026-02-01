@@ -173,11 +173,26 @@ autocmd('BufEnter', {
 
 -- Prevent accidentally saving a file named '\'.
 -- When typing ":w\" by mistake, automatically do ":w" instead
-vim.api.nvim_create_autocmd('BufWriteCmd', {
+autocmd('BufWriteCmd', {
     pattern = [[\\]],
     group = group,
     callback = function()
         vim.cmd('write')
     end,
     desc = "Prevent accidentally saving a file named '\\'"
+})
+
+-- Jump to a file reference under the cursor. Used for llm buffer in e.g.
+-- sidekick.nvim
+autocmd("TermOpen", {
+    callback = function(ctx)
+        vim.keymap.set(
+            "n",
+            "<C-]>",
+            function()
+                require('tummetott.utils').goto_file_at_cursor(ctx.buf)
+            end,
+            { buffer = ctx.buf }
+        )
+    end,
 })

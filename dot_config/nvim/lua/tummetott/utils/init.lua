@@ -34,4 +34,6 @@ function M.close_attached_floats(base_win_id)
     return false
 end
 
+M.goto_file_at_cursor = require('tummetott.utils.goto-file').goto_file_at_cursor
+
 return M
