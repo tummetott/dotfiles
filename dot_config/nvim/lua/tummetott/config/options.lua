@@ -43,9 +43,6 @@ vim.opt.mouse = 'a'
 -- Scrolling should be as fine grain as possible with the mouse
 vim.opt.mousescroll = "ver:1,hor:1"
 
--- Enable true colors
-vim.opt.termguicolors = true
-
 -- No linewrap
 vim.opt.wrap = false
 

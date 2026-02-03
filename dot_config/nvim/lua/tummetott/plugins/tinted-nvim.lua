@@ -7,6 +7,7 @@ return {
         apply_scheme_on_startup = true,
         compile = false,
         capabilities = {
+            truecolor = true,
             undercurl = true,
             terminal_colors = true,
         },
