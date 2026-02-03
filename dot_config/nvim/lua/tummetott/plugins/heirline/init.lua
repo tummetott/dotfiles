@@ -5,7 +5,7 @@ return {
     dependencies = 'lewis6991/gitsigns.nvim',
     config = function()
         local comp = require('tummetott.plugins.heirline.components')
-        local colors = require('tinted-nvim').palette_aliases
+        local colors = require('tinted-nvim').get_palette_aliases()
         require('heirline').setup {
             statusline = comp.statusline,
             winbar = comp.winbar,
@@ -39,7 +39,7 @@ return {
         vim.api.nvim_create_autocmd('ColorScheme', {
             group = vim.api.nvim_create_augroup('HeirlineColorUpdate', { clear = true }),
             callback = function()
-                colors = require('tinted-nvim').palette_aliases
+                colors = require('tinted-nvim').get_palette_aliases()
                 if colors then
                     require('heirline.utils').on_colorscheme(colors)
                     vim.cmd('redrawstatus')
