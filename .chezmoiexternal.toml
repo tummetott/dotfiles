@@ -171,9 +171,9 @@ type = 'git-repo'
 url = 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
 refreshPeriod = '168h'
 
-['.local/share/zsh/powerlevel10k']
+['.local/share/zsh/zsh-transient-prompt']
 type = 'git-repo'
-url = 'https://github.com/romkatv/powerlevel10k.git'
+url = 'https://github.com/olets/zsh-transient-prompt.git'
 refreshPeriod = '168h'
 {{ end }}
 

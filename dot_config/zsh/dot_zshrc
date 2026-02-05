@@ -10,13 +10,6 @@
 # negligible.
 [ -f ~/.config/shell/env ] && source ~/.config/shell/env
 
-# Initialize Powerlevel10k instant prompt. Keep this block near the top of zshrc
-# to ensure the prompt appears immediately when a new shell session starts.
-if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" \
-        && ( -n "$TMUX" || -n "$SSH_TTY" ) ]]; then
-    source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Hostname up to the first '.'
 export SHORT_HOST=${SHORT_HOST:-${(%):-%m}}
 
@@ -61,9 +54,6 @@ autoload -Uz $fpath[1]/*(.:t)
 # Delete compiled completions and recompile them with:
 # 'rm -f $ZSH_COMPDUMP; compinit -d "$ZSH_COMPDUMP"'
 
-[[ -s "$XDG_DATA_HOME/zsh/powerlevel10k/powerlevel10k.zsh-theme" ]] \
-    && source "$XDG_DATA_HOME/zsh/powerlevel10k/powerlevel10k.zsh-theme"
-
 [[ -s "$XDG_DATA_HOME/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] \
     && source "$XDG_DATA_HOME/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
@@ -98,9 +88,6 @@ zle -N zle-line-init
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification
 unsetopt HIST_VERIFY
-
-# Source the 'powerlevel10k' config
-[ -f ${ZDOTDIR}/p10k.zsh ] && source ${ZDOTDIR}/p10k.zsh
 
 # FZF should use 'fd' instead of the default 'find'
 if command -v fd >/dev/null 2>&1; then
@@ -149,5 +136,11 @@ if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]] && [[ -z "$TMUX" ]]; then
     eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
-# Return with exit code 0
-true
+# Nice prompt
+if (( $+commands[starship] )); then
+    eval "$(starship init zsh)"
+fi
+
+# Must be sourced after 'starship init'
+[[ -s "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme"

@@ -3,6 +3,7 @@ add_newline = false
 
 # Modules you explicitly add to the format will not be part of $all
 format = """
+${custom.ssh}\
 ${custom.icon}\
 $all
 """
@@ -58,6 +59,12 @@ when = true
 format = '[$output]($style) '
 style = 'blue'
 
+[custom.ssh]
+when = 'test -n "$SSH_CONNECTION"'
+symbol = ''
+style = 'purple'
+format = '[$symbol ssh]($style) '
+
 [time]
 disabled = false
 format = 'at [ $time]($style)'
@@ -75,7 +82,7 @@ ahead = '⇡$count'
 behind = '⇣$count'
 diverged = '⇕$count'
 untracked = '?$count'
-stashed = '$$count'
+stashed = '*$count'
 modified = '!$count'
 staged = '+$count'
 renamed = '»$count'
