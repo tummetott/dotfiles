@@ -38,6 +38,11 @@ return {
                         desc = 'insert prompt or context',
                     },
                 }
+            },
+            -- FIX: Removed the deprecated "--enable web_search" flag, that
+            -- sidekick adds automatically 
+            tools = {
+                codex = { cmd = { "codex" } },
             }
         },
     },
