@@ -112,10 +112,6 @@ vim.opt.iskeyword:append('-')
 -- By default, all folds are open
 vim.opt.foldlevelstart = 99
 
--- Use treesitter to define folds automatically
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
 -- Don't show the foldcolumn
 vim.opt.foldcolumn = '0'
 

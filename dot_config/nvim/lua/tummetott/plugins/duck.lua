@@ -3,7 +3,7 @@ return {
     enabled = true,
     keys = {
         {
-            '<Leader>+',
+            '<Leader>=',
             function() require('duck').hatch() end,
             desc = 'More ducks!',
         },

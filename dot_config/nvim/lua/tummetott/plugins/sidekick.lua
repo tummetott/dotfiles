@@ -2,6 +2,11 @@ return {
     'folke/sidekick.nvim',
     enabled = true,
     event = 'VeryLazy',
+    init = function()
+        require('which-key').add {
+            { "<Leader>j", group = "Sidekick" }
+        }
+    end,
     config = function(_, opts)
         require('sidekick').setup(opts)
 
