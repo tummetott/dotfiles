@@ -10,6 +10,14 @@ source ~/.config/shell/env
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
+if command -v tinty >/dev/null 2>&1; then
+    info 'Configure tinty'
+    log tinty install
+    log tinty apply base24-catppuccin-frappe
+else
+    warn 'Tinty not found, skipping configuration'
+fi
+
 {{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
     {{ if .sudo }}
         info 'Generate locale'
