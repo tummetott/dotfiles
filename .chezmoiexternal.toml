@@ -204,7 +204,7 @@ type = 'archive-file'
 {{ if eq .chezmoi.os "darwin" }}
     {{ $asset = printf "tinty-%s-apple-darwin.tar.gz" $arch }}
 {{ else if eq .chezmoi.os "linux" }}
-    {{ $asset = printf "tinty-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ $asset = printf "tinty-%s-unknown-linux-gnu.tar.gz" $arch }}
 {{ end }}
 url = '{{ gitHubLatestReleaseAssetURL "tinted-theming/tinty" $asset }}'
 path = "tinty"
