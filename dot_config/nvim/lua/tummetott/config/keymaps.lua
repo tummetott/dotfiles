@@ -123,6 +123,12 @@ local maps = {
     },
     {
         mode = 'n',
+        lhs = '<c-;>',
+        rhs = utils.soft_zoom,
+        opts = { desc = 'Enlarge the window' },
+    },
+    {
+        mode = 'n',
         lhs = '<esc>',
         rhs = function()
             -- Disable highlights temporarily (until next search)

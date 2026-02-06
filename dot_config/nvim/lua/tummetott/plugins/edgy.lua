@@ -1,3 +1,4 @@
+-- TODO: remove once this is fixed: https://github.com/folke/trouble.nvim/issues/681
 return {
     'folke/edgy.nvim',
     enabled = true,

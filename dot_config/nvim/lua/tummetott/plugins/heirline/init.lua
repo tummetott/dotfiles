@@ -41,24 +41,26 @@ return {
             opts = {
                 colors = colors,
                 disable_winbar_cb = function(args)
-                    return require('heirline.conditions').buffer_matches({
-                        buftype = {
-                            'nofile',
-                            'prompt',
-                            'help',
-                            'quickfix',
-                        },
+                    local win = vim.fn.bufwinid(args.buf)
+                    if win == -1 then
+                        return false
+                    end
+
+                    -- 1. disable for floating windows
+                    local cfg = vim.api.nvim_win_get_config(win)
+                    if cfg.relative ~= "" then
+                        return true
+                    end
+
+                    -- 2. disable for specific buffers entirely
+                    return require("heirline.conditions").buffer_matches({
                         filetype = {
-                            'trouble',
-                            'FTerm',
-                            'help',
-                            'NvimTree',
-                            'man',
-                            'DiffviewFiles',
-                            'DiffviewFileHistory',
-                            'qf',
-                            'sidekick_terminal',
-                            'snacks_dashboard',
+                            "snacks_dashboard",
+                            "TelescopePrompt",
+                            "TelescopeResults",
+                        },
+                        buftype = {
+                            "prompt",
                         },
                     }, args.buf)
                 end,

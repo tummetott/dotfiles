@@ -605,7 +605,183 @@ M.statusline = {
     M.right_moon
 }
 
-M.winbar = {
+M.special_winbar = {
+    condition = function()
+        return conditions.buffer_matches({
+            filetype = {
+                'trouble',
+                'help',
+                'NvimTree',
+                'man',
+                'DiffviewFiles',
+                'DiffviewFileHistory',
+                'qf',
+                'sidekick_terminal',
+            },
+            buftype = {
+                'nofile',
+                'terminal',
+            },
+        })
+    end,
+
+    static = {
+        icon = vim.g.nerdfonts and '  ' or '> ',
+
+        rules = {
+            {
+                title = 'NATIVE QUICKFIX',
+                match = function(buf, win)
+                    return vim.bo[buf].filetype == 'qf'
+                    and vim.fn.getwininfo(win)[1].loclist ~= 1
+                end,
+            },
+            {
+                title = 'NATIVE LOCLIST',
+                match = function(buf, win)
+                    return vim.bo[buf].filetype == 'qf'
+                    and vim.fn.getwininfo(win)[1].loclist == 1
+                end,
+            },
+            {
+                title = 'QUICKFIX',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'quickfix'
+                end,
+            },
+            {
+                title = 'LOCLIST',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'loclist'
+                end,
+            },
+            {
+                title = 'TELESCOPE',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and (
+                        vim.w[win].trouble.mode == 'telescope'
+                        or vim.w[win].trouble.mode == 'telescope_files'
+                    )
+                end,
+            },
+            {
+                title = 'DIAGNOSTICS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'diagnostics'
+                end,
+            },
+            {
+                title = 'DEFINITIONS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_definitions'
+                end,
+            },
+            {
+                title = 'TYPE DEFINITIONS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_type_definitions'
+                end,
+            },
+            {
+                title = 'REFERENCES',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_references'
+                end,
+            },
+            {
+                title = 'IMPLEMENTATIONS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_implementations'
+                end,
+            },
+            {
+                title = 'DECLARATIONS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_declarations'
+                end,
+            },
+            {
+                title = 'TODOS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'todo'
+                end,
+            },
+            {
+                title = 'DIFFVIEW FILES',
+                match = function(buf)
+                    return vim.bo[buf].filetype == 'DiffviewFiles'
+                end,
+            },
+            {
+                title = 'DIFFVIEW HISTORY',
+                match = function(buf)
+                    local name = vim.fn.bufname(buf)
+                    return vim.bo[buf].filetype == 'DiffviewFileHistory'
+                    and name
+                    and name:sub(-#'DiffviewFileHistoryPanel') == 'DiffviewFileHistoryPanel'
+                end,
+            },
+            {
+                title = 'DIFFVIEW HISTORY OPTIONS',
+                match = function(buf)
+                    local name = vim.fn.bufname(buf)
+                    return vim.bo[buf].filetype == 'DiffviewFileHistory'
+                    and name
+                    and name:sub(-#'DiffviewFHOptionPanel') == 'DiffviewFHOptionPanel'
+                end,
+            },
+            {
+                title = 'MANPAGE',
+                match = function(buf)
+                    return vim.bo[buf].filetype == 'man'
+                end,
+            },
+            {
+                title = 'TERMINAL',
+                match = function(buf)
+                    return vim.bo[buf].buftype == 'terminal'
+                end,
+            },
+        },
+    },
+    -- Icon Provider
+    {
+        provider = function(self)
+            return self.icon
+        end,
+        hl = { fg = 'orange', bold = true },
+    },
+    -- Title provider
+    {
+        provider = function(self)
+            local buf = vim.api.nvim_get_current_buf()
+            local win = vim.api.nvim_get_current_win()
+
+            for _, rule in ipairs(self.rules) do
+                if rule.match(buf, win) then
+                    return rule.title
+                end
+            end
+
+            -- final fallback
+            local ft = vim.bo[buf].filetype
+            return ft ~= '' and ft:upper() or 'SPECIAL'
+        end,
+        hl = { fg = 'blue', bold = true },
+    },
+}
+
+M.normal_winbar = {
     hl = {
         fg = 'bright_grey',
         bg = 'darkest_grey',
@@ -616,6 +792,12 @@ M.winbar = {
     M.buff_modified,
     M.align,
     M.right_moon
+}
+
+M.winbar = {
+    fallthrough = false,
+    M.special_winbar,
+    M.normal_winbar
 }
 
 M.tabline = {
