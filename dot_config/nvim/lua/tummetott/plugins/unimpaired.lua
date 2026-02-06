@@ -1,5 +1,6 @@
 M = {}
 
+-- TODO: Consider removing and archiving this plugin
 table.insert(M, {
     'tummetott/unimpaired.nvim',
     enabled = true,
