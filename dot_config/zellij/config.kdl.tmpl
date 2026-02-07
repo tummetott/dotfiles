@@ -122,7 +122,7 @@ keybinds clear-defaults=true {
     shared_except "entersearch" "normal" {
         bind "enter" { SwitchToMode "normal"; }
     }
-    shared_except "search" "renametab" "renamepane" "normal" "session" {
+    shared_except "search" "renametab" "renamepane" "normal" {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Ctrl c" { SwitchToMode "normal"; }
     }
@@ -179,7 +179,7 @@ plugins {
         format_hide_on_overlength true
         format_left "{tabs}"
         format_precedence "lrc"
-        format_right "#[fg=$darkest_grey,bg=$background]#[bg=$darkest_grey] {pipe_prog}{command_hostname}{datetime}#[fg=$bright_grey,bg=$darkest_grey]󰄷 {session}#[bg=$darkest_grey] #[fg=$darkest_grey,bg=$background]"
+        format_right "{mode}  #[fg=$darkest_grey,bg=$background]#[bg=$darkest_grey] {pipe_prog}{command_hostname}{datetime}#[fg=$bright_grey,bg=$darkest_grey]󰄷 {session}#[bg=$darkest_grey] #[fg=$darkest_grey,bg=$background]"
         format_space ""
         hide_frame_except_for_search true
         pipe_prog_format "#[fg=$bright_grey,bg=$darkest_grey] {output}  "
@@ -193,6 +193,20 @@ plugins {
         tab_sync_indicator " "
         tab_truncate_end_format "#[fg=$bright_grey] ..."
         tab_truncate_start_format "#[fg=$bright_grey]... "
+
+        mode_resize        "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]resize-pane  #[fg=$dark_grey]-/+ #[fg=$grey]resize-pain"
+        mode_session       "#[fg=$dark_grey]p ➜ #[fg=$grey]plugins  #[fg=$dark_grey]s ➜ #[fg=$grey]sessions  #[fg=$dark_grey]w  ➜ #[fg=$grey]web-sessions"
+        mode_move          "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]move-pane  #[fg=$dark_grey][/] ➜ #[fg=$grey]move-tap  #[fg=$dark_grey]n/p ➜ #[fg=$grey]swap-layout"
+
+        // Currently unused modes
+        mode_prompt        "#[fg=$purple,bold]PROMPT"
+        mode_scroll        "#[fg=$blue,bold]SCROLL"
+        mode_rename_pane   "#[fg=$blue,bold]RENAME PANE"
+
+        // Shown by frame boarders
+        // mode_enter_search  "#[fg=$cyan,bold]ENTER SEARCH"
+        // mode_search        "#[fg=$cyan,bold]SEARCH"
+        // mode_rename_tab    "#[fg=$blue,bold]RENAME TAB"
     }
 }
 
