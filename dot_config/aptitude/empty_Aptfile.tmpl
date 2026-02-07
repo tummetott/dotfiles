@@ -80,6 +80,10 @@ ruby-full
 shellcheck
 {{- end }}
 
+{{- if contains "-vm" .osid }}
+spice-vdagent
+{{- end }}
+
 {{- if .install.snap }}
 snapd
 {{- end }}
