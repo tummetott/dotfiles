@@ -22,7 +22,7 @@ fi
 
 if has nvim; then
     if [ ! -d "$XDG_DATA_HOME/nvim/lazy" ]; then
-        info 'Installing Nvim plugins'
+        info 'Installing nvim plugins'
         log nvim --headless -c 'Lazy! sync'  -c 'qa'
     fi
 fi
