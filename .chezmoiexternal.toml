@@ -44,6 +44,18 @@
     refreshPeriod = '168h'
     {{ end }}
 
+    {{ if .install.ghostty }}
+    ['.local/bin/ghostty']
+    type = 'file'
+    {{ $arch := .chezmoi.arch }}
+    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
+    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+    {{ $asset := printf "Ghostty-*-%s.AppImage" $arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "pkgforge-dev/ghostty-appimage" $asset }}'
+    executable = true
+    refreshPeriod = '168h'
+    {{ end }}
+
     {{ if .install.zellij }}
     ['.local/bin/zellij']
     type = 'archive-file'
