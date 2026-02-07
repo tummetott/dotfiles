@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "ANSI colors 0–21"
+echo
+
+for i in {0..21}; do
+  printf "%2d: \e[48;5;%sm          \e[0m\n" "$i" "$i"
+done
