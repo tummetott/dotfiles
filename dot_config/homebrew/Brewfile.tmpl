@@ -162,6 +162,10 @@ cask "balenaetcher"
 cask "folx"
 {{- end }}
 
+{{- if .install.ghostty }}
+cask "ghostty"
+{{- end }}
+
 {{- if .install.iterm2 }}
 cask "iterm2"
 {{- end }}

@@ -21,6 +21,7 @@ flatpak = false
 fnm = false
 folx = false
 fzf = false
+ghostty = false
 gnome_tweaks = false
 go = false
 iproute2 = false
