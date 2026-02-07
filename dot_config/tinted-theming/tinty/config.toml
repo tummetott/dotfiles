@@ -60,3 +60,13 @@ path = "https://github.com/tinted-theming/tinted-shell"
 themes-dir = "scripts"
 hook = "[ -n \"$ITERM_SESSION_ID\" ] && source \"$TINTY_THEME_FILE_PATH\""
 supported-systems = ["base16", "base24"]
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-terminal"
+themes-dir = "themes/ghostty"
+hook = """
+mkdir -p ~/.config/ghostty/themes
+command cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/ghostty/themes/tinted-theming && killall -SIGUSR2 ghostty
+"""
+supported-systems = ["base16", "base24"]
