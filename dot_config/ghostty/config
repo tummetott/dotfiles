@@ -1,3 +1,4 @@
 font-size = 18
 font-family = "FiraCode Nerd Font Mono"
 theme = "tinted-theming"
+quit-after-last-window-closed=true
