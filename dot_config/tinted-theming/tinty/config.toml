@@ -1,4 +1,5 @@
 default-scheme = "base16-catppuccin-frappe"
+shell = "bash -c '{}'"
 preferred-schemes = [
     # Dark themes
     "base16-catppuccin-frappe",
