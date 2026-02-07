@@ -67,6 +67,7 @@ name = "tinted-terminal"
 themes-dir = "themes/ghostty"
 hook = """
 mkdir -p ~/.config/ghostty/themes
-command cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/ghostty/themes/tinted-theming && killall -SIGUSR2 ghostty
+command cp -f "$TINTY_THEME_FILE_PATH" ~/.config/ghostty/themes/tinted-theming
+killall -SIGUSR2 ghostty 2>/dev/null || true
 """
 supported-systems = ["base16", "base24"]
