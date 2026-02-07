@@ -36,6 +36,16 @@ lfm
 neofetch
 {{- end }}
 
+{{ if .install.neovim }}                                                                                                                                           █
+# Nvim installed via .chezmoiextrernal                                                                                                                             █
+                                                                                                                                                                   █
+# For X11                                                                                                                                                          █
+xclip
+
+# For wayland
+wl-clipboard
+{{- end }}
+
 {{- if .install.ninja }}
 ninja-build
 {{- end }}
