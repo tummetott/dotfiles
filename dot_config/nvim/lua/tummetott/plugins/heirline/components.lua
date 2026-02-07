@@ -509,7 +509,7 @@ M.man_bufname = {
 M.special_bufname = {
     static = {
         bufnames = {
-            ['NvimTree'] = 'NVIMTREE',
+            ['NvimTree'] = 'FILE TREE',
             ['TelescopePrompt'] = 'TELESCOPE',
             ['lazy'] = 'LAZY',
             ['Outline'] = 'OUTLINE',
@@ -720,6 +720,12 @@ M.special_winbar = {
                 title = 'DIFFVIEW FILES',
                 match = function(buf)
                     return vim.bo[buf].filetype == 'DiffviewFiles'
+                end,
+            },
+            {
+                title = 'FILE TREE',
+                match = function(buf)
+                    return vim.bo[buf].filetype == 'NvimTree'
                 end,
             },
             {
