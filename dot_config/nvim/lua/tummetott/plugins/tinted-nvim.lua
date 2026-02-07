@@ -45,6 +45,7 @@ return {
     },
     highlights = {
         EndOfBuffer = { fg = 'background' },
+        NonText = { fg = 'dark_grey' },
         Search = {
             fg = 'background',
             bg = { darken = 'brightest_white', amount = 0.3 }
