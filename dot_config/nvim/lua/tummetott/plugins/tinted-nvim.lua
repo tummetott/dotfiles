@@ -1,5 +1,5 @@
 return {
-    'tummetott/tinted-nvim',
+    'tinted-theming/tinted-nvim',
     enabled = true,
     lazy = false,
     opts = {
