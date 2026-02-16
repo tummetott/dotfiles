@@ -37,6 +37,7 @@ table.insert(M, {
             'python',
             'rust',
             'toml',
+            'typescript',
             'yaml',
         })
 
