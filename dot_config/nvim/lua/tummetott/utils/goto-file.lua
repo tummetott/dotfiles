@@ -57,15 +57,18 @@ local function resolve_filepath_at_cursor(buf)
         return nil
     end
 
-    -- 6. Probe for a <path>:<line> suffix and return early if matched
+    -- 6. Strip punctuation around the captured word under cursor
+    word = word:gsub("^[%(%[%{\"'`]+", ""):gsub("[%)%]%}\"'`,;%.]+$", "")
+
+    -- 7. Probe for a <path>:<line> suffix and return early if matched
     local path, lnum = word:match("^([%w%._%-/@~%+]+):(%d+)")
     if path then
         return path, tonumber(lnum)
     end
 
-    -- 7. Extract a standalone filepath prefix (no line number). Allows '~'
+    -- 8. Extract a standalone filepath prefix (no line number). Allows '~'
     -- suffixes commonly used for backup files.
-    path = word:match("^[%w%._%-/@~%+]+[%w~]")
+    path = word:match("^[%w%._%-/@~%+]+%.[%w]+[~]?")
     if path then
         return path
     end
