@@ -56,6 +56,7 @@ return {
         StatusLineNC = {},
         FoldColumn = { link = 'LineNr' },
         TabLineFill = {},
+        DiffAdd = { bg = { darken = 'blue', amount = 0.7 } },
 
         -- Lazy has no explicit plugin spec, so this goes in here
         LazyReasonCmd = { fg = 'dark_grey' },
