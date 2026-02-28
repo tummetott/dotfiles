@@ -1,14 +1,13 @@
 local M = {}
 
--- Jump to next diagnostic
+-- Jump to diagnostic. These are already default keymaps; however, they are
+-- overridden to also show the diagnostic inside a floating window.
 vim.keymap.set(
     'n',
     ']d',
     function() vim.diagnostic.jump({ count = 1, float = true }) end,
     { desc = 'Go to next diagnostic' }
 )
-
--- Jump to previous diagnostic
 vim.keymap.set(
     'n',
     '[d',
@@ -16,140 +15,142 @@ vim.keymap.set(
     { desc = 'Go to previous diagnostic' }
 )
 
--- Goto type definition
-vim.keymap.set(
-    'n',
-    '<Leader>lt',
-    function()
-        require('trouble').open('lsp_type_definitions')
-    end,
-    { desc = 'Go to type definition' }
-)
-
--- Goto implementation. Useful in OOP languages like Java, TypeScript, or
--- C++ to find where an interface or abstract method is implemented.
-vim.keymap.set(
-    'n',
-    '<Leader>li',
-    function()
-        require('trouble').open('lsp_implementations')
-    end,
-    { desc = 'Go to implementation' }
-)
-
--- Rename
-vim.keymap.set(
-    'n',
-    '<Leader>lr',
-    function() vim.lsp.buf.rename() end,
-    { desc = 'Rename' }
-)
-
 -- Show signature help
 vim.keymap.set(
     'n',
-    '<Leader>ls',
+    'grs',
     function() vim.lsp.buf.signature_help() end,
     { desc = 'Show signature help' }
 )
 
--- Highlight all occurences of word under the cursor
+-- Highlight all occurrences of the word under the cursor.
 vim.keymap.set(
     'n',
-    '<Leader>lh',
+    '<leader><space>',
     function() vim.lsp.buf.document_highlight() end,
     { desc = 'Highlight word' }
-)
-
--- Code action
-vim.keymap.set(
-    'n',
-    '<Leader>la',
-    function() vim.lsp.buf.code_action() end,
-    { desc = 'Code action' }
 )
 
 -- Auto formatting
 vim.keymap.set(
     'n',
-    '<Leader>lf',
+    'grf',
     function() vim.lsp.buf.format { async = true } end,
     { desc = 'Auto formatting' }
 )
 
--- Send diagnostics to quickfix list
+-- List workspace folders
 vim.keymap.set(
     'n',
-    '<Leader>ld',
+    'grl',
     function()
-        require('trouble').open('diagnostics')
+        local folders = vim.lsp.buf.list_workspace_folders()
+        table.sort(folders)
+        vim.print(vim.fn.uniq(folders))
     end,
-    { desc = 'Workspace diagnostics' }
+    { desc = 'List workspace folders' }
 )
 
--- Show references in quickfix list
-vim.keymap.set(
-    'n',
-    'gr',
-    function()
-        require('trouble').open('lsp_references')
-    end,
-    { desc = 'Goto references' }
-)
+local function default_workspace_folder()
+    local name = vim.api.nvim_buf_get_name(0)
+    if name ~= '' then
+        local dir = vim.fn.fnamemodify(name, ':~:h')
+        if dir and dir ~= '' then
+            return dir
+        end
+    end
+    return vim.fn.fnamemodify(vim.uv.cwd(), ':~')
+end
 
 -- Add workspace folder
 vim.keymap.set(
     'n',
-    '<Leader>l+',
-    function() vim.lsp.buf.add_workspace_folder() end,
+    'gr+',
+    function()
+        vim.ui.input({
+            prompt = 'Add workspace folder: ',
+            default = default_workspace_folder(),
+        }, function(input)
+            if input == nil then
+                return
+            end
+            input = vim.trim(input)
+            if input == '' then
+                return
+            end
+            vim.lsp.buf.add_workspace_folder(vim.fs.normalize(input))
+        end)
+    end,
     { desc = 'Add workspace folder' }
 )
 
 -- Remove workspace folder
 vim.keymap.set(
     'n',
-    '<Leader>l-',
-    function() vim.lsp.buf.remove_workspace_folder() end,
-    { desc = 'Remove workspace folder' }
-)
+    'gr-',
+    function()
+        local folders = vim.lsp.buf.list_workspace_folders()
+        table.sort(folders)
+        folders = vim.fn.uniq(folders)
+        if vim.tbl_isempty(folders) then
+            vim.notify('No workspace folders to remove', vim.log.levels.INFO)
+            return
+        end
 
-vim.keymap.set(
-    'n',
-    '<Leader>ll',
-    function() vim.print(vim.lsp.buf.list_workspace_folders()) end,
-    { desc = 'List workspace folders' }
+        vim.ui.select(folders, {
+            prompt = 'Remove workspace folder:',
+        }, function(choice)
+            if choice == nil then
+                return
+            end
+
+            -- We do not use vim.lsp.buf.remove_workspace_folder() here because
+            -- it always shows an awefull built-in message.
+            local bufnr = vim.api.nvim_get_current_buf()
+            for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+                client:_remove_workspace_folder(choice)
+            end
+            vim.notify('Worspace folder removed', vim.log.levels.INFO)
+        end)
+    end,
+    { desc = 'Remove workspace folder' }
 )
 
 -- Some LSP-related keymaps override useful built-in Vim keymaps, so they should
 -- only be defined after an LSP client attaches to the current buffer.
-M.register_buffer_keymaps = function(_, bufnr)
+M.register_buffer_keymaps = function(client, bufnr)
+
     -- Goto definition
-    vim.keymap.set(
-        'n',
-        'gd',
-        function()
-            require('trouble').open('lsp_definitions')
-        end,
-        { desc = 'Go to definition', buffer = bufnr }
-    )
+    if client.server_capabilities.definitionProvider then
+        vim.keymap.set(
+            'n',
+            'gd',
+            function()
+                require('trouble').open('lsp_definitions')
+            end,
+            { desc = 'Go to definition', buffer = bufnr }
+        )
+    end
 
     -- Goto declaration. Mostly relevant in C/C++, e.g. when a function is
-    -- declared in a header file
-    vim.keymap.set(
-        'n',
-        'gD',
-        function()
-            require('trouble').open('lsp_declaration')
-        end,
-        { desc = 'Go to declaration', buffer = bufnr }
-    )
+    -- declared in a header file. Not every language server implements this
+    if client.server_capabilities.declarationProvider then
+        vim.keymap.set(
+            'n',
+            'gD',
+            function()
+                require('trouble').open('lsp_declaration')
+            end,
+            { desc = 'Go to declaration', buffer = bufnr }
+        )
+    end
 
     -- Neovim automatically remaps 'K' to show LSP hover information whenever a
     -- language server attaches, replacing the default :Man behavior. We
     -- register it here in which-key for proper documentation.
-    require 'which-key'.add {
+    require('which-key').add({
         { 'K', desc = 'Show LSP hover info' },
-    }
+    })
 end
 
 return M
