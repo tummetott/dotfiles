@@ -291,6 +291,43 @@ local maps = {
         rhs = '<cmd>Lazy<cr>',
         opts = { desc = 'Open Lazy' }
     },
+    {
+        mode = 'n',
+        lhs = 'zh',
+        rhs = function()
+            if vim.w.diff_highlights_forced_off then
+                vim.w.diff_highlights_forced_off = false
+                vim.opt_local.winhl:remove {
+                    'DiffAdd',
+                    'DiffText',
+                    'DiffChange',
+                }
+                local ok, reticle = pcall(require, 'reticle')
+                if ok then
+                    reticle.set_cursorline(false)
+                else
+                    vim.wo.cursorline = false
+                end
+            else
+                vim.w.diff_highlights_forced_off = true
+                vim.opt_local.winhl:append {
+                    DiffAdd = 'None',
+                    DiffText = 'None',
+                    DiffChange = 'None',
+                }
+                -- ISSUE: cursorline still shows an underline even if diff
+                -- highlights are disabled. See:
+                -- https://github.com/neovim/neovim/issues/9800
+                local ok, reticle = pcall(require, 'reticle')
+                if ok then
+                    reticle.set_cursorline(true)
+                else
+                    vim.wo.cursorline = true
+                end
+            end
+        end,
+        opts = { desc = 'Toggle diff highlights' }
+    },
 }
 
 for _, m in ipairs(maps) do

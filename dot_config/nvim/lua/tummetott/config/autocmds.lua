@@ -121,6 +121,10 @@ autocmd('ModeChanged', {
     -- Entering any visual mode (\22 is visual block mode).
     pattern = '*:[v\22]',
     callback = function()
+        -- This window local flag is set by a keymap
+        if vim.w.diff_highlights_forced_off then
+            return
+        end
         vim.opt_local.winhl:append {
             DiffAdd = 'None',
             DiffText = 'None',
@@ -135,6 +139,9 @@ autocmd('ModeChanged', {
     -- Leaving any visual mode.
     pattern = '*:[^v\22]',
     callback = function()
+        if vim.w.diff_highlights_forced_off then
+            return
+        end
         vim.opt_local.winhl:remove {
             'DiffAdd',
             'DiffText',

@@ -38,6 +38,7 @@ return {
                     vim.cmd('DiffviewToggleFiles')
                     scroll_panel()
                 end,
+                -- TODO: this overwrites the buildin keymap to jump to next diff
                 [']c'] = function()
                     require('diffview.config').actions.select_next_entry()
                 end,
