@@ -40,7 +40,14 @@ local maps = {
     {
         mode = 'n',
         lhs = 'gV',
-        rhs = '`[v`]',
+        rhs = function()
+            local ok, textobj = pcall(require, "yanky.textobj")
+            if ok then
+                textobj.last_put()
+            else
+                vim.cmd([[normal! `[v`]])
+            end
+        end,
         opts = { desc = 'Select previous pasted text' }
     },
     {

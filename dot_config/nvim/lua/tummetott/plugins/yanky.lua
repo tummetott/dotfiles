@@ -20,6 +20,9 @@ return {
         preserve_cursor_position = {
             enabled = true,
         },
+        textobj = {
+            enabled = true,
+        },
     },
     keys = {
         {
