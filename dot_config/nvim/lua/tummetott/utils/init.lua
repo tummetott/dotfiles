@@ -36,6 +36,4 @@ end
 
 M.goto_file_at_cursor = require('tummetott.utils.goto-file').goto_file_at_cursor
 
-M.soft_zoom = require('tummetott.utils.soft-zoom').toggle
-
 return M

@@ -130,9 +130,15 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<c-;>',
-        rhs = utils.soft_zoom,
-        opts = { desc = 'Enlarge the window' },
+        lhs = '<c-=>',
+        rhs = require('tummetott.utils.winsize').expand,
+        opts = { desc = 'Expand window' },
+    },
+    {
+        mode = 'n',
+        lhs = '<c-->',
+        rhs = require('tummetott.utils.winsize').contract,
+        opts = { desc = 'Contract window' },
     },
     {
         mode = 'n',
