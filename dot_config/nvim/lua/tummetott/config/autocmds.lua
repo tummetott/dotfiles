@@ -100,7 +100,7 @@ autocmd({ 'BufWritePre' }, {
         if event.match:match('^%w%w+://') then
             return
         end
-        local file = vim.loop.fs_realpath(event.match) or event.match
+        local file = vim.uv.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
     end,
 })
@@ -110,7 +110,8 @@ autocmd('BufEnter', {
     group = group,
     pattern = 'term://*',
     callback = function()
-        if vim.bo.buftype == 'terminal' then
+        if vim.bo.buftype == 'terminal'
+            and vim.bo.filetype ~= 'sidekick_terminal' then
             vim.cmd('startinsert')
         end
     end
