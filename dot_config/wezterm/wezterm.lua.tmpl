@@ -55,15 +55,14 @@ config.keys = {
     { key = "M", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "R", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "U", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
-    { key = "+", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "_", mods = "CTRL|SHIFT", action = wezterm.action.DisableDefaultAssignment },
     { key = "Tab", mods = "CTRL", action = wezterm.action.DisableDefaultAssignment },
-    { key = "r", mods = "CMD", action = wezterm.action.SendKey { key = "r", mods = "META" } },
 
-    -- WezTerm fully supports the Kitty keyboard protocol, but `Ctrl -` currently
-    -- doesn't emit a CSI-u sequence as expected. Manually send the correct
-    -- escape code so it behaves consistently across terminals.
+    -- HACK: WezTerm supports the Kitty keyboard protocol, but some key
+    -- combinations currently do not emit the correct CSI-u sequences.
+    -- Work around this by explicitly sending the expected CSI-u events.
     { key = "-", mods = "CTRL", action = wezterm.action.SendString("\x1b[45;5u") },
+    { key = "+", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[61;6u"), },
 
     -- These are conventional macOS keymaps
     { key = 'f', mods = 'CMD|CTRL', action = wezterm.action.ToggleFullScreen },

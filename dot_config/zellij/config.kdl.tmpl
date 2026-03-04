@@ -34,9 +34,9 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl g" { NewPane "stacked"; } // Mnemonic: group
         bind "Shift Ctrl y" { SwitchToMode "session"; }
         bind "Shift Ctrl i" { BreakPane; } // Mnemonic: isolate
+        bind "Shift Ctrl -" { Resize "Decrease"; }
+        bind "Shift Ctrl =" { Resize "Increase"; }
 
-        bind "Ctrl =" { Resize "Increase"; }
-        bind "Ctrl -" { Resize "Decrease"; }
         // They dont work in alacritty
         bind "Super 1" { GoToTab 1; }
         bind "Super 2" { GoToTab 2; }
