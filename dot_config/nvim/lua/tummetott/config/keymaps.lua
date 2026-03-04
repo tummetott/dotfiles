@@ -154,13 +154,6 @@ local maps = {
         rhs = '<NOP>', -- Disable ex mode
         opts = {}
     },
-    -- TODO: this creates timeout when pressing 'q'
-    -- {
-    --     mode = 'n',
-    --     lhs = 'q:',
-    --     rhs = '<NOP>', -- Can also be accessed with 'q?'
-    --     opts = {}
-    -- },
     {
         mode = 'n',
         lhs = ']w',

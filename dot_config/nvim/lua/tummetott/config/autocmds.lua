@@ -204,3 +204,19 @@ autocmd("TermOpen", {
         )
     end,
 })
+
+-- Disable the command line history window opened by `q:`.  
+-- Mapping `q:` to <Nop> would introduce a delay when stopping macro
+-- recording with `q`, because `q:` makes `q` a keymap prefix and
+-- Neovim waits for `timeoutlen` to see if `:` follows.  
+-- Instead, allow the built-in command to trigger and immediately
+-- close the command window via an autocmd, which avoids affecting
+-- macro behavior.
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+    callback = function()
+        if vim.fn.getcmdwintype() == ":" then
+            vim.cmd("quit")
+        end
+    end,
+    desc = "Disable q: command window",
+})
