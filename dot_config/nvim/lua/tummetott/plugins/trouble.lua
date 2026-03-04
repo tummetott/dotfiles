@@ -20,7 +20,13 @@ return {
         max_items = 200,      -- limit number of items that can be displayed per section
         multiline = true,     -- render multi-line messages
         pinned = false,       -- When pinned, the opened trouble window will be bound to the current buffer
-        win = {},             -- window options for the results window. Can be a split or a floating window.
+        win = {
+            wo = {
+                -- HACK: Workaround until the following issue is resolved
+                -- https://github.com/folke/trouble.nvim/issues/681
+                winbar = "%{%v:lua.require'heirline'.eval_winbar()%}",
+            }
+        },
         -- Window options for the preview window. Can be a split, floating window,
         -- or `main` to show the preview in the main editor window.
         preview = { type = 'main' },
