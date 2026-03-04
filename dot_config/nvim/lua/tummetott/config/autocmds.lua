@@ -212,11 +212,20 @@ autocmd("TermOpen", {
 -- Instead, allow the built-in command to trigger and immediately
 -- close the command window via an autocmd, which avoids affecting
 -- macro behavior.
-vim.api.nvim_create_autocmd("CmdwinEnter", {
+-- autocmd("CmdwinEnter", {
+--     callback = function()
+--         if vim.fn.getcmdwintype() == ":" then
+--             vim.cmd("quit")
+--         end
+--     end,
+--     desc = "Disable q: command window",
+-- })
+
+-- Disable linenumbers in command windows (search and cmd history)
+autocmd("CmdwinEnter", {
     callback = function()
-        if vim.fn.getcmdwintype() == ":" then
-            vim.cmd("quit")
-        end
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
     end,
-    desc = "Disable q: command window",
+    desc = "Disable linenumbers in command windows",
 })

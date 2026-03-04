@@ -246,7 +246,7 @@ M.lsp = {
             end
             return '  ' .. self.icon .. table.concat(names, ' ')
         end,
-        update = { 'LspAttach' ,'LspDetach' },
+        update = { 'LspAttach', 'LspDetach' },
     },
     {
         condition = spinner.spinner_active,
@@ -626,94 +626,107 @@ M.special_winbar = {
     end,
 
     static = {
-        icon = vim.g.nerdfonts and '  ' or '> ',
+        icon = vim.g.nerdfonts and ' ' or '> ',
 
         rules = {
+            {
+                title = 'COMMAND HISTORY',
+                match = function()
+                    return vim.fn.getcmdwintype() == ':'
+                end,
+            },
+            {
+                title = 'SEARCH HISTORY',
+                match = function()
+                    local t = vim.fn.getcmdwintype()
+                    return t == '/' or t == '?'
+                end,
+            },
             {
                 title = 'NATIVE QUICKFIX',
                 match = function(buf, win)
                     return vim.bo[buf].filetype == 'qf'
-                    and vim.fn.getwininfo(win)[1].loclist ~= 1
+                        and vim.fn.getwininfo(win)[1].loclist ~= 1
                 end,
             },
             {
                 title = 'NATIVE LOCLIST',
                 match = function(buf, win)
                     return vim.bo[buf].filetype == 'qf'
-                    and vim.fn.getwininfo(win)[1].loclist == 1
+                        and vim.fn.getwininfo(win)[1].loclist == 1
                 end,
             },
             {
                 title = 'QUICKFIX',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'quickfix'
+                        and vim.w[win].trouble.mode == 'quickfix'
                 end,
             },
             {
                 title = 'LOCLIST',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'loclist'
+                        and vim.w[win].trouble.mode == 'loclist'
                 end,
             },
             {
                 title = 'TELESCOPE',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and (
-                        vim.w[win].trouble.mode == 'telescope'
-                        or vim.w[win].trouble.mode == 'telescope_files'
-                    )
+                        and (
+                            vim.w[win].trouble.mode == 'telescope'
+                            or vim.w[win].trouble.mode == 'telescope_files'
+                        )
                 end,
             },
             {
                 title = 'DIAGNOSTICS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'diagnostics'
+                        and vim.w[win].trouble.mode == 'diagnostics'
                 end,
             },
             {
                 title = 'DEFINITIONS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'lsp_definitions'
+                        and vim.w[win].trouble.mode == 'lsp_definitions'
                 end,
             },
             {
                 title = 'TYPE DEFINITIONS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'lsp_type_definitions'
+                        and vim.w[win].trouble.mode == 'lsp_type_definitions'
                 end,
             },
             {
                 title = 'REFERENCES',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'lsp_references'
+                        and vim.w[win].trouble.mode == 'lsp_references'
                 end,
             },
             {
                 title = 'IMPLEMENTATIONS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'lsp_implementations'
+                        and vim.w[win].trouble.mode == 'lsp_implementations'
                 end,
             },
             {
                 title = 'DECLARATIONS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'lsp_declarations'
+                        and vim.w[win].trouble.mode == 'lsp_declarations'
                 end,
             },
             {
                 title = 'TODOS',
                 match = function(_, win)
                     return vim.w[win].trouble
-                    and vim.w[win].trouble.mode == 'todo'
+                        and vim.w[win].trouble.mode == 'todo'
                 end,
             },
             {
@@ -733,8 +746,8 @@ M.special_winbar = {
                 match = function(buf)
                     local name = vim.fn.bufname(buf)
                     return vim.bo[buf].filetype == 'DiffviewFileHistory'
-                    and name
-                    and name:sub(-#'DiffviewFileHistoryPanel') == 'DiffviewFileHistoryPanel'
+                        and name
+                        and name:sub(- #'DiffviewFileHistoryPanel') == 'DiffviewFileHistoryPanel'
                 end,
             },
             {
@@ -742,8 +755,8 @@ M.special_winbar = {
                 match = function(buf)
                     local name = vim.fn.bufname(buf)
                     return vim.bo[buf].filetype == 'DiffviewFileHistory'
-                    and name
-                    and name:sub(-#'DiffviewFHOptionPanel') == 'DiffviewFHOptionPanel'
+                        and name
+                        and name:sub(- #'DiffviewFHOptionPanel') == 'DiffviewFHOptionPanel'
                 end,
             },
             {
