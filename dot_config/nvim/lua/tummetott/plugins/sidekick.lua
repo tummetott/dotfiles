@@ -21,6 +21,23 @@ return {
                 require('sidekick.nes').update()
             end)
         end, 1000)
+
+        -- Codex hardcodes <C-n>/<C-p> to navigate between questions in plan
+        -- mode. These mappings repurpose them for list navigation instead.
+        -- ISSUE: https://github.com/openai/codex/issues/3049
+        -- vim.api.nvim_create_autocmd('FileType', {
+        --     pattern = 'sidekick_terminal',
+        --     callback = function(args)
+        --         vim.keymap.set('t', "<C-n>", "<Down>", {
+        --             buffer = args.buf,
+        --             desc = 'Next Item',
+        --         })
+        --         vim.keymap.set('t', "<C-p>", "<Up>", {
+        --             buffer = args.buf,
+        --             desc = 'Previous Item',
+        --         })
+        --     end,
+        -- })
     end,
     opts = {
         nes = {
@@ -154,22 +171,6 @@ return {
             function() require('sidekick.cli').prompt() end,
             mode = { 'n', 'x' },
             desc = 'Sidekick Select Prompt',
-        },
-        -- Enable <C-n>/<C-p> navigation for Codex selection menus by
-        -- translating them to arrow keys in terminal mode. This overrides
-        -- default nvim terminal-mode behavior globally; verify no other
-        -- terminal workflows rely on these keys.
-        {
-            '<c-n>',
-            '<down>',
-            mode = 't',
-            desc = 'Down',
-        },
-        {
-            '<c-p>',
-            '<up>',
-            mode = 't',
-            desc = 'Up',
         },
     },
 }
