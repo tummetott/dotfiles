@@ -129,13 +129,13 @@ local maps = {
         opts = { desc = 'Delete word backward' },
     },
     {
-        mode = 'n',
+        mode = { 'n', 't' },
         lhs = '<c-=>',
         rhs = require('tummetott.utils.winsize').expand,
         opts = { desc = 'Expand window' },
     },
     {
-        mode = 'n',
+        mode = { 'n', 't' },
         lhs = '<c-->',
         rhs = require('tummetott.utils.winsize').contract,
         opts = { desc = 'Contract window' },

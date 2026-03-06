@@ -70,8 +70,9 @@ table.insert(M, {
     lazy = false,
     highlights = {
         -- Used for document highlight
-        LspReferenceRead = { bg = 'dark_grey' },
-        LspReferenceWrite = { bg = 'dark_grey' },
+        LspReferenceText = { bg = 'dark_grey' },
+        LspReferenceRead = { link = 'LspReferenceText' },
+        LspReferenceWrite = { link = 'LspReferenceText' },
     },
 })
 
