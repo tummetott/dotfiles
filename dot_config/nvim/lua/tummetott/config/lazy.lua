@@ -74,6 +74,7 @@ require('lazy').setup {
                 'tohtml',
                 'tutor',
                 'zipPlugin',
+                'matchparen', -- handled by blink.pairs
             },
         },
     },
