@@ -264,57 +264,21 @@ table.insert(M, {
         },
         -- Swap keymaps
         {
-            ']sa',
+            'g>',
             function()
                 require('nvim-treesitter-textobjects.swap')
                 .swap_next('@parameter.inner')
             end,
-            desc = 'swap with next parameter',
+            desc = 'Swap with next parameter',
             mode = 'n',
         },
         {
-            '[sa',
+            'g<',
             function()
                 require('nvim-treesitter-textobjects.swap')
                 .swap_previous('@parameter.inner')
             end,
-            desc = 'swap with previous parameter',
-            mode = 'n',
-        },
-        {
-            ']sf',
-            function()
-                require('nvim-treesitter-textobjects.swap')
-                .swap_next('@function.outer')
-            end,
-            desc = 'swap with next function',
-            mode = 'n',
-        },
-        {
-            '[sf',
-            function()
-                require('nvim-treesitter-textobjects.swap')
-                .swap_previous('@function.outer')
-            end,
-            desc = 'swap with previous function',
-            mode = 'n',
-        },
-        {
-            ']sc',
-            function()
-                require('nvim-treesitter-textobjects.swap')
-                .swap_next('@class.outer')
-            end,
-            desc = 'swap with next class',
-            mode = 'n',
-        },
-        {
-            '[sc',
-            function()
-                require('nvim-treesitter-textobjects.swap')
-                .swap_previous('@class.outer')
-            end,
-            desc = 'swap with previous class',
+            desc = 'Swap with previous parameter',
             mode = 'n',
         },
     },

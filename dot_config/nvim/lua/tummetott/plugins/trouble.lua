@@ -212,9 +212,9 @@ return {
             desc = 'Toggle telescope list',
         },
         {
-            '<Leader>ts',
+            'gO',
             function() require('trouble').toggle('lsp_document_symbols') end,
-            desc = 'Toggle symbols',
+            desc = 'Document symbols',
         },
         {
             '<tab>',

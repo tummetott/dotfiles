@@ -120,6 +120,7 @@ return {
             { 'gri', desc = 'Goto implementation' },
             { 'grt', desc = 'Goto type definition' },
             { 'gr',  group = 'LSP' },
+            { 'gx', desc = 'Opens URI under cursor with the system handler' },
         },
         show_help = true,
         show_key = true,
