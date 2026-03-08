@@ -67,16 +67,6 @@ return {
             mode = { 'n', 'x' },
         },
         {
-            ']p',
-            '<Plug>(YankyPutIndentAfterLinewise)',
-            desc = 'Put below current line using indent of current line',
-        },
-        {
-            '[p',
-            '<Plug>(YankyPutIndentBeforeLinewise)',
-            desc = 'Put above current line using indent of current line',
-        },
-        {
             '<C-n>',
             '<Plug>(YankyCycleForward)',
             desc = 'Next item in yank ring',

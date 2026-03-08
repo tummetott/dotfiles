@@ -26,7 +26,7 @@ return {
     },
     init = function()
         require('which-key').add {
-            { "<Leader>g", group = "Gitsigns" }
+            { "<Leader>g", group = "Git" }
         }
     end,
     keys = {
@@ -36,7 +36,7 @@ return {
                vim.schedule(function() require 'gitsigns'.next_hunk() end)
                 return '<Ignore>'
             end,
-            desc = 'Go to next hunk',
+            desc = 'Next hunk',
             expr = true,
         },
         {
@@ -45,7 +45,7 @@ return {
                 vim.schedule(function() require 'gitsigns'.prev_hunk() end)
                 return '<Ignore>'
             end,
-            desc = 'Go to previous hunk',
+            desc = 'Previous hunk',
             expr = true,
         },
         {

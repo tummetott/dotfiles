@@ -237,7 +237,7 @@ return {
             desc = 'Previous Trouble entry',
         },
         {
-            '[c',
+            '[q',
             function()
                 local trouble = require('trouble')
                 if trouble.is_open({ mode = 'quickfix' }) then
@@ -246,10 +246,10 @@ return {
                     vim.cmd('silent! cprevious')
                 end
             end,
-            desc = 'Previous Trouble entry',
+            desc = 'Previous quickfix entry',
         },
         {
-            ']c',
+            ']q',
             function()
                 local trouble = require('trouble')
                 if trouble.is_open({ mode = 'quickfix' }) then
@@ -258,27 +258,31 @@ return {
                     vim.cmd('silent! cnext')
                 end
             end,
-            desc = 'Next Trouble entry',
+            desc = 'Next quickfix entry',
         },
         {
-            '[C',
+            '[Q',
             function()
                 local trouble = require('trouble')
                 if trouble.is_open({ mode = 'quickfix' }) then
                     trouble.first({ jump = true })
+                else
+                    vim.cmd('silent! cfirst')
                 end
             end,
-            desc = 'First Trouble entry',
+            desc = 'First quickfix entry',
         },
         {
-            ']C',
+            ']Q',
             function()
                 local trouble = require('trouble')
                 if trouble.is_open({ mode = 'quickfix' }) then
                     trouble.last({ jump = true })
+                else
+                    vim.cmd('silent! clast')
                 end
             end,
-            desc = 'Last Trouble entry',
+            desc = 'Last quickfix entry',
         },
     },
     highlights = {

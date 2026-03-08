@@ -100,7 +100,7 @@ table.insert(M, {
     keys = {
         -- Select keymaps
         {
-            'af',
+            'am',
             function()
                 require('nvim-treesitter-textobjects.select')
                     .select_textobject('@function.outer', 'textobjects')
@@ -109,7 +109,7 @@ table.insert(M, {
             mode = { 'x', 'o' },
         },
         {
-            'if',
+            'im',
             function()
                 require('nvim-treesitter-textobjects.select')
                     .select_textobject('@function.inner', 'textobjects')
@@ -141,7 +141,7 @@ table.insert(M, {
                 require('nvim-treesitter-textobjects.select')
                     .select_textobject('@parameter.outer', 'textobjects')
             end,
-            desc = 'outer argument (parameter)',
+            desc = 'outer argument',
             mode = { 'x', 'o' },
         },
         {
@@ -150,7 +150,7 @@ table.insert(M, {
                 require('nvim-treesitter-textobjects.select')
                     .select_textobject('@parameter.inner', 'textobjects')
             end,
-            desc = 'inner argument (parameter)',
+            desc = 'inner argument',
             mode = { 'x', 'o' },
         },
         {
@@ -173,57 +173,75 @@ table.insert(M, {
         },
         -- Jump keymaps
         {
-            ']f',
+            ']m',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_start('@function.outer', 'textobjects')
             end,
-            desc = 'next function start',
+            desc = 'Next function start',
             mode = { 'n', 'x', 'o' },
         },
         {
-            '[f',
+            '[m',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_start('@function.outer', 'textobjects')
             end,
-            desc = 'previous function start',
+            desc = 'Previous function start',
             mode = { 'n', 'x', 'o' },
         },
         {
-            ']F',
+            ']M',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_end('@function.outer', 'textobjects')
             end,
-            desc = 'next function end',
+            desc = 'Next function end',
             mode = { 'n', 'x', 'o' },
         },
         {
-            '[F',
+            '[M',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_end('@function.outer', 'textobjects')
             end,
-            desc = 'previous function end',
+            desc = 'Previous function end',
             mode = { 'n', 'x', 'o' },
         },
         {
-            ']]',
+            ']c',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_start('@class.outer', 'textobjects')
             end,
-            desc = 'next class start',
+            desc = 'Next class start',
             mode = { 'n', 'x', 'o' },
         },
         {
-            '[[',
+            '[c',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_start('@class.outer', 'textobjects')
             end,
-            desc = 'previous class start',
+            desc = 'Previous class start',
+            mode = { 'n', 'x', 'o' },
+        },
+        {
+            ']C',
+            function()
+                require('nvim-treesitter-textobjects.move')
+                .goto_next_end('@class.outer', 'textobjects')
+            end,
+            desc = 'Next class end',
+            mode = { 'n', 'x', 'o' },
+        },
+        {
+            '[C',
+            function()
+                require('nvim-treesitter-textobjects.move')
+                .goto_previous_end('@class.outer', 'textobjects')
+            end,
+            desc = 'Previous class end',
             mode = { 'n', 'x', 'o' },
         },
         {
@@ -232,7 +250,7 @@ table.insert(M, {
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_start('@local.scope', 'locals')
             end,
-            desc = 'next scope start',
+            desc = 'Next scope start',
             mode = { 'n', 'x', 'o' },
         },
         {
@@ -241,7 +259,7 @@ table.insert(M, {
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_start('@local.scope', 'locals')
             end,
-            desc = 'previous scope start',
+            desc = 'Previous scope start',
             mode = { 'n', 'x', 'o' },
         },
         -- Swap keymaps

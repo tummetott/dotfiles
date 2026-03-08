@@ -164,13 +164,13 @@ local maps = {
         mode = 'n',
         lhs = ']w',
         rhs = function() vim.fn.search('\\s\\+$', 'w') end,
-        opts = { desc = 'Jump to next trailing whitespace' }
+        opts = { desc = 'Next trailing whitespace' }
     },
     {
         mode = 'n',
         lhs = '[w',
         rhs = function() vim.fn.search('\\s\\+$', 'bw') end,
-        opts = { desc = 'Jump to previous trailing whitespace' }
+        opts = { desc = 'Previous trailing whitespace' }
     },
     {
         mode = 'n',

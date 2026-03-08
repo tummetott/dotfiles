@@ -47,32 +47,15 @@ return {
                     -- Fix the cursor position in the file / commit panel
                     focus_panel_selection()
                 end,
-                -- TODO: this overwrites the buildin keymap to jump to next diff
-                [']c'] = function()
-                    require('diffview.config').actions.select_next_entry()
-                end,
-                ['[c'] = function()
-                    require('diffview.config').actions.select_prev_entry()
-                end,
                 ['q'] = '<cmd>DiffviewClose<cr>',
             },
             file_panel = {
                 ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
-                [']c'] = function()
-                    require('diffview.config').actions.select_next_entry()
-                end,
-                ['[c'] = function()
-                    require('diffview.config').actions.select_prev_entry()
-                end,
+                ['q'] = '<cmd>DiffviewToggleFiles<cr>',
             },
             file_history_panel = {
                 ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
-                [']c'] = function()
-                    require('diffview.config').actions.select_next_entry()
-                end,
-                ['[c'] = function()
-                    require('diffview.config').actions.select_prev_entry()
-                end,
+                ['q'] = '<cmd>DiffviewToggleFiles<cr>',
             },
         },
         view = {
@@ -82,11 +65,6 @@ return {
         },
         hooks = {
             view_opened = function(view)
-                -- Hide the file browser for diffviews but not for history views
-                if (view.class:name() == 'DiffView') then
-                    vim.cmd('DiffviewToggleFiles')
-                end
-
                 -- Fix the cursor position in the file / commit panel
                 view.emitter:on("file_open_post", function()
                     focus_panel_selection(view)
