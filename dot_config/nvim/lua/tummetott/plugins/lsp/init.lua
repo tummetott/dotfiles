@@ -77,6 +77,8 @@ table.insert(M, {
 })
 
 -- mason.nvim is the plugin manager for language servers
+-- ISSUE: https://github.com/folke/lazydev.nvim/issues/136
+-- FIX: :MasonInstall lua-language-server@3.16.4
 table.insert(M, {
     'mason-org/mason.nvim',
     enabled = true,
