@@ -114,7 +114,7 @@ return {
             'ih',
             ':<C-u>Gitsigns select_hunk<CR>',
             mode = { 'o', 'x' },
-            desc = 'Inner hunk',
+            desc = 'inner hunk',
         }
     },
     highlights = {
