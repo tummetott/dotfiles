@@ -46,6 +46,7 @@ table.insert(M, {
                         ['<C-q>'] = require("trouble.sources.telescope").open,
                         -- Append selected entries to trouble
                         ['<C-y>'] = require("trouble.sources.telescope").add,
+                        ['<esc>'] = actions.close,
                     },
                     n = {
                         -- By default, I dont show a preview of a file. However, I set
