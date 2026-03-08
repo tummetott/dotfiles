@@ -5,30 +5,37 @@ return {
     config = true,
     init = function()
         require('which-key').add {
-            { "<leader>s", group = "Session" },
+            { '<leader>p', group = 'Persist' },
         }
     end,
     keys = {
         {
-            '<leader>sc',
+            '<leader>pc',
             function()
                 require'persistence'.load()
             end,
-            desc = 'Load current directory session',
+            desc = 'Load current session',
         },
         {
-            '<leader>sl',
+            '<leader>pl',
             function()
                 require'persistence'.load({ last = true })
             end,
             desc = 'Load last session',
         },
         {
-            '<leader>sq',
+            '<leader>pq',
             function()
                 require'persistence'.stop()
             end,
             desc = 'Stop session recording',
+        },
+        {
+            '<leader>ps',
+            function()
+                require("persistence").select()
+            end,
+            desc = 'Load selected session',
         }
     }
 }
