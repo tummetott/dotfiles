@@ -77,9 +77,13 @@ table.insert(M, {
     enabled = true,
     branch = 'main',
     init = function()
-        -- Disable entire built-in ftplugin mappings to avoid conflicts.
-        -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
-        vim.g.no_plugin_maps = true
+        -- The README suggests disabling all built-in ftplugin mappings to avoid
+        -- keymap conflicts. However, that also disables mappings from plugins I
+        -- want to keep, such as matchit. For now, I am not setting
+        -- `g:no_plugin_maps`. If built-in ftplugin mappings override my
+        -- Treesitter mappings, I will switch the Treesitter mappings to
+        -- buffer-local mappings in a FileType autocmd so they take precedence.
+        -- vim.g.no_plugin_maps = true
     end,
     opts = {
         -- Automatically jump forward to textobj

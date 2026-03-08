@@ -42,7 +42,8 @@ return {
         -- Overwrite some keymap descriptions
         spec = {
             { '&', desc = 'Repeat substitute on current line' },
-            { '%', mode = { 'n', 'x' }, desc = 'Jump to matching pair' },
+            { '%', mode = { 'n', 'x' }, desc = 'Next matching pair' },
+            { 'g%', mode = { 'n', 'x' }, desc = 'Previous matching pair' },
             { 'ib', mode = { 'o', 'x' }, desc = 'inner ()' },
             { 'ab', mode = { 'o', 'x' }, desc = 'outer ()' },
             { 'i(', mode = { 'o', 'x' }, desc = 'inner ()' },
@@ -121,6 +122,9 @@ return {
             { 'grt', desc = 'Goto type definition' },
             { 'gr',  group = 'LSP' },
             { 'gx', desc = 'Opens URI under cursor with the system handler' },
+            { 'g;', desc = 'Previous position in change list' },
+            { 'g,', desc = 'Next position in change list' },
+            { 'a%', mode = { 'o', 'x' }, desc = 'matching pair' }, -- matchit plugin
         },
         show_help = true,
         show_key = true,
