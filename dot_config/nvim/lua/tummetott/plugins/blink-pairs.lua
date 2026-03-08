@@ -24,12 +24,12 @@ return {
             enabled = true,
             -- requires require('vim._extui').enable({}), otherwise has no effect
             cmdline = false,
-            -- Rotating colors by nesting depth. These groups are not defined by
-            -- default as I dont use this feature
+            -- Rotating colors by nesting depth (rainbow). These groups are not
+            -- defined by default as I dont use this feature
             groups = {
-                'BlinkPairsOrange',
-                'BlinkPairsPurple',
-                'BlinkPairsBlue',
+                -- 'BlinkPairsOrange',
+                -- 'BlinkPairsPurple',
+                -- 'BlinkPairsBlue',
             },
             unmatched_group = 'BlinkPairsUnmatched',
 
