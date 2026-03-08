@@ -1,20 +1,24 @@
----@diagnostic disable: redefined-local
+-- Move the file/history panel cursor to the current active file in the view.
+-- This normalizes cursor placement after panel open/toggle so it lands on a
+-- selectable entry (not header/context lines) in both DiffView and
+-- FileHistoryView.
+local function focus_panel_selection(view)
+    view = view or require("diffview.lib").get_current_view()
+    local p = view and view.panel
+    if not p or not p:is_open() then return end
 
--- Scroll the window in the Diffview's file and history panels until the lines
--- displaying help and context information are no longer visible
-local scroll_panel = function()
-    local offset
-    local ft = vim.bo.filetype
-    if ft == 'DiffviewFiles' then
-        offset = 3
-    elseif ft == 'DiffviewFileHistory' then
-        offset = 5
+    -- DiffView panel
+    if p.highlight_cur_file and p.cur_file then
+        p:highlight_cur_file()
+        return
     end
-    if offset then
-        local first_line = vim.fn.line('w0')
-        local shift = offset - first_line
-        if shift > 0 then
-            vim.api.nvim_input(shift .. '<c-e>')
+
+    -- FileHistoryView panel
+    if p.highlight_item and type(p.cur_file) == "function" then
+        local file = p:cur_file()
+        if file then
+            p:highlight_item(file)
+            return
         end
     end
 end
@@ -24,19 +28,24 @@ return {
     enabled = true,
     init = function()
         require('which-key').add {
-            { "<leader>d", group = "Diff" },
+            { '<leader>d', group = 'Diff' },
         }
     end,
     opts = {
         file_panel = {
             listing_style = 'list',
+            win_config = {
+                position = 'bottom',
+                height = 12,
+            },
         },
         use_icons = vim.g.nerdfonts,
         keymaps = {
             view = {
                 ['<C-s>'] = function()
                     vim.cmd('DiffviewToggleFiles')
-                    scroll_panel()
+                    -- Fix the cursor position in the file / commit panel
+                    focus_panel_selection()
                 end,
                 -- TODO: this overwrites the buildin keymap to jump to next diff
                 [']c'] = function()
@@ -77,6 +86,11 @@ return {
                 if (view.class:name() == 'DiffView') then
                     vim.cmd('DiffviewToggleFiles')
                 end
+
+                -- Fix the cursor position in the file / commit panel
+                view.emitter:on("file_open_post", function()
+                    focus_panel_selection(view)
+                end)
             end,
             diff_buf_win_enter = function(bufnr, winid, ctx)
                 -- Locally disable line wrap, list chars and relative numbers
@@ -89,10 +103,6 @@ return {
                 if ok then
                     scrollbar.hide()
                 end
-
-                -- Scroll the window until the lines displaying help and context
-                -- information are no longer visible
-                vim.schedule(scroll_panel)
             end,
             view_closed = function()
                 -- IBL only has buffer local indent guides. We therefore must
@@ -124,19 +134,19 @@ return {
         {
             '<Leader>di',
             '<Cmd>DiffviewOpen --selected-file=' ..
-                vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
+            vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
             desc = 'LOCAL against INDEX',
         },
         {
             '<Leader>dh',
             '<Cmd>DiffviewOpen HEAD --selected-file=' ..
-                vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
+            vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
             desc = 'LOCAL against HEAD',
         },
         {
             '<Leader>ds',
             '<Cmd>DiffviewOpen HEAD --staged --selected-file=' ..
-                vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
+            vim.fn.resolve(vim.fn.expand('%')) .. '<CR>',
             desc = 'INDEX against HEAD',
         },
         {
