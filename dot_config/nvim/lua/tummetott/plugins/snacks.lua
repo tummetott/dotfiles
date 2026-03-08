@@ -97,6 +97,16 @@ return {
         },
         input = {
             enabled = true,
+            win = {
+                keys = {
+                    i_esc = {
+                        '<esc>',
+                        { 'cmp_close', 'cancel' },
+                        mode = 'i',
+                        expr = true,
+                    },
+                },
+            },
         },
         picker = {
             enabled = true,
@@ -112,6 +122,7 @@ return {
         SnacksDashboardHeader = { fg = 'blue' },
         SnacksDashboardFooter = { fg = 'dark_grey' },
         SnacksIndentScope = { fg = 'dark_grey' },
+        SnacksInputBorder = { link = 'FloatBorder' },
     },
     keys = {
         {

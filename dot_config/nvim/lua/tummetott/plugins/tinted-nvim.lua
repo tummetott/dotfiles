@@ -47,6 +47,8 @@ return {
         EndOfBuffer = { fg = 'background' },
         Whitespace = { fg = 'dark_grey' },
         NonText = { fg = 'darkest_grey' },
+        WinSeparator = { fg = 'dark_grey' },
+        FloatBorder = { link = 'WinSeparator' },
         Search = {
             fg = 'background',
             bg = { darken = 'brightest_white', amount = 0.3 }
