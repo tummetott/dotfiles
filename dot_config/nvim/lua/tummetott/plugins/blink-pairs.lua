@@ -1,5 +1,5 @@
--- ISSUE: error in matchparen plugin when in lua block comments
--- ISSUE: dont autocomplete in cmdline search mode
+-- ISSUE: https://github.com/saghen/blink.pairs/issues/87
+-- ISSUE: https://github.com/saghen/blink.pairs/issues/86
 return {
     'saghen/blink.pairs',
     enabled = true,
