@@ -92,6 +92,31 @@ autocmd('FileType', {
     end,
 })
 
+autocmd('FileType', {
+    pattern = 'qf',
+    group = group,
+    callback = function(ctx)
+        -- delete current entry
+        vim.keymap.set('n', 'dd', function()
+            local line = vim.api.nvim_win_get_cursor(0)[1]
+            require('tummetott.utils.qflist').delete_qf_entries(line, line)
+        end, {
+            buffer = ctx.buf,
+            desc = 'Delete quickfix entry',
+        })
+
+        -- delete visual selection
+        vim.keymap.set('x', 'd', function()
+            local first = vim.fn.line('v')
+            local last = vim.api.nvim_win_get_cursor(0)[1]
+            require('tummetott.utils.qflist').delete_qf_entries(math.min(first, last), math.max(first, last))
+        end, {
+            buffer = ctx.buf,
+            desc = 'Delete qf entries',
+        })
+    end,
+})
+
 -- Auto create dir when saving a file, in case some intermediate directory does
 -- not exist
 autocmd({ 'BufWritePre' }, {
@@ -205,10 +230,10 @@ autocmd("TermOpen", {
     end,
 })
 
--- Disable the command line history window opened by `q:`.  
+-- Disable the command line history window opened by `q:`.
 -- Mapping `q:` to <Nop> would introduce a delay when stopping macro
 -- recording with `q`, because `q:` makes `q` a keymap prefix and
--- Neovim waits for `timeoutlen` to see if `:` follows.  
+-- Neovim waits for `timeoutlen` to see if `:` follows.
 -- Instead, allow the built-in command to trigger and immediately
 -- close the command window via an autocmd, which avoids affecting
 -- macro behavior.
