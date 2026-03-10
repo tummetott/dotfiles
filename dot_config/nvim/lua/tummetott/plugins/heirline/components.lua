@@ -709,6 +709,13 @@ M.special_winbar = {
                 end,
             },
             {
+                title = 'SYMBOLS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                    and vim.w[win].trouble.mode == 'lsp_document_symbols'
+                end,
+            },
+            {
                 title = 'IMPLEMENTATIONS',
                 match = function(_, win)
                     return vim.w[win].trouble

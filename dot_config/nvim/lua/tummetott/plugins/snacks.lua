@@ -73,8 +73,14 @@ return {
                     hidden = true
                 },
                 {
-                    key = 'q',
-                    action = '<CMD>quit<CR>',
+                    key = '<c-q>',
+                    action = function()
+                        if require('dismiss').has_dismissable_win() then
+                            require('dismiss').dismiss()
+                        else
+                            vim.cmd('quit')
+                        end
+                    end,
                     hidden = true
                 }
             },

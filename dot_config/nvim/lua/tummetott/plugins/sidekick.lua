@@ -59,6 +59,7 @@ return {
                         mode = 't',
                         desc = 'insert prompt or context',
                     },
+                    stopinsert = false,
                 }
             },
             -- FIX: Removed the deprecated "--enable web_search" flag, that

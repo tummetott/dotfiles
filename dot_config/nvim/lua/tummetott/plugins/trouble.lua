@@ -126,7 +126,11 @@ return {
                 desc = 'Document symbols',
                 mode = 'lsp_document_symbols',
                 focus = false,
-                win = { position = 'right' },
+                title = false,
+                win = {
+                    position = 'right',
+                    size = 0.3,
+                },
                 filter = {
                     -- remove Package since luals uses it for control flow structures
                     ['not'] = { ft = 'lua', kind = 'Package' },

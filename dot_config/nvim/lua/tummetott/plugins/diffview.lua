@@ -47,15 +47,19 @@ return {
                     -- Fix the cursor position in the file / commit panel
                     focus_panel_selection()
                 end,
-                ['q'] = '<cmd>DiffviewClose<cr>',
+                ['<c-q>'] = function()
+                    if require('dismiss').has_dismissable_win() then
+                        require('dismiss').dismiss()
+                    else
+                        vim.cmd('DiffviewClose')
+                    end
+                end,
             },
             file_panel = {
                 ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
-                ['q'] = '<cmd>DiffviewToggleFiles<cr>',
             },
             file_history_panel = {
                 ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
-                ['q'] = '<cmd>DiffviewToggleFiles<cr>',
             },
         },
         view = {
@@ -141,11 +145,6 @@ return {
             '<Leader>dl',
             '<Cmd>DiffviewFileHistory --base=LOCAL %<CR>',
             desc = 'LOCAL against history',
-        },
-        {
-            '<Leader>dq',
-            '<Cmd>DiffviewClose<CR>',
-            desc = 'Quit diffview',
         },
     },
 }

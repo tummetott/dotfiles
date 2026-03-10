@@ -334,12 +334,6 @@ local maps = {
         end,
         opts = { desc = 'Toggle diff highlights' }
     },
-    {
-        mode = 'n',
-        lhs = '<c-q>',
-        rhs = require('tummetott.utils.dismiss').dismiss,
-        opts = { desc = 'TODO' }
-    },
 }
 
 for _, m in ipairs(maps) do
