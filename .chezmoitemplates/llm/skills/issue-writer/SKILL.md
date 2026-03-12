@@ -22,9 +22,17 @@ Do not introduce any additional markdown headings or subheadings anywhere in the
 
 ## Output requirements
 
-`## Background` must be about two sentences and serve as an executive summary for readers who are not familiar with the project. This section is meant for the report and is not shared with the client in GitHub. The first sentence should explain the purpose of the affected module, component, or pallet. The second sentence should explain the role of the affected function, method, hook, extrinsic, or code path.
+`## Background` must be brief, usually about two sentences, and serve as an executive summary for readers who are not familiar with the project. This section is meant for the report and is not shared with the client in GitHub. The first sentence should explain the purpose of the affected module, component, pallet, hook, or subsystem. The second sentence should explain the role of the affected function, method, validation step, accounting path, state transition, or execution flow relevant to the issue. Keep this section neutral and contextual. Do not argue the bug here.
 
-`## Issue Description` must explain the bug in clear prose. Describe what the vulnerable logic does, what assumption is incorrect or missing, how the bug can be triggered, and why the implementation is unsafe or incorrect. The writeup should be understandable without requiring the reader to click links.
+`## Issue Description` must explain the bug in clear, self-contained prose. In most cases, follow this flow:
+
+1. identify the relevant code path or check,
+2. explain what the current logic does,
+3. explain the incorrect, missing, or inconsistent assumption,
+4. describe how the bug can be triggered, and
+5. explain why the resulting behavior is unsafe or incorrect.
+
+The report should be understandable without requiring the reader to open the links. When useful, include a compact concrete scenario, a short ordered sequence, or a small state snapshot to make the failure mode obvious.
 
 `## Risk` must explain the practical impact in context. Focus on realistic consequences, not exaggerated worst-case outcomes. If impact depends on privileges, environmental assumptions, or specific preconditions, state that plainly.
 
@@ -44,14 +52,25 @@ Example:
 The [`pre_inherents()`](https://github.com/example/repo/blob/<commit>/path/to/file.rs#L98-L166) hook inside the in-instructions pallet ...
 ```
 
-Use links as durable references so readers can locate the code being discussed.
+Use links as durable references so readers can locate the code being discussed. Use only the minimum set of code references needed to explain the issue clearly.
 
 ## Inline code excerpts
 
-When the issue depends on a specific code fragment, include both a permalink and a small inline excerpt immediately afterwards in a fenced code block with syntax highlighting. The report should remain understandable without requiring the reader to open the links.
+When the issue depends on a specific code fragment, include both a permalink and a small inline excerpt immediately afterwards in a fenced code block with syntax highlighting. The report must remain understandable without requiring the reader to open the links.
 
 Inline code especially when a specific condition, missing check, state transition, ordering issue, or accounting bug is central to the explanation. Keep excerpts short and focused on the lines needed to support the argument. Do not inline large code blocks unnecessarily.
 
 ## Working approach
 
-Write the title and the four required sections only. Start by identifying the minimum set of code locations needed to explain the bug. Then write the background for non-experts, explain the issue with precise code references, inline the key excerpt when it materially improves comprehension, describe the practical risk, and finish with a concrete mitigation suggestion.
+Write the title and the four required sections only.
+
+Start by identifying the minimum set of code locations needed to explain the bug. Then:
+
+* write a brief background for non-experts,
+* explain the issue through the concrete code path,
+* include a short code excerpt when it materially improves comprehension,
+* walk through the broken assumption and trigger scenario,
+* describe the realistic impact in system context, and
+* finish with a concrete mitigation suggestion that restores the intended invariant or safety property.
+
+Match the tone of a professional security audit finding: technical, restrained, specific, and easy to verify.
