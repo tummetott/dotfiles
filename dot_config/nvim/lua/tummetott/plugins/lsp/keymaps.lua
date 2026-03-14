@@ -23,14 +23,6 @@ vim.keymap.set(
     { desc = 'Show signature help' }
 )
 
--- Highlight all occurrences of the word under the cursor.
-vim.keymap.set(
-    'n',
-    '<leader><space>',
-    function() vim.lsp.buf.document_highlight() end,
-    { desc = 'Highlight word' }
-)
-
 -- Auto formatting
 vim.keymap.set(
     'n',
