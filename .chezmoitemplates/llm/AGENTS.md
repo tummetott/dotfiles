@@ -25,3 +25,18 @@ Use both sparingly — only when they add value, not by default.
 - **Neither** is needed when the explanation stands on its own.
 
 The guiding question is: *does including this reference or snippet actually help here?* If not, leave it out.
+
+# Comments and Documentation
+
+Write code comments, docstrings, READMEs, and other repository documentation as descriptions of the system as it currently exists.
+
+Guidelines:
+- Describe present behavior, domain intent, invariants, constraints, and responsibilities.
+- Use present-tense, state-based language.
+- Avoid implementation-history phrasing tied to prior versions (e.g., "now", "previously", "was changed to", "refactored to", "this replaces", "does X instead of Y").
+- Only describe how the system evolved when history is itself required context, such as migration notes, release notes, or compatibility guidance.
+
+Prefer describing what the system does:
+- "Uses a cache to avoid repeated lookups."
+- "The parser validates signatures before parsing payload data."
+- "Retry logic bounds retry attempts and backs off between failures."
