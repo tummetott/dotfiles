@@ -7,18 +7,19 @@ Write a markdown issue report for an already identified vulnerability.
 
 Use this exact structure and no other headings:
 
-```markdown
+~~~markdown
 [<severity>] <issue-title>
 
 ## Background
 ## Issue Description
 ## Risk
 ## Mitigation Suggestion
-````
+~~~
 
-Severity must be one of `INFO`, `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL`.
+Severity must be one of `Info`, `Low`, `Medium`, `High`, or `Critical`.
 
-Do not introduce any additional markdown headings or subheadings anywhere in the output. If emphasis is useful, use bold text inline.
+Do not introduce any additional markdown headings or subheadings anywhere in the output. If emphasis is useful, use **bold** text inline.
+The final response must contain only a single outer `~~~markdown` fenced block, with no text before or after it. This wrapper is for chat display only and must not be included when writing the issue to a file.
 
 ## Output requirements
 
@@ -59,6 +60,32 @@ Use links as durable references so readers can locate the code being discussed. 
 When the issue depends on a specific code fragment, include both a permalink and a small inline excerpt immediately afterwards in a fenced code block with syntax highlighting. The report must remain understandable without requiring the reader to open the links.
 
 Inline code especially when a specific condition, missing check, state transition, ordering issue, or accounting bug is central to the explanation. Keep excerpts short and focused on the lines needed to support the argument. Do not inline large code blocks unnecessarily.
+Use normal triple backticks for all inner code fences so they remain nested inside the outer `~~~markdown` block.
+
+## File output
+
+When writing the issue to a file, save it in the top level of the current working directory. The filename must be derived from the issue title as a short kebab-case slug, not the raw title.
+
+Normalize filenames as follows:
+
+* lowercase everything
+* replace spaces and other separators with `-`
+* remove characters that are not letters, numbers, or `-`
+* collapse repeated dashes into a single `-`
+* trim leading and trailing dashes
+* prefix the filename with the severity
+* suffix the filename with `-issue.md`
+* ensure the full filename is no longer than 35 characters
+* if needed, aggressively shorten the title slug semantically rather than preserving the full title literally
+
+Use this format:
+
+`<severity>-<title-slug>-issue.md`
+
+Examples:
+
+* `high-missing-access-control-issue.md`
+* `medium-incorrect-reward-accounting-issue.md`
 
 ## Working approach
 
