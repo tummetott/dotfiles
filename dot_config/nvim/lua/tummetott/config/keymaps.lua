@@ -148,6 +148,11 @@ local maps = {
             vim.cmd('nohlsearch')
             -- Clear the cmdline
             vim.cmd('echo ""')
+            -- Clear pending highlights
+            vim.lsp.buf.clear_references()
+            pcall(function()
+                require('follow.highlight').clear()
+            end)
             -- Close attached floats
             local win = vim.api.nvim_get_current_win()
             utils.close_attached_floats(win)

@@ -4,16 +4,16 @@ return {
     lazy = true,
     opts = {
         highlight = {
-            hlgroup = 'LspReferenceText',
+            hlgroup = 'FollowReferenceHighlight',
             clear_events = {
                 'CursorHold',
                 'CursorHoldI',
                 -- 'CursorMoved',
             },
         },
-        open = {
+        target = {
             exclude = {
-                current_win = false,
+                current_win = true,
                 filetypes = {},
                 buftypes = {
                     'help',
@@ -30,13 +30,16 @@ return {
         {
             '<c-]>',
             function()
-                if not require('follow').follow() then
-                    return '<C-]>'
+                if not require("follow").follow({
+                    jump = true,
+                    highlight = true,
+                }) then
+                    vim.cmd("normal! <C-]>")
                 end
             end,
-            expr = true,
-            desc = 'Goto file or jump to definition',
+            desc = 'Goto file reference or jump to definition',
         },
+        -- ISSUE: https://github.com/folke/lazy.nvim/issues/2136
         {
             '<c-[>',
             function()
@@ -45,10 +48,14 @@ return {
                     highlight = true,
                 })
                 if not ok then
+                    vim.lsp.buf.clear_references()
                     vim.lsp.buf.document_highlight()
                 end
             end,
             desc = 'Highlight reference',
         }
-    }
+    },
+    highlights = {
+        FollowReferenceHighlight = { bg = 'darkest_grey' },
+    },
 }
