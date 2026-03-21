@@ -30,11 +30,11 @@ return {
         {
             '<c-]>',
             function()
-                if not require("follow").follow({
+                if not require('follow').follow({
                     jump = true,
                     highlight = true,
                 }) then
-                    vim.cmd("normal! <C-]>")
+                    vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
                 end
             end,
             desc = 'Goto file reference or jump to definition',
