@@ -36,6 +36,9 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl i" { BreakPane; } // Mnemonic: isolate
         bind "Shift Ctrl -" { Resize "Decrease"; }
         bind "Shift Ctrl =" { Resize "Increase"; }
+        // Currently duplicates of n / p
+        bind "Shift Ctrl [" { GoToPreviousTab; }
+        bind "Shift Ctrl ]" { GoToNextTab; }
 
         // They dont work in alacritty
         bind "Super 1" { GoToTab 1; }

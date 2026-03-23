@@ -29,7 +29,9 @@ config.audible_bell = 'Disabled'
 config.color_scheme = current_tinty_scheme() or 'tokyonight'
 config.enable_kitty_keyboard = true
 config.keys = {
-    -- Disable some default keymaps that collide with zellij
+    -- Disable some default keymaps that collide with zellij.
+    -- NOTE: With SHIFT in `mods`, WezTerm expects the shifted character as `key`
+    -- (e.g. `{` instead of `[`, `+` instead of `=`).
     { key = "1", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "2", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
     { key = "3", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
@@ -63,6 +65,8 @@ config.keys = {
     -- Work around this by explicitly sending the expected CSI-u events.
     { key = "-", mods = "CTRL", action = wezterm.action.SendString("\x1b[45;5u") },
     { key = "+", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[61;6u"), },
+    { key = "{", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[91;6u") },
+    { key = "}", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[93;6u") },
 
     -- These are conventional macOS keymaps
     { key = 'f', mods = 'CMD|CTRL', action = wezterm.action.ToggleFullScreen },
