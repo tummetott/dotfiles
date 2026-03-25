@@ -72,6 +72,12 @@ keybinds clear-defaults=true {
                 move_to_focused_tab true
             }; SwitchToMode "normal";
         }
+        bind "l"{
+            LaunchOrFocusPlugin "zellij:layout-manager" {
+                floating true
+                move_to_focused_tab true
+            }; SwitchToMode "normal";
+        }
     }
     resize {
         bind "h" "left" { Resize "Increase left"; }
@@ -198,7 +204,7 @@ plugins {
         tab_truncate_start_format "#[fg=$bright_grey]... "
 
         mode_resize        "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]resize-pane  #[fg=$dark_grey]-/+ #[fg=$grey]resize-pain"
-        mode_session       "#[fg=$dark_grey]p ➜ #[fg=$grey]plugins  #[fg=$dark_grey]s ➜ #[fg=$grey]sessions  #[fg=$dark_grey]w  ➜ #[fg=$grey]web-sessions"
+        mode_session       "#[fg=$dark_grey]p ➜ #[fg=$grey]plugins  #[fg=$dark_grey]s ➜ #[fg=$grey]sessions  #[fg=$dark_grey]w ➜ #[fg=$grey]web-sessions  #[fg=$dark_grey]l ➜ #[fg=$grey]layouts"
         mode_move          "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]move-pane  #[fg=$dark_grey][/] ➜ #[fg=$grey]move-tap  #[fg=$dark_grey]n/p ➜ #[fg=$grey]swap-layout"
 
         // Currently unused modes
@@ -228,6 +234,10 @@ simplified_ui true
 // Choose the theme that is specified in the themes section.
 theme "tinted"
 
+// ISSUE: Delete this once the following issue is closed
+// https://github.com/zellij-org/zellij/issues/4889
+theme_dir "/Users/jonas/.config/zellij/themes"
+
 // Choose the base input mode of zellij.
 default_mode "normal"
 
@@ -245,6 +255,9 @@ pane_frames false
 // or should each user have their own cursor (false)
 // (Requires restart)
 mirror_session false
+
+// Dont show help when hovering over a window border with the mouse
+mouse_hover_effects false
 
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
 // eg. when terminal window with an active zellij session is closed
