@@ -1,5 +1,4 @@
--- ISSUE: https://github.com/saghen/blink.pairs/issues/87
--- ISSUE: https://github.com/saghen/blink.pairs/issues/86
+-- ISSUE: https://github.com/saghen/blink.pairs/issues/92
 return {
     'saghen/blink.pairs',
     enabled = true,
@@ -16,7 +15,9 @@ return {
             -- enabled
             enabled = true,
             cmdline = true,
-            disabled_filetypes = {},
+            disabled_filetypes = {
+                'TelescopePrompt',
+            },
             -- Extend default rules
             pairs = {},
         },
