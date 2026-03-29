@@ -87,14 +87,6 @@ return {
                 end
             end,
             view_closed = function()
-                -- IBL only has buffer local indent guides. We therefore must
-                -- enable the guid of the buffer again when exiting the
-                -- diffview.
-                local loaded, ibl = pcall(require, 'ibl')
-                if loaded then
-                    ibl.setup_buffer(0, { enabled = true })
-                end
-
                 -- Enable scrollbar
                 local ok, scrollbar = pcall(require, 'scrollbar.utils')
                 if ok then
