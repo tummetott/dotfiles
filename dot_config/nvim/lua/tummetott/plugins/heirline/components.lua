@@ -202,7 +202,7 @@ M.git_conflict = {
 
 M.trailing_whitespace = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile'
+        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
     end,
     init = function(self)
         self.has_trailing = vim.fn.search('\\s$', 'nwc') ~= 0
@@ -589,7 +589,6 @@ M.statusline = {
     condition = function()
         return not conditions.buffer_matches({
             filetype = { 'snacks_dashboard' },
-            buftype = { 'terminal' }
         })
     end,
     hl = {
@@ -616,7 +615,6 @@ M.special_winbar = {
                 'DiffviewFiles',
                 'DiffviewFileHistory',
                 'qf',
-                'sidekick_terminal',
             },
             buftype = {
                 'nofile',
