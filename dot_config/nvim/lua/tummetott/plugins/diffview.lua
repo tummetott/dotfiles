@@ -23,8 +23,9 @@ local function focus_panel_selection(view)
     end
 end
 
+-- TODO: investigate how the fork performs
 return {
-    'sindrets/diffview.nvim',
+    'dlyongemallo/diffview.nvim',
     enabled = true,
     init = function()
         require('which-key').add {
