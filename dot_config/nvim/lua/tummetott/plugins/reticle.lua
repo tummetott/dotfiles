@@ -30,7 +30,9 @@ return {
                 'NvimTree',
                 'TelescopePrompt',
                 'trouble',
-                'snacks_dashboard'
+                'snacks_dashboard',
+                'DiffviewFileHistory',
+                'DiffviewFiles',
             },
         },
     },
