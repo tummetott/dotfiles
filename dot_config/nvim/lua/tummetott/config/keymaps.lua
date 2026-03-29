@@ -186,6 +186,24 @@ local maps = {
     },
     {
         mode = 'n',
+        lhs = '[e',
+        rhs = function()
+            vim.cmd('silent! move --' .. vim.v.count1)
+            vim.cmd.normal '=='
+        end,
+        opts = { desc = 'Exchange above' }
+    },
+    {
+        mode = 'n',
+        lhs = ']e',
+        rhs = function()
+            vim.cmd('silent! move +' .. vim.v.count1)
+            vim.cmd.normal '=='
+        end,
+        opts = { desc = 'Exchange below' }
+    },
+    {
+        mode = 'n',
         lhs = 'x',
         rhs = '"_x', -- Don't pollute register
         opts = { desc = 'Delete char under cursor' }
