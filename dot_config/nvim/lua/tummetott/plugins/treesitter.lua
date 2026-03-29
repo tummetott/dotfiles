@@ -20,26 +20,31 @@ table.insert(M, {
     end,
     -- This plugin does not necessarily need a call to setup
     config = function()
-        local treesitter = require('nvim-treesitter')
-        -- NOTE: tree-sitter-cli must be installed globally in order to install
-        -- parsers
-        treesitter.install({
-            'bash',
-            'c',
-            'cpp',
-            'dockerfile',
-            'html',
-            'java',
-            'json',
-            'lua',
-            'markdown',
-            'nu',
-            'python',
-            'rust',
-            'toml',
-            'typescript',
-            'yaml',
-        })
+
+        -- Automatic parser installation only works when `tree-sitter-cli` is
+        -- installed. If this dependency is missing, we silently skip the
+        -- installation. Parsers can always be installed manually via:
+        --     :TSInstall <parser>
+        local ok, treesitter = pcall(require, "nvim-treesitter")
+        if ok then
+            treesitter.install({
+                'bash',
+                'c',
+                'cpp',
+                'dockerfile',
+                'html',
+                'java',
+                'json',
+                'lua',
+                'markdown',
+                'nu',
+                'python',
+                'rust',
+                'toml',
+                'typescript',
+                'yaml',
+            })
+        end
 
         vim.api.nvim_create_autocmd("FileType", {
             group = vim.api.nvim_create_augroup("TreesitterAttach", { clear = true }),
