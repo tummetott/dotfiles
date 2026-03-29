@@ -10,6 +10,7 @@ source ~/.config/shell/env
     {{ template "bootstrap/macos-settings.tmpl" . }}
 {{ end }}
 
+{{- if .install.tinty }}
 if command -v tinty >/dev/null 2>&1; then
     info 'Configure tinty'
     log tinty install
@@ -17,6 +18,7 @@ if command -v tinty >/dev/null 2>&1; then
 else
     warn 'Tinty not found, skipping configuration'
 fi
+{{- end }}
 
 {{ if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
     {{ if .sudo }}
