@@ -37,7 +37,6 @@
     {{ $asset := printf "tree-sitter-cli-%s-%s.zip" $os $arch }}
     url = '{{ gitHubLatestReleaseAssetURL "tree-sitter/tree-sitter" $asset }}'
     extract = true
-    path = 'tree-sitter'
     stripComponents = 1
     executable = true
     refreshPeriod = '168h'
