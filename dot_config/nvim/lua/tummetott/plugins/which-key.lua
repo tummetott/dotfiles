@@ -125,6 +125,7 @@ return {
             { 'g;', desc = 'Previous position in change list' },
             { 'g,', desc = 'Next position in change list' },
             { 'a%', mode = { 'o', 'x' }, desc = 'matching pair' }, -- matchit plugin
+            { '<leader>y', group = 'Toggle option' },
         },
         show_help = true,
         show_key = true,

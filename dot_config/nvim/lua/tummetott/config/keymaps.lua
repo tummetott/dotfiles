@@ -1,5 +1,12 @@
 local utils = require 'tummetott.utils'
 
+local function echo_toggle(label, enabled)
+    vim.api.nvim_echo({
+        { label .. ' ', 'Normal' },
+        { enabled and 'enabled' or 'disabled', enabled and 'DiagnosticOk' or 'DiagnosticWarn' },
+    }, false, {})
+end
+
 local maps = {
     {
         mode = 'x',
@@ -302,6 +309,89 @@ local maps = {
         lhs = '<leader>z',
         rhs = '<cmd>Lazy<cr>',
         opts = { desc = 'Open Lazy' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yd',
+        rhs = function()
+            vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
+            echo_toggle('Diff', vim.o.diff)
+        end,
+        opts = { desc = 'diff' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yh',
+        rhs = function()
+            vim.o.hlsearch = not vim.o.hlsearch
+            echo_toggle('Highlight search', vim.o.hlsearch)
+        end,
+        opts = { desc = 'highlight search' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yl',
+        rhs = function()
+            vim.o.list = not vim.o.list
+            echo_toggle('Listchars', vim.o.list)
+        end,
+        opts = { desc = 'listchars' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yn',
+        rhs = function()
+            vim.o.number = not vim.o.number
+            echo_toggle('Line numbers', vim.o.number)
+        end,
+        opts = { desc = 'line numbers' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yr',
+        rhs = function()
+            vim.o.relativenumber = not vim.o.relativenumber
+            echo_toggle('Relative numbers', vim.o.relativenumber)
+        end,
+        opts = { desc = 'relative numbers' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>ys',
+        rhs = function()
+            vim.o.spell = not vim.o.spell
+            echo_toggle('Spell check', vim.o.spell)
+        end,
+        opts = { desc = 'spell check' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yt',
+        rhs = function()
+            vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
+            echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
+        end,
+        opts = { desc = 'colorcolumn' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yv',
+        rhs = function()
+            vim.diagnostic.config {
+                virtual_text = not vim.diagnostic.config().virtual_text,
+            }
+            echo_toggle('Virtual text', vim.diagnostic.config().virtual_text)
+        end,
+        opts = { desc = 'virtual text' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yw',
+        rhs = function()
+            vim.o.wrap = not vim.o.wrap
+            echo_toggle('Wrap', vim.o.wrap)
+        end,
+        opts = { desc = 'line wrapping' }
     },
     {
         mode = 'n',
