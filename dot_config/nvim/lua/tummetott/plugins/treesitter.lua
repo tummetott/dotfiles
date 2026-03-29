@@ -21,12 +21,11 @@ table.insert(M, {
     -- This plugin does not necessarily need a call to setup
     config = function()
 
-        -- Automatic parser installation only works when `tree-sitter-cli` is
-        -- installed. If this dependency is missing, we silently skip the
-        -- installation. Parsers can always be installed manually via:
-        --     :TSInstall <parser>
-        local ok, treesitter = pcall(require, "nvim-treesitter")
-        if ok then
+        -- Note: `tree-sitter-cli` must be installed. However, we do not error
+        -- if this dependency is missing.
+        local has_cli = vim.fn.executable('tree-sitter-cli') == 1
+        if has_cli then
+            local treesitter = require('nvim-treesitter')
             treesitter.install({
                 'bash',
                 'c',
