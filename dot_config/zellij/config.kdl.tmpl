@@ -22,7 +22,6 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl d" { Detach; }
         bind "Shift Ctrl m" { SwitchToMode "move"; }
         bind "Shift Ctrl e" { EditScrollback; SwitchToMode "normal"; }
-        bind "Shift Ctrl z" { SwitchToMode "resize"; } // Mnemonic: size
         bind "Shift Ctrl r" { SwitchToMode "renametab"; TabNameInput 0; }
         bind "Shift Ctrl a" {
             NewTab { layout "chezmoi-apply"; }
@@ -52,51 +51,42 @@ keybinds clear-defaults=true {
         bind "Super 9" { GoToTab 9; }
     }
     session {
-        bind "q" { Quit; }
-        bind "p" {
+        bind "q" "Shift Ctrl q" { Quit; }
+        bind "p" "Shift Ctrl p" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
                 move_to_focused_tab true
             }; SwitchToMode "normal";
 
         }
-        bind "s"{
+        bind "s" "Shift Ctrl s"{
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }; SwitchToMode "normal";
         }
-        bind "w"{
+        bind "w" "Shift Ctrl w"{
             LaunchOrFocusPlugin "zellij:share" {
                 floating true
                 move_to_focused_tab true
             }; SwitchToMode "normal";
         }
-        bind "l"{
+        bind "l" "Shift Ctrl l"{
             LaunchOrFocusPlugin "zellij:layout-manager" {
                 floating true
                 move_to_focused_tab true
             }; SwitchToMode "normal";
         }
     }
-    resize {
-        bind "h" "left" { Resize "Increase left"; }
-        bind "j" "down" { Resize "Increase down"; }
-        bind "k" "up" { Resize "Increase up"; }
-        bind "l" "right" { Resize "Increase right"; }
-        bind "=" { Resize "Increase"; }
-        bind "-" { Resize "Decrease"; }
-    }
     move {
-        bind "h" "left" { MovePane "left"; }
-        bind "j" "down" { MovePane "down"; }
-        bind "k" "up" { MovePane "up"; }
-        bind "l" "right" { MovePane "right"; }
-        // TODO: create swap layouts
-        bind "p" { PreviousSwapLayout; }
-        bind "n" { NextSwapLayout; }
-        bind "[" { MoveTab "left"; }
-        bind "]" { MoveTab "right"; }
+        bind "h" "Shift Ctrl h" "left" { MovePane "left"; }
+        bind "j" "Shift Ctrl j" "down" { MovePane "down"; }
+        bind "k" "Shift Ctrl k" "up" { MovePane "up"; }
+        bind "l" "Shift Ctrl l" "right" { MovePane "right"; }
+        bind "p" "Shift Ctrl p" { PreviousSwapLayout; }
+        bind "n" "Shift Ctrl n" { NextSwapLayout; }
+        bind "[" "Shift Ctrl [" { MoveTab "left"; }
+        bind "]" "Shift Ctrl ]" { MoveTab "right"; }
     }
     search {
         bind "n" { Search "down"; }
