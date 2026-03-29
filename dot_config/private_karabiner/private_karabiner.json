@@ -103,6 +103,7 @@
                                             "^org.alacritty$",
                                             "^com.googlecode.iterm2$",
                                             "^com.github.wez.wezterm$",
+                                            "^com.mitchellh.ghostty$",
                                             "^com.utmapp.UTM$",
                                             "^com.riotgames.LeagueofLegends.GameClient$"
                                         ],
@@ -134,6 +135,7 @@
                                             "^org.alacritty$",
                                             "^com.googlecode.iterm2$",
                                             "^com.github.wez.wezterm$",
+                                            "^com.mitchellh.ghostty$",
                                             "^com.utmapp.UTM$",
                                             "^com.riotgames.LeagueofLegends.GameClient$"
                                         ],
