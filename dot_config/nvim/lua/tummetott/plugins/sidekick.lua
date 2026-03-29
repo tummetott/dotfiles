@@ -4,7 +4,7 @@ return {
     event = 'VeryLazy',
     init = function()
         require('which-key').add {
-            { "<Leader>j", group = "Sidekick" }
+            { '<Leader>j', group = 'Sidekick' }
         }
     end,
     config = function(_, opts)
@@ -51,6 +51,7 @@ return {
             },
         },
         cli = {
+            picker = 'telescope',
             win = {
                 keys = {
                     prompt = {
@@ -59,14 +60,25 @@ return {
                         mode = 't',
                         desc = 'insert prompt or context',
                     },
+                    buffers = {
+                        '<leader>fb',
+                        'buffers',
+                        mode = 'n',
+                        desc = 'open buffer picker',
+                    },
+                    files = {
+                        '<leader>ff',
+                        'files',
+                        mode = 'n',
+                        desc = 'open file picker',
+                    },
                     stopinsert = false,
+                    hide_n = false,
                 }
             },
-            -- FIX: Removed the deprecated "--enable web_search" flag, that
-            -- sidekick adds automatically 
-            tools = {
-                codex = { cmd = { "codex" } },
-            }
+            prompts = {
+                contained = 'Describe the current system state in a fully self-contained way, without referencing history or changes.',
+            },
         },
     },
     keys = {
@@ -152,7 +164,7 @@ return {
         },
         {
             '<leader>jt',
-            function() require('sidekick.cli').send({ msg = '{this}' }) end,
+            function() require('sidekick.cli').send({ msg = '{line}' }) end,
             mode = { 'x', 'n' },
             desc = 'Send This',
         },

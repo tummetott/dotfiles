@@ -183,8 +183,9 @@ local maps = {
         rhs = '"_x', -- Don't pollute register
         opts = { desc = 'Delete char under cursor' }
     },
-    -- TAB and C-i share a legacy keycode. Mapping <Tab> also captures <C-i>,
-    -- so we remap <C-i> to itself to restore jumplist behavior.
+    -- <Tab> and <C-i> share a legacy keycode. Mapping only one key collapses
+    -- both to the same action. I therefore map <C-i> to itself to preserve
+    -- jumplist behavior.
     {
         mode = 'n',
         lhs = '<C-i>',
@@ -338,6 +339,21 @@ local maps = {
             end
         end,
         opts = { desc = 'Toggle diff highlights' }
+    },
+    {
+        mode = 't',
+        lhs = '<c-[>',
+        rhs = '<c-\\><c-n>',
+        opts = { desc = 'Exit terminal insert mode' }
+    },
+    -- <esc> and <c-[> share a legacy keycode. Mapping only one key
+    -- collapses both to the same action. I therefore map <esc> to itself to
+    -- pass the <esc> character through to the terminal program.
+    {
+        mode = 't',
+        lhs = '<esc>',
+        rhs = '<esc>',
+        opts = { desc = 'Esc passthrough' }
     },
 }
 
