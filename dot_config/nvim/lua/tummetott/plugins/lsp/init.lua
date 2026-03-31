@@ -42,13 +42,12 @@ vim.lsp.enable({
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
+
         local bufnr = args.buf
 
         -- Register buffer-local keymaps
         keymaps.register_buffer_keymaps(client, bufnr)
-
-        -- Setup signature help
-        signature.setup(client, bufnr)
 
         -- Clear references on cursor hold
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -70,9 +69,11 @@ table.insert(M, {
     lazy = false,
     highlights = {
         -- Used for document highlight
+        -- TODO: delete once added in tinted-nvim
         LspReferenceText = { bg = 'dark_grey' },
         LspReferenceRead = { link = 'LspReferenceText' },
         LspReferenceWrite = { link = 'LspReferenceText' },
+        LspSignatureActiveParameter = { link = 'LspReferenceText' },
     },
 })
 

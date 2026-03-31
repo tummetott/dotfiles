@@ -41,8 +41,12 @@ Every issue file starts with the YAML frontmatter shown above, followed by the i
 
 Fill the frontmatter as follows:
 
-* `attack_scenario` is one short sentence, or at most two short sentences, in prose and starts with `An attacker does...`.
-* Keep `attack_scenario` brief and concrete. State the attacker action and the immediate consequence only. Do not include extended reasoning, background, root-cause analysis, or speculative implementation history in this field.
+* `attack_scenario` must be a single short sentence that starts with `An attacker does`.
+* After that prefix, use only 4-10 words.
+* State only the attacker action and the immediate consequence.
+* Do not include background, preconditions, technical qualifiers, or root-cause details.
+* Prefer the shortest acceptable phrasing. If it can be shorter, shorten it.
+* The frontmatter is a label, not a summary. Do not restate the full finding in `attack_scenario`.
 * `classification` must be one of the classifications listed below.
 * `component` names the affected area, such as `Runtime configuration`, a pallet, module, package, service, library, or another concrete subsystem.
 * If multiple components are affected, list them in the same field and separate them with commas.
