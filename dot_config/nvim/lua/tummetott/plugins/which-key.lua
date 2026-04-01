@@ -88,8 +88,6 @@ return {
             { '[{', mode = 'n', desc = 'Previous unmatched {' },
             { ']%', mode = 'n', desc = 'Next unmatched (under cursor)' },
             { '[%', mode = 'n', desc = 'Previous unmatched (under cursor)' },
-            { ']]', mode = 'n', desc = 'Next section' },
-            { '[[', mode = 'n', desc = 'Previous section' },
             { ']<c-q>', mode = 'n', desc = 'Next quickfix entry in next file' },
             { '[<c-q>', mode = 'n', desc = 'Previous quickfix entry in previous file' },
             { ']<c-l>', mode = 'n', desc = 'Next loclist entry in next file' },

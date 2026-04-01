@@ -49,10 +49,7 @@ return {
         NonText = { fg = 'darkest_grey' },
         WinSeparator = { fg = 'dark_grey' },
         FloatBorder = { link = 'WinSeparator' },
-        Search = {
-            fg = 'background',
-            bg = { darken = 'brightest_white', amount = 0.3 }
-        },
+        Search = { bg = 'dark_grey' },
         IncSearch = { bg = 'orange', fg = 'background' },
         CursorLineNr = { fg = 'brightest_white', bold = true },
         StatusLine = {},

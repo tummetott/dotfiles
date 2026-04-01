@@ -6,9 +6,7 @@ return {
         highlight = {
             hlgroup = 'FollowReferenceHighlight',
             clear_events = {
-                'CursorHold',
-                'CursorHoldI',
-                -- 'CursorMoved',
+                'CursorMoved',
             },
         },
         target = {
@@ -48,8 +46,9 @@ return {
                     highlight = true,
                 })
                 if not ok then
-                    vim.lsp.buf.clear_references()
-                    vim.lsp.buf.document_highlight()
+                    pcall(function()
+                        require("illuminate").visible_buf()
+                    end)
                 end
             end,
             desc = 'Highlight reference',

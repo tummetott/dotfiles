@@ -157,9 +157,8 @@ local maps = {
             vim.cmd('echo ""')
             -- Clear pending highlights
             vim.lsp.buf.clear_references()
-            pcall(function()
-                require('follow.highlight').clear()
-            end)
+            pcall(function() require('follow.highlight').clear() end)
+            pcall(function() require('illuminate').invisible_buf() end)
             -- Close attached floats
             local win = vim.api.nvim_get_current_win()
             utils.close_attached_floats(win)

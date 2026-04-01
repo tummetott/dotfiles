@@ -48,13 +48,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- Register buffer-local keymaps
         keymaps.register_buffer_keymaps(client, bufnr)
-
-        -- Clear references on cursor hold
-        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-            callback = vim.lsp.buf.clear_references,
-            group = doc_hl_grp,
-            buffer = bufnr,
-        })
     end,
 })
 
