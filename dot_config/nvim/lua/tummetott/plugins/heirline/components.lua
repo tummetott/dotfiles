@@ -188,7 +188,7 @@ M.diagnostics = {
 
 M.git_conflict = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile'
+        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
     end,
     init = function(self)
         self.conflicts = vim.fn.search('^[<>|]\\{7} \\|=\\{7}$', 'nwc')
