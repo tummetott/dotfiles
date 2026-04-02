@@ -9,24 +9,6 @@ autocmd('CmdlineLeave', {
     command = 'echo ""',
 })
 
--- Turn on hlsearch when typing the search
-autocmd('CmdlineEnter', {
-    group = group,
-    pattern = { '/', '\\?' },
-    callback = function()
-        vim.opt.hlsearch = true
-    end,
-})
-
--- Turn off hlsearch when jumping to a search
-autocmd('CmdlineLeave', {
-    group = group,
-    pattern = { '/', '\\?' },
-    callback = function()
-        vim.opt.hlsearch = false
-    end,
-})
-
 -- Helper function to check if a view should be created or loaded
 local view_check = function()
     -- No special buffers
@@ -156,9 +138,6 @@ autocmd('ModeChanged', {
             DiffText = 'None',
             DiffChange = 'None',
         }
-        -- Disable hlsearch in visual mode because when both hlsearch and Visual
-        -- mode are active, overlapping highlights cause readability issues
-        vim.opt.hlsearch = false
     end
 })
 autocmd('ModeChanged', {

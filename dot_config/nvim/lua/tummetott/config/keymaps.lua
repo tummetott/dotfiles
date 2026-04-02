@@ -219,22 +219,10 @@ local maps = {
     -- Make `n` always move to the next match and `N` to the previous one,
     -- independent of whether the search was started with `/` or `?`.
     {
-        mode = 'n',
-        lhs = 'n',
-        rhs = '"Nn"[v:searchforward]."zv"',
-        opts = { expr = true, desc = 'Next search result' }
-    },
-    {
         mode = { 'x', 'o' },
         lhs = 'n',
         rhs = '"Nn"[v:searchforward]',
         opts = { expr = true, desc = 'Next search result' }
-    },
-    {
-        mode = 'n',
-        lhs = 'N',
-        rhs = '"nN"[v:searchforward]."zv"',
-        opts = { expr = true, desc = 'Prev search result' }
     },
     {
         mode = { 'x', 'o' },
