@@ -2,7 +2,7 @@
 -- manual highlighing
 return {
     'RRethy/vim-illuminate',
-    event = 'LazyFile',
+    event = 'VeryLazy',
     enabled = true,
     opts = {
         providers = {
@@ -31,6 +31,22 @@ return {
         })
     end,
     keys = {
+        -- ISSUE: https://github.com/folke/lazy.nvim/issues/2136
+        {
+            '<c-[>',
+            function()
+                local ok, result = pcall(function()
+                    return require('follow').follow({
+                        jump = false,
+                        highlight = true,
+                    })
+                end)
+                if not ok or not result then
+                    require("illuminate").visible_buf()
+                end
+            end,
+            desc = 'Highlight reference',
+        },
         {
             ']]',
             function()

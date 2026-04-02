@@ -37,22 +37,6 @@ return {
             end,
             desc = 'Goto file reference or jump to definition',
         },
-        -- ISSUE: https://github.com/folke/lazy.nvim/issues/2136
-        {
-            '<c-[>',
-            function()
-                local ok = require('follow').follow({
-                    jump = false,
-                    highlight = true,
-                })
-                if not ok then
-                    pcall(function()
-                        require("illuminate").visible_buf()
-                    end)
-                end
-            end,
-            desc = 'Highlight reference',
-        }
     },
     highlights = {
         FollowReferenceHighlight = { bg = 'darkest_grey' },
