@@ -3,7 +3,6 @@ M = {}
 -- Loading this module automatically registers all global LSP-related keymaps
 local keymaps = require("tummetott.plugins.lsp.keymaps")
 
-local signature = require("tummetott.plugins.lsp.signature")
 local doc_hl_grp = vim.api.nvim_create_augroup("document_hl", {})
 
 -- Global options for all diagnostics
