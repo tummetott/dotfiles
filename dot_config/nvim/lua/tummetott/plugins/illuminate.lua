@@ -1,5 +1,3 @@
--- TODO: If I keep this plugin, remove the autocmd in lspconfig which resets the
--- manual highlighing
 return {
     'RRethy/vim-illuminate',
     event = 'VeryLazy',
@@ -36,7 +34,7 @@ return {
             '<c-[>',
             function()
                 local ok, result = pcall(function()
-                    return require('follow').follow({
+                    return require('pathnav').open({
                         jump = false,
                         highlight = true,
                     })

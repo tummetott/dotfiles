@@ -1,10 +1,10 @@
 return {
-    'tummetott/follow.nvim',
+    'tummetott/pathnav.nvim',
     enabled = true,
     lazy = true,
     opts = {
         highlight = {
-            hlgroup = 'FollowReferenceHighlight',
+            hlgroup = 'PathnavLocation',
             clear_events = {
                 'CursorMoved',
             },
@@ -28,17 +28,17 @@ return {
         {
             '<c-]>',
             function()
-                if not require('follow').follow({
+                if not require('pathnav').open({
                     jump = true,
                     highlight = true,
                 }) then
                     vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
                 end
             end,
-            desc = 'Goto file reference or jump to definition',
+            desc = 'Open filepath or jump to definition',
         },
     },
     highlights = {
-        FollowReferenceHighlight = { bg = 'darkest_grey' },
+        PathnavLocation = { bg = 'darkest_grey' },
     },
 }
