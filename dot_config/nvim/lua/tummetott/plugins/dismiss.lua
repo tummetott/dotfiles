@@ -2,7 +2,10 @@ return {
     'tummetott/dismiss.nvim',
     enabled = true,
     lazy = true,
+    ---@type dismiss.ConfigOptions
     opts = {
+        prefer_focused = false,
+        fallback_to_current = true,
         match = {
             filetypes = {
                 'trouble',
@@ -20,7 +23,7 @@ return {
                 return vim.fn.getcmdwintype() ~= ""
             end
         },
-        labels = {
+        picker = {
             hlgroup = 'DismissLabel',
         },
     },
@@ -32,6 +35,14 @@ return {
             end,
             mode = { 'n', 't' },
             desc = 'Dismiss window',
+        },
+        {
+            'g<c-q>',
+            function()
+                require('dismiss').pick()
+            end,
+            mode = { 'n', 't' },
+            desc = 'Pick window to close',
         },
     },
 }

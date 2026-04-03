@@ -11,10 +11,11 @@ return {
         target_window = {
             exclude = {
                 current = false,
-                filetypes = {},
+                filetypes = {
+                    'trouble',
+                },
                 buftypes = {
                     'help',
-                    'nofile',
                     'prompt',
                     'quickfix',
                     'terminal',
