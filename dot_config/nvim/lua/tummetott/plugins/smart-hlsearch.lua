@@ -45,6 +45,26 @@ return {
             expr = true,
         },
         {
+            'n',
+            function()
+                require('smart-hlsearch').activate()
+                return ('Nn'):sub(vim.v.searchforward + 1, vim.v.searchforward + 1)
+            end,
+            mode = { 'x', 'o' },
+            expr = true,
+            desc = 'Next search result',
+        },
+        {
+            'N',
+            function()
+                require('smart-hlsearch').activate()
+                return ('nN'):sub(vim.v.searchforward + 1, vim.v.searchforward + 1)
+            end,
+            mode = { 'x', 'o' },
+            expr = true,
+            desc = 'Prev search result',
+        },
+        {
             '*',
             function()
                 require('smart-hlsearch').activate()

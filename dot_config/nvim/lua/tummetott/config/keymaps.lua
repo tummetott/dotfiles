@@ -216,20 +216,6 @@ local maps = {
         rhs = '<C-i>',
         opts = { desc = 'Newer position in jump list' }
     },
-    -- Make `n` always move to the next match and `N` to the previous one,
-    -- independent of whether the search was started with `/` or `?`.
-    {
-        mode = { 'x', 'o' },
-        lhs = 'n',
-        rhs = '"Nn"[v:searchforward]',
-        opts = { expr = true, desc = 'Next search result' }
-    },
-    {
-        mode = { 'x', 'o' },
-        lhs = 'N',
-        rhs = '"nN"[v:searchforward]',
-        opts = { expr = true, desc = 'Prev search result' }
-    },
     -- Navigate command line history (prefix sensitive). When a completion menu
     -- is open, <C-n>/<C-p> are used by completion; otherwise they move through
     -- history.
