@@ -2,16 +2,15 @@ return {
     'tummetott/pathnav.nvim',
     enabled = true,
     lazy = true,
+    ---@type pathnav.ConfigOptions
     opts = {
         highlight = {
-            hlgroup = 'PathnavLocation',
-            clear_events = {
-                'CursorMoved',
-            },
+            hlgroup = 'PathnavReferenceText',
+            clear_events = { 'CursorMoved' },
         },
-        target = {
+        target_window = {
             exclude = {
-                current_win = true,
+                current = false,
                 filetypes = {},
                 buftypes = {
                     'help',
@@ -22,16 +21,21 @@ return {
                 },
                 condition = nil,
             },
+            prefer = {
+                matching_file = true,
+                last_target = false,
+            },
+            split = {
+                direction = 'right',
+                force = false,
+            },
         },
     },
     keys = {
         {
             '<c-]>',
             function()
-                if not require('pathnav').open({
-                    jump = true,
-                    highlight = true,
-                }) then
+                if not require('pathnav').open() then
                     vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
                 end
             end,
@@ -39,6 +43,6 @@ return {
         },
     },
     highlights = {
-        PathnavLocation = { bg = 'darkest_grey' },
+        PathnavReferenceText = { bg = 'darkest_grey' },
     },
 }
