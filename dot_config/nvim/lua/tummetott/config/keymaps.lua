@@ -64,25 +64,25 @@ local maps = {
         opts = { desc = 'Change word' }
     },
     {
-        mode = 'n',
+        mode = { 'n', 'x' },
         lhs = '<C-h>',
         rhs = '<C-w>h',
         opts = { desc = 'Jump to left window' }
     },
     {
-        mode = 'n',
+        mode = { 'n', 'x' },
         lhs = '<C-j>',
         rhs = '<C-w>j',
         opts = { desc = 'Jump to below window' }
     },
     {
-        mode = 'n',
+        mode = { 'n', 'x' },
         lhs = '<C-k>',
         rhs = '<C-w>k',
         opts = { desc = 'Jump to above window' }
     },
     {
-        mode = 'n',
+        mode = { 'n', 'x' },
         lhs = '<C-l>',
         rhs = '<C-w>l',
         opts = { desc = 'Jump to right window' }
