@@ -34,13 +34,11 @@ return {
     },
     keys = {
         {
-            '<c-]>',
+            'gf',
             function()
-                if not require('pathnav').open() then
-                    vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
-                end
+                require('pathnav').open()
             end,
-            desc = 'Open filepath or jump to definition',
+            desc = 'Jump to file under cursor',
         },
     },
     highlights = {
