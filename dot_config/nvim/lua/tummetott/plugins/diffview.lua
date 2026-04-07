@@ -77,9 +77,10 @@ return {
             end,
             diff_buf_win_enter = function(bufnr, winid, ctx)
                 -- Locally disable line wrap, list chars and relative numbers
-                vim.opt_local.wrap = false
-                vim.opt_local.list = false
-                vim.opt_local.relativenumber = false
+                vim.wo.foldlevel = 0
+                vim.wo.wrap = false
+                vim.wo.list = false
+                vim.wo.relativenumber = false
 
                 -- Disable scrollbar
                 local ok, scrollbar = pcall(require, 'scrollbar.utils')
