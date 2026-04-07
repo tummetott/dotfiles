@@ -4,7 +4,7 @@ return {
     enabled = true,
     version = '*', -- required with prebuilt binaries
     -- download prebuilt binaries from github releases
-    dependencies = 'saghen/blink.download',
+    dependencies = 'saghen/blink.lib',
 
     --- @module 'blink.pairs'
     --- @type blink.pairs.Config
@@ -48,6 +48,7 @@ return {
         debug = false,
     },
     highlights = {
-        BlinkPairsUnmatched = { bg = 'red' }
+        BlinkPairsUnmatched = { bg = 'red' },
+        BlinkPairsMatchParen = { link = 'MatchParen' },
     }
 }
