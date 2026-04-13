@@ -31,6 +31,16 @@ vim.keymap.set(
     { desc = 'Auto formatting' }
 )
 
+-- LSP references
+vim.keymap.set(
+    'n',
+    'grr',
+    function()
+        require 'telescope.builtin'.lsp_references()
+    end,
+    { desc = 'Goto references' }
+)
+
 -- List workspace folders
 vim.keymap.set(
     'n',

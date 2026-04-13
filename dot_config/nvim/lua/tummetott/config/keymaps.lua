@@ -157,7 +157,7 @@ local maps = {
             vim.cmd('echo ""')
             -- Clear pending highlights
             vim.lsp.buf.clear_references()
-            pcall(function() require('follow.highlight').clear() end)
+            pcall(function() require('pathnav.highlight').clear() end)
             pcall(function() require('illuminate').invisible_buf() end)
             -- Close attached floats
             local win = vim.api.nvim_get_current_win()
@@ -435,6 +435,12 @@ local maps = {
         lhs = '<esc>',
         rhs = '<esc>',
         opts = { desc = 'Esc passthrough' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>w',
+        rhs = '<cmd>%s/\\s\\+$//e<CR>',
+        opts = { desc = 'Trim trailing whitespaces' }
     },
 }
 
