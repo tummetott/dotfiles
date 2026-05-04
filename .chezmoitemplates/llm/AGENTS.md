@@ -5,9 +5,9 @@ Always reference files using paths relative to the most appropriate base:
 - **Anything else**: absolute — `/etc/nginx/nginx.conf`
 
 Allowed formats:
-- Whole file: `<path>`
-- Single line: `<path>:<line>`
-- Line range (inclusive): `<path>:<start>-<end>`
+- Whole file: `path`
+- Single line: `path:line`
+- Line range (inclusive): `path:start-end`
 
 ## Rules
 - Line numbers must never appear without the full file path.
