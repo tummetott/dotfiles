@@ -32,7 +32,8 @@ vim.lsp.enable({
     'copilot',
     'vtsls', -- typescript
     'gopls',
-    'sourcekit', -- swift
+    'sourcekit', -- swift lsp. Preinstalled on macos with xcode
+    'solidity_ls', -- vscode-solidity-server
 })
 
 -- Use the LspAttach event instead of overwriting vim.lsp.config's on_attach,
