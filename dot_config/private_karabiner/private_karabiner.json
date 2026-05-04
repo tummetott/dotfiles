@@ -41,7 +41,10 @@
                                 "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
                                 "to": [{ "key_code": "left_shift" }],
                                 "to_if_alone": [
-                                    { "key_code": "caps_lock" },
+                                    {
+                                        "hold_down_milliseconds": 200,
+                                        "key_code": "caps_lock"
+                                    },
                                     {
                                         "set_variable": {
                                             "name": "left_shift_pressed",
