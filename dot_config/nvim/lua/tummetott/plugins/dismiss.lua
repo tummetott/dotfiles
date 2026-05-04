@@ -41,7 +41,7 @@ return {
             function()
                 require('dismiss').pick()
             end,
-            mode = { 'n', 't' },
+            mode = { 'n' },
             desc = 'Pick window to close',
         },
     },

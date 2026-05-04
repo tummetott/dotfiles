@@ -21,9 +21,9 @@ table.insert(M, {
     -- This plugin does not necessarily need a call to setup
     config = function()
 
-        -- Note: `tree-sitter-cli` must be installed. However, we do not error
+        -- Note: `tree-sitter` must be installed. However, we do not error
         -- if this dependency is missing.
-        local has_cli = vim.fn.executable('tree-sitter-cli') == 1
+        local has_cli = vim.fn.executable('tree-sitter') == 1
         if has_cli then
             local treesitter = require('nvim-treesitter')
             treesitter.install({
@@ -43,14 +43,21 @@ table.insert(M, {
                 'typescript',
                 'yaml',
             })
+        else
+            vim.schedule(function()
+                vim.notify(
+                    'tree-sitter CLI not found — Treesitter parsers will not be installed',
+                    vim.log.levels.WARN
+                )
+            end)
         end
 
-        vim.api.nvim_create_autocmd("FileType", {
-            group = vim.api.nvim_create_augroup("TreesitterAttach", { clear = true }),
+        vim.api.nvim_create_autocmd('FileType', {
+            group = vim.api.nvim_create_augroup('TreesitterAttach', { clear = true }),
             desc = 'Auto enable treesitter for supported filetype',
             callback = function(ctx)
                 local ft = ctx.match
-                if ft == "bigfile" then
+                if ft == 'bigfile' then
                     return
                 end
 
@@ -62,12 +69,12 @@ table.insert(M, {
                 if not parser_name or not parser then return end
 
                 -- Enable treesitter syntax highlighting
-                if vim.treesitter.query.get(parser_name, "highlights") then
+                if vim.treesitter.query.get(parser_name, 'highlights') then
                     vim.treesitter.start(ctx.buf, parser_name)
                 end
 
                 -- Enable treesitter folding
-                if vim.treesitter.query.get(parser_name, "folds") then
+                if vim.treesitter.query.get(parser_name, 'folds') then
                     vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
                     vim.wo[0][0].foldmethod = 'expr'
                 end
