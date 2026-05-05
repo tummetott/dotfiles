@@ -27,19 +27,24 @@
     stripComponents = 1
     refreshPeriod = '168h'
 
+    # HACK: Only install if `tree-sitter` is not already available.
+    # The prebuilt release binaries require a newer glibc and do not run on
+    # some fuzzing servers. On those machines, remove this artifact and
+    # install manually via: cargo install tree-sitter-cli --locked
+    {{ if not (lookPath "tree-sitter") }}
     ['.local/bin/tree-sitter']
     type = 'archive-file'
     {{ $arch := .chezmoi.arch }}
     {{ if eq $arch "amd64" }}{{ $arch = "x64" }}{{ end }}
     {{ $os := .chezmoi.os }}
-    {{ if eq $os "darwin" }}{{ $os = "macos" }}
-    {{ end }}
+    {{ if eq $os "darwin" }}{{ $os = "macos" }}{{ end }}
     {{ $asset := printf "tree-sitter-cli-%s-%s.zip" $os $arch }}
     url = '{{ gitHubLatestReleaseAssetURL "tree-sitter/tree-sitter" $asset }}'
     extract = true
     path = 'tree-sitter'
     executable = true
     refreshPeriod = '168h'
+    {{ end }}
     {{ end }}
 
     {{ if .install.ghostty }}
@@ -208,8 +213,7 @@ refreshPeriod = '168h'
 type = 'archive-file'
 {{ $arch := .chezmoi.arch }}
 {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}
-{{ else if eq $arch "arm64" }}{{ $arch = "aarch64" }}
-{{ end }}
+{{ else if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
 {{ $asset := "" }}
 {{ if eq .chezmoi.os "darwin" }}
     {{ $asset = printf "tinty-%s-apple-darwin.tar.gz" $arch }}
@@ -233,8 +237,7 @@ refreshPeriod = "169h"
 ['.local/bin/mods']
 type = 'archive-file'
 {{ $arch := .chezmoi.arch }}
-{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}
-{{ end }}
+{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
 {{ $os := .chezmoi.os }}
 {{ if eq $os "darwin" }}{{ $os = "Darwin" }}
 {{ else if eq $os "linux" }}{{ $os = "Linux" }}
