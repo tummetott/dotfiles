@@ -1,3 +1,4 @@
+# vim: set ft=toml:
 default-scheme = "base16-catppuccin-frappe"
 shell = "bash -c '{}'"
 preferred-schemes = [
@@ -14,6 +15,7 @@ preferred-schemes = [
     "base16-one-light",
 ]
 
+{{ if not (or (env "SSH_CONNECTION") (env "SSH_CLIENT")) -}}
 [[items]]
 path = "https://github.com/tinted-theming/tinted-terminal"
 name = "tinted-wezterm"
@@ -71,3 +73,4 @@ command cp -f "$TINTY_THEME_FILE_PATH" ~/.config/ghostty/themes/tinted-theming
 killall -SIGUSR2 ghostty 2>/dev/null || true
 """
 supported-systems = ["base16", "base24"]
+{{- end }}
