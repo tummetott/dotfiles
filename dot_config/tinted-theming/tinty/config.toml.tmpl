@@ -1,18 +1,30 @@
 # vim: set ft=toml:
-default-scheme = "base16-catppuccin-frappe"
 shell = "bash -c '{}'"
-preferred-schemes = [
-    # Dark themes
-    "base16-catppuccin-frappe",
-    "base16-gruvbox-material-dark-medium",
+default-scheme = "base16-tomorrow-night-eighties"
+default-cycle-ring = "default"
+
+[[rings]]
+name = "default"
+schemes = [
     "base16-tomorrow-night-eighties",
+    "base16-github"
+]
+
+[[rings]]
+name = "dark"
+schemes = [
+    "base16-tomorrow-night-eighties",
+    "base16-gruvbox-material-dark-medium",
     "base16-gruvbox-dark-soft",
     "base16-decaf",
+    # "base16-catppuccin-frappe",
+]
 
-    # Light themes
-    "base16-catppuccin-latte",
+[[rings]]
+name = "light"
+schemes = [
     "base16-github",
-    "base16-one-light",
+    "base16-gruvbox-medium-light",
 ]
 
 {{ if not (or (env "SSH_CONNECTION") (env "SSH_CLIENT")) -}}
