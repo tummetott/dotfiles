@@ -29,11 +29,13 @@ fi
     {{ end }}
 {{ end }}
 
-{{ if or (eq .chezmoi.hostname "Void") (eq .chezmoi.hostname "Catch") -}}
+{{ if eq .chezmoi.hostname "Catch" -}}
 info 'Change dotfile repository from HTTPS to SSH'
-pushd "$HOME/.local/share/chezmoi"
-git remote set-url origin git@github.com:tummetott/dotfiles.git
-popd
+git -C "$HOME/.local/share/chezmoi" remote set-url origin git@github.com-private:tummetott/dotfiles.git
+{{ end -}}
+{{ if or (eq .chezmoi.hostname "Void") (eq .chezmoi.hostname "big-fuzz") (eq .chezmoi.hostname "fuzzy-bear") -}}
+info 'Change dotfile repository from HTTPS to SSH'
+git -C "$HOME/.local/share/chezmoi" remote set-url origin git@github.com:tummetott/dotfiles.git
 {{ end -}}
 
 compl 'Installation successful. You should reboot now!'
