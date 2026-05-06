@@ -4,8 +4,8 @@ return {
     lazy = true,
     ---@type dismiss.ConfigOptions
     opts = {
-        prefer_focused = false,
-        fallback_to_current = true,
+        prefer_focused = true,
+        fallback_to_current = false,
         match = {
             filetypes = {
                 'trouble',
@@ -18,9 +18,9 @@ return {
                 'sidekick_terminal',
                 'Outline',
             },
-            condition = function()
+            condition = function(win)
                 -- Match cmdwin (search / cmd history)
-                return vim.fn.getcmdwintype() ~= ""
+                return vim.fn.win_gettype(win) == "command"
             end
         },
         picker = {
