@@ -70,6 +70,11 @@ return {
         },
         hooks = {
             view_opened = function(view)
+                -- Hide the file browser for diffviews but not for history views
+                if (view.class:name() == 'DiffView') then
+                    vim.cmd('DiffviewToggleFiles')
+                end
+
                 -- Fix the cursor position in the file / commit panel
                 view.emitter:on("file_open_post", function()
                     focus_panel_selection(view)
