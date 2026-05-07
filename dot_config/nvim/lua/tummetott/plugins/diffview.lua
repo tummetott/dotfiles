@@ -77,23 +77,17 @@ return {
     keys = {
         {
             '<Leader>di',
-            function()
-                vim.cmd('DiffviewOpen --selected-file=' .. vim.fn.resolve(vim.fn.expand('%')))
-            end,
+            '<Cmd>DiffviewOpen --selected-file=%<CR>',
             desc = 'LOCAL against INDEX',
         },
         {
             '<Leader>dh',
-            function()
-                vim.cmd('DiffviewOpen HEAD --selected-file=' .. vim.fn.resolve(vim.fn.expand('%')))
-            end,
+            '<Cmd>DiffviewOpen HEAD --selected-file=%<CR>',
             desc = 'LOCAL against HEAD',
         },
         {
             '<Leader>ds',
-            function()
-                vim.cmd('DiffviewOpen HEAD --staged --selected-file=' .. vim.fn.resolve(vim.fn.expand('%')))
-            end,
+            '<Cmd>DiffviewOpen HEAD --staged --selected-file=%<CR>',
             desc = 'INDEX against HEAD',
         },
         {
