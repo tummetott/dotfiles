@@ -1,29 +1,3 @@
--- Move the file/history panel cursor to the current active file in the view.
--- This normalizes cursor placement after panel open/toggle so it lands on a
--- selectable entry (not header/context lines) in both DiffView and
--- FileHistoryView.
-local function focus_panel_selection(view)
-    view = view or require("diffview.lib").get_current_view()
-    local p = view and view.panel
-    if not p or not p:is_open() then return end
-
-    -- DiffView panel
-    if p.highlight_cur_file and p.cur_file then
-        p:highlight_cur_file()
-        return
-    end
-
-    -- FileHistoryView panel
-    if p.highlight_item and type(p.cur_file) == "function" then
-        local file = p:cur_file()
-        if file then
-            p:highlight_item(file)
-            return
-        end
-    end
-end
-
--- TODO: investigate how the fork performs
 return {
     'dlyongemallo/diffview.nvim',
     enabled = true,
@@ -34,20 +8,20 @@ return {
     end,
     opts = {
         file_panel = {
+            show = false,
             listing_style = 'list',
             win_config = {
                 position = 'bottom',
                 height = 12,
             },
         },
+        file_history_panel = {
+            show = true,
+        },
         use_icons = vim.g.nerdfonts,
         keymaps = {
             view = {
-                ['<C-s>'] = function()
-                    vim.cmd('DiffviewToggleFiles')
-                    -- Fix the cursor position in the file / commit panel
-                    focus_panel_selection()
-                end,
+                ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
                 ['<c-q>'] = function()
                     if require('dismiss').has_dismissable_win() then
                         require('dismiss').dismiss()
@@ -69,17 +43,6 @@ return {
             },
         },
         hooks = {
-            view_opened = function(view)
-                -- Hide the file browser for diffviews but not for history views
-                if (view.class:name() == 'DiffView') then
-                    vim.cmd('DiffviewToggleFiles')
-                end
-
-                -- Fix the cursor position in the file / commit panel
-                view.emitter:on("file_open_post", function()
-                    focus_panel_selection(view)
-                end)
-            end,
             diff_buf_win_enter = function(bufnr, winid, ctx)
                 -- Locally disable line wrap, list chars and relative numbers
                 vim.wo.foldlevel = 0
