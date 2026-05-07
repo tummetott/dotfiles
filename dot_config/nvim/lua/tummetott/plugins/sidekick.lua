@@ -78,6 +78,7 @@ return {
             },
             prompts = {
                 contained = 'Describe the current system state in a fully self-contained way, without referencing history or changes.',
+                explain = 'Describe this to a non-domain expert',
             },
         },
     },
@@ -146,9 +147,34 @@ return {
             mode = 'n', -- Insert mode mapping in blink.cmp
             desc = 'Clear Copilot Suggestion'
         },
+        -- HACK: workaround for this issue: https://github.com/folke/sidekick.nvim/issues/318
         {
             '<c-.>',
-            function() require('sidekick.cli').toggle({ filter = { installed = true } }) end,
+            function()
+                local Cli = require('sidekick.cli')
+                local State = require('sidekick.cli.state')
+
+                if not next(State.get({ attached = true, terminal = true })) then
+                    Cli.focus({ filter = { installed = true } })
+                    return
+                end
+
+                State.with(function(state)
+                    local t = state.terminal
+                    if not t then
+                        return
+                    end
+                    if t:is_open() then
+                        t:hide()
+                        return
+                    end
+                    t:show()
+                    vim.api.nvim_set_current_win(t.win)
+                end, {
+                    filter = { attached = true, terminal = true },
+                    focus = false,
+                })
+            end,
             desc = 'Sidekick Toggle',
             mode = { 'n', 't', 'i', 'x' },
         },
