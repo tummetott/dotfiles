@@ -9,35 +9,22 @@ return {
     end,
     opts = {
         nes = {
-            enabled = true,
-            trigger = {
-                -- Trigger 'next suggestion' when i accepted a previous
-                -- suggestion
-                events = {
-                    'User SidekickNesDone',
-                },
-            },
+            enabled = false,
         },
         cli = {
             picker = 'telescope',
             win = {
                 keys = {
                     prompt = {
-                        '<c-o>',
+                        '<c-i>',
                         'prompt',
                         mode = 't',
                         desc = 'insert prompt or context',
                     },
-                    buffers = {
-                        '<leader>fb',
-                        'buffers',
-                        mode = 'n',
-                        desc = 'open buffer picker',
-                    },
                     files = {
-                        '<leader>ff',
+                        '<c-;>',
                         'files',
-                        mode = 'n',
+                        mode = 't',
                         desc = 'open file picker',
                     },
                     stopinsert = false,
@@ -45,8 +32,15 @@ return {
                 }
             },
             prompts = {
-                contained = 'Describe the current system state in a fully self-contained way, without referencing history or changes.',
+                contained = 'Describe the current system state in a fully self-contained way, without referencing history or changes',
                 explain = 'Describe this to a non-domain expert',
+                buffers = false,
+                document = false,
+                file = false,
+                fixes = false,
+                changes = false,
+                line = false,
+                position = false,
             },
         },
     },
