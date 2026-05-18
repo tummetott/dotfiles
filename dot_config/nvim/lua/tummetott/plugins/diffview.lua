@@ -102,7 +102,7 @@ return {
         },
         {
             '<Leader>dl',
-            '<Cmd>DiffviewFileHistory --base=LOCAL %<CR>',
+            '<Cmd>DiffviewFileHistory --pin-local %<CR>',
             desc = 'LOCAL against history',
         },
     },
