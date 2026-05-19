@@ -34,6 +34,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Next search match'
         },
         {
             'N',
@@ -43,6 +44,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Previous search match'
         },
         {
             'n',
