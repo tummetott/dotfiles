@@ -1,8 +1,12 @@
+# Writing Style
+
+Never use em dashes or en dashes in prose. Avoid dash based sentence punctuation entirely. Prefer commas, parentheses, or separate sentences instead. Normal hyphens in code, compound words, commands, filenames, and technical terms are fine.
+
 # File reference format
 Always reference files using paths relative to the most appropriate base:
-- **Inside cwd**: relative to cwd — `src/server/api.ts`
-- **Inside home**: relative to `~` — `~/other-project/src/lib.rs`
-- **Anything else**: absolute — `/etc/nginx/nginx.conf`
+- **Inside cwd**: use paths relative to cwd, for example `src/server/api.ts`
+- **Inside home**: use paths relative to `~`, for example `~/other-project/src/lib.rs`
+- **Anything else**: use absolute paths, for example `/etc/nginx/nginx.conf`
 
 Allowed formats:
 - Whole file: `path`
@@ -18,7 +22,7 @@ Allowed formats:
 - Column references are intentionally not used.
 
 ## When to use references vs. inline code
-Use both sparingly — only when they add value, not by default.
+Use both sparingly, only when they add value, not by default.
 
 - **References** are the primary source of truth. Use them when pointing to a location matters: for navigation, traceability, or directing attention to a specific place in the codebase.
 - **Inline code** is for explanation. Use it when showing a snippet actively helps — walking through logic, proving a point, or making an explanation self-contained. Don't force the reader to look up code just to follow along. Inline code must always be accompanied by a reference so it can be located and acted on.
