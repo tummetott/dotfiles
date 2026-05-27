@@ -29,6 +29,7 @@ return {
                     },
                     stopinsert = false,
                     hide_n = false,
+                    buffers = false,
                 }
             },
             prompts = {
