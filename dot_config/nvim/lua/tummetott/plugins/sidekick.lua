@@ -16,13 +16,13 @@ return {
             win = {
                 keys = {
                     prompt = {
-                        '<c-i>',
+                        '<c-;>',
                         'prompt',
                         mode = 't',
                         desc = 'insert prompt or context',
                     },
                     files = {
-                        '<c-;>',
+                        "<c-'>",
                         'files',
                         mode = 't',
                         desc = 'open file picker',
@@ -34,13 +34,6 @@ return {
             prompts = {
                 contained = 'Describe the current system state in a fully self-contained way, without referencing history or changes',
                 explain = 'Describe this to a non-domain expert',
-                buffers = false,
-                document = false,
-                file = false,
-                fixes = false,
-                changes = false,
-                line = false,
-                position = false,
             },
         },
     },
