@@ -30,6 +30,7 @@ Library
 {{ if ne .chezmoi.hostname "Catch" }}
 .ssh/id_ed25519_srlabs
 .ssh/id_ed25519_srlabs.pub
+.config/git/config-srlabs
 {{ end }}
 
 {{ if and (ne .chezmoi.hostname "Void") (ne .chezmoi.hostname "Catch") }}
