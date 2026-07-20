@@ -13,7 +13,9 @@ Begin by helping the developer determine whether the application should be packa
 
 Only after the packaging model is clear should you add skills, MCP servers, hooks, project configuration, plugin manifests, marketplace metadata, or other agent-specific integration.
 
-## Workspace Packages
+## Choosing a Packaging Model
+
+### Workspace Packages
 
 A workspace package is defined and activated by the current repository.
 
@@ -23,7 +25,7 @@ Use a workspace package when the agentic application belongs to a specific repos
 
 Workspace packages are activated automatically when launching the agent from that repository.
 
-## Installable Packages
+### Installable Packages
 
 An installable package is defined independently of the current repository.
 
@@ -35,13 +37,41 @@ Use an installable package when the agentic application must be available outsid
 
 Installable packages are activated explicitly by the user and operate within the user's current working context.
 
-## Workspace Package Implementation
+## Agent Runtime Differences
 
-Use a workspace package when the agentic application belongs to a repository and should become available when a user starts an agent from that checkout.
+Claude Code and Codex package the same concepts differently because they discover and launch runtime components differently. Understanding these runtime differences explains why MCP server and hook registration differs between the two agents.
 
-### Package Layout
+### Path Resolution
 
-Use shared locations for implementation and agent-specific locations only for discovery and registration:
+Workspace packages execute from the repository that contains the package. The current working directory is the repository root, so repository relative paths resolve naturally. MCP servers and hooks can therefore be registered using paths relative to the current checkout.
+
+Installable packages execute from the user's current workspace, not from the plugin installation. The agent caches the installed plugin at an internal location that is not known at package authoring time, so repository relative paths no longer resolve to bundled files.
+
+Claude Code exposes the plugin installation directory through `${CLAUDE_PLUGIN_ROOT}`. Use this variable whenever an MCP server or hook must reference files bundled inside the plugin.
+
+Codex does not expose an equivalent plugin root variable. Bundled MCP servers and hooks must therefore be launched using either absolute paths resolved at installation time or executables that are available on the user's PATH.
+
+### Environment Variables
+
+Claude Code commonly launches MCP servers and hooks with the environment inherited from the Claude Code process. User defined environment variables are therefore available without additional registration.
+
+Codex does not automatically expose every environment variable to launched MCP servers. Whenever an MCP server reads a user provided environment variable, declare it explicitly using `env_vars` in the Codex MCP registration.
+
+For example:
+
+```json
+{
+  "env_vars": ["GITLAB_TOKEN"]
+}
+```
+
+`env_vars` declares the variable names to pass through from the launching environment. It does not declare, store, or supply their values.
+
+This applies to secrets, API keys, tokens, path overrides, and any other runtime environment variables that the MCP server expects to read.
+
+## Package Layouts
+
+For workspace packages, use shared locations for implementation and agent-specific locations only for discovery and registration:
 
 ```text
 .agents/
@@ -58,129 +88,33 @@ Use shared locations for implementation and agent-specific locations only for di
   settings.json                   # Claude project hooks and settings
 .codex/
   config.toml                     # Codex project MCP servers, hooks, and settings
-.mcp.json                         # Claude project MCP servers
+.mcp.json                         # shared project MCP servers, or Claude project MCP servers when Codex registration splits
+mcp/
+  <server-name>/
+    <server-files>                # workspace MCP implementation
 ```
 
-### Skills
-
-Create skills according to the `skill-creator` skill.
-
-Store each canonical skill under:
-
-```text
-.agents/skills/<skill-name>/
-```
-
-Codex discovers the canonical skill directly. Expose it to Claude Code through a repository-contained relative symlink:
-
-```text
-.claude/skills/<skill-name> -> ../../.agents/skills/<skill-name>
-```
-
-The symlink is part of the repository and resolves only within the checkout. Users do not create global symlinks.
-
-### MCP Servers
-
-Store each MCP implementation once in an agent-agnostic project location. Register it separately for each agent, using the same server name and repository-relative execution command.
-
-For Codex, define project MCP servers in `.codex/config.toml`:
-
-```toml
-[mcp_servers.<server-name>]
-command = "uv"
-args = ["run", "--project", ".", "<server-entrypoint>"]
-```
-
-For Claude Code, define the same server in `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "<server-name>": {
-      "command": "uv",
-      "args": ["run", "--project", ".", "<server-entrypoint>"]
-    }
-  }
-}
-```
-
-Commands must run the implementation from the current checkout and must not depend on globally installed copies of repository-owned code.
-
-### Hooks
-
-Store a hook inside a skill when the hook exists only for that skill:
-
-```text
-.agents/skills/<skill-name>/hooks/<hook-name>
-```
-
-Store a hook at the package level when the hook supports multiple skills, an MCP workflow, or a repository-wide policy:
-
-```text
-.agents/hooks/<hook-name>
-```
-
-These locations express implementation ownership. They do not activate the hook automatically. Activate hooks by registering the canonical hook path in each agent's project configuration. Use `.agents/hooks/<hook-name>` or `.agents/skills/<skill-name>/hooks/<hook-name>` as `<canonical-hook-path>` in the examples below.
-
-For Codex, register project hooks in `.codex/config.toml`:
-
-```toml
-[[hooks.PreToolUse]]
-matcher = "Bash"
-
-[[hooks.PreToolUse.hooks]]
-type = "command"
-command = './<canonical-hook-path>'
-timeout = 30
-statusMessage = "Running workspace hook"
-```
-
-For Claude Code, register project hooks in `.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./<canonical-hook-path>"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-## Installable Package Implementation
-
-Use an installable package when the agentic application must be available independently of its source checkout, including when it is used from other repositories or composed into larger workflows. Installable packages are implemented through the plugin systems of Claude Code and Codex.
-
-### Package Layout
-
-Create one self-contained plugin root for each installable package:
+For installable packages, create one self-contained plugin root:
 
 ```text
 plugins/
   <plugin-name>/                  # plugin package boundary
     .codex-plugin/
       plugin.json                 # Codex plugin manifest
-      mcp.json                    # Codex MCP registration
-      hooks.json                  # Codex hook registration
+    .codex/
+      config.toml                 # Codex plugin MCP servers, hooks, and settings
+    .claude/
+      settings.json               # Claude Code plugin hooks and settings
     .claude-plugin/
       plugin.json                 # Claude Code plugin manifest
-    .mcp.json                     # Claude Code MCP registration
+    .mcp.json                     # shared plugin MCP servers, or Claude Code MCP servers when Codex registration splits
     skills/
       <skill-name>/
         SKILL.md                  # package-owned skill body
     mcp/
       <server-name>/
-        ...                       # shared MCP implementation
+        <server-files>            # shared MCP implementation
     hooks/
-      hooks.json                  # Claude Code hook registration
       <hook-name>                 # shared hook implementation
 
 .agents/
@@ -199,17 +133,33 @@ plugins/<plugin-name>/
 
 Everything required at runtime must either be inside this boundary or be an explicitly declared external dependency. Use lowercase hyphen-case for plugin, skill, and MCP server identifiers. Keep the plugin directory name and the `name` in both plugin manifests identical.
 
+## Package Components
+
 ### Skills
 
-Store package-owned skills under:
+Create skills according to the `skill-creator` skill. Maintain each skill once.
+
+For workspace packages, store each canonical skill under:
+
+```text
+.agents/skills/<skill-name>/
+```
+
+Codex discovers the canonical skill directly. Expose it to Claude Code through a repository-contained relative symlink:
+
+```text
+.claude/skills/<skill-name> -> ../../.agents/skills/<skill-name>
+```
+
+The symlink is part of the repository and resolves only within the checkout. Users do not create global symlinks.
+
+For installable packages, store package-owned skills under:
 
 ```text
 plugins/<plugin-name>/skills/<skill-name>/
 ```
 
-Create skills according to the `skill-creator` skill. Maintain each skill once.
-
-Codex loads plugin skills from the path declared in `plugins/<plugin-name>/.codex-plugin/plugin.json`:
+Claude Code discovers plugin skills from this canonical directory. Declare the same skills directory in `plugins/<plugin-name>/.codex-plugin/plugin.json` so Codex loads plugin skills from that path:
 
 ```json
 {
@@ -217,137 +167,128 @@ Codex loads plugin skills from the path declared in `plugins/<plugin-name>/.code
 }
 ```
 
-Claude Code loads plugin skills from:
-
-```text
-plugins/<plugin-name>/skills/
-```
-
 ### MCP Servers
 
-Store a bundled MCP implementation under:
+Store each MCP implementation once in an agent-agnostic location, and keep the server name consistent across registrations.
+
+Claude Code and Codex both support the `.mcp.json` registration format. A shared registration is practical only when both agents can execute the same command unchanged. Packaged MCPs often do not meet this requirement because Claude Code supports `${CLAUDE_PLUGIN_ROOT}`, while Codex may require different command paths or explicit `env_vars`. Therefore, use `.mcp.json` for Claude Code and `.codex/config.toml` for Codex.
+
+For workspace packages, place the registration files and MCP implementation in the repository root:
 
 ```text
-plugins/<plugin-name>/mcp/<server-name>/
+.mcp.json
+.codex/config.toml
+mcp/<server-name>/
 ```
 
-Maintain the MCP implementation once, and register it separately for each agent. MCP launch registration is agent-specific because each agent resolves bundled plugin resources differently.
-
-Create the Claude Code MCP registration at:
+For installable packages, place the registration files under the plugin root and bundle the MCP implementation under `mcp/<server-name>/`:
 
 ```text
-plugins/<plugin-name>/.mcp.json
+plugins/<plugin-name>/
+|-- .mcp.json
+|-- .codex/
+|   `-- config.toml
+`-- mcp/
+    `-- <server-name>/
 ```
 
-Use `${CLAUDE_PLUGIN_ROOT}` when a Claude Code MCP command needs to address files bundled inside the plugin package:
+Claude Code registration:
 
 ```json
 {
-  "<server-name>": {
-    "command": "uv",
-    "args": ["run", "--project", "${CLAUDE_PLUGIN_ROOT}/mcp/<server-name>", "<server-entrypoint>"]
+  "mcpServers": {
+    "<server-name>": {
+      "command": "uv",
+      "args": ["run", "--project", "<project-path>", "<server-entrypoint>"]
+    }
   }
 }
 ```
 
-Create the Codex MCP registration at:
+Codex registration:
 
-```text
-plugins/<plugin-name>/.codex-plugin/mcp.json
+```toml
+[mcp_servers.<server-name>]
+command = "uv"
+args = ["run", "--project", "<project-path>", "<server-entrypoint>"]
+env_vars = ["GITLAB_TOKEN"]
 ```
 
-Codex MCP commands must be executable from the user's active workspace environment. Use a command available on `PATH`, or use an installation-generated absolute command path when the server is bundled inside the plugin package:
+Omit `env_vars` when the server does not read local environment variables.
 
-```json
-{
-  "<server-name>": {
-    "command": "<server-executable-on-path>",
-    "args": ["<server-arg>"]
-  }
-}
-```
-
-Declare the Codex MCP registration file in `plugins/<plugin-name>/.codex-plugin/plugin.json`:
-
-```json
-{
-  "mcpServers": "./.codex-plugin/mcp.json"
-}
-```
+Workspace packages may use relative paths because commands execute from the repository checkout. Installable Codex registrations cannot rely on relative paths because commands execute from the user's active workspace. Use either a command available on `PATH` or an installation-generated absolute command path. Claude Code registrations may instead use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files.
 
 ### Hooks
 
-Store bundled hook implementations under:
+Store each hook implementation once. Keep registration separate from implementation. Use the same command in both agent registrations only when both Claude Code and Codex can execute it unchanged.
+
+For workspace packages, store hooks according to ownership:
+
+```text
+.agents/skills/<skill-name>/hooks/<hook-name>
+.agents/hooks/<hook-name>
+```
+
+Hooks used by one skill belong to that skill. Hooks shared across skills, MCP workflows, or repository-wide policies belong under `.agents/hooks`.
+
+For installable packages, store bundled hook implementations under:
 
 ```text
 plugins/<plugin-name>/hooks/<hook-name>
 ```
 
-Maintain the hook implementation once, and register it separately for each agent. Hook launch registration is agent-specific because each agent resolves bundled plugin resources differently.
-
-Create the Claude Code hook registration at:
+Register hooks in each agent's configuration. For workspace packages, use the repository root configuration:
 
 ```text
-plugins/<plugin-name>/hooks/hooks.json
+.claude/settings.json
+.codex/config.toml
 ```
 
-Use `${CLAUDE_PLUGIN_ROOT}` when a Claude Code hook command needs to address files bundled inside the plugin package:
+For installable packages, use the plugin's configuration:
+
+```text
+plugins/<plugin-name>/.claude/settings.json
+plugins/<plugin-name>/.codex/config.toml
+```
+
+Workspace registrations may use relative paths because commands execute from the repository checkout. Installable Codex registrations cannot use relative paths to address bundled plugin files because commands execute from the user's active workspace. Use either a command available on `PATH` or an installation-generated absolute command path. Claude Code may instead use `${CLAUDE_PLUGIN_ROOT}` to locate bundled hook implementations.
+
+Codex registration:
+
+```toml
+[[hooks.PreToolUse]]
+matcher = "Bash"
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "<command>"
+timeout = 30
+statusMessage = "Running hook"
+```
+
+Claude Code registration:
 
 ```json
 {
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": ".*",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/<hook-name>",
-            "timeout": 30
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/<hook-name>"
           }
         ]
       }
     ]
   }
-}
-```
-
-Create the Codex hook registration at:
-
-```text
-plugins/<plugin-name>/.codex-plugin/hooks.json
-```
-
-Codex hook commands must be executable from the user's active workspace environment. Use a command available on `PATH`, or use an installation-generated absolute command path when the hook is bundled inside the plugin package:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "<hook-executable-on-path>",
-            "timeout": 30
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-Declare the Codex hook registration file in `plugins/<plugin-name>/.codex-plugin/plugin.json`:
-
-```json
-{
-  "hooks": "./.codex-plugin/hooks.json"
 }
 ```
 
 ### Plugin Manifests
+
+Create plugin manifests for installable packages.
 
 Create the Codex manifest at:
 
@@ -366,8 +307,6 @@ For example:
     "name": "<author-or-team>"
   },
   "skills": "./skills/",
-  "mcpServers": "./.codex-plugin/mcp.json",
-  "hooks": "./.codex-plugin/hooks.json",
   "interface": {
     "displayName": "<Plugin Display Name>",
     "shortDescription": "Short package description.",
@@ -397,9 +336,9 @@ For example:
 }
 ```
 
-### Marketplace
+### Marketplaces
 
-Publish the package through a Codex marketplace at:
+Publish installable packages through a Codex marketplace at:
 
 ```text
 .agents/plugins/marketplace.json
@@ -430,7 +369,7 @@ For example:
 }
 ```
 
-Publish the package through a Claude Code marketplace at:
+Publish installable packages through a Claude Code marketplace at:
 
 ```text
 .claude-plugin/marketplace.json
@@ -460,11 +399,11 @@ For example:
 
 Do not use names reserved for, or likely to be confused with, an official marketplace.
 
-## User Installation Instructions
+## Activation
 
-Every package should document how users activate it in the package README.
+Document package activation in the package README.
 
-For workspace packages, tell users to start the agent from the repository checkout. The package is discovered from the current checkout:
+For workspace packages, document that users start the agent from the repository checkout. The package is discovered from the current checkout:
 
 ```sh
 cd <repository>
@@ -476,14 +415,14 @@ cd <repository>
 codex
 ```
 
-For Claude Code installable packages, tell users to add the Claude Code marketplace manifest and install the plugin:
+For Claude Code installable packages:
 
 ```sh
 claude plugin marketplace add ./.claude-plugin/marketplace.json
 claude plugin install <plugin-name>@<marketplace-name>
 ```
 
-For Codex installable packages, tell users to add the repository or marketplace root that contains `.agents/plugins/marketplace.json`, then install the plugin:
+For Codex installable packages:
 
 ```sh
 codex plugin marketplace add ./
