@@ -49,7 +49,7 @@ Installable packages execute from the user's current workspace, not from the plu
 
 Claude Code exposes the plugin installation directory through `${CLAUDE_PLUGIN_ROOT}`. Use this variable whenever an MCP server or hook must reference files bundled inside the plugin.
 
-Codex does not expose an equivalent plugin root variable. Bundled MCP servers and hooks must therefore be launched using either absolute paths resolved at installation time or executables that are available on the user's PATH.
+Codex exposes `${PLUGIN_ROOT}` (and `${CLAUDE_PLUGIN_ROOT}` as a compatibility alias) for hook commands. Codex does not expand these variables for MCP server commands (a known bug). Bundled MCP server commands must therefore use either a command available on `PATH` or an absolute path.
 
 ### Environment Variables
 
@@ -59,10 +59,8 @@ Codex does not automatically expose every environment variable to launched MCP s
 
 For example:
 
-```json
-{
-  "env_vars": ["GITLAB_TOKEN"]
-}
+```toml
+env_vars = ["GITLAB_TOKEN"]
 ```
 
 `env_vars` declares the variable names to pass through from the launching environment. It does not declare, store, or supply their values.
@@ -102,9 +100,7 @@ plugins/
     .codex-plugin/
       plugin.json                 # Codex plugin manifest
     .codex/
-      config.toml                 # Codex plugin MCP servers, hooks, and settings
-    .claude/
-      settings.json               # Claude Code plugin hooks and settings
+      config.toml                 # Codex plugin MCP servers
     .claude-plugin/
       plugin.json                 # Claude Code plugin manifest
     .mcp.json                     # shared plugin MCP servers, or Claude Code MCP servers when Codex registration splits
@@ -115,7 +111,8 @@ plugins/
       <server-name>/
         <server-files>            # shared MCP implementation
     hooks/
-      <hook-name>                 # shared hook implementation
+      hooks.json                  # agent agnostic hook registration
+      <hook-name>                 # hook implementation
 
 .agents/
   plugins/
@@ -244,16 +241,11 @@ Register hooks in each agent's configuration. For workspace packages, use the re
 .codex/config.toml
 ```
 
-For installable packages, use the plugin's configuration:
+For installable packages, both agents use the plugin's `hooks/hooks.json`.
 
-```text
-plugins/<plugin-name>/.claude/settings.json
-plugins/<plugin-name>/.codex/config.toml
-```
+Workspace hook commands may use relative paths. Installable package hook commands cannot use relative paths because they execute from the user's active workspace. Both Claude Code and Codex resolve `${CLAUDE_PLUGIN_ROOT}` to the installed plugin root; use it to reference bundled hook implementations.
 
-Workspace registrations may use relative paths because commands execute from the repository checkout. Installable Codex registrations cannot use relative paths to address bundled plugin files because commands execute from the user's active workspace. Use either a command available on `PATH` or an installation-generated absolute command path. Claude Code may instead use `${CLAUDE_PLUGIN_ROOT}` to locate bundled hook implementations.
-
-Codex registration:
+Workspace Codex registration (`.codex/config.toml`):
 
 ```toml
 [[hooks.PreToolUse]]
@@ -266,7 +258,7 @@ timeout = 30
 statusMessage = "Running hook"
 ```
 
-Claude Code registration:
+`.claude/settings.json` (workspace Claude Code) and `hooks/hooks.json` (plugin, both agents) use the same JSON schema:
 
 ```json
 {
@@ -425,6 +417,6 @@ claude plugin install <plugin-name>@<marketplace-name>
 For Codex installable packages:
 
 ```sh
-codex plugin marketplace add ./
+codex plugin marketplace add ./.agents/plugins
 codex plugin add <plugin-name>@<marketplace-name>
 ```
