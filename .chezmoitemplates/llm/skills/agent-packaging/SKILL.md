@@ -124,6 +124,8 @@ plugins/<plugin-name>/
 
 Everything required at runtime must either be inside this boundary or be an explicitly declared external dependency. Use lowercase hyphen-case for plugin, skill, and MCP server identifiers. Keep the plugin directory name and the `name` in both plugin manifests identical.
 
+`.claude/settings.local.json` holds user-local trust gates and permission overrides. It must always be git-ignored and never committed to the repository.
+
 ## Package Components
 
 ### Skills
