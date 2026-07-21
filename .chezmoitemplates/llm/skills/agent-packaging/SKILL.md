@@ -85,11 +85,8 @@ For workspace packages, use shared locations for implementation and agent-specif
     <skill-name> -> ../../.agents/skills/<skill-name>  # Claude skill adapter
   settings.json                   # Claude project hooks and settings
 .codex/
-  config.toml                     # Codex project MCP servers, hooks, and settings
-.mcp.json                         # shared project MCP servers, or Claude project MCP servers when Codex registration splits
-mcp/
-  <server-name>/
-    <server-files>                # workspace MCP implementation
+  config.toml                     # Codex MCP servers and hooks (required when server reads env vars)
+.mcp.json                         # shared MCP servers, or Claude Code only when Codex registration splits
 ```
 
 For installable packages, create one self-contained plugin root:
@@ -103,13 +100,10 @@ plugins/
       config.toml                 # Codex plugin MCP servers
     .claude-plugin/
       plugin.json                 # Claude Code plugin manifest
-    .mcp.json                     # shared plugin MCP servers, or Claude Code MCP servers when Codex registration splits
+    .mcp.json                     # Claude Code MCP server registration
     skills/
       <skill-name>/
         SKILL.md                  # package-owned skill body
-    mcp/
-      <server-name>/
-        <server-files>            # shared MCP implementation
     hooks/
       hooks.json                  # agent agnostic hook registration
       <hook-name>                 # hook implementation
@@ -168,25 +162,28 @@ Claude Code discovers plugin skills from this canonical directory. Declare the s
 
 Store each MCP implementation once in an agent-agnostic location, and keep the server name consistent across registrations.
 
-Claude Code and Codex both support the `.mcp.json` registration format. A shared registration is practical only when both agents can execute the same command unchanged. Packaged MCPs often do not meet this requirement because Claude Code supports `${CLAUDE_PLUGIN_ROOT}`, while Codex may require different command paths or explicit `env_vars`. Therefore, use `.mcp.json` for Claude Code and `.codex/config.toml` for Codex.
+Split MCP registration whenever Codex requires agent-specific configuration. Use `.mcp.json` for Claude Code and `.codex/config.toml` for Codex.
 
-For workspace packages, place the registration files and MCP implementation in the repository root:
+Codex requires agent-specific configuration when:
+- The server reads environment variables (`env_vars` is Codex-only and has no equivalent in `.mcp.json`)
+- The server command path differs between agents (always the case for installable packages, since Codex does not expand `${CLAUDE_PLUGIN_ROOT}` in MCP commands)
+
+For workspace packages where the server reads no environment variables, a shared `.mcp.json` works for both agents. In all other cases, split.
+
+For workspace packages, place registration files at the repository root. Store the implementation in any agent-agnostic location within the repository:
 
 ```text
-.mcp.json
-.codex/config.toml
-mcp/<server-name>/
+.mcp.json          # shared, or Claude Code only when splitting
+.codex/config.toml # Codex only, required when server reads env vars
 ```
 
-For installable packages, place the registration files under the plugin root and bundle the MCP implementation under `mcp/<server-name>/`:
+For installable packages, always split. Place registration files at the plugin root. Store the implementation anywhere inside the plugin boundary:
 
 ```text
 plugins/<plugin-name>/
 |-- .mcp.json
-|-- .codex/
-|   `-- config.toml
-`-- mcp/
-    `-- <server-name>/
+`-- .codex/
+    `-- config.toml
 ```
 
 Claude Code registration:
@@ -213,7 +210,17 @@ env_vars = ["GITLAB_TOKEN"]
 
 Omit `env_vars` when the server does not read local environment variables.
 
-Workspace packages may use relative paths because commands execute from the repository checkout. Installable Codex registrations cannot rely on relative paths because commands execute from the user's active workspace. Use either a command available on `PATH` or an installation-generated absolute command path. Claude Code registrations may instead use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files.
+Workspace packages may use relative paths because commands execute from the repository checkout. Claude Code registrations for installable packages may use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files.
+
+Codex does not expand `${PLUGIN_ROOT}` or `${CLAUDE_PLUGIN_ROOT}` in MCP server commands (known bug). For Python MCP servers packaged with `uv`, the recommended workaround is to install the server as a `uv` tool during plugin installation. This links the server entry point into `uv`'s bin directory and makes it available as a plain command on `PATH`:
+
+```toml
+[mcp_servers.<server-name>]
+command = "<server-name>"
+env_vars = ["GITLAB_TOKEN"]
+```
+
+Document the `uv tool install` step in the plugin README alongside the other installation steps.
 
 ### Hooks
 
@@ -419,4 +426,10 @@ For Codex installable packages:
 ```sh
 codex plugin marketplace add ./.agents/plugins
 codex plugin add <plugin-name>@<marketplace-name>
+```
+
+If the plugin includes a Python MCP server installed as a `uv` tool, add the install step:
+
+```sh
+uv tool install <path-to-mcp-package>
 ```
