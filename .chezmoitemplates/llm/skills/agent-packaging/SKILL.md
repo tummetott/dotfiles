@@ -39,7 +39,7 @@ Installable packages are activated explicitly by the user and operate within the
 
 ## Agent Runtime Differences
 
-Claude Code and Codex package the same concepts differently because they discover and launch runtime components differently. Understanding these runtime differences explains why MCP server and hook registration differs between the two agents.
+Claude Code, Codex, and OpenCode package the same concepts differently because they discover and launch runtime components differently. Understanding these runtime differences explains why MCP server and hook registration differs between agents.
 
 ### Path Resolution
 
@@ -50,6 +50,8 @@ Installable packages execute from the user's current workspace, not from the plu
 Claude Code exposes the plugin installation directory through `${CLAUDE_PLUGIN_ROOT}`. Use this variable whenever an MCP server or hook must reference files bundled inside the plugin.
 
 Codex exposes `${PLUGIN_ROOT}` (and `${CLAUDE_PLUGIN_ROOT}` as a compatibility alias) for hook commands. Codex does not expand these variables for MCP server commands (a known bug). Bundled MCP server commands must therefore use either a command available on `PATH` or an absolute path.
+
+OpenCode has no unified installable package format. Skills, MCP servers, and event hooks are three independent subsystems with separate discovery and registration mechanisms. There is no single install command that bundles them together into one installable unit the way Claude Code and Codex plugins do. Global availability requires separate activation steps for each component, documented under Activation.
 
 ### Environment Variables
 
@@ -67,6 +69,22 @@ env_vars = ["GITLAB_TOKEN"]
 
 This applies to secrets, API keys, tokens, path overrides, and any other runtime environment variables that the MCP server expects to read.
 
+OpenCode does not automatically expose environment variables to launched MCP servers either. Declare each variable explicitly using the `environment` key in the MCP registration. Unlike Codex's `env_vars` which declares names only, `environment` takes key-value pairs. Use the `{env:VAR}` substitution syntax to pull values from the launching environment at runtime:
+
+```json
+"environment": {
+  "GITLAB_TOKEN": "{env:GITLAB_TOKEN}"
+}
+```
+
+### OpenCode Plugins vs. Agent Plugins
+
+The term "plugin" means different things across agents. In Claude Code and Codex, a plugin is an installable package that bundles agentic components such as skills, MCP servers, hooks, and other integrations with a manifest for discovery and installation.
+
+In OpenCode, a plugin is a JavaScript or TypeScript module that subscribes to runtime events such as `tool.execute.before` and `session.idle`. It is not a container for skills or MCP server registrations. OpenCode plugins implement behavior that would be expressed as declarative shell command hooks in Claude Code and Codex.
+
+This skill uses "plugin" to mean the Claude Code and Codex concept. Where OpenCode requires a plugin to implement equivalent hook behavior, that is noted explicitly.
+
 ## Package Layouts
 
 For workspace packages, use shared locations for implementation and agent-specific locations only for discovery and registration:
@@ -77,19 +95,23 @@ For workspace packages, use shared locations for implementation and agent-specif
     <skill-name>/
       SKILL.md                    # canonical skill body
       hooks/
-        <hook-name>               # hook implementation used only by this skill
+        <hook-name>               # skill-scoped hook
   hooks/
-    <hook-name>                   # workspace-level hook implementation
+    <hook-name>                   # shared hook
 .claude/
   skills/
-    <skill-name> -> ../../.agents/skills/<skill-name>  # Claude skill adapter
-  settings.json                   # Claude project hooks and settings
+    <skill-name> -> ../../.agents/skills/<skill-name>  # symlink to canonical skill
+  settings.json                   # Claude hook registration
 .codex/
-  config.toml                     # Codex MCP servers and hooks (required when server reads env vars)
-.mcp.json                         # shared MCP servers, or Claude Code only when Codex registration splits
+  config.toml                     # Codex MCP servers and hook registration
+.opencode/
+  plugins/
+    <hook-name>.ts                # OpenCode hook implementation
+.mcp.json                         # Claude Code MCP servers, shared with Codex when possible
+opencode.json                     # OpenCode project config
 ```
 
-For installable packages, create one self-contained plugin root:
+For installable packages, create one self-contained plugin root. OpenCode has no installable package model and is not part of this layout.
 
 ```text
 plugins/
@@ -105,7 +127,7 @@ plugins/
       <skill-name>/
         SKILL.md                  # package-owned skill body
     hooks/
-      hooks.json                  # agent agnostic hook registration
+      hooks.json                  # Claude Code and Codex hook registration
       <hook-name>                 # hook implementation
 
 .agents/
@@ -138,7 +160,7 @@ For workspace packages, store each canonical skill under:
 .agents/skills/<skill-name>/
 ```
 
-Codex discovers the canonical skill directly. Expose it to Claude Code through a repository-contained relative symlink:
+Codex and OpenCode discover the canonical skill directly from this location. Expose it to Claude Code through a repository-contained relative symlink:
 
 ```text
 .claude/skills/<skill-name> -> ../../.agents/skills/<skill-name>
@@ -160,26 +182,23 @@ Claude Code discovers plugin skills from this canonical directory. Declare the s
 }
 ```
 
+OpenCode has no installable package model. Skills cannot be bundled and installed the way Claude Code and Codex plugins can. See Activation for how to make OpenCode skills globally available.
+
 ### MCP Servers
 
 Store each MCP implementation once in an agent-agnostic location, and keep the server name consistent across registrations.
 
-Split MCP registration whenever Codex requires agent-specific configuration. Use `.mcp.json` for Claude Code and `.codex/config.toml` for Codex.
+Each agent uses its own registration format and file. OpenCode always requires a separate `opencode.json` entry because its command format and environment variable declaration differ from Claude Code and Codex. Claude Code and Codex can share a `.mcp.json` when the server reads no environment variables; add a separate `.codex/config.toml` whenever `env_vars` is needed or the command path differs.
 
-Codex requires agent-specific configuration when:
-- The server reads environment variables (`env_vars` is Codex-only and has no equivalent in `.mcp.json`)
-- The server command path differs between agents (always the case for installable packages, since Codex does not expand `${CLAUDE_PLUGIN_ROOT}` in MCP commands)
-
-For workspace packages where the server reads no environment variables, a shared `.mcp.json` works for both agents. In all other cases, split.
-
-For workspace packages, place registration files at the repository root. Store the implementation in any agent-agnostic location within the repository:
+For workspace packages, place registration files at the repository root:
 
 ```text
-.mcp.json          # shared, or Claude Code only when splitting
-.codex/config.toml # Codex only, required when server reads env vars
+.mcp.json          # Claude Code, or shared with Codex when no env vars are needed
+.codex/config.toml # Codex, when splitting from .mcp.json
+opencode.json      # OpenCode (mcp key alongside other project config)
 ```
 
-For installable packages, always split. Place registration files at the plugin root. Store the implementation anywhere inside the plugin boundary:
+For installable packages, Claude Code and Codex register at the plugin root. OpenCode has no installable package model; its global MCP registration is documented under Activation.
 
 ```text
 plugins/<plugin-name>/
@@ -188,7 +207,9 @@ plugins/<plugin-name>/
     `-- config.toml
 ```
 
-Claude Code registration:
+All three agents support relative paths for workspace packages because commands execute from the repository checkout.
+
+Claude Code registration (`.mcp.json`):
 
 ```json
 {
@@ -201,7 +222,7 @@ Claude Code registration:
 }
 ```
 
-Codex registration:
+Codex registration (`.codex/config.toml`):
 
 ```toml
 [mcp_servers.<server-name>]
@@ -210,11 +231,27 @@ args = ["run", "--project", "<project-path>", "<server-entrypoint>"]
 env_vars = ["GITLAB_TOKEN"]
 ```
 
-Omit `env_vars` when the server does not read local environment variables.
+Omit `env_vars` when the server does not read environment variables.
 
-Workspace packages may use relative paths because commands execute from the repository checkout. Claude Code registrations for installable packages may use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files.
+OpenCode registration (`opencode.json`):
 
-Codex does not expand `${PLUGIN_ROOT}` or `${CLAUDE_PLUGIN_ROOT}` in MCP server commands (known bug). For Python MCP servers packaged with `uv`, the recommended workaround is to install the server as a `uv` tool during plugin installation. This links the server entry point into `uv`'s bin directory and makes it available as a plain command on `PATH`:
+```json
+{
+  "mcp": {
+    "<server-name>": {
+      "type": "local",
+      "command": ["uv", "run", "--directory", "<project-path>", "<server-entrypoint>"],
+      "environment": {
+        "GITLAB_TOKEN": "{env:GITLAB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Omit `environment` when the server does not read environment variables.
+
+Claude Code registrations for installable packages may use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files. Codex does not expand `${PLUGIN_ROOT}` or `${CLAUDE_PLUGIN_ROOT}` in MCP server commands (known bug). For Python MCP servers packaged with `uv`, the recommended workaround is to install the server as a `uv` tool during plugin installation. This links the server entry point into `uv`'s bin directory and makes it available as a plain command on `PATH`:
 
 ```toml
 [mcp_servers.<server-name>]
@@ -226,9 +263,9 @@ Document the `uv tool install` step in the plugin README alongside the other ins
 
 ### Hooks
 
-Store each hook implementation once. Keep registration separate from implementation. Use the same command in both agent registrations only when both Claude Code and Codex can execute it unchanged.
+Claude Code and Codex share a declarative hook model: hooks are shell commands registered against agent events in configuration files, with implementations stored separately under `.agents/hooks/`. OpenCode has no equivalent declarative hook system. In OpenCode, hook-like behavior is expressed as a TypeScript module that subscribes to runtime events using OpenCode's plugin system.
 
-For workspace packages, store hooks according to ownership:
+Store shell hook implementations once, according to ownership:
 
 ```text
 .agents/skills/<skill-name>/hooks/<hook-name>
@@ -237,22 +274,16 @@ For workspace packages, store hooks according to ownership:
 
 Hooks used by one skill belong to that skill. Hooks shared across skills, MCP workflows, or repository-wide policies belong under `.agents/hooks`.
 
-For installable packages, store bundled hook implementations under:
+#### Claude Code and Codex
 
-```text
-plugins/<plugin-name>/hooks/<hook-name>
-```
-
-Register hooks in each agent's configuration. For workspace packages, use the repository root configuration:
+For workspace packages, register hooks in the repository root configuration:
 
 ```text
 .claude/settings.json
 .codex/config.toml
 ```
 
-For installable packages, both agents use the plugin's `hooks/hooks.json`.
-
-Workspace hook commands may use relative paths. Installable package hook commands cannot use relative paths because they execute from the user's active workspace. Both Claude Code and Codex resolve `${CLAUDE_PLUGIN_ROOT}` to the installed plugin root; use it to reference bundled hook implementations.
+For installable packages, store bundled implementations under `plugins/<plugin-name>/hooks/` and register them in the plugin's `hooks/hooks.json`. Workspace hook commands may use relative paths. Installable package hook commands must use `${CLAUDE_PLUGIN_ROOT}` because they execute from the user's active workspace, not the plugin installation directory. Both Claude Code and Codex resolve `${CLAUDE_PLUGIN_ROOT}` to the installed plugin root.
 
 Workspace Codex registration (`.codex/config.toml`):
 
@@ -267,7 +298,7 @@ timeout = 30
 statusMessage = "Running hook"
 ```
 
-`.claude/settings.json` (workspace Claude Code) and `hooks/hooks.json` (plugin, both agents) use the same JSON schema:
+`.claude/settings.json` (workspace) and `hooks/hooks.json` (installable package) use the same JSON schema:
 
 ```json
 {
@@ -287,9 +318,41 @@ statusMessage = "Running hook"
 }
 ```
 
+#### OpenCode
+
+Store the implementation in `.opencode/plugins/`. OpenCode discovers and loads all TypeScript and JavaScript files in that directory automatically on startup for workspace use. For global use, register the same file with `opencode plugin <path> --global`.
+
+A plugin subscribes to events by returning a hooks object from its exported function:
+
+```typescript
+import type { Plugin } from "@opencode-ai/plugin"
+
+export const MyHook: Plugin = async ({ client }) => {
+  return {
+    "tool.execute.before": async () => {
+      // hook logic here
+    },
+  }
+}
+```
+
+Available events include `tool.execute.before`, `tool.execute.after`, `session.idle`, `file.edited`, and others. The plugin receives a context object with `project`, `client`, `$` (Bun shell), `directory`, and `worktree`.
+
+Because the plugin is both the registration and the implementation, there is no separate shell script. If the hook logic is shared with Claude Code and Codex, store the shared implementation under `.agents/hooks/` as a shell script and invoke it from the OpenCode plugin using the Bun shell:
+
+```typescript
+export const MyHook: Plugin = async ({ $, directory }) => {
+  return {
+    "tool.execute.before": async () => {
+      await $`${directory}/.agents/hooks/<hook-name>`
+    },
+  }
+}
+```
+
 ### Plugin Manifests
 
-Create plugin manifests for installable packages.
+Create plugin manifests for installable packages. OpenCode has no plugin manifest format.
 
 Create the Codex manifest at:
 
@@ -404,16 +467,11 @@ Do not use names reserved for, or likely to be confused with, an official market
 
 Document package activation in the package README.
 
-For workspace packages, document that users start the agent from the repository checkout. The package is discovered from the current checkout:
+For workspace packages, document that users start the agent from the repository checkout. All agents discover the package from the current checkout:
 
 ```sh
 cd <repository>
-claude
-```
-
-```sh
-cd <repository>
-codex
+claude   # or: codex, opencode
 ```
 
 For Claude Code installable packages:
@@ -435,3 +493,18 @@ If the plugin includes a Python MCP server installed as a `uv` tool, add the ins
 ```sh
 uv tool install <path-to-mcp-package>
 ```
+
+OpenCode has no equivalent installable package format. Global activation requires separate steps for each component. Run these once from the cloned repository:
+
+```sh
+# skills
+ln -sfn "$(pwd)/.agents/skills/<skill-name>" ~/.config/opencode/skills/<skill-name>
+
+# MCP servers
+opencode mcp add <server-name> -- uv run --directory "$(pwd)/<server-path>" <server-entrypoint>
+
+# event hooks
+opencode plugin "$(pwd)/.opencode/plugins/<hook-name>.ts" --global
+```
+
+Repeat the skill and MCP steps for each skill and server in the package. Multiple packages can be installed independently; each command adds to the global configuration without replacing entries from other packages.
