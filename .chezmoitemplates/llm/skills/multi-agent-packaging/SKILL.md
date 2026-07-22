@@ -1,5 +1,5 @@
 ---
-name: agent-packaging
+name: multi-agent-packaging
 description: Use when deciding how an agentic application, including skills, MCP servers, hooks, and plugins, should be discovered, installed, and activated by CLI agents such as Claude Code, Codex, and OpenCode.
 ---
 
