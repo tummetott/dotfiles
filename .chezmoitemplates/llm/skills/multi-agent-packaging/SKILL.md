@@ -43,15 +43,17 @@ Claude Code, Codex, and OpenCode package the same concepts differently because t
 
 ### Path Resolution
 
-Workspace packages execute from the repository that contains the package. The current working directory is the repository root, so repository relative paths resolve naturally. MCP servers and hooks can therefore be registered using paths relative to the current checkout.
+Workspace packages run with the repository as the working directory, so repository-relative paths resolve correctly.
 
-Installable packages execute from the user's current workspace, not from the plugin installation. The agent caches the installed plugin at an internal location that is not known at package authoring time, so repository relative paths no longer resolve to bundled files.
+Installable packages carry no such guarantee. The agent caches the plugin at a location unknown at authoring time, and the runtime working directory is the user's workspace, not the plugin's canonical location. Repository-relative paths therefore might not resolve to the intended files.
 
-Claude Code exposes the plugin installation directory through `${CLAUDE_PLUGIN_ROOT}`. Use this variable whenever an MCP server or hook must reference files bundled inside the plugin.
+The default goal is running a bundled server from its canonical location. The canonical location is the authored source tree, so it is complete and current by construction. Any other runtime location is a derived copy, complete only as far as whatever process produced it and current only as of whatever last refreshed it, with gaps in either failing silently. Resolving back to canonical location removes this failure mode instead of requiring every install path to maintain a correct copy.
 
-Codex exposes `${PLUGIN_ROOT}` (and `${CLAUDE_PLUGIN_ROOT}` as a compatibility alias) for hook commands. Codex does not expand these variables for MCP server commands (a known bug). Bundled MCP server commands must therefore use either a command available on `PATH` or an absolute path.
+Claude Code supports this with `${CLAUDE_PLUGIN_ROOT}`, expanded in both hook and MCP server commands, letting a bundled server launch from its canonical location regardless of where the plugin was cached.
 
-OpenCode has no unified installable package format. Skills, MCP servers, and event hooks are three independent subsystems with separate discovery and registration mechanisms. There is no single install command that bundles them together into one installable unit the way Claude Code and Codex plugins do. Global availability requires separate activation steps for each component, documented under Activation.
+Codex defines the same variable (`${PLUGIN_ROOT}`, aliased as `${CLAUDE_PLUGIN_ROOT}`) but expands it only for hooks, not MCP server commands (a known bug). OpenCode provides no equivalent variable. On both, reaching canonical location for an MCP server command requires an absolute path.
+
+Where canonical location cannot be reached directly, a bundled server can still run from a copy, provided the copy is complete and current, for example one produced by a build step that packages the required files alongside the executable. Installing the command on `PATH` is a separate concern: it only affects how the agent finds the command, not where it runs from. An editable install keeps a `PATH` command pointing back at canonical location; a regular install backs it with a build copy, which works only if that copy carries the dependent files along. In each case, the burden shifts from resolving a path to guaranteeing a copy, a burden canonical-location execution avoids.
 
 ### Environment Variables
 
@@ -251,7 +253,7 @@ OpenCode registration (`opencode.json`):
 
 Omit `environment` when the server does not read environment variables.
 
-Claude Code registrations for installable packages may use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files. Codex does not expand `${PLUGIN_ROOT}` or `${CLAUDE_PLUGIN_ROOT}` in MCP server commands (known bug). For Python MCP servers packaged with `uv`, the recommended workaround is to install the server as a `uv` tool during plugin installation. This links the server entry point into `uv`'s bin directory and makes it available as a plain command on `PATH`:
+Claude Code registrations for installable packages may use `${CLAUDE_PLUGIN_ROOT}` to locate bundled files. Codex does not expand `${PLUGIN_ROOT}` or `${CLAUDE_PLUGIN_ROOT}` in MCP server commands (known bug). For Python MCP servers packaged with `uv`, the recommended workaround is to install the server as an editable `uv` tool during plugin installation. This links the server entry point into `uv`'s bin directory and makes it available as a plain command on `PATH`, while keeping the entry point's source location inside the plugin directory:
 
 ```toml
 [mcp_servers.<server-name>]
@@ -259,7 +261,13 @@ command = "<server-name>"
 env_vars = ["GITLAB_TOKEN"]
 ```
 
-Document the `uv tool install` step in the plugin README alongside the other installation steps.
+```sh
+uv tool install --editable <plugin-root>
+```
+
+Use `--editable`, not a regular install. A regular `uv tool install` builds and copies the package into an isolated tool environment, so any code that resolves its own location through `Path(__file__)` resolves inside that isolated environment instead of the plugin directory. An editable install keeps `__file__` pointing at the plugin's source tree, so bundled files remain reachable. See Path Resolution for the underlying rule.
+
+Document the `uv tool install --editable` step in the plugin README alongside the other installation steps. The same requirement applies to any OpenCode server distributed as a standalone installable tool rather than referenced by path; see the OpenCode note under Activation.
 
 ### Hooks
 
@@ -491,7 +499,7 @@ codex plugin add <plugin-name>@<marketplace-name>
 If the plugin includes a Python MCP server installed as a `uv` tool, add the install step:
 
 ```sh
-uv tool install <path-to-mcp-package>
+uv tool install --editable <path-to-mcp-package>
 ```
 
 OpenCode has no equivalent installable package format. Global activation requires separate steps for each component. Run these once from the cloned repository:
@@ -508,3 +516,10 @@ opencode plugin "$(pwd)/.opencode/plugins/<hook-name>.ts" --global
 ```
 
 Repeat the skill and MCP steps for each skill and server in the package. Multiple packages can be installed independently; each command adds to the global configuration without replacing entries from other packages.
+
+The MCP server command above reaches canonical location directly, through an absolute path. An MCP server can instead be installed onto `PATH`, which still reaches canonical location as long as the install is editable:
+
+```sh
+uv tool install --editable "$(pwd)/<server-path>"
+opencode mcp add <server-name> -- <server-entrypoint>
+```
