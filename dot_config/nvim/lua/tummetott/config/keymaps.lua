@@ -303,7 +303,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yd',
+        lhs = '<leader><space>d',
         rhs = function()
             vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
             echo_toggle('Diff', vim.o.diff)
@@ -312,7 +312,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yh',
+        lhs = '<leader><space>h',
         rhs = function()
             vim.o.hlsearch = not vim.o.hlsearch
             echo_toggle('Highlight search', vim.o.hlsearch)
@@ -321,7 +321,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yl',
+        lhs = '<leader><space>l',
         rhs = function()
             vim.o.list = not vim.o.list
             echo_toggle('Listchars', vim.o.list)
@@ -330,7 +330,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yn',
+        lhs = '<leader><space>n',
         rhs = function()
             vim.o.number = not vim.o.number
             echo_toggle('Line numbers', vim.o.number)
@@ -339,7 +339,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yr',
+        lhs = '<leader><space>r',
         rhs = function()
             vim.o.relativenumber = not vim.o.relativenumber
             echo_toggle('Relative numbers', vim.o.relativenumber)
@@ -348,7 +348,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>ys',
+        lhs = '<leader><space>s',
         rhs = function()
             vim.o.spell = not vim.o.spell
             echo_toggle('Spell check', vim.o.spell)
@@ -357,7 +357,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yt',
+        lhs = '<leader><space>t',
         rhs = function()
             vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
             echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
@@ -366,7 +366,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yv',
+        lhs = '<leader><space>v',
         rhs = function()
             vim.diagnostic.config {
                 virtual_text = not vim.diagnostic.config().virtual_text,
@@ -377,7 +377,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>yw',
+        lhs = '<leader><space>w',
         rhs = function()
             vim.o.wrap = not vim.o.wrap
             echo_toggle('Wrap', vim.o.wrap)

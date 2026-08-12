@@ -38,7 +38,7 @@ return {
     },
     keys = {
         {
-            '<leader>yc',
+            '<leader><space>c',
             function()
                 local reticle = require 'reticle'
                 reticle.toggle_cursorline()
@@ -47,7 +47,7 @@ return {
             desc = 'Toggle cursorline',
         },
         {
-            '<leader>yu',
+            '<leader><space>u',
             function()
                 local reticle = require 'reticle'
                 reticle.toggle_cursorcolumn()
@@ -56,7 +56,7 @@ return {
             desc = 'Toggle cursorcolumn',
         },
         {
-            '<leader>yx',
+            '<leader><space>x',
             function()
                 local reticle = require 'reticle'
                 reticle.toggle_cursorcross()

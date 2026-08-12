@@ -1,3 +1,4 @@
+-- TODO: migrate to v2 when ready
 return {
     'saghen/blink.cmp',
     enabled = true,
