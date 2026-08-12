@@ -124,6 +124,9 @@ return {
             { 'g,', desc = 'Next position in change list' },
             { 'a%', mode = { 'o', 'x' }, desc = 'matching pair' }, -- matchit plugin
             { '<leader><space>', group = 'Toggle option' },
+            { '<leader>c', mode = { 'n', 'x' }, group = 'Case' },
+            { '<leader>g', mode = { 'n', 'x' }, group = 'Git' },
+            { '<leader>j', mode = { 'n', 'x' }, group = 'Sidekick' },
         },
         show_help = true,
         show_key = true,
