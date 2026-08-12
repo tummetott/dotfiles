@@ -1,10 +1,12 @@
--- ISSUE: https://github.com/saghen/blink.pairs/issues/92
 return {
     'saghen/blink.pairs',
     enabled = true,
     version = '*', -- required with prebuilt binaries
     -- download prebuilt binaries from github releases
     dependencies = 'saghen/blink.lib',
+    build = function()
+        require('blink.pairs').download():pwait(60000)
+    end,
 
     --- @module 'blink.pairs'
     --- @type blink.pairs.Config
