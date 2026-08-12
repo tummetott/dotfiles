@@ -120,6 +120,6 @@ return {
         GitSignsAdd = { fg = 'green' },
         GitSignsDelete = { fg = 'red' },
         GitSignsChange = { fg = 'blue' },
-        GitSignsUntracked = { fg = 'dark_grey' },
+        GitSignsUntracked = { fg = 'dark_gray' },
     }
 }

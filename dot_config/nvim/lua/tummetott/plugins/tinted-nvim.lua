@@ -45,11 +45,11 @@ return {
     },
     highlights = {
         EndOfBuffer = { fg = 'background' },
-        Whitespace = { fg = 'dark_grey' },
-        NonText = { fg = 'darkest_grey' },
-        WinSeparator = { fg = 'dark_grey' },
+        Whitespace = { fg = 'dark_gray' },
+        NonText = { fg = 'darkest_gray' },
+        WinSeparator = { fg = 'dark_gray' },
         FloatBorder = { link = 'WinSeparator' },
-        Search = { bg = 'dark_grey' },
+        Search = { bg = 'dark_gray' },
         IncSearch = { bg = 'orange', fg = 'background' },
         CursorLineNr = { fg = 'brightest_white', bold = true },
         StatusLine = {},
@@ -59,7 +59,7 @@ return {
         DiffAdd = { bg = { darken = 'blue', amount = 0.7 } },
 
         -- Lazy has no explicit plugin spec, so this goes in here
-        LazyReasonCmd = { fg = 'dark_grey' },
+        LazyReasonCmd = { fg = 'dark_gray' },
         LazyReasonEvent = { link = 'LazyReasonCmd' },
         LazyReasonFt = { link = 'LazyReasonCmd' },
         LazyReasonImport = { link = 'LazyReasonCmd' },
@@ -70,8 +70,8 @@ return {
         LazyReasonSource = { link = 'LazyReasonCmd' },
         LazyReasonStart = { link = 'LazyReasonCmd' },
         LazySpecial = { fg = 'cyan' }, -- bullet points
-        LazyButton = { bg = 'darkest_grey' },
-        LazyButtonActive = { bg = 'grey' },
+        LazyButton = { bg = 'darkest_gray' },
+        LazyButtonActive = { bg = 'gray' },
         LazyH1 = { link = 'LazyButton' },
     }
 }

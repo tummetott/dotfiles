@@ -291,8 +291,8 @@ return {
     },
     highlights = {
         TroubleIndent = { link = 'NonText' },
-        TroubleIndentFoldOpen = { fg = 'grey' },
+        TroubleIndentFoldOpen = { fg = 'gray' },
         TroubleIndentFoldClosed = { link = 'TroubleIndentFoldOpen' },
-        TroubleCount = { fg = 'foreground', bg = 'darkest_grey', bold = false },
+        TroubleCount = { fg = 'foreground', bg = 'darkest_gray', bold = false },
     }
 }

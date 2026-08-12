@@ -86,7 +86,7 @@ return {
         { 'Y', 'y$', desc = 'Yank to end of line' },
     },
     highlights = {
-        YankyYanked = { bg = 'dark_grey' },
+        YankyYanked = { bg = 'dark_gray' },
         YankyPut = { link = 'YankyYanked' },
     }
 }

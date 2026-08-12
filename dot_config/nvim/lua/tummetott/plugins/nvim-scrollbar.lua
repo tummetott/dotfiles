@@ -29,14 +29,14 @@ return {
         set_highlights = false,
     },
     highlights = {
-        ScrollbarHandle = { fg = 'dark_grey' },
+        ScrollbarHandle = { fg = 'dark_gray' },
         ScrollbarError = { fg = 'red' },
-        ScrollbarErrorHandle = { fg = 'red', bg = 'dark_grey' },
+        ScrollbarErrorHandle = { fg = 'red', bg = 'dark_gray' },
         ScrollbarWarn = { fg = 'orange' },
-        ScrollbarWarnHandle = { fg = 'orange', bg = 'dark_grey' },
+        ScrollbarWarnHandle = { fg = 'orange', bg = 'dark_gray' },
         ScrollbarHint = { fg = 'yellow' },
-        ScrollbarHintHandle = { fg = 'yellow', bg = 'dark_grey' },
+        ScrollbarHintHandle = { fg = 'yellow', bg = 'dark_gray' },
         ScrollbarInfo = { fg = 'blue' },
-        ScrollbarInfoHandle = { fg = 'blue', bg = 'dark_grey' },
+        ScrollbarInfoHandle = { fg = 'blue', bg = 'dark_gray' },
     }
 }

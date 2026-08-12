@@ -126,8 +126,8 @@ return {
     },
     highlights = {
         SnacksDashboardHeader = { fg = 'blue' },
-        SnacksDashboardFooter = { fg = 'dark_grey' },
-        SnacksIndentScope = { fg = 'dark_grey' },
+        SnacksDashboardFooter = { fg = 'dark_gray' },
+        SnacksIndentScope = { fg = 'dark_gray' },
         SnacksInputBorder = { link = 'FloatBorder' },
     },
     keys = {

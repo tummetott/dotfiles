@@ -63,7 +63,7 @@ table.insert(M, {
     highlights = {
         -- Used for document highlight
         -- TODO: delete once added in tinted-nvim
-        LspReferenceText = { bg = 'dark_grey' },
+        LspReferenceText = { bg = 'dark_gray' },
         LspReferenceRead = { link = 'LspReferenceText' },
         LspReferenceWrite = { link = 'LspReferenceText' },
         LspSignatureActiveParameter = { link = 'LspReferenceText' },

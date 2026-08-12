@@ -6,13 +6,13 @@ local spinner = require('tummetott.plugins.heirline.spinner')
 M.align = { provider = '%=' }
 
 M.left_moon = {
-    { provider = '', hl = { fg = 'darkest_grey', bg = 'background' } },
+    { provider = '', hl = { fg = 'darkest_gray', bg = 'background' } },
     { provider = ' ' }
 }
 
 M.right_moon = {
     { provider = ' ' },
-    { provider = '', hl = { fg = 'darkest_grey', bg = 'background' } }
+    { provider = '', hl = { fg = 'darkest_gray', bg = 'background' } }
 }
 
 M.mode = {
@@ -592,8 +592,8 @@ M.statusline = {
         })
     end,
     hl = {
-        fg = 'bright_grey',
-        bg = 'darkest_grey',
+        fg = 'bright_gray',
+        bg = 'darkest_gray',
     },
     M.left_moon,
     {
@@ -807,8 +807,8 @@ M.special_winbar = {
 
 M.normal_winbar = {
     hl = {
-        fg = 'bright_grey',
-        bg = 'darkest_grey',
+        fg = 'bright_gray',
+        bg = 'darkest_gray',
     },
     M.left_moon,
     M.bufname,
@@ -840,7 +840,7 @@ M.tabline = {
         end,
     }),
     hl = {
-        fg = 'grey'
+        fg = 'gray'
     }
 }
 

@@ -42,6 +42,6 @@ return {
         },
     },
     highlights = {
-        PathnavReferenceText = { bg = 'darkest_grey' },
+        PathnavReferenceText = { bg = 'darkest_gray' },
     },
 }
