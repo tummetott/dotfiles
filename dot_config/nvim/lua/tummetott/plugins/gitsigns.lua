@@ -25,7 +25,7 @@ return {
     },
     init = function()
         require('which-key').add {
-            { "<Leader>g", group = "Git" }
+            { '<leader>g', mode = { 'n', 'x' }, group = 'Git' },
         }
     end,
     keys = {

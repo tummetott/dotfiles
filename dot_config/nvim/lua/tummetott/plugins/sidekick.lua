@@ -4,7 +4,7 @@ return {
     event = 'VeryLazy',
     init = function()
         require('which-key').add {
-            { '<Leader>j', group = 'Sidekick' }
+            { '<leader>j', mode = { 'n', 'x' }, group = 'Sidekick' },
         }
     end,
     opts = {

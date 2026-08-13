@@ -3,7 +3,7 @@ return {
     enabled = true,
     init = function()
         require('which-key').add {
-            { "<leader>c", group = "Case" },
+            { '<leader>c', mode = { 'n', 'x' }, group = 'Case' },
         }
     end,
     keys = {
