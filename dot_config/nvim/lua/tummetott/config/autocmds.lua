@@ -118,7 +118,7 @@ autocmd('BufEnter', {
     pattern = 'term://*',
     callback = function()
         if vim.bo.buftype == 'terminal'
-            and vim.bo.filetype ~= 'sidekick_terminal' then
+            and vim.bo.filetype ~= 'codecompanion_cli' then
             vim.cmd('startinsert')
         end
     end
