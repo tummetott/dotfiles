@@ -109,24 +109,10 @@ return {
             preset = 'default',
             ['<CR>'] = {
                 'accept', -- returns false if comp menu is not selected
-                function()
-                    local ok, sidekick = pcall(require, 'sidekick.nes')
-                    if ok and sidekick.have() then
-                        sidekick.apply()
-                        return true
-                    end
-                end,
                 'fallback',
             },
             ['<c-e>'] = {
                 'cancel',
-                function()
-                    local ok, sidekick = pcall(require, 'sidekick.nes')
-                    if ok and sidekick.have() then
-                        sidekick.clear()
-                        return true
-                    end
-                end,
                 'fallback',
             },
             ['<Tab>'] = {
