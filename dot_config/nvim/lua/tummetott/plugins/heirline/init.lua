@@ -48,19 +48,20 @@ return {
 
                     -- 1. disable for floating windows
                     local cfg = vim.api.nvim_win_get_config(win)
-                    if cfg.relative ~= "" then
+                    if cfg.relative ~= '' then
                         return true
                     end
 
                     -- 2. disable for specific buffers entirely
                     return require("heirline.conditions").buffer_matches({
                         filetype = {
-                            "snacks_dashboard",
-                            "TelescopePrompt",
-                            "TelescopeResults",
+                            'snacks_dashboard',
+                            'TelescopePrompt',
+                            'TelescopeResults',
+                            'codecompanion_cli',
                         },
                         buftype = {
-                            "prompt",
+                            'prompt',
                         },
                     }, args.buf)
                 end,
