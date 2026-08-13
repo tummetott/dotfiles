@@ -8,6 +8,21 @@ local cli_prompts = {
     tempfile = [[Write your most recent response, properly formatted as markdown, to a new temporary file. Reply with only that file's path, no other text.]],
 }
 
+-- Hides any visible CLI window, then focuses (or creates) the given agent's
+-- session, so only one CLI pane is ever visible at a time.
+local function switch_cli(agent)
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[buf].filetype == 'codecompanion_cli' then
+            vim.api.nvim_win_hide(win)
+        end
+    end
+    local cli = require('codecompanion.interactions.cli')
+    local instance = cli.find_by_agent(agent) or cli.create({ agent = agent })
+    instance.ui:open(cli_sizes[instance.bufnr])
+    instance:focus()
+end
+
 return {
     'olimorris/codecompanion.nvim',
     enabled = true,
@@ -206,21 +221,21 @@ return {
         {
             '<leader>lc',
             function()
-                require('codecompanion').cli({ agent = 'claude_code' })
+                switch_cli('claude_code')
             end,
             desc = 'Claude Code',
         },
         {
             '<leader>lx',
             function()
-                require('codecompanion').cli({ agent = 'codex' })
+                switch_cli('codex')
             end,
             desc = 'Codex',
         },
         {
             '<leader>lo',
             function()
-                require('codecompanion').cli({ agent = 'opencode' })
+                switch_cli('opencode')
             end,
             desc = 'OpenCode',
         },
