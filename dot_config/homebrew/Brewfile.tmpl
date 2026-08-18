@@ -117,10 +117,6 @@ brew "zellij"
 brew "zsh"
 {{- end }}
 
-{{- if .install.amphetamine }}
-mas "Amphetamine", id: 937984704
-{{- end }}
-
 {{- if .nerdfonts }}
 cask "font-fira-code-nerd-font"
 cask "font-meslo-lg-nerd-font"
@@ -130,36 +126,12 @@ cask "font-meslo-lg-nerd-font"
 cask "alacritty"
 {{- end }}
 
-{{- if .install.anki }}
-cask "anki"
-{{- end }}
-
-{{- if .install.appcleaner }}
-cask "appcleaner"
-{{- end }}
-
 {{- if .install.codex }}
 cask "codex"
 {{- end }}
 
-{{- if .install.chrome }}
-cask "google-chrome"
-{{- end }}
-
-{{- if .install.discord }}
-cask "discord"
-{{- end }}
-
 {{- if .install.docker }}
 cask "docker"
-{{- end }}
-
-{{- if .install.etcher }}
-cask "balenaetcher"
-{{- end }}
-
-{{- if .install.folx }}
-cask "folx"
 {{- end }}
 
 {{- if .install.ghostty }}
@@ -170,56 +142,12 @@ cask "ghostty"
 cask "iterm2"
 {{- end }}
 
-{{- if .install.jabref }}
-cask "jabref"
-{{- end }}
-
 {{- if .install.karabiner }}
 cask "karabiner-elements"
 {{- end }}
 
-{{- if .install.keka }}
-cask "keka"
-{{- end }}
-
 {{- if .install.kitty }}
 cask "kitty"
-{{- end }}
-
-{{- if .install.lulu }}
-cask "lulu"
-{{- end }}
-
-{{- if .install.magnet }}
-mas "Magnet", id: 441258766
-{{- end }}
-
-{{- if .install.seafile }}
-cask "seafile-client"
-{{- end }}
-
-{{- if .install.signal }}
-cask "signal"
-{{- end }}
-
-{{- if .install.sublime  }}
-cask "sublime-text"
-{{- end }}
-
-{{- if .install.texifier }}
-cask "texifier"
-{{- end }}
-
-{{- if .install.transmission }}
-cask "transmission"
-{{- end }}
-
-{{- if .install.typora }}
-cask "typora"
-{{- end }}
-
-{{- if .install.vlc }}
-cask "vlc"
 {{- end }}
 
 {{- if .install.wezterm }}
@@ -232,16 +160,4 @@ mas "WireGuard", id: 1451685025
 
 {{- if .install.wireshark }}
 cask "wireshark"
-{{- end }}
-
-{{- if .install.xld }}
-cask "xld"
-{{- end }}
-
-{{- if .install.yate }}
-cask "yate"
-{{- end }}
-
-{{- if .install.zoom }}
-cask "zoom"
 {{- end }}

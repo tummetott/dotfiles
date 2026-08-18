@@ -79,10 +79,6 @@ fi
     {{ template "bootstrap/alacritty.tmpl" . }}
 {{ end }}
 
-{{ if .install.signal }}
-    {{ template "bootstrap/signal.tmpl" . }}
-{{ end }}
-
 {{ if .install.neovim }}
     {{ template "bootstrap/neovim.tmpl" . }}
 {{ end }}
