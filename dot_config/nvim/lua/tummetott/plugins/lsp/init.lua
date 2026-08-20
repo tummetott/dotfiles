@@ -86,12 +86,13 @@ table.insert(M, {
     },
 })
 
+-- TODO: this errors if dependencies to build are LSP are not satisfied
 -- mason-tool-installer.nvim ensures the language servers used by
 -- 'vim.lsp.enable' above are installed via Mason. 'sourcekit' is intentionally
 -- left out since it isn't managed by Mason.
 table.insert(M, {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    enabled = true,
+    enabled = false,
     dependencies = { 'mason-org/mason.nvim' },
     opts = {
         ensure_installed = {
