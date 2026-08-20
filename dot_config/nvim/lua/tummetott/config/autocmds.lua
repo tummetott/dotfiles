@@ -112,18 +112,6 @@ autocmd({ 'BufWritePre' }, {
     end,
 })
 
--- Start insert mode when switching to a terminal buffer
-autocmd('BufEnter', {
-    group = group,
-    pattern = 'term://*',
-    callback = function()
-        if vim.bo.buftype == 'terminal'
-            and vim.bo.filetype ~= 'codecompanion_cli' then
-            vim.cmd('startinsert')
-        end
-    end
-})
-
 -- Disable diff highlights when in visual mode.
 autocmd('ModeChanged', {
     -- Entering any visual mode (\22 is visual block mode).
