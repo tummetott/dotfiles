@@ -12,26 +12,6 @@ set -euo pipefail
 trap on_error ERR
 source ~/.config/shell/env
 
-{{ if .platform.sudo }}
-if sudo -n true 2>/dev/null; then
-    info "Sudo credentials already cached."
-else
-    info "Requesting your password to enable sudo access..."
-    trap - ERR
-    set +e
-    sudo -v
-    rc=$?
-    set -e
-    trap on_error ERR
-    if [ "$rc" -ne 0 ]; then
-        error "Could not obtain sudo access. Aborting setup."
-        info "Tip: Set platform.sudo to false in \"~/.config/chezmoi/chezmoi.toml\" to skip sudo-dependent installs"
-        exit 1
-    fi
-    info "Sudo access granted and cached"
-fi
-{{ end }}
-
 {{ if .platform.apt }}
 info 'Upgrade and autoremove apt packages'
 
