@@ -11,7 +11,7 @@ source ~/.local/share/chezmoi/.script-helper
 set -euo pipefail
 trap on_error ERR
 
-{{ if and (eq .chezmoi.os "linux") .platform.gui }}
+{{ if eq .chezmoi.os "linux" }}
 {{ if .platform.sudo }}
 info 'Remap Caps Lock to Ctrl'
 
