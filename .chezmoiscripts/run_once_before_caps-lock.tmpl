@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+# This is a static remap: Caps Lock always behaves as Ctrl. It does not
+# replicate the tap-for-Esc/hold-for-Ctrl behavior configured for macOS in
+# dot_config/private_karabiner/private_karabiner.json. That dual behavior
+# would need a key remapping daemon instead of a udev hwdb rule, e.g. keyd
+# with "capslock = overload(control, esc)" in /etc/keyd/default.conf.
+
+source ~/.local/share/chezmoi/.script-helper
+set -euo pipefail
+trap on_error ERR
+
+{{ if and (eq .chezmoi.os "linux") .platform.gui }}
+{{ if .platform.sudo }}
+info 'Remap Caps Lock to Ctrl'
+
+sudo tee /etc/udev/hwdb.d/90-caps2ctrl.hwdb > /dev/null <<'EOF'
+evdev:atkbd:*
+ KEYBOARD_KEY_3a=leftctrl
+
+evdev:input:b0003v*p*e*
+ KEYBOARD_KEY_3a=leftctrl
+EOF
+
+log sudo systemd-hwdb update
+log sudo udevadm trigger
+{{ else }}
+warn 'Could not remap Caps Lock to Ctrl (missing sudo)'
+{{ end }}
+{{ end }}
