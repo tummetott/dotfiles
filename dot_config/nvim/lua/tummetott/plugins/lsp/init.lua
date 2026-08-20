@@ -29,7 +29,6 @@ vim.lsp.enable({
     'clangd',
     'rust_analyzer',
     'efm', -- Also install 'shellcheck'
-    'copilot',
     'vtsls', -- typescript
     'gopls',
     'sourcekit', -- swift lsp. Preinstalled on macos with xcode
@@ -71,8 +70,6 @@ table.insert(M, {
 })
 
 -- mason.nvim is the plugin manager for language servers
--- ISSUE: https://github.com/folke/lazydev.nvim/issues/136
--- FIX: :MasonInstall lua-language-server@3.16.4
 table.insert(M, {
     'mason-org/mason.nvim',
     enabled = true,
@@ -86,6 +83,28 @@ table.insert(M, {
         'MasonInstall',
         'MasonUninstall',
         'MasonUpdate',
+    },
+})
+
+-- mason-tool-installer.nvim ensures the language servers used by
+-- 'vim.lsp.enable' above are installed via Mason. 'sourcekit' is intentionally
+-- left out since it isn't managed by Mason.
+table.insert(M, {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    enabled = true,
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = {
+        ensure_installed = {
+            'lua-language-server', -- lua_ls
+            'pyright',
+            'clangd',
+            'rust-analyzer', -- rust_analyzer
+            'efm',
+            'shellcheck', -- used by efm
+            'vtsls', -- typescript
+            'gopls',
+            'vscode-solidity-server', -- solidity_ls
+        },
     },
 })
 
