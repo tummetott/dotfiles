@@ -61,6 +61,13 @@ while read -r line; do
 done < <(grep -vE '^\s*(#|$)' "$XDG_CONFIG_HOME/snap/Snapfile" | awk '!seen[$0]++')
 {{ end }}
 
+{{ if and (eq .chezmoi.os "linux") .platform.gui .platform.snap .install.alacritty }}
+if has alacritty; then
+    info 'Creating alacritty terminfo entry'
+    log sh -c "curl -fsSL https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info | sudo tic -xe alacritty,alacritty-direct -"
+fi
+{{ end }}
+
 {{ if .platform.brew }}
 load_brew_environment() {
     if [ -x /opt/homebrew/bin/brew ]; then
