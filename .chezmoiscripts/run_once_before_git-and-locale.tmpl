@@ -15,5 +15,9 @@ if ! has git; then
 fi
 
 info 'Generate locale'
+# Some images (e.g. Raspberry Pi OS) only enable a different default locale in
+# /etc/locale.gen, in which case 'locale-gen en_US.UTF-8' silently generates
+# nothing. Uncomment the line first so generation always includes it.
+log sudo sed -i 's/^# *\(en_US\.UTF-8 UTF-8\)/\1/' /etc/locale.gen
 log sudo locale-gen "en_US.UTF-8"
 {{ end }}
