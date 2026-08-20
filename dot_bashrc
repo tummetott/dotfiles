@@ -48,6 +48,10 @@ fi
 # Activate FZF
 if command -v fzf &> /dev/null; then
     eval "$(fzf --bash)"
+
+    # Remap fzf file widget to CTRL-g. Restore default bash CTRL-t
+    bind -x '"\C-g": fzf-file-widget'
+    bind '"\C-t": transpose-chars'
 fi
 
 # tinted-theming for fzf
