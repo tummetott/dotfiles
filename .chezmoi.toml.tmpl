@@ -193,9 +193,7 @@ tree = false
 {{- if $brew }}
 uv = false
 {{- end }}
-{{- /* TODO: the wezterm/wezterm-linuxbrew tap only ships an amd64 bottle
-    today; drop the arch restriction once it gains arm64 support. */}}
-{{- if and $gui (not $darwinVm) (or $darwinBrew (and $linuxBrew (eq .chezmoi.arch "amd64"))) }}
+{{- if and $gui (not $darwinVm) $darwinBrew }}
 wezterm = false
 {{- end }}
 {{- if $brew }}
