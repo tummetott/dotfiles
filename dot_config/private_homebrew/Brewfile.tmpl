@@ -151,11 +151,4 @@ cask "wezterm"
 {{- if .install.wireguard }}
 mas "WireGuard", id: 1451685025
 {{- end }}
-
-{{- else if eq .chezmoi.os "linux" }}
-
-{{- if .install.wezterm }}
-tap "wezterm/wezterm-linuxbrew", trusted: true
-brew "wezterm/wezterm-linuxbrew/wezterm"
-{{- end }}
 {{- end }}

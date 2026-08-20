@@ -59,9 +59,9 @@ chezmoi apply
 | ---------- | ------------------- | -------------------- | ------------------- | ----------------------------- |
 | Alacritty  | Yes                 | No (OpenGL error)      | Yes      | Yes         |
 | Ghostty    | Yes                 | Yes                   | Yes      | Yes |
-| WezTerm    | Yes                 | No (OpenGL error) | Yes [^1] | Yes [^1] |
-| Kitty      | Yes                 | No (OpenGL error)     | Not Tested | Not Tested |
+| WezTerm    | Yes                 | No (OpenGL error) | N/A [^1] | N/A [^1] |
+| Kitty      | Yes                 | No (OpenGL error)     | N/A [^1] | N/A [^1] |
 | iTerm2     | Yes                 | Yes        | N/A                  | N/A                            |
 
-[^1]: Only on amd64. The `wezterm/wezterm-linuxbrew` tap only packages an x86_64 bottle; expected to support arm64 eventually.
+[^1]: No Homebrew formula or snap package exists for Linux.
 
