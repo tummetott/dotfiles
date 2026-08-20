@@ -12,6 +12,11 @@
 # Source alias file
 [ -f "$XDG_CONFIG_HOME/shell/aliases" ] && source "$XDG_CONFIG_HOME/shell/aliases"
 
+# Init mise
+if command -v mise &> /dev/null; then
+    eval "$(mise activate bash)"
+fi
+
 # Remove macOS's "we now use zsh" warning at startup
 export BASH_SILENCE_DEPRECATION_WARNING=1
 

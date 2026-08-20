@@ -4,7 +4,13 @@
 - macOS: Get the latest system updates
 - macOS: Run `xcode-select --install` or install Xcode via AppStore
 - Ubuntu: Run `ibus-setup`. Go to Emoji tab and remove the `C-;` and `C-.` keymaps
-- Linux in VM on macOS: Go to `Settings` -> `Keyboard` and change the input source to `English (UK, Macintosh)`
+- Linux VM on macOS: Go to `Settings` -> `Keyboard` and change the input source to `English (UK, Macintosh)`
+- Linux without `snapd` preinstalled: If you want snap-packaged apps (e.g. `ghostty`), install and enable it manually first, since not every distro's `snapd` package auto-enables its systemd units the way Ubuntu's does:
+  ```sh
+  sudo apt install snapd
+  sudo systemctl enable --now snapd.apparmor
+  sudo systemctl enable --now snapd
+  ```
 
 ### Install
 
@@ -15,7 +21,7 @@ sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init tummetott
 
 Define what applications to install by editing the `chezmoi.toml` file
 ```sh
-vim ~/.config/chezmoi/chezmoi.toml
+vi ~/.config/chezmoi/chezmoi.toml
 ```
 
 Install dotfiles and applications (chezmoi not in PATH yet)
@@ -47,4 +53,15 @@ chezmoi apply
 
 ### Notes
 
-- `WezTerm` and `Kitty` do not run inside VMs because they require OpenGL. Use `Alacritty` instead.
+#### Terminal emulator compatibility
+
+| Terminal   | macOS (bare metal) | macOS (VM)          | Linux (bare metal) | Linux (VM)                  |
+| ---------- | ------------------- | -------------------- | ------------------- | ----------------------------- |
+| Alacritty  | Yes                 | No (OpenGL error)      | Yes      | Yes         |
+| Ghostty    | Yes                 | Yes                   | Yes      | Yes |
+| WezTerm    | Yes                 | No (OpenGL error) | Yes [^1] | Yes [^1] |
+| Kitty      | Yes                 | No (OpenGL error)     | Not Tested | Not Tested |
+| iTerm2     | Yes                 | Yes        | N/A                  | N/A                            |
+
+[^1]: Only on amd64. The `wezterm/wezterm-linuxbrew` tap only packages an x86_64 bottle; expected to support arm64 eventually.
+

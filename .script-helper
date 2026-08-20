@@ -4,6 +4,8 @@
 # functions. In order to use the functions, you must source this file in
 # another bash script
 
+mkdir -p "$(dirname "$BOOTSTRAP_LOG_FILE")"
+
 # Define color palette for colored output
 BOLD="$(tput bold 2>/dev/null || echo '')"
 RED="$(tput setaf 1 2>/dev/null || echo '')"
@@ -51,30 +53,4 @@ pushd () {
 
 popd () {
     command popd "$@" > /dev/null
-}
-
-download() {
-    url="$1"
-    dst="$2"
-
-    if has curl; then
-        cmd="curl --fail --silent --location --output $dst $url"
-    elif has wget; then
-        cmd="wget --quiet --output-document=$dst $url"
-    elif has fetch; then
-        cmd="fetch --quiet --output=$dst $url"
-    else
-        error "No HTTP download program (curl, wget, fetch) found"
-        return 1
-    fi
-    log $cmd
-}
-
-get_latest_from_github() {
-    repo="$1"
-    release="$2"
-    curl -Ls "https://api.github.com/repos/${repo}/releases/latest" \
-        | grep "\"browser_download_url\": .*${release}.*" \
-        | cut -d '"' -f 4 \
-        | xargs -n 1 curl -sSLO
 }

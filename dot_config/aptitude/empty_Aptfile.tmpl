@@ -1,111 +1,39 @@
-# Aptitude packages to install in this machine.
+# Apt packages to install on this machine.
 
-{{- if .install.bat }}
-bat
-{{- end }}
-
-{{- if .install.build_essential }}
+{{- if .platform.brew }}
 build-essential
+curl
+file
+git
+procps
 {{- end }}
 
-{{- if .install.cmake }}
-cmake
-{{- end }}
-
-{{- if .install.gnome_tweaks }}
+{{- if .platform.gui }}
 gnome-tweaks
-{{- end }}
-
-{{- if .install.go }}
-golang-go
 {{- end }}
 
 {{- if .install.iproute2 }}
 iproute2
 {{- end }}
 
-{{- if .install.kitty }}
-kitty
-{{- end }}
-
-{{- if .install.lf }}
-lfm
-{{- end }}
-
-{{- if .install.neofetch }}
-neofetch
+{{- if .install.wireguard }}
+wireguard
 {{- end }}
 
 {{ if .install.neovim }}
-# Nvim installed via .chezmoiextrernal
+build-essential
 
+{{- if .platform.gui }}
 # For X11
 xclip
 
 # For wayland
 wl-clipboard
 {{- end }}
-
-{{- if .install.ninja }}
-ninja-build
 {{- end }}
 
-{{- if .install.nmap }}
-nmap
-{{- end }}
-
-{{- if .install.node }}
-nodejs
-npm
-{{- end }}
-
-{{- if .install.perl }}
-perl
-{{- end }}
-
-{{- if .install.python }}
-python3
-python3-pip
-{{- end }}
-
-{{- if .install.ripgrep }}
-ripgrep
-{{- end }}
-
-{{- if .install.ruby }}
-ruby-full
-{{- end }}
-
-{{- if .install.shellcheck }}
-shellcheck
-{{- end }}
-
-{{- if contains "-vm" .osid }}
+{{- if and .platform.vm .platform.gui }}
 spice-vdagent
-{{- end }}
-
-{{- if .install.snap }}
-snapd
-{{- end }}
-
-{{- if .install.tldr }}
-{{- if regexMatch "^kali" .osid }}
-tealdeer
-{{- else }}
-tldr
-{{- end}}
-{{- end }}
-
-{{- if .install.tmux }}
-tmux
-{{- end }}
-
-{{- if .install.tree }}
-tree
-{{- end }}
-
-{{- if .install.wget }}
-wget
 {{- end }}
 
 {{- if .install.zsh }}

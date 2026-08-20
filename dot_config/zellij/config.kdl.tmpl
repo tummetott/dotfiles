@@ -215,7 +215,7 @@ web_client {
 }
 
 // Use a simplified UI without special fonts (arrow glyphs)
-{{- if .nerdfonts }}
+{{- if .platform.nerdfonts }}
 simplified_ui false
 {{- else }}
 simplified_ui true

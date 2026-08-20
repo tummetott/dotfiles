@@ -1,21 +1,32 @@
+[platform]
+distro = ""
+vm = false
+sudo = false
+gui = false
+apt = false
+brew = false
+snap = false
 fontsize = 17.0
 nerdfonts = false
-sudo = false
+
+[xdg]
+config_home = ""
+data_home = ""
+state_home = ""
+cache_home = ""
+log_file = ""
 
 [install]
 alacritty = false
 bat = false
 bottom = false
-build_essential = false
+claude = false
 cmake = false
 codex = false
 docker = false
 fd = false
-flatpak = false
-fnm = false
 fzf = false
 ghostty = false
-gnome_tweaks = false
 go = false
 iproute2 = false
 iterm2 = false
@@ -24,20 +35,17 @@ kitty = false
 lf = false
 lsd = false
 mods = false
-neofetch = false
 neovim = false
 ninja = false
 nmap = false
 node = false
 nushell = false
-perl = false
 python = false
 ripgrep = false
 ruby = false
 rust = false
 sd = false
 shellcheck = false
-snap = false
 starship = false
 tinty = false
 tldr = false
@@ -47,7 +55,5 @@ uv = false
 wezterm = false
 wget = false
 wireguard = false
-wireshark = false
-xclip = false
 zellij = false
 zsh = false

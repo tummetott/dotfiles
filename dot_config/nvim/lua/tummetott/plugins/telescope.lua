@@ -190,7 +190,7 @@ table.insert(M, {
 table.insert(M, {
     'nvim-telescope/telescope-fzf-native.nvim',
     enabled = true,
-    build = 'make',
+    build = 'make --silent',
     cond = vim.fn.executable('make') == 1,
     lazy = true,
     config = function()

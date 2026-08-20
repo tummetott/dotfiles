@@ -1,60 +1,89 @@
-# Macos packages are installed with brew
-{{ if eq .chezmoi.os "linux" }}
-    {{ if .nerdfonts }}
-    ['.local/share/fonts/FiraCode']
-    type = 'archive'
-    url = '{{ gitHubLatestReleaseAssetURL "ryanoasis/nerd-fonts" "FiraCode.tar.xz" }}'
-    extract = true
-    include = ['*.ttf']
-    refreshPeriod = '168h'
+# Packages with native Homebrew coverage are installed from the Brewfile.
+# The core tools below have no brew alternative on this machine, so they're
+# fetched directly from each project's own GitHub releases instead.
+{{ if not .platform.brew }}
+    {{ $rustArch := .chezmoi.arch }}
+    {{ if eq $rustArch "amd64" }}{{ $rustArch = "x86_64" }}{{ end }}
+    {{ if eq $rustArch "arm64" }}{{ $rustArch = "aarch64" }}{{ end }}
+    {{ $rustOS := "unknown-linux-musl" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $rustOS = "apple-darwin" }}{{ end }}
 
-    ['.local/share/fonts/Meslo']
-    type = 'archive'
-    url = '{{ gitHubLatestReleaseAssetURL "ryanoasis/nerd-fonts" "Meslo.tar.xz" }}'
-    extract = true
-    include = ['*.ttf']
+    {{ if .install.fzf }}
+    ['.local/bin/fzf']
+    type = 'archive-file'
+    {{ $asset := printf "fzf-*-%s_%s.tar.gz" .chezmoi.os .chezmoi.arch }}
+    url = '{{ gitHubLatestReleaseAssetURL "junegunn/fzf" $asset }}'
+    path = 'fzf'
+    executable = true
+    refreshPeriod = '168h'
+    {{ end }}
+
+    {{ if .install.lsd }}
+    ['.local/bin/lsd']
+    type = 'archive-file'
+    {{ $asset := printf "lsd-*-%s-%s.tar.gz" $rustArch $rustOS }}
+    url = '{{ gitHubLatestReleaseAssetURL "lsd-rs/lsd" $asset }}'
+    path = 'lsd'
+    stripComponents = 1
+    executable = true
     refreshPeriod = '168h'
     {{ end }}
 
     {{ if .install.neovim }}
     ['.local/share/nvim-app']
     type = 'archive'
+    {{ $os := "linux" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $os = "macos" }}{{ end }}
     {{ $arch := .chezmoi.arch }}
     {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ $asset := printf "nvim-linux-%s.tar.gz" $arch }}
+    {{ $asset := printf "nvim-%s-%s.tar.gz" $os $arch }}
     url = '{{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset }}'
-    extract = true
     stripComponents = 1
     refreshPeriod = '168h'
 
-    # HACK: Only install if `tree-sitter` is not already available.
-    # The prebuilt release binaries require a newer glibc and do not run on
-    # some fuzzing servers. On those machines, remove this artifact and
-    # install manually via: cargo install tree-sitter-cli --locked
-    {{ if not (lookPath "tree-sitter") }}
+    # nvim-treesitter needs the tree-sitter CLI on PATH to install parsers.
     ['.local/bin/tree-sitter']
     type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x64" }}{{ end }}
-    {{ $os := .chezmoi.os }}
-    {{ if eq $os "darwin" }}{{ $os = "macos" }}{{ end }}
+    {{ $os := "linux" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $os = "macos" }}{{ end }}
+    {{ $arch := "x64" }}
+    {{ if eq .chezmoi.arch "arm64" }}{{ $arch = "arm64" }}{{ end }}
     {{ $asset := printf "tree-sitter-cli-%s-%s.zip" $os $arch }}
     url = '{{ gitHubLatestReleaseAssetURL "tree-sitter/tree-sitter" $asset }}'
-    extract = true
     path = 'tree-sitter'
     executable = true
     refreshPeriod = '168h'
     {{ end }}
+
+    {{ if .install.ripgrep }}
+    ['.local/bin/rg']
+    type = 'archive-file'
+    {{ $asset := printf "ripgrep-*-%s-%s.tar.gz" $rustArch $rustOS }}
+    url = '{{ gitHubLatestReleaseAssetURL "BurntSushi/ripgrep" $asset }}'
+    path = 'rg'
+    stripComponents = 1
+    executable = true
+    refreshPeriod = '168h'
     {{ end }}
 
-    {{ if .install.ghostty }}
-    ['.local/bin/ghostty']
-    type = 'file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "Ghostty-*-%s.AppImage" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "pkgforge-dev/ghostty-appimage" $asset }}'
+    {{ if .install.starship }}
+    ['.local/bin/starship']
+    type = 'archive-file'
+    {{ $asset := printf "starship-%s-%s.tar.gz" $rustArch $rustOS }}
+    url = '{{ gitHubLatestReleaseAssetURL "starship/starship" $asset }}'
+    path = 'starship'
+    executable = true
+    refreshPeriod = '168h'
+    {{ end }}
+
+    {{ if .install.tinty }}
+    ['.local/bin/tinty']
+    type = 'archive-file'
+    {{ $tintyOS := "unknown-linux-gnu" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $tintyOS = "apple-darwin" }}{{ end }}
+    {{ $asset := printf "tinty-%s-%s.tar.gz" $rustArch $tintyOS }}
+    url = '{{ gitHubLatestReleaseAssetURL "tinted-theming/tinty" $asset }}'
+    path = 'tinty'
     executable = true
     refreshPeriod = '168h'
     {{ end }}
@@ -62,118 +91,30 @@
     {{ if .install.zellij }}
     ['.local/bin/zellij']
     type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "zellij-%s-unknown-linux-musl.tar.gz" $arch }}
+    {{ $zellijOS := "unknown-linux-musl" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $zellijOS = "apple-darwin" }}{{ end }}
+    {{ $asset := printf "zellij-%s-%s.tar.gz" $rustArch $zellijOS }}
     url = '{{ gitHubLatestReleaseAssetURL "zellij-org/zellij" $asset }}'
+    path = 'zellij'
     executable = true
-    path = "zellij"
-    refreshPeriod = "168h"
-    {{ end }}
-
-    {{ if .install.fd }}
-    ['.local/bin/fd']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "fd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "sharkdp/fd" $asset }}'
-    executable = true
-    path = "fd"
-    stripComponents = 1
-    refreshPeriod = "168h"
-    {{ end }}
-
-    {{ if .install.sd }}
-    ['.local/bin/sd']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "sd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "chmln/sd" $asset }}'
-    executable = true
-    path = "sd"
-    stripComponents = 1
-    refreshPeriod = "168h"
-    {{ end }}
-
-    {{ if .install.lsd }}
-    ['.local/bin/lsd']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "lsd-v*-%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "lsd-rs/lsd" $asset }}'
-    executable = true
-    path = "lsd"
-    stripComponents = 1
-    refreshPeriod = "168h"
-    {{ end }}
-
-    {{ if .install.bottom }}
-    ['.local/bin/btm']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "bottom_%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "ClementTsang/bottom" $asset }}'
-    executable = true
-    path = "btm"
-    refreshPeriod = "168h"
-    {{ end }}
-
-    {{ if .install.fzf }}
-    ['.local/bin']
-    type = 'archive'
-    {{ $asset := printf "fzf-*-linux_%s.tar.gz" .chezmoi.arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "junegunn/fzf" $asset }}'
-    extract = true
     refreshPeriod = '168h'
     {{ end }}
 
-    {{ if .install.nushell }}
-    ['.local/bin/nu']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "nu-*-%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "nushell/nushell" $asset }}'
-    path = "nu"
-    stripComponents = 1
-    executable = true
-    refreshPeriod = "168h"
-    {{ end }}
+    {{ if and .platform.gui .platform.nerdfonts }}
+    {{ $fontDir := ".local/share/fonts" }}
+    {{ if eq .chezmoi.os "darwin" }}{{ $fontDir = "Library/Fonts" }}{{ end }}
 
-    {{ if .install.fnm }}
-    ['.local/bin/fnm']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    # fnm has a confusing release naming scheme
-    {{ if eq $arch "amd64" }}{{ $arch = "linux" }}{{ end }}
-    {{ $asset := printf "fnm-%s.zip" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "Schniz/fnm" $asset }}'
-    executable = true
-    path = "fnm"
-    refreshPeriod = "168h"
-    {{ end }}
+    ['{{ $fontDir }}/FiraCode']
+    type = 'archive'
+    url = '{{ gitHubLatestReleaseAssetURL "ryanoasis/nerd-fonts" "FiraCode.tar.xz" }}'
+    include = ['*.ttf']
+    refreshPeriod = '168h'
 
-    {{ if .install.codex }}
-    ['.local/bin/codex']
-    type = 'archive-file'
-    {{ $arch := .chezmoi.arch }}
-    {{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-    {{ if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-    {{ $asset := printf "codex-%s-unknown-linux-musl.tar.gz" $arch }}
-    url = '{{ gitHubLatestReleaseAssetURL "openai/codex" $asset }}'
-    executable = true
-    path = 'codex-{{ $arch }}-unknown-linux-musl'
-    refreshPeriod = "168h"
+    ['{{ $fontDir }}/Meslo']
+    type = 'archive'
+    url = '{{ gitHubLatestReleaseAssetURL "ryanoasis/nerd-fonts" "Meslo.tar.xz" }}'
+    include = ['*.ttf']
+    refreshPeriod = '168h'
     {{ end }}
 {{ end }}
 
@@ -208,44 +149,9 @@ url = 'https://github.com/olets/zsh-transient-prompt.git'
 refreshPeriod = '168h'
 {{ end }}
 
-{{ if .install.tinty }}
-['.local/bin/tinty']
-type = 'archive-file'
-{{ $arch := .chezmoi.arch }}
-{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}
-{{ else if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
-{{ $asset := "" }}
-{{ if eq .chezmoi.os "darwin" }}
-    {{ $asset = printf "tinty-%s-apple-darwin.tar.gz" $arch }}
-{{ else if eq .chezmoi.os "linux" }}
-    {{ $asset = printf "tinty-%s-unknown-linux-gnu.tar.gz" $arch }}
-{{ end }}
-url = '{{ gitHubLatestReleaseAssetURL "tinted-theming/tinty" $asset }}'
-path = "tinty"
-executable = true
-refreshPeriod = "168h"
-{{ end }}
-
 {{ if .install.zellij }}
 ['.local/share/zellij/zjstatus.wasm']
 type = 'file'
 url = 'https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm'
 refreshPeriod = "169h"
-{{ end }}
-
-{{ if .install.mods }}
-['.local/bin/mods']
-type = 'archive-file'
-{{ $arch := .chezmoi.arch }}
-{{ if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end }}
-{{ $os := .chezmoi.os }}
-{{ if eq $os "darwin" }}{{ $os = "Darwin" }}
-{{ else if eq $os "linux" }}{{ $os = "Linux" }}
-{{ end }}
-{{ $asset := printf "mods_*_%s_%s.tar.gz" $os $arch }}
-url = '{{ gitHubLatestReleaseAssetURL "charmbracelet/mods" $asset }}'
-path = "mods"
-stripComponents = 1
-executable = true
-refreshPeriod = "168h"
 {{ end }}

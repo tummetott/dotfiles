@@ -5,11 +5,15 @@ source ~/.local/share/chezmoi/.script-helper
 set -euo pipefail
 trap on_error ERR
 
-# In Pi OS, the default swap size is only 100MB. Let's increase it to 2GB
-{{ if contains "raspberrypi" .osid }}
+# Raspberry Pi OS uses a small default swap size.
+{{ if eq .platform.distro "pi" }}
+    {{ if .platform.sudo }}
     info 'Increase swap size'
     log sudo dphys-swapfile swapoff
     log sudo sed -i 's/^CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2000/' /etc/dphys-swapfile
     log sudo dphys-swapfile setup
     log sudo dphys-swapfile swapon
+    {{ else }}
+    warn 'Could not increase swap size (missing sudo)'
+    {{ end }}
 {{ end }}

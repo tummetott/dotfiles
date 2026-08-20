@@ -58,6 +58,12 @@ require('lazy').setup {
     change_detection = {
         notify = false,
     },
+    headless = {
+        -- Headless syncs (e.g. the Homebrew postinstall hook) should be as
+        -- silent as possible
+        colors = false,
+        process = false,
+    },
     dev = {
         -- Directory where you store your local plugin projects
         path = '~/Projects',

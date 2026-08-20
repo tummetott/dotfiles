@@ -23,11 +23,13 @@ local config = {}
 -- config.term = 'wezterm'
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 ---@diagnostic disable-next-line: malformed-number
-config.font_size = {{ .fontsize }}
+config.font_size = {{ .platform.fontsize }}
 config.enable_tab_bar = false
 config.audible_bell = 'Disabled'
 config.color_scheme = current_tinty_scheme() or 'tokyonight'
 config.enable_kitty_keyboard = true
+-- Prevents GNOME from showing wezterm without a border and close/minimize buttons.
+config.enable_wayland = false
 config.debug_key_events = false
 config.keys = {
     -- Disable some default keymaps that collide with zellij.

@@ -1,0 +1,3 @@
+{{- if and (eq .platform.distro "pi") .install.neovim -}}
+{{ .chezmoi.homeDir }}/.local/share/nvim-app/bin/nvim
+{{- end -}}

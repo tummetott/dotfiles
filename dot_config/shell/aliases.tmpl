@@ -1,18 +1,17 @@
 #!/usr/bin/env sh
 # vim: set ft=bash:
 
-{{- if regexMatch "ubuntu|pop|raspberrypi|kali" .osid }}
-alias bat='batcat'
-alias btm='bottom'
-alias lf='lfm'
-alias wezterm='flatpak run org.wezfurlong.wezterm'
-{{- end }}
-
-{{- if contains "darwin" .osid }}
+{{- if eq .chezmoi.os "darwin" }}
 alias pwdf='finder-path'
 alias cdf='cd "$(finder-path)"'
 alias sudoedit='sudo -e'
 alias shutdown='shutdown -h'
+
+# Useful to compare with my own nvim config. Must be installed manually before
+alias chad='NVIM_APPNAME=chad nvim'
+alias astro='NVIM_APPNAME=astro nvim'
+alias lazy='NVIM_APPNAME=lazyvim nvim'
+alias ovim='NVIM_APPNAME=nvim-old nvim'
 {{- end }}
 
 if command -v lsd > /dev/null; then
@@ -52,15 +51,3 @@ alias cm='chezmoi'
 alias c='cd ~/.local/share/chezmoi'
 alias n='cd ~/.local/share/chezmoi/dot_config/nvim/lua/tummetott'
 alias p='cd ~/.local/share/nvim/lazy'
-
-{{- if contains "darwin" .osid }}
-
-# Useful to compare with my own nvim config. Must be installed manually before
-alias chad='NVIM_APPNAME=chad nvim'
-alias astro='NVIM_APPNAME=astro nvim'
-alias lazy='NVIM_APPNAME=lazyvim nvim'
-alias ovim='NVIM_APPNAME=nvim-old nvim'
-
-{{- end }}
-
-alias playground='cd ~/thesis/playground'

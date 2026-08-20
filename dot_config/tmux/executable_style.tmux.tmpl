@@ -49,7 +49,7 @@ tmux set -g pane-active-border-style fg="${dark_grey}",bg="${background}"
 # Set default colors for the line
 tmux set -g status-style "fg=${bright_grey},bg=${background}"
 
-{{- if .nerdfonts }}
+{{- if .platform.nerdfonts }}
 
 # All window tabs but the current
 tmux setw -g window-status-format "#[\
@@ -68,7 +68,7 @@ tmux set -g status-right "#[\
     bg=${background},fg=${red}]#{?#{!=:#{selection_present},}, im COPY MODE ,}#[\
     bg=${background},fg=${cyan}]#{?window_zoomed_flag, 󰍉 ZOOM ENABLED ,}#[\
     bg=${background},fg=${darkest_grey}]#[\
-{{- if contains "darwin" .osid }}
+{{- if eq .chezmoi.os "darwin" }}
     bg=${darkest_grey},fg=${bright_grey}]  #W   #(scutil --get ComputerName)   %H:%M  󰄷 #S #[\
 {{- else }}
     bg=${darkest_grey},fg=${bright_grey}]  #W   #h   %H:%M  󰄷 #S #[\
@@ -87,7 +87,7 @@ tmux setw -g window-status-current-format "#[bg=${darkest_grey},fg=${blue},bold]
 tmux set -g status-right "#[\
     bg=${background},fg=${red}]#{?#{!=:#{selection_present},}, Vim COPY MODE ,}#[\
     bg=${background},fg=${cyan}]#{?window_zoomed_flag, ZOOM ENABLED ,}#[\
-{{- if contains "darwin" .osid }}
+{{- if eq .chezmoi.os "darwin" }}
     bg=${darkest_grey},fg=${bright_grey}]  CMD: #W  HOST: #(scutil --get ComputerName)  TIME: %H:%M  SESSION: #S  ";
 {{- else }}
     bg=${darkest_grey},fg=${bright_grey}]  CMD: #W  HOST: #h  TIME: %H:%M  SESSION: #S  ";

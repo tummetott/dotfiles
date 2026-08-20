@@ -1,20 +1,70 @@
 # vim: set ft=toml:
-{{- $osid := .chezmoi.os }}
-{{- if eq $osid "darwin" }}
+{{- $sudo := promptBoolOnce . "platform.sudo" "Enable sudo-based setup?" true }}
+{{- $gui := promptBoolOnce . "platform.gui" "Install GUI applications?" true }}
+{{- $darwin := eq .chezmoi.os "darwin" }}
+{{- $linux := eq .chezmoi.os "linux" }}
+
+{{- $distro := .chezmoi.os }}
+{{- $vm := false }}
+
+{{- if $darwin }}
     {{- if output "system_profiler" "SPHardwareDataType" | regexMatch "Virtual" }}
-        {{- $osid = "darwin-vm" }}
+        {{- $vm = true }}
     {{- end }}
+
 {{- else if hasKey .chezmoi.osRelease "id" }}
     {{- if and (eq .chezmoi.osRelease.id "debian") (glob "/boot/config.txt") }}
-        {{- $osid = "raspberrypi" }}
+        {{- $distro = "pi" }}
     {{- else }}
-        {{- $osid = .chezmoi.osRelease.id }}
+        {{- $distro = .chezmoi.osRelease.id }}
     {{- end }}
+
     {{- if lookPath "systemd-detect-virt" }}
-        {{- if not (output "sh" "-c" "systemd-detect-virt || true" | trim | eq "none") }}
-            {{- $osid = printf "%s-vm" $osid }}
+        {{- if exec "systemd-detect-virt" "--quiet" }}
+            {{- $vm = true }}
         {{- end }}
     {{- end }}
+{{- end }}
+
+{{- $darwinVm := and $vm $darwin }}
+{{- $linuxVm := and $vm $linux }}
+
+{{- $apt := and
+    $sudo
+    $linux
+    (ne (lookPath "apt-get") "")
+}}
+
+{{- $snap := and $sudo $linux (ne (lookPath "snap") "") }}
+
+{{- $brew := and
+    (ne $distro "pi")
+    (or
+        (ne (lookPath "brew") "")
+        (and
+            $sudo
+            (or
+                $darwin
+                (and
+                    $linux
+                    (or
+                        (eq .chezmoi.arch "amd64")
+                        (eq .chezmoi.arch "arm64")
+                    )
+                )
+            )
+        )
+    )
+}}
+
+{{- $darwinBrew := and $darwin $brew }}
+{{- $linuxBrew := and $linux $brew }}
+
+{{- $fontsize := 13.0 }}
+{{- if $darwin }}
+{{- $fontsize = 17.0 }}
+{{- else if eq $distro "kali" }}
+{{- $fontsize = 12.0 }}
 {{- end }}
 
 encryption = "age"
@@ -34,198 +84,123 @@ XDG_CONFIG_HOME = "{{ .chezmoi.homeDir }}/.config"
 XDG_DATA_HOME = "{{ .chezmoi.homeDir }}/.local/share"
 XDG_STATE_HOME = "{{ .chezmoi.homeDir }}/.local/state"
 XDG_CACHE_HOME = "{{ .chezmoi.homeDir }}/.cache"
-BOOTSTRAP_LOG_FILE = "/tmp/chezmoi.log"
-
-[data]
-osid = {{ $osid | quote }}
-{{- if eq "darwin" $osid }}
-fontsize = 17.0
-{{- else if eq "darwin-vm" $osid }}
-fontsize = 21.0
-{{- else if regexMatch "ubuntu|pop" $osid }}
-fontsize = 13.0
-{{- else if contains "kali" $osid }}
-fontsize = 12.0
-{{- end }}
-nerdfonts = true
-sudo = true
+BOOTSTRAP_LOG_FILE = "{{ .chezmoi.homeDir }}/.local/state/chezmoi/bootstrap.log"
 
 [data.xdg]
 config_home = "{{ .chezmoi.homeDir }}/.config"
 data_home = "{{ .chezmoi.homeDir }}/.local/share"
 state_home = "{{ .chezmoi.homeDir }}/.local/state"
 cache_home = "{{ .chezmoi.homeDir }}/.cache"
+log_file = "{{ .chezmoi.homeDir }}/.local/state/chezmoi/bootstrap.log"
+
+[data.platform]
+distro = {{ $distro | quote }}
+vm = {{ $vm }}
+sudo = {{ $sudo }}
+gui = {{ $gui }}
+apt = {{ $apt }}
+brew = {{ $brew }}
+snap = {{ $snap }}
+nerdfonts = true
+fontsize = {{ $fontsize }}
 
 [data.install]
-{{- if contains "darwin" $osid }}
-alacritty = true
-bat = false
-bottom = false
-cmake = false
-codex = true
-docker = false
-fd = true
-fnm = false
+# Core terminal tools
 fzf = true
-ghostty = true
-go = false
-iproute2 = false
-iterm2 = true
-karabiner = true
-kitty = false
-lf = false
 lsd = true
-mods = true
-neofetch = false
 neovim = true
-ninja = false
-nmap = false
-node = false
-nushell = false
-perl = false
 ripgrep = true
-ruby = false
-rust = false
-sd = true
-shellcheck = false
 starship = true
 tinty = true
-tldr = true
-tmux = false
-tree = true
-uv = false
-wezterm = true
-wget = true
-wireguard = false
-wireshark = false
-xclip = false
 zellij = true
 zsh = true
-{{- end }}
 
-{{- if regexMatch "ubuntu|pop" $osid }}
-alacritty = true
-bat = false
-bottom = false
-build_essential = true
-cmake = false
-codex = true
-fd = true
-flatpak = false
-fnm = false
-fzf = true
-ghostty = false
-gnome_tweaks = false
-go = false
-iproute2 = true
-kitty = false
-lf = false
-lsd = true
-mods = true
-neofetch = false
-neovim = true
-ninja = false
-nmap = false
-node = false
-nushell = false
-perl = false
-python = false
-ripgrep = true
-ruby = false
-rust = false
-sd = false
-shellcheck = false
-snap = false
-starship = true
-tinty = true
-tldr = true
-tmux = false
-tree = true
-uv = false
-wezterm = true
-wget = true
-zellij = true
-zsh = true
+# Everything else, only available through specific package managers
+{{- if and $gui (not $darwinVm) (or $darwinBrew $snap) }}
+alacritty = false
 {{- end }}
-
-{{- if contains "kali" $osid }}
-alacritty = true
+{{- if $brew }}
 bat = false
-bottom = false
-build_essential = true
-cmake = false
-codex = true
-fd = true
-flatpak = true
-fnm = false
-fzf = true
-ghostty = false
-gnome_tweaks = false
-go = false
-iproute2 = true
-kitty = false
-lf = false
-lsd = true
-mods = false
-neofetch = false
-neovim = true
-ninja = false
-nmap = false
-node = false
-nushell = false
-perl = false
-python = false
-ripgrep = true
-ruby = false
-rust = false
-sd = false
-shellcheck = false
-snap = false
-starship = true
-tinty = true
-tldr = true
-tmux = false
-tree = true
-uv = false
-wezterm = true
-wget = true
-zellij = true
-zsh = true
 {{- end }}
-
-{{- if contains "raspberrypi" $osid }}
-bat = false
+{{- if $brew }}
 bottom = false
-build_essential = false
+{{- end }}
+{{- if $brew }}
+claude = false
+{{- end }}
+{{- if $brew }}
 cmake = false
+{{- end }}
+{{- if $brew }}
 codex = false
+{{- end }}
+{{- if and $darwinBrew $gui }}
+docker = false
+{{- end }}
+{{- if $brew }}
 fd = false
-fnm = false
-fzf = true
+{{- end }}
+{{- if and $gui (or $darwinBrew $snap) }}
+ghostty = true
+{{- end }}
+{{- if $brew }}
 go = false
-iproute2 = true
+{{- end }}
+iproute2 = false
+{{- if and $darwinBrew $gui }}
+iterm2 = false
+{{- end }}
+{{- if and $darwinBrew (not $vm) $gui }}
+karabiner = true
+{{- end }}
+{{- if and $darwinBrew $gui }}
+kitty = false
+{{- end }}
+{{- if $brew }}
 lf = false
-lsd = true
+{{- end }}
+{{- if $brew }}
 mods = false
-neofetch = false
-neovim = true
+{{- end }}
+{{- if $brew }}
 ninja = false
+{{- end }}
+{{- if $brew }}
 nmap = false
+{{- end }}
 node = false
+{{- if $brew }}
 nushell = false
-perl = false
+{{- end }}
 python = false
-ripgrep = false
 ruby = false
 rust = false
+{{- if $brew }}
 sd = false
+{{- end }}
+{{- if $brew }}
 shellcheck = false
-starship = false
+{{- end }}
+{{- if $brew }}
 tldr = false
+{{- end }}
+{{- if $brew }}
 tmux = false
+{{- end }}
+{{- if $brew }}
 tree = false
+{{- end }}
+{{- if $brew }}
 uv = false
+{{- end }}
+{{- /* TODO: the wezterm/wezterm-linuxbrew tap only ships an amd64 bottle
+    today; drop the arch restriction once it gains arm64 support. */}}
+{{- if and $gui (not $darwinVm) (or $darwinBrew (and $linuxBrew (eq .chezmoi.arch "amd64"))) }}
+wezterm = false
+{{- end }}
+{{- if $brew }}
 wget = false
-zellij = true
-zsh = true
+{{- end }}
+{{- if or $linux (and $darwinBrew $gui) }}
+wireguard = false
 {{- end }}

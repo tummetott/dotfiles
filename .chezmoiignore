@@ -1,9 +1,7 @@
 **/.DS_Store
 
-{{ if not (contains "darwin" .osid) }}
-Library
-.config/homebrew
-.config/iterm2
+{{ if ne .chezmoi.os "darwin" }}
+Library/Preferences/com.googlecode.iterm2.plist
 .config/karabiner
 .config/shell/functions/clean-clipboard
 .config/shell/functions/finder-path
@@ -15,15 +13,21 @@ Library
 .local/share/scripts/enable-ftp-server
 .local/share/scripts/enable-network-ds-store-files
 .local/share/scripts/enable-ssh-server
-{{ else }}
-.config/nushell
 {{ end }}
 
-{{ if not (regexMatch "ubuntu|pop|raspberrypi|kali" .osid) }}
+{{ if not .platform.brew }}
+.config/homebrew
+{{ end }}
+
+{{ if not .platform.apt }}
 .config/aptitude
 {{ end }}
 
-{{ if not (eq "raspberrypi" .osid ) }}
+{{ if not .platform.snap }}
+.config/snap
+{{ end }}
+
+{{ if ne .platform.distro "pi" }}
 .ssh/authorized_keys
 {{ end }}
 
