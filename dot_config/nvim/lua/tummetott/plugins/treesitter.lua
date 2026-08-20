@@ -73,8 +73,13 @@ table.insert(M, {
                     vim.treesitter.start(ctx.buf, parser_name)
                 end
 
-                -- Enable treesitter folding
-                if vim.treesitter.query.get(parser_name, 'folds') then
+                -- Enable treesitter folding. Skip windows already in diff
+                -- mode: diffview.nvim relies on 'foldmethod' being 'diff' to
+                -- keep both sides of a diff folded in sync, and FileType can
+                -- refire while a buffer is still shown in a diff window
+                -- (e.g. diffview's internal BufReadPost re-emission),
+                -- clobbering that back to treesitter's own per-side folds.
+                if vim.treesitter.query.get(parser_name, 'folds') and not vim.wo.diff then
                     vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
                     vim.wo[0][0].foldmethod = 'expr'
                 end
