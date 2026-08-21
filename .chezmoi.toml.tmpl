@@ -12,7 +12,7 @@
 {{- $vm := false }}
 
 {{- if $darwin }}
-    {{- if output "system_profiler" "SPHardwareDataType" | regexMatch "Virtual" }}
+    {{- if eq (trim (output "sysctl" "-n" "kern.hv_vmm_present")) "1" }}
         {{- $vm = true }}
     {{- end }}
 
