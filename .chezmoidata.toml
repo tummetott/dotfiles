@@ -8,6 +8,7 @@ brew = false
 snap = false
 fontsize = 17.0
 nerdfonts = false
+hostname = ""
 
 [xdg]
 config_home = ""

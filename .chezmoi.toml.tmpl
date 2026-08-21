@@ -3,6 +3,10 @@
 {{- $gui := promptBoolOnce . "platform.gui" "Install GUI applications?" true }}
 {{- $darwin := eq .chezmoi.os "darwin" }}
 {{- $linux := eq .chezmoi.os "linux" }}
+{{- $hostname := "" }}
+{{- if $sudo }}
+    {{- $hostname = promptStringOnce . "platform.hostname" "Computer name (leave blank to skip renaming)" "" }}
+{{- end }}
 
 {{- $distro := .chezmoi.os }}
 {{- $vm := false }}
@@ -98,6 +102,9 @@ distro = {{ $distro | quote }}
 vm = {{ $vm }}
 sudo = {{ $sudo }}
 gui = {{ $gui }}
+{{- if $hostname }}
+hostname = {{ $hostname | quote }}
+{{- end }}
 apt = {{ $apt }}
 brew = {{ $brew }}
 snap = {{ $snap }}

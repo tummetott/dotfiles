@@ -6,6 +6,13 @@ set -euo pipefail
 trap on_error ERR
 
 {{ if eq .chezmoi.os "darwin" }}
+{{ if .platform.hostname }}
+info 'Set computer name'
+sudo scutil --set ComputerName {{ .platform.hostname | quote }}
+sudo scutil --set LocalHostName {{ .platform.hostname | quote }}
+sudo scutil --set HostName {{ .platform.hostname | quote }}
+{{ end }}
+
 info 'Configure macOS settings'
 
 # Disable startup chime
