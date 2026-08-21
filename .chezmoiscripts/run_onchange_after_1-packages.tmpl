@@ -72,7 +72,7 @@ info 'Installing formulas from Brewfile'
 brew bundle --file="$XDG_CONFIG_HOME/homebrew/Brewfile"
 {{ end }}
 
-{{ if or .install.ruby .install.rust .install.node .install.python }}
+{{ if or .install.ruby .install.rust .install.node .install.python .install.go }}
 if ! has mise; then
     info 'Installing mise'
     log sh -c "curl -fsSL https://mise.run | sh"
