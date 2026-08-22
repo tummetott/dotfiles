@@ -75,19 +75,9 @@ return {
             mode = { 'n', 't', 'i', 'x' },
         },
         {
-            '<leader>lc',
-            function() require('sidekick.cli').toggle({ name = 'claude', focus = true }) end,
-            desc = 'Claude Code',
-        },
-        {
-            '<leader>lx',
-            function() require('sidekick.cli').toggle({ name = 'codex', focus = true }) end,
-            desc = 'Codex',
-        },
-        {
-            '<leader>lo',
-            function() require('sidekick.cli').toggle({ name = 'opencode', focus = true }) end,
-            desc = 'OpenCode',
+            '<leader>la',
+            function() require('sidekick.cli').select() end,
+            desc = 'Agent',
         },
         {
             '<leader>lr',
