@@ -95,6 +95,28 @@ return {
         })
     end,
     opts = {
+        adapters = {
+            http = {
+                -- Needs apple-on-device API. See:
+                -- https://github.com/gety-ai/apple-on-device-openai
+                apple_on_device = function()
+                    return require('codecompanion.adapters').extend('openai_compatible', {
+                        formatted_name = 'Apple On-Device',
+                        env = {
+                            api_key = 'not-needed',
+                            url = 'http://127.0.0.1:11535',
+                            chat_url = '/v1/chat/completions',
+                            models_endpoint = '/v1/models',
+                        },
+                        schema = {
+                            model = {
+                                default = 'apple-on-device',
+                            },
+                        },
+                    })
+                end,
+            },
+        },
         display = {
             diff = {
                 enabled = false,

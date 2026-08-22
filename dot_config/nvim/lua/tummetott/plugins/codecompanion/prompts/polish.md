@@ -8,6 +8,9 @@ opts:
   modes:
     - v
   placement: replace
+  adapter:
+    name: apple_on_device
+    model: apple-on-device
 ---
 
 ## system
