@@ -51,6 +51,10 @@ brew "nmap"
 brew "nushell"
 {{- end }}
 
+{{- if .install.pi }}
+brew "pi-coding-agent"
+{{- end }}
+
 {{- if .install.ripgrep }}
 brew "ripgrep"
 {{- end }}

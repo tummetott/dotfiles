@@ -41,6 +41,7 @@ ninja = false
 nmap = false
 node = false
 nushell = false
+pi = false
 python = false
 ripgrep = false
 ruby = false
