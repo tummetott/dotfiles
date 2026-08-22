@@ -353,7 +353,7 @@ M.venv = {
 
 M.revision = {
     condition = function()
-        return require 'tummetott.utils'.is_loaded('diffview.nvim') and
+        return require 'tummetott.utils'.is_loaded('diffview-plus.nvim') and
             require 'diffview.lib'.get_current_view()
     end,
     static = {
@@ -396,32 +396,56 @@ M.revision = {
 
 M.bufname = {
     static = {
-        oil_icon = vim.g.nerdfonts and ' ' or ''
+        oil_icon = vim.g.nerdfonts and ' ' or '',
+        -- Path aliases: buffers under `path` are displayed as
+        -- `alias/<path relative to path>` instead of the full path.
+        path_aliases = {
+            {
+                path = vim.fn.expand(
+                    '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Perlite/'),
+                alias = 'Perlite',
+                icon = vim.g.nerdfonts and ' ' or '',
+                icon_color = '#7C3AED',
+            },
+        },
     },
     init = function(self)
         local bufname = vim.api.nvim_buf_get_name(0)
-        local ft = vim.bo.filetype
         if bufname == '' then
-            self.bufname = '[No File]'
-            self.icon = ''
+            self.bufname, self.icon = '[No File]', ''
             return
-        elseif ft == 'oil' then
+        end
+
+        local kind = vim.bo.filetype == 'oil' and 'oil' or 'file'
+        if kind == 'oil' then
             bufname = bufname:gsub('^oil://', '')
-            self.bufname = vim.fn.fnamemodify(bufname, ':~')
-            self.icon = self.oil_icon
-            self.icon_color = '#e68805'
-            return
         elseif bufname:match('^diffview://') then
             if bufname == 'diffview://null' then
-                self.bufname = '[Empty Diffview]'
-                self.icon = ''
+                self.bufname, self.icon = '[Empty Diffview]', ''
                 return
             end
-            bufname = bufname:gsub('^diffview://', '')
-            bufname = bufname:gsub('%.git/[^/]+/', '')
+            bufname = bufname:gsub('^diffview://', ''):gsub('%.git/[^/]+/', '')
         end
-        self.bufname = vim.fn.fnamemodify(bufname, ':~:.')
-        if vim.g.nerdfonts then
+
+        self.bufname = vim.fn.fnamemodify(bufname, kind == 'oil' and ':~' or ':~:.')
+
+        local abs_bufname = vim.fn.fnamemodify(bufname, ':p')
+        local alias
+        for _, entry in ipairs(self.path_aliases) do
+            if abs_bufname:sub(1, #entry.path) == entry.path then
+                alias = entry
+                break
+            end
+        end
+        if alias then
+            self.bufname = alias.alias .. '/' .. abs_bufname:sub(#alias.path + 1)
+        end
+
+        if kind == 'oil' then
+            self.icon, self.icon_color = self.oil_icon, '#e68805'
+        elseif alias then
+            self.icon, self.icon_color = alias.icon, alias.icon_color
+        elseif vim.g.nerdfonts then
             self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(
                 vim.fn.expand('%:t'), nil, { default = true })
             self.icon = self.icon .. ' '

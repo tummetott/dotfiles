@@ -153,10 +153,23 @@ table.insert(M, {
             function()
                 require 'telescope.builtin'.find_files({
                     cwd = '~/.local/share/chezmoi/',
-                    prompt_title = 'Find Dotfiles',
+                    prompt_title = 'Dotfiles',
                 })
             end,
             desc = 'Dotfile',
+        },
+        {
+            '<Leader>fn',
+            function()
+                require 'telescope.builtin'.find_files({
+                    cwd = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Perlite/',
+                    prompt_title = 'Obsidian Notes',
+                    find_command = {
+                        'rg', '--files', '--iglob', '*.md',
+                    },
+                })
+            end,
+            desc = 'Obsidian Notes',
         },
         {
             '<Leader>fq',
