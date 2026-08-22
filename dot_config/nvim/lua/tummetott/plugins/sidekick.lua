@@ -36,6 +36,8 @@ return {
                     stopinsert = false,
                     hide_n = false,
                     buffers = false,
+                    normal_cr = false,
+                    files = false,
                 }
             },
         },
