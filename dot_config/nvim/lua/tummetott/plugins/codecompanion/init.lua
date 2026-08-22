@@ -25,7 +25,7 @@ end
 
 return {
     'olimorris/codecompanion.nvim',
-    enabled = true,
+    enabled = false,
     -- Allows any 19.x release, blocks major version bumps.
     version = '^19.0.0',
     dependencies = {
@@ -90,7 +90,7 @@ return {
         vim.api.nvim_create_autocmd('User', {
             pattern = 'CodeCompanionInlineFinished',
             callback = function()
-                vim.cmd('normal! <Esc>')
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
             end,
         })
     end,

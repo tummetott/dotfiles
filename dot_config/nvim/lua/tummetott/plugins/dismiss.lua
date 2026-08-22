@@ -15,6 +15,7 @@ return {
                 'DiffviewFiles',
                 'DiffviewFileHistory',
                 'qf',
+                'sidekick_terminal',
                 'codecompanion_cli',
                 'Outline',
             },
