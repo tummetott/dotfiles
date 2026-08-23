@@ -108,7 +108,7 @@ return {
         {
             '<Leader>dp',
             function()
-                vim.ui.input({ prompt = 'MR/PR number: ' }, function(id)
+                vim.ui.input({ prompt = 'PR number: ' }, function(id)
                     if not id or id == '' then
                         return
                     end
