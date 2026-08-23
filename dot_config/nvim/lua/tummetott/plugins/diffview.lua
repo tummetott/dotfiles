@@ -105,5 +105,42 @@ return {
             '<Cmd>DiffviewFileHistory --pin-local %<CR>',
             desc = 'LOCAL against history',
         },
+        {
+            '<Leader>dp',
+            function()
+                vim.ui.input({ prompt = 'MR/PR number: ' }, function(id)
+                    if not id or id == '' then
+                        return
+                    end
+
+                    local remote_url =
+                        vim.fn.system('git remote get-url origin'):gsub('%s+$', '')
+                    local ref
+                    local branch = 'pr-' .. id
+
+                    if remote_url:match('gitlab') then
+                        ref = string.format('merge-requests/%s/head', id)
+                    elseif remote_url:match('github') then
+                        ref = string.format('pull/%s/head', id)
+                    else
+                        vim.notify(
+                            'Unrecognized remote host for origin: ' .. remote_url,
+                            vim.log.levels.ERROR
+                        )
+                        return
+                    end
+
+                    local result =
+                        vim.fn.system(string.format('git fetch origin +%s:%s', ref, branch))
+                    if vim.v.shell_error ~= 0 then
+                        vim.notify('git fetch failed:\n' .. result, vim.log.levels.ERROR)
+                        return
+                    end
+
+                    vim.cmd('DiffviewOpen main...' .. branch)
+                end)
+            end,
+            desc = 'PR against TARGET',
+        },
     },
 }

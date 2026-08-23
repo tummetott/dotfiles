@@ -374,7 +374,16 @@ M.revision = {
                     if head == rev.commit then
                         rev_label = 'HEAD'
                     else
-                        rev_label = string.format('%s', rev.commit:sub(1, 7))
+                        local branches = vim.fn.system({
+                            'git', 'branch', '--points-at', rev.commit,
+                            '--format=%(refname:short)',
+                        })
+                        local pr_id = branches:match('pr%-(%d+)')
+                        if pr_id then
+                            rev_label = 'PR #' .. pr_id
+                        else
+                            rev_label = string.format('%s', rev.commit:sub(1, 7))
+                        end
                     end
                 elseif rev.type == 3 then
                     rev_label = ({
