@@ -141,6 +141,9 @@ cmake = false
 {{- if $brew }}
 codex = false
 {{- end }}
+{{- if $brew }}
+crush = false
+{{- end }}
 {{- if and $darwinBrew $gui }}
 docker = false
 {{- end }}
@@ -165,9 +168,6 @@ kitty = false
 {{- end }}
 {{- if $brew }}
 lf = false
-{{- end }}
-{{- if $brew }}
-mods = false
 {{- end }}
 {{- if $brew }}
 ninja = false

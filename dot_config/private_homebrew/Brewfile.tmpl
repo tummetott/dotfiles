@@ -13,6 +13,11 @@ brew "bottom"
 brew "cmake"
 {{- end }}
 
+{{- if .install.crush }}
+tap "charmbracelet/tap", trusted: true
+brew "charmbracelet/tap/crush"
+{{- end }}
+
 {{- if .install.fd }}
 brew "fd"
 {{- end }}
@@ -27,11 +32,6 @@ brew "lf"
 
 {{- if .install.lsd }}
 brew "lsd"
-{{- end }}
-
-{{- if .install.mods }}
-tap "charmbracelet/tap", trusted: true
-brew "charmbracelet/tap/mods"
 {{- end }}
 
 {{- if .install.neovim }}
