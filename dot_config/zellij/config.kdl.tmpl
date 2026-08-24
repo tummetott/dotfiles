@@ -28,7 +28,13 @@ keybinds clear-defaults=true {
             SwitchToMode "normal";
         }
         bind "Shift Ctrl x" { Clear; Write 12; } // 12 is byte value for Ctrl l
-        bind "Shift Ctrl o" { ToggleFocusFullscreen; } // Mnemonic: open
+        bind "Shift Ctrl z" { ToggleFocusFullscreen; } // Mnemonic: zoom
+        bind "Shift Ctrl o" {
+            LaunchOrFocusPlugin "session-manager" { // Mnemonic: open session
+                floating true
+                move_to_focused_tab true
+            };
+        }
         bind "Shift Ctrl b" { ToggleTab; } // Mnemonic: back
         bind "Shift Ctrl g" { NewPane "stacked"; } // Mnemonic: group
         bind "Shift Ctrl y" { SwitchToMode "session"; }
