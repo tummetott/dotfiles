@@ -184,7 +184,7 @@ Claude Code discovers plugin skills from this canonical directory. Declare the s
 }
 ```
 
-OpenCode has no installable package model. Skills cannot be bundled and installed the way Claude Code and Codex plugins can. See Activation for how to make OpenCode skills globally available.
+OpenCode has no installable package model: it has no plugin format that bundles skills with MCP servers and hooks into one installable unit the way Claude Code and Codex plugins do, and it never scans inside a `plugins/<plugin-name>/` boundary. Symlink the skill to `~/.agents/skills/<skill-name>` so OpenCode can discover it; see Activation for the exact command.
 
 ### MCP Servers
 
@@ -506,7 +506,7 @@ OpenCode has no equivalent installable package format. Global activation require
 
 ```sh
 # skills
-ln -sfn "$(pwd)/.agents/skills/<skill-name>" ~/.config/opencode/skills/<skill-name>
+ln -sfn "$(pwd)/plugins/<plugin-name>/skills/<skill-name>" ~/.agents/skills/<skill-name>
 
 # MCP servers
 opencode mcp add <server-name> -- uv run --directory "$(pwd)/<server-path>" <server-entrypoint>
