@@ -1,7 +1,51 @@
-provider add openrouter \
+# vim: set ft=bash:
+
+# Custom OpenRouter provider to discover models directly from OpenRouter's API,
+# including new models that are not yet available through Crush's Catwalk catalog.
+provider add openrouter-custom \
   --type openai-compat \
   --base-url "https://openrouter.ai/api/v1" \
-  --api-key "${OPENROUTER_API_KEY:?set OPENROUTER_API_KEY}"
+  --api-key "$OPENROUTER_API_KEY"
 
-model large openrouter/anthropic/claude-sonnet-4.6
+model large openrouter-custom/stealth/ox-alpha
 model small openrouter/openai/gpt-5.6-luna
+
+# ChatGPT Codex provider that reuses the OAuth token from your locally installed
+# Codex CLI, allowing you to use GPT models through your Codex subscription.
+# Note: token refresh is not automatic. Restart Crush after the Codex CLI
+# refreshes or rotates the OAuth token.
+if [[ -r "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
+  codex_auth="${CODEX_HOME:-$HOME/.codex}/auth.json"
+  codex_token="$(jq -r '.tokens.access_token // empty' "$codex_auth")"
+  codex_account="$(jq -r '.tokens.account_id // empty' "$codex_auth")"
+
+  if [[ -n "$codex_token" && -n "$codex_account" ]]; then
+    provider add codex-subscription \
+      --type openai \
+      --base-url "https://chatgpt.com/backend-api/codex" \
+      --api-key "$codex_token" \
+      --extra-header originator codex_cli_rs \
+      --extra-header OpenAI-Beta "responses=experimental" \
+      --extra-header chatgpt-account-id "$codex_account" \
+      --provider-options '{"service_tier":"default"}' # disable 'fast' mode
+
+    codex_models=(
+      gpt-5.6-sol
+      gpt-5.6-terra
+      gpt-5.6-luna
+      gpt-5.5
+      gpt-5.4
+      gpt-5.4-mini
+    )
+
+    for m in "${codex_models[@]}"; do
+      model add "codex-subscription/$m" \
+        --name "$m" \
+        --context-window 272000 \
+        --can-reason true \
+        --supports-images true \
+        --reasoning-effort medium
+    done
+  fi
+  unset codex_auth codex_token codex_account codex_models
+fi
