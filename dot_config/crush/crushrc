@@ -1,5 +1,7 @@
 # vim: set ft=bash:
 
+option global-context-path ~/.config/crush/instructions.md
+
 # Custom OpenRouter provider to discover models directly from OpenRouter's API,
 # including new models that are not yet available through Crush's Catwalk catalog.
 provider add openrouter-custom \
