@@ -1,16 +1,12 @@
 # vim: set ft=bash:
 
-option global-context-path ~/.config/crush/instructions.md
-
-# Custom OpenRouter provider to discover models directly from OpenRouter's API,
-# including new models that are not yet available through Crush's Catwalk catalog.
-provider add openrouter-custom \
-  --type openai-compat \
-  --base-url "https://openrouter.ai/api/v1" \
-  --api-key "$OPENROUTER_API_KEY"
-
 model large codex-subscription/gpt-5.6-terra
 model small codex-subscription/gpt-5.6-luna
+
+option global-context-path ~/.config/crush/instructions.md
+option ui transparent true
+option metrics false
+# option provider-auto-update true
 
 # ChatGPT Codex provider that reuses the OAuth token from your locally installed
 # Codex CLI, allowing you to use GPT models through your Codex subscription.
