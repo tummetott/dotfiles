@@ -1,0 +1,15 @@
+{
+    "providers": {
+        "srlabs": {
+            "baseUrl": "http://10.10.45.86:8080/v1",
+            "api": "openai-completions",
+            "apiKey": "not-needed",
+            "models": [
+                {
+                    "id": "srlabs/default",
+                    "name": "SRLabs default"
+                }
+            ]
+        }
+    }
+}

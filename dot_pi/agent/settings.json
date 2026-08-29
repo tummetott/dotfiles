@@ -1,0 +1,13 @@
+{
+    "defaultProvider": "openai-codex",
+    "defaultModel": "gpt-5.6-terra",
+    "defaultThinkingLevel": "high",
+    "defaultProjectTrust": "always",
+    "theme": "dark",
+    "enableInstallTelemetry": false,
+    "enabledModels": [
+        "gpt-5.6-terra",
+        "gpt-5.6-sol",
+        "srlabs/default"
+    ]
+}
