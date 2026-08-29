@@ -1,7 +1,7 @@
 # vim: set ft=bash:
 
-model large codex-subscription/gpt-5.6-terra
-model small codex-subscription/gpt-5.6-luna
+model large openai-codex/gpt-5.6-terra
+model small openai-codex/gpt-5.6-luna
 
 option global-context-path ~/.config/crush/instructions.md
 option ui transparent true
@@ -23,7 +23,7 @@ if [[ -r "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
   codex_account="$(jq -r '.tokens.account_id // empty' "$codex_auth")"
 
   if [[ -n "$codex_token" && -n "$codex_account" ]]; then
-    provider add codex-subscription \
+    provider add openai-codex \
       --type openai \
       --base-url "https://chatgpt.com/backend-api/codex" \
       --api-key "$codex_token" \
@@ -41,7 +41,7 @@ if [[ -r "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
     )
 
     for m in "${codex_models[@]}"; do
-      model add "codex-subscription/$m" \
+      model add "openai-codex/$m" \
         --name "$m" \
         --context-window 272000 \
         --can-reason true \
