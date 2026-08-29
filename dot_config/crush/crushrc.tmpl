@@ -8,6 +8,11 @@ option ui transparent true
 option metrics false
 # option provider-auto-update true
 
+permissions allow \
+    fetch \
+    agentic_fetch \
+    sourcegraph
+
 # ChatGPT Codex provider that reuses the OAuth token from your locally installed
 # Codex CLI, allowing you to use GPT models through your Codex subscription.
 # Note: token refresh is not automatic. Restart Crush after the Codex CLI
