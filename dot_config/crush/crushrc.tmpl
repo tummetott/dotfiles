@@ -8,17 +8,6 @@ option ui transparent true
 option metrics false
 # option provider-auto-update true
 
-provider add srlabs \
-  --type openai-compat \
-  --base-url "http://10.10.45.86:8080/v1" \
-  --discover-models true
-
-# Create an "active" alias pointing to whichever model is currently loaded.
-# Unfortunately, you can't see which model it links to. If you want to check
-# this, visit: http://10.10.45.86:8080/ui/
-active_model="$(curl -sf http://10.10.45.86:8080/running | jq -r '.running[0].model // empty')"
-[[ -n "$active_model" ]] && model add "srlabs/$active_model" --name "active"
-
 # ChatGPT Codex provider that reuses the OAuth token from your locally installed
 # Codex CLI, allowing you to use GPT models through your Codex subscription.
 # Note: token refresh is not automatic. Restart Crush after the Codex CLI
@@ -56,4 +45,15 @@ if [[ -r "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
     done
   fi
   unset codex_auth codex_token codex_account codex_models
+fi
+
+# Add srlabs provider only when inside the srlabs VPN
+{{ if eq .chezmoi.os "darwin" -}}
+if route -n get 10.10.45.86 2>/dev/null | grep -q 'interface: utun'; then
+{{ else if eq .chezmoi.os "linux" -}}
+if command -v ip >/dev/null && ip route get 10.10.45.86 2>/dev/null | grep -qE 'dev tun[0-9]*'; then
+{{ end }}  provider add srlabs \
+    --type openai-compat \
+    --base-url "http://10.10.45.86:8080/v1" \
+    --discover-models true
 fi

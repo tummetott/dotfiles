@@ -1,5 +1,7 @@
 **/.DS_Store
 
+.config/codex/config.toml
+
 {{ if ne .chezmoi.os "darwin" }}
 Library/Preferences/com.googlecode.iterm2.plist
 .config/karabiner
