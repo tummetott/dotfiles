@@ -77,8 +77,14 @@ encryption = "age"
 identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
 recipient = "age1py04fpx5dan88dsvz5thm37aaj4p93jrasqj7lfxw8u4r7w0capswq8zcv"
 
+[diff] 
+command = "nvim"
+args = ["-d"]
+pager = ""
+
 [merge]
-command = "nvimdiff"
+command = "nvim"
+args = ["-d"]
 
 [github]
 refreshPeriod = "168h"
