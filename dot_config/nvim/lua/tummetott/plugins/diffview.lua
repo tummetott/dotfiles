@@ -137,7 +137,23 @@ return {
                         return
                     end
 
-                    vim.cmd('DiffviewOpen main...' .. branch)
+                    local default_branch_result = vim.system({
+                        'git',
+                        'symbolic-ref',
+                        '--quiet',
+                        '--short',
+                        'refs/remotes/origin/HEAD',
+                    }, { text = true }):wait()
+                    local default_branch = vim.trim(default_branch_result.stdout)
+                    if default_branch_result.code ~= 0 or default_branch == '' then
+                        vim.notify(
+                            'Unable to determine the default branch for origin',
+                            vim.log.levels.ERROR
+                        )
+                        return
+                    end
+
+                    vim.cmd('DiffviewOpen ' .. default_branch .. '...' .. branch)
                 end)
             end,
             desc = 'PR against TARGET',
