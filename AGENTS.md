@@ -1,11 +1,6 @@
----
-name: chezmoi-dotfiles
-description: Guidance for working with the user's chezmoi-managed dotfiles repository. Use when the user explicitly mentions chezmoi, their dotfiles repository, or asks to add, modify, debug, or integrate configuration as part of their reproducible multi-machine dotfiles setup. Also use when a task inside that repository involves package installation, install flags, machine-specific settings, platform conditions, external resources, bootstrap scripts, shell integration, or application configuration. Do not use for general questions about configuring applications, shells, package managers, or operating systems unless the request is specifically connected to the chezmoi-managed environment.
----
-
 # Source and Target State
 
-This skill is for working with a chezmoi-managed dotfiles setup.
+This repository manages a chezmoi-based dotfiles setup.
 
 Chezmoi has two important locations:
 
@@ -30,7 +25,7 @@ Three separate files are involved in a flag's lifecycle, and none of them refere
 
 * `.chezmoidata.toml` holds the repository-wide default value (normally `false`) for every `install.<tool>` flag, used by any machine that hasn't overridden it.
 * `.chezmoi.toml.tmpl` holds the same flag, asked interactively during `chezmoi init` on a new machine, wrapped in a platform predicate so it's only asked where an install path actually exists for that platform.
-* `~/.config/chezmoi/chezmoi.toml` holds each individual machine's actual answer. This file lives outside the source repository entirely, it is not version-controlled and not shared between machines. It is what `chezmoi apply` actually reads to decide what to install on the machine it runs on. Changing the flag in the two files above does not change what's installed on any already-initialized machine; that requires editing this file too.
+* `~/.config/chezmoi/chezmoi.toml` stores each machine's answers from `chezmoi init`. It lives outside the source repository, is unversioned, and is not shared between machines. Users can adjust its install flags after initialization. `chezmoi apply` uses those flags to determine which managed resources to install.
 
 Package installation is split by mechanism:
 
@@ -45,7 +40,7 @@ Application configuration lives in the corresponding chezmoi source path. For ex
 
 Shell initialization, aliases, environment setup, and completions live with the existing shell configuration in the source state (for example, autoloaded shell functions under `dot_config/shell/functions/`, and zsh completions under `dot_local/share/zsh/custom-completions/`). Installation and shell integration are separate concerns, so installing a CLI package does not by itself complete its integration.
 
-Before changing something, inspect an existing feature that solves a similar problem and identify all files involved in it. The dotfile repository is the concrete implementation of the system described by this skill.
+When adding a capability that spans multiple integration points, use a similar existing capability as a guide and update the corresponding files.
 
 # Bootstrap and Installation
 
@@ -71,33 +66,15 @@ Use existing template data and capability checks to express real differences bet
 
 Install flags allow a tool or application to exist in shared source state while being enabled only on machines where it belongs. The shared source state (`.chezmoidata.toml`, `.chezmoi.toml.tmpl`) defines available behavior and defaults; each machine's own `~/.config/chezmoi/chezmoi.toml` keeps the choices that are intentionally machine-specific, and only that file affects what an actual `chezmoi apply` does on that machine.
 
-When changing an install flag, inspect how an existing flag is represented in all three flag locations plus the package or external declaration that consumes it.
+When adding an install flag, set its default to `false` in `.chezmoidata.toml`, derive it from applicable machine capabilities in `.chezmoi.toml.tmpl`, and gate the consuming package or external declaration with the flag. Update `~/.config/chezmoi/chezmoi.toml` only when the current machine should enable it.
 
 # Adding New Capabilities
 
-Treat a new tool or capability as a feature of the whole chezmoi setup, not merely as a package declaration or configuration file.
-
-Start by finding a similar existing tool and inspect every part of its integration. Depending on the feature, that may include:
-
-* `dot_config/private_homebrew/Brewfile.tmpl`
-* `dot_config/aptitude/empty_Aptfile.tmpl`
-* `dot_config/snap/empty_Snapfile.tmpl`
-* `.chezmoiexternal.toml`
-* `dot_config/mise/config.toml.tmpl`, for tools distributed only through a language package manager
-* `.chezmoi.toml.tmpl`
-* `.chezmoidata.toml`
-* `.chezmoiscripts/`
-* application configuration under `dot_config/...`
-* shell functions under `dot_config/shell/functions/`
-* completions under `dot_local/share/zsh/custom-completions/`
-* platform or GUI template conditions
-* the current machine's own `~/.config/chezmoi/chezmoi.toml`, if the tool should be enabled here right now
-
-Not every tool needs every integration point, and chezmoi does not fail loudly when one is missing, so a feature can look done here while staying incomplete elsewhere.
+When package availability or installation details are unknown, research the supported platforms and architectures. For Homebrew candidates, `brew info --json=v2 <formula>` shows supported combinations. Consult upstream release sources when another mechanism may be appropriate. Use **Bootstrap and Installation** to select the mechanism, and refer to an analogous existing capability when implementation details are unclear.
 
 # Safe Change Workflow
 
-After changing templates or source files, inspect what chezmoi actually renders rather than reasoning only from the template source:
+After changing templates, install declarations, external resources, scripts, platform conditions, or source-to-target mappings, inspect what chezmoi renders:
 
 ```text
 chezmoi diff
@@ -112,16 +89,4 @@ Check that:
 * a change intended for one platform does not unexpectedly affect another
 * the rendered diff contains only the intended changes
 
-Do not edit a target file merely to make the current machine work while leaving the corresponding source unchanged. That creates configuration drift and the change can disappear on the next apply.
-
-# Ambiguity and Intent
-
-Resolve implementation questions by inspecting the existing chezmoi source state first.
-
-If an analogous tool already establishes how install flags, package declarations, externals, templates, shell integration, or platform conditions work, follow that precedent instead of asking the user to choose implementation details that the source state already answers.
-
-Ask when the unresolved question is about intent rather than mechanics.
-
-The most important case is a completely new tool, file, or behavior with no precedent in the source state. Infer intent from the request when possible: if the user explicitly asks to add it to dotfiles, chezmoi, or make it reproducible across machines, treat it as a permanent addition; if the user only asks to install or configure something on the current machine, do not automatically add it to chezmoi. If the distinction materially affects the implementation and intent remains unclear, ask whether the change should be local-only or managed by chezmoi.
-
-When no exact precedent exists, fall back to the reasoning in Bootstrap and Installation and Repository Structure rather than guessing.
+Treat requests to modify, fix, or debug managed configuration as changes to source state. Use target state only to inspect deployed output or diagnose rendering, and make durable changes in source state.

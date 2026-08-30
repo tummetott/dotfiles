@@ -1,5 +1,8 @@
 **/.DS_Store
+AGENTS.md
+.config/nvim/AGENTS.md
 
+# These agent configs mix managed settings with runtime session state.
 .config/codex/config.toml
 .pi/agent/settings.json
 
