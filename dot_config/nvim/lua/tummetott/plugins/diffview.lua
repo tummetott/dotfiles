@@ -139,13 +139,15 @@ return {
 
                     local default_branch_result = vim.system({
                         'git',
-                        'symbolic-ref',
-                        '--quiet',
-                        '--short',
-                        'refs/remotes/origin/HEAD',
+                        'ls-remote',
+                        '--symref',
+                        'origin',
+                        'HEAD',
                     }, { text = true }):wait()
-                    local default_branch = vim.trim(default_branch_result.stdout)
-                    if default_branch_result.code ~= 0 or default_branch == '' then
+                    local default_branch = (default_branch_result.stdout or ''):match(
+                        'ref: refs/heads/([^%s]+)%s+HEAD'
+                    )
+                    if default_branch_result.code ~= 0 or not default_branch then
                         vim.notify(
                             'Unable to determine the default branch for origin',
                             vim.log.levels.ERROR
@@ -153,7 +155,7 @@ return {
                         return
                     end
 
-                    vim.cmd('DiffviewOpen ' .. default_branch .. '...' .. branch)
+                    vim.cmd('DiffviewOpen origin/' .. default_branch .. '...' .. branch)
                 end)
             end,
             desc = 'PR against TARGET',

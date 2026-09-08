@@ -46,7 +46,7 @@ if [[ -r "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
         --context-window 272000 \
         --can-reason true \
         --supports-images true \
-        --reasoning-effort medium
+        --reasoning-effort high
     done
   fi
   unset codex_auth codex_token codex_account codex_models
