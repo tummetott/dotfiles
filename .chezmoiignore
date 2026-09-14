@@ -7,7 +7,7 @@ AGENTS.md
 .pi/agent/settings.json
 
 {{ if ne .chezmoi.os "darwin" }}
-Library/Preferences/com.googlecode.iterm2.plist
+Library/
 .config/karabiner
 .config/shell/functions/clean-clipboard
 .config/shell/functions/finder-path
