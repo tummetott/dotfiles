@@ -93,14 +93,19 @@ unsetopt HIST_VERIFY
 if command -v fd >/dev/null 2>&1; then
     # Run by nvim **<tab>
     _fzf_compgen_path() {
-        fd --type f --hidden --follow "$1"
+        fd --type f --hidden --follow . "$1"
     }
     # Run by cd **<tab>
     _fzf_compgen_dir() {
-        fd --type d --hidden --follow "$1"
+        fd --type d --hidden --follow . "$1"
     }
-    # Used by C-t
-    export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow"
+    # Used by C-g. Lists the files that git does not ignore. Pressing C-g
+    # inside the picker widens the list to every file and directory, and the
+    # prompt names the active mode.
+    _fzf_fd='fd --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$_fzf_fd --type f"
+    export FZF_CTRL_T_OPTS="--prompt 'files> ' --bind 'ctrl-g:transform:[[ \$FZF_PROMPT == \"all> \" ]] && echo \"change-prompt(files> )+reload($_fzf_fd --type f)\" || echo \"change-prompt(all> )+reload($_fzf_fd --no-ignore)\"'"
+    unset _fzf_fd
 fi
 
 # iTerm2 cannot configure ANSI colors 16–21, so tinted-terminal does not work
