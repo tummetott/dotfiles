@@ -13,8 +13,13 @@
 # Enable smart case. Case is ignored except an uppercase letter is typed
 --smart-case
 
+# Show git ignored files
+--no-ignore-vcs
+
 # Exclude files while searching
---glob=!.git/*
+--glob=!.git
+--glob=!.DS_Store
+--glob=!._*
 --glob=!.viminfo
 --glob=!.zsh_history
 --glob=!.bash_history
