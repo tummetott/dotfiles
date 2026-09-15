@@ -1,5 +1,53 @@
 local M = {}
 
+-- Toggling the gitignore filter closes the picker and reopens it, since a
+-- running finder's arguments cannot be changed. The query and the directory
+-- carry over. `_get_prompt` is private API, and the only way to read the
+-- current query from inside an action.
+local function reopen_with(open, no_ignore)
+    return function(prompt_bufnr)
+        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+        local prompt, cwd = picker:_get_prompt(), picker.cwd
+        require('telescope.actions').close(prompt_bufnr)
+        open(not no_ignore, prompt, cwd)
+    end
+end
+
+-- Telescope dedupes attached keys by termcode, where <C-i> and <Tab> both
+-- collapse to \t. Attaching <C-i> therefore suppresses the default <Tab>
+-- mapping, so it is reapplied here to keep multi selection working.
+local function ignore_mappings(open, no_ignore)
+    return function(_, map)
+        local actions = require 'telescope.actions'
+        map('i', '<C-i>', reopen_with(open, no_ignore), { desc = 'Toggle gitignored files' })
+        map('i', '<Tab>', actions.toggle_selection + actions.move_selection_worse)
+        return true
+    end
+end
+
+-- Lists files in the working directory.
+local function find_files(no_ignore, default_text, cwd)
+    require('telescope.builtin').find_files {
+        no_ignore = no_ignore,
+        default_text = default_text,
+        cwd = cwd,
+        prompt_title = no_ignore and 'Find Files (incl. ignored)' or 'Find Files',
+        attach_mappings = ignore_mappings(find_files, no_ignore),
+    }
+end
+
+-- Greps the working directory. live_grep has no `no_ignore` option, so the flag
+-- goes straight to ripgrep.
+local function live_grep(no_ignore, default_text, cwd)
+    require('telescope.builtin').live_grep {
+        additional_args = no_ignore and { '--no-ignore' } or nil,
+        default_text = default_text,
+        cwd = cwd,
+        prompt_title = no_ignore and 'Live Grep (incl. ignored)' or 'Live Grep',
+        attach_mappings = ignore_mappings(live_grep, no_ignore),
+    }
+end
+
 table.insert(M, {
     'nvim-telescope/telescope.nvim',
     enabled = true,
@@ -75,12 +123,12 @@ table.insert(M, {
     keys = {
         {
             '<Leader>ff',
-            function() require 'telescope.builtin'.find_files() end,
+            function() find_files(false) end,
             desc = 'File'
         },
         {
             '<Leader>fg',
-            function() require 'telescope.builtin'.live_grep() end,
+            function() live_grep(false) end,
             desc = 'Grep',
         },
         {
