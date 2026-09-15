@@ -27,16 +27,20 @@ table.insert(M, {
                 cycle_layout_list = { 'vertical', 'horizontal' },
                 mappings = {
                     i = {
-                        -- By default, I dont show a preview of a file. However, I set
-                        -- a keybinding to toggle the preview window
-                        ['<C-h>'] = layout.toggle_preview,
-                        -- Telescope mapps <C-u> to scroll up in my preview window.
-                        -- Let's unmap this in order to get my delete line behavior back.
-                        ['<C-d>'] = false,
+                        -- Open the preview window
+                        ['<C-o>'] = layout.toggle_preview,
+                        -- Telescope binds C-u, C-d, C-f and C-k to preview
+                        -- scrolling, which shadows my insert mode line editing
+                        -- and cursor movement. The arrow keys scroll the
+                        -- preview instead.
                         ['<C-u>'] = false,
-                        -- Scroll with the arrow keys
+                        ['<C-d>'] = false,
+                        ['<C-f>'] = false,
+                        ['<C-k>'] = false,
                         ['<Up>'] = actions.preview_scrolling_up,
                         ['<Down>'] = actions.preview_scrolling_down,
+                        ['<Left>'] = actions.preview_scrolling_left,
+                        ['<Right>'] = actions.preview_scrolling_right,
                         -- I prefer to open a file in a horizontal split with C-s instead of C-x
                         ['<C-s>'] = actions.select_horizontal,
                         ['<C-x>'] = false,
@@ -48,25 +52,6 @@ table.insert(M, {
                         ['<C-y>'] = require("trouble.sources.telescope").add,
                         ['<esc>'] = actions.close,
                     },
-                    n = {
-                        -- By default, I dont show a preview of a file. However, I set
-                        -- a keybinding to toggle the preview window
-                        ['<C-h>'] = layout.toggle_preview,
-                        -- Telescope mapps <C-u> to scroll up in my preview window.
-                        -- Let's unmap this in order to get my delete line behavior back.
-                        -- Scroll with the arrow keys
-                        ['<Up>'] = actions.preview_scrolling_up,
-                        ['<Down>'] = actions.preview_scrolling_down,
-                        -- I prefer to open a file in a horizontal split with C-s instead of C-x
-                        ['<C-s>'] = actions.select_horizontal,
-                        ['<C-x>'] = false,
-                        -- Copy fuzzy result to cmdline but don't execute it
-                        ['<C-z>'] = actions.edit_command_line,
-                        -- Open selected entries in trouble
-                        ['<C-q>'] = require("trouble.sources.telescope").open,
-                        -- Append selected entries to trouble
-                        ['<C-y>'] = require("trouble.sources.telescope").add,
-                    }
                 }
             },
             pickers = {
