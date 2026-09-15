@@ -379,8 +379,21 @@ local maps = {
         mode = 'n',
         lhs = '<leader><space>w',
         rhs = function()
-            vim.o.wrap = not vim.o.wrap
-            echo_toggle('Wrap', vim.o.wrap)
+            if vim.wo.diff then
+                -- In a diff, wrapping applies to every diff window of the
+                -- tabpage. The tab scoped flag is the source of truth, so
+                -- diff windows opened later pick up the same setting.
+                vim.t.diff_wrap = not vim.t.diff_wrap
+                for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                    if vim.wo[win].diff then
+                        vim.wo[win].wrap = vim.t.diff_wrap
+                    end
+                end
+                echo_toggle('Wrap', vim.t.diff_wrap)
+            else
+                vim.o.wrap = not vim.wo.wrap
+                echo_toggle('Wrap', vim.o.wrap)
+            end
         end,
         opts = { desc = 'line wrapping' }
     },
