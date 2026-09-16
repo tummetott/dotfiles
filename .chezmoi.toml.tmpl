@@ -119,6 +119,7 @@ fontsize = {{ $fontsize }}
 
 [data.install]
 # Core terminal tools
+fd = true
 fzf = true
 lsd = true
 neovim = true
@@ -152,9 +153,6 @@ crush = false
 {{- end }}
 {{- if and $darwinBrew $gui }}
 docker = false
-{{- end }}
-{{- if $brew }}
-fd = false
 {{- end }}
 {{- if and $gui (or $darwinBrew $snap) }}
 ghostty = true

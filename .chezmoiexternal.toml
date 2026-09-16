@@ -8,6 +8,17 @@
     {{ $rustOS := "unknown-linux-musl" }}
     {{ if eq .chezmoi.os "darwin" }}{{ $rustOS = "apple-darwin" }}{{ end }}
 
+    {{ if .install.fd }}
+    ['.local/bin/fd']
+    type = 'archive-file'
+    {{ $asset := printf "fd-*-%s-%s.tar.gz" $rustArch $rustOS }}
+    url = '{{ gitHubLatestReleaseAssetURL "sharkdp/fd" $asset }}'
+    path = 'fd'
+    stripComponents = 1
+    executable = true
+    refreshPeriod = '168h'
+    {{ end }}
+
     {{ if .install.fzf }}
     ['.local/bin/fzf']
     type = 'archive-file'
