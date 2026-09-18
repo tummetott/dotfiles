@@ -143,6 +143,29 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com.pioneerdj.",
+                                            "^com.alphatheta."
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "u",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "home",
+                                        "modifiers": ["shift"]
+                                    },
+                                    { "key_code": "delete_or_backspace" }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
                                             "^net.kovidgoyal.kitty$",
                                             "^org.alacritty$",
                                             "^com.googlecode.iterm2$",
