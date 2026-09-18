@@ -1,7 +1,8 @@
 local cli_prompts = {
-    no_history = [[You're still narrating your own edit history instead of stating the current, settled truth. Rewrite this in present tense: keep the standing reason it has to be this way, drop anything about what it used to be, what changed, or why you changed it.]],
-    explain = 'Describe this to a non-domain expert',
-    tempfile = [[Write your most recent response, properly formatted as markdown, to a new temporary file. Reply with only that file's path, no other text.]],
+    no_history = "You're still narrating your own edit history instead of stating the current, settled truth. Rewrite this in present tense: keep the standing reason it has to be this way, drop anything about what it used to be, what changed, or why you changed it.",
+    explain = "Describe this to a non-domain expert",
+    tempfile = "Write your most recent response, properly formatted as markdown, to a new temporary file. Reply with only that file's path, no other text.",
+    conversation = "Don't do any changes. We're just having a conversation."
 }
 
 return {
