@@ -142,19 +142,9 @@ table.insert(M, {
             desc = 'Buffer',
         },
         {
-            '<Leader>fh',
-            function() require 'telescope.builtin'.help_tags() end,
-            desc = 'Help',
-        },
-        {
             '<Leader>fo',
             function() require 'telescope.builtin'.oldfiles() end,
             desc = 'Oldfile',
-        },
-        {
-            '<Leader>fm',
-            function() require 'telescope.builtin'.man_pages() end,
-            desc = 'Man page',
         },
         {
             '<Leader>fs',
@@ -162,12 +152,12 @@ table.insert(M, {
             desc = 'Spell suggest',
         },
         {
-            '<Leader>fc',
+            '<Leader>fa',
             function() require 'telescope.builtin'.colorscheme() end,
             desc = 'Colorscheme',
         },
         {
-            '<Leader>fi',
+            '<Leader>fc',
             function() require 'telescope.builtin'.git_commits() end,
             desc = 'Git commit',
         },
@@ -208,16 +198,6 @@ table.insert(M, {
             '<Leader>fq',
             function() require 'telescope.builtin'.quickfixhistory() end,
             desc = 'Quickfix history',
-        },
-        {
-            '<Leader>fa',
-            function() require 'telescope.builtin'.autocommands() end,
-            desc = 'Autocommands',
-        },
-        {
-            '<Leader>fk',
-            function() require 'telescope.builtin'.keymaps() end,
-            desc = 'Keymaps',
         },
         {
             -- When inside cmdline, search the cmdline history with CTRL-/
