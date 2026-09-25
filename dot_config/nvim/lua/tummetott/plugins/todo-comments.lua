@@ -42,7 +42,7 @@ return {
             after = '',
         },
     },
-    event = 'LazyFile',
+    event = 'VeryLazy',
     keys = {
         {
             '<Leader>to',

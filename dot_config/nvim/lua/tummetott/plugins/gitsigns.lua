@@ -1,7 +1,7 @@
 return {
     'lewis6991/gitsigns.nvim',
     enabled = true,
-    event = 'LazyFile',
+    event = 'VeryLazy',
     opts = {
         signcolumn = true,
         signs = {

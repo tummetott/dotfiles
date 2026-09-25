@@ -1,9 +1,6 @@
 -- Options must be loaded before plugins
 require('tummetott.config.options')
 
--- Setup additional lazy events like LazyFile and LazySearch
-require('tummetott.core.events')
-
 -- Autocmds can be loaded lazily when not opening a file
 local lazy_autocmds = vim.fn.argc(-1) == 0
 if not lazy_autocmds then

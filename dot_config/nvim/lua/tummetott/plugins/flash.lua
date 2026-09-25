@@ -1,7 +1,9 @@
 return {
     'folke/flash.nvim',
     enabled = true,
-    event = 'LazySearch',
+    event = {
+        { event = 'CmdlineEnter', pattern = { '/', '\\?' } },
+    },
     opts = {
         modes = {
             char = { enabled = false },
