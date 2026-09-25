@@ -36,8 +36,8 @@ local function delta()
     local ui = vim.api.nvim_list_uis()[1]
     return {
         -- Expand / contract window by 20%
-        width = math.floor(ui.width * 0.2),
-        height = math.floor(ui.height * 0.2),
+        width = math.floor(ui.width * 0.1),
+        height = math.floor(ui.height * 0.1),
     }
 end
 
