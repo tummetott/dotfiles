@@ -144,7 +144,7 @@ return {
             keymap = {
                 preset = 'inherit',
                 ['<CR>'] = {
-                    'accept',
+                    'accept_and_enter',
                     'fallback',
                 },
                 ['<C-p>'] = {
