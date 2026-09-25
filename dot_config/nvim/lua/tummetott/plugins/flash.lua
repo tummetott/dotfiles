@@ -38,21 +38,15 @@ return {
     keys = {
         {
             'r',
-            function() require('flash').remote() end,
-            mode = 'o',
-            desc = 'Remote Flash',
-        },
-        {
-            'R',
             function() require('flash').treesitter_search() end,
             mode = { 'o', 'x' },
-            desc = 'Treesitter Search',
+            desc = 'Remote flash',
         },
         {
             '<c-j>',
             function() require('flash').toggle() end,
             mode = { 'c' },
-            desc = 'Toggle Flash Search',
+            desc = 'Toggle flash search',
         },
     },
     highlights = {
