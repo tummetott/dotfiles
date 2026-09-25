@@ -95,12 +95,12 @@ return {
         {
             '<Leader>da',
             '<Cmd>DiffviewFileHistory<CR>',
-            desc = 'History for all files',
+            desc = 'History all files',
         },
         {
             '<Leader>dc',
             '<Cmd>DiffviewFileHistory %<CR>',
-            desc = 'History for current file',
+            desc = 'History current file',
         },
         {
             '<Leader>dl',

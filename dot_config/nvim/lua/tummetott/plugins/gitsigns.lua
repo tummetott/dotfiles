@@ -74,7 +74,7 @@ return {
         },
         {
             '<Leader>gp',
-            function() require 'gitsigns'.preview_hunk() end,
+            function() require 'gitsigns'.preview_hunk_inline() end,
             desc = 'Preview hunk'
         },
         {
@@ -85,12 +85,7 @@ return {
         {
             '<Leader>gl',
             function() require 'gitsigns'.toggle_current_line_blame() end,
-            desc = 'Toggle current line blame'
-        },
-        {
-            '<Leader>gv',
-            function() require 'gitsigns'.toggle_deleted() end,
-            desc = 'Toggle virtual text diff'
+            desc = 'Toggle line blame'
         },
         {
             '<Leader>gs',

@@ -17,28 +17,28 @@ return {
             function()
                 require('neogen').generate({ type = 'func' })
             end,
-            desc = 'Function annotaton',
+            desc = 'Function',
         },
         {
             '<leader>ac',
             function()
                 require('neogen').generate({ type = 'class' })
             end,
-            desc = 'Class annotaton',
+            desc = 'Class',
         },
         {
             '<leader>at',
             function()
                 require('neogen').generate({ type = 'type' })
             end,
-            desc = 'Type annotaton',
+            desc = 'Type',
         },
         {
             '<leader>ai',
             function()
                 require('neogen').generate({ type = 'file' })
             end,
-            desc = 'File annotaton',
+            desc = 'File',
         },
     }
 }

@@ -22,7 +22,7 @@ return {
         {
             '<leader>o',
             '<cmd>Outline!<cr>',
-            desc = 'Toggle Outline',
+            desc = 'Toggle outline',
         }
     }
 }
