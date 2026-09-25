@@ -8,4 +8,4 @@ end
 vim.g.nerdfonts = vim.env.NO_NERDFONTS == nil
 
 -- Run the plugin manager lazy.nvim
-require('tummetott.config.lazy')
+require('tummetott.lazy')
