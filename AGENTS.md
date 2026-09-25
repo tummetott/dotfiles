@@ -11,7 +11,7 @@ The source state is authoritative. Make durable changes there.
 
 The target state is generated output. Do not make durable changes directly in target files, because a later `chezmoi apply` can overwrite them and those edits are not part of the version-controlled setup.
 
-Use `chezmoi diff` to inspect what the current source state would change in the target state. Treat `chezmoi apply` as an explicit deployment step and never run it automatically, even when the diff looks clean.
+Treat `chezmoi apply` as an explicit deployment step and never run it automatically.
 
 This setup supports different machine types, including macOS systems, Linux desktops, Raspberry Pis, and restricted servers. Changes preserve that multi-machine model rather than only making the current machine work.
 
