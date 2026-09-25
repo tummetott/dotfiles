@@ -189,9 +189,10 @@ return {
                 'label',     -- Tertiary sort: by label if still tied
             },
         },
-        -- TODO: create ISSUE, request signature includes markdown body
+        -- Signatures are triggerd with the `lsp-overloads` plugin
         signature = {
             enabled = false,
+            window = { show_documentation = true },
         },
         snippets = {
             preset = 'luasnip',
