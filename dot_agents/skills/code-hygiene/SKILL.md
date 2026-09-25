@@ -1,6 +1,6 @@
 ---
 name: code-hygiene
-description: General guidelines for writing code and making changes. Use when writing or modifying code in any language or project.
+description: "Use before writing or editing files in a repository: the style rules that edits are held to, covering comments and documentation, naming, error handling, and structure. Skip for read-only work such as code review, explanation, search, planning, or answering questions about existing code."
 ---
 
 # Code Hygiene

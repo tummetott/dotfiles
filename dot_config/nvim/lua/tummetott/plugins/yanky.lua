@@ -78,8 +78,12 @@ return {
         },
         {
             '<leader>fy',
-            '<Cmd>YankyRingHistory<Cr>',
-            desc = 'Show yank ring history',
+            function()
+                require('telescope').extensions.yank_history.yank_history {
+                    preview = { hide_on_startup = true },
+                }
+            end,
+            desc = 'Yank ring',
         },
         -- This keymap is set here because yanky must be loaded in order to
         -- highlight the yanked text.
