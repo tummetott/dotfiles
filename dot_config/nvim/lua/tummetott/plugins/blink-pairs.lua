@@ -1,6 +1,7 @@
 return {
     'saghen/blink.pairs',
     enabled = true,
+    event = 'VeryLazy',
     version = '*', -- required with prebuilt binaries
     -- download prebuilt binaries from github releases
     dependencies = 'saghen/blink.lib',
