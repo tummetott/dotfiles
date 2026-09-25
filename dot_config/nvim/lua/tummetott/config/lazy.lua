@@ -2,11 +2,9 @@ vim.pack.add { "https://github.com/folke/lazy.nvim" }
 
 require('lazy').setup {
     spec = {
-        -- Due to the absence of a callback function in lazy that triggers after
-        -- lazy initialization but before plugins are loaded, a workaround is
-        -- employed. A Lua module is passed to lazy, returning a dummy plugin
-        -- specification (representing lazy itself). This module acts as the
-        -- desired callback.
+        -- Setup manages non-plugin configuration: options, events, autocmds,
+        -- and keymaps. Import it through lazy so the overall startup time can
+        -- be measured realiably by lazy.
         { import = 'tummetott.core.setup' },
         -- Each plugin specification is organized in a separate file. Here we
         -- define the path to the parent directory

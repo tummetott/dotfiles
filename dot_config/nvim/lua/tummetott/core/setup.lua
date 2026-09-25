@@ -22,5 +22,5 @@ vim.api.nvim_create_autocmd('User', {
     end,
 })
 
--- Return a dummy plugin spec representing lazy itself
-return { 'folke/lazy.nvim', version = '*' }
+-- This setup module defines no plugin specs.
+return {}
