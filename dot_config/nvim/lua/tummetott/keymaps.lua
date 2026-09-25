@@ -278,6 +278,12 @@ local maps = {
         opts = { desc = 'Indent with tab' }
     },
     {
+        mode = 'n',
+        lhs = '<leader>r',
+        rhs = '<cmd>restart<cr>',
+        opts = { desc = 'Restart neovim' }
+    },
+    {
         mode = 'x',
         lhs = 'gn',
         rhs = '<esc>ngn',
