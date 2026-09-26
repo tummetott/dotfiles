@@ -151,7 +151,7 @@ M.register_buffer_keymaps = function(client, bufnr)
     -- language server attaches, replacing the default :Man behavior. We
     -- register it here in which-key for proper documentation.
     require('which-key').add({
-        { 'K', desc = 'Show LSP hover info' },
+        { 'K', desc = 'LSP hover info' },
     })
 end
 

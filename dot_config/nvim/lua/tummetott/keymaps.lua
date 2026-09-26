@@ -290,12 +290,6 @@ local maps = {
         opts = { desc = 'Search forwards and select' }
     },
     {
-        mode = 'n',
-        lhs = 'Q',
-        rhs = 'Qj',
-        opts = { desc = 'Repeat macro and move line down', remap = true }
-    },
-    {
         mode = 'x',
         lhs = 'Q',
         rhs = ':norm Q<CR>',

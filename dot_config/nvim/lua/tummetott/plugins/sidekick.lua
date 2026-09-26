@@ -78,7 +78,7 @@ return {
         {
             '<leader>la',
             function() require('sidekick.cli').select() end,
-            desc = 'Agent',
+            desc = 'Open agent',
         },
         {
             '<leader>lr',
