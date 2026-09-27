@@ -1,13 +1,21 @@
 # vim: set ft=ini:
 
 {{ if eq .chezmoi.hostname "Catch" -}}
+# Catch defaults to the SRLabs indentity
 [include]
     path = ~/.config/git/config-srlabs
 
-[includeIf "hasconfig:remote.*.url:git@github.com-private:*/**"]
+# Tummetott repositories use the private profile
+[includeIf "hasconfig:remote.*.url:git@github.com:tummetott/**"]
     path = ~/.config/git/config-tummetott
 
+# Command to switch identity on demand for a repository
+[alias]
+    use-private = "!git config --local include.path ~/.config/git/config-tummetott"
+    use-work = "!git config --local include.path ~/.config/git/config-srlabs"
+
 {{- else }}
+# Other machines use the Tummetott identity
 [include]
     path = ~/.config/git/config-tummetott
 {{- end }}
