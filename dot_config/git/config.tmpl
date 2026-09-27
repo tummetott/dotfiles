@@ -1,17 +1,15 @@
 # vim: set ft=ini:
 
 {{ if eq .chezmoi.hostname "Catch" -}}
-[user]
-    name = jonas
-    email = 274872563+jonas-srlabs@users.noreply.github.com
-
-[includeIf "hasconfig:remote.*.url:ssh://git@ssh.gitlab.srlabs.de:45983/**"]
+[include]
     path = ~/.config/git/config-srlabs
 
+[includeIf "hasconfig:remote.*.url:git@github.com-private:*/**"]
+    path = ~/.config/git/config-tummetott
+
 {{- else }}
-[user]
-    name = Tummetott
-    email = 19708025+Tummetott@users.noreply.github.com
+[include]
+    path = ~/.config/git/config-tummetott
 {{- end }}
 
 [pull]
