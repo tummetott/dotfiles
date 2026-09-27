@@ -1,5 +1,5 @@
 return {
-    'johmsalas/text-case.nvim',
+    'tummetott/text-case.nvim',
     enabled = true,
     init = function()
         require('which-key').add {
