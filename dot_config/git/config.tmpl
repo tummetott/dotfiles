@@ -1,7 +1,7 @@
 # vim: set ft=ini:
 
 {{ if eq .chezmoi.hostname "Catch" -}}
-# Catch defaults to the SRLabs indentity
+# Catch defaults to the SRLabs identity
 [include]
     path = ~/.config/git/config-srlabs
 
@@ -9,7 +9,9 @@
 [includeIf "hasconfig:remote.*.url:git@github.com:tummetott/**"]
     path = ~/.config/git/config-tummetott
 
-# Command to switch identity on demand for a repository
+# Switch this repository's Git identity and SSH key on demand.
+# To update the author of the latest commit after switching:
+# git commit --amend --no-edit --reset-author
 [alias]
     use-private = "!git config --local include.path ~/.config/git/config-tummetott"
     use-work = "!git config --local include.path ~/.config/git/config-srlabs"
