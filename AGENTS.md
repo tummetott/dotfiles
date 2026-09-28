@@ -74,11 +74,10 @@ When package availability or installation details are unknown, research the supp
 
 # Safe Change Workflow
 
-After changing templates, install declarations, external resources, scripts, platform conditions, or source-to-target mappings, inspect what chezmoi renders:
+Check rendered output with `chezmoi diff` after changing:
 
-```text
-chezmoi diff
-```
+* any `.tmpl` file
+* bootstrap installation inputs outside templates: `.chezmoidata.toml`, `.chezmoiexternal.toml`, package declarations, or install flags in `~/.config/chezmoi/chezmoi.toml`
 
 Check that:
 
