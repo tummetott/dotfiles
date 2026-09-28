@@ -143,6 +143,7 @@ return {
             { 'g%', mode = { 'o', 'x' }, hidden = true },
             { '[%', mode = { 'o', 'x' }, hidden = true },
             { ']%', mode = { 'o', 'x' }, hidden = true },
+            { '<leader>o',  group = 'Open' },
         },
         show_help = true,
         show_key = true,

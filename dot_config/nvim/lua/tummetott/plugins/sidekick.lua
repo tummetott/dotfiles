@@ -76,9 +76,9 @@ return {
             mode = { 'n', 't', 'i', 'x' },
         },
         {
-            '<leader>la',
+            '<leader>oa',
             function() require('sidekick.cli').select() end,
-            desc = 'Open agent',
+            desc = 'Agent',
         },
         {
             '<leader>lf',

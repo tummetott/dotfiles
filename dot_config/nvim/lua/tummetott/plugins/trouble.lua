@@ -69,6 +69,7 @@ return {
                 format = "{file_icon}{filename}",
             },
             quickfix = {
+                warn_no_results = false,
                 sort = { "pos", "filename", "severity", "message" },
                 groups = {
                     { "filename", format = "{file_icon}{filename} {count}" },
@@ -76,6 +77,7 @@ return {
                 format = "{text:ts} {pos}",
             },
             loclist = {
+                warn_no_results = false,
                 sort = { "pos", "filename", "severity", "message" },
                 groups = {
                     { "filename", format = "{file_icon}{filename} {count}" },
@@ -201,19 +203,24 @@ return {
     cmd = { 'Trouble' },
     keys = {
         {
-            '<Leader>tq',
+            '<Leader>oq',
             function() require('trouble').toggle('quickfix') end,
-            desc = 'Toggle quickfix list',
+            desc = 'Quickfix list',
         },
         {
-            '<Leader>tl',
+            '<Leader>ol',
             function() require('trouble').toggle('loclist') end,
-            desc = 'Toggle location list',
+            desc = 'Location list',
         },
         {
-            '<Leader>tt',
+            '<Leader>ot',
             function() require('trouble').toggle('telescope') end,
-            desc = 'Toggle telescope list',
+            desc = 'Telescope list',
+        },
+        {
+            '<Leader>oT',
+            function() require('trouble').toggle('telescope_files') end,
+            desc = 'Telescope files',
         },
         {
             'gO',

@@ -20,9 +20,9 @@ return {
     cmd = { 'Outline', 'OutlineOpen' },
     keys = {
         {
-            '<leader>o',
+            '<leader>oo',
             '<cmd>Outline!<cr>',
-            desc = 'Toggle outline',
+            desc = 'Outline',
         }
     }
 }

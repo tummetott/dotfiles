@@ -297,9 +297,9 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>z',
+        lhs = '<leader>oz',
         rhs = '<cmd>Lazy<cr>',
-        opts = { desc = 'Open Lazy' }
+        opts = { desc = 'Lazy' }
     },
     {
         mode = 'n',
