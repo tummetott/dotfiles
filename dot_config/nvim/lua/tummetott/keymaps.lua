@@ -467,6 +467,24 @@ local maps = {
         rhs = '<cmd>%s/\\s\\+$//e<CR>',
         opts = { desc = 'Trim trailing whitespaces' }
     },
+    {
+        mode = 'n',
+        lhs = '<c-/>',
+        rhs = 'gcc',
+        opts = { remap = true, desc = 'Comment current line' }
+    },
+    {
+        mode = 'i',
+        lhs = '<c-/>',
+        rhs = '<c-o>gcc',
+        opts = { remap = true, desc = 'Comment current line' }
+    },
+    {
+        mode = 'x',
+        lhs = '<c-/>',
+        rhs = 'gc',
+        opts = { remap = true, desc = 'Comment current selection' }
+    },
 }
 
 for _, m in ipairs(maps) do
