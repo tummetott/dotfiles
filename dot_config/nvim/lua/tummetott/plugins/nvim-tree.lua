@@ -36,7 +36,7 @@ return {
     },
     keys = {
         {
-            '<leader>of',
+            '<c-s>',
             '<Cmd>NvimTreeToggle<CR>',
             desc = 'File Tree',
         }

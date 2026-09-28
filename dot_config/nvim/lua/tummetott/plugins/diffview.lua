@@ -19,6 +19,15 @@ return {
             show = true,
         },
         use_icons = vim.g.nerdfonts,
+        -- Histogram groups changes into cleaner hunks than the default myers
+        -- algorithm, and linematch pairs added with deleted lines inside a
+        -- hunk so the intra-line DiffText highlight carries meaning.
+        diffopt = {
+            algorithm = 'histogram',
+            linematch = 60,
+        },
+        auto_close_on_empty = true,
+        clean_up_buffers = true,
         keymaps = {
             view = {
                 ['<C-s>'] = '<CMD>DiffviewToggleFiles<CR>',
@@ -51,28 +60,16 @@ return {
                 vim.wo.wrap = vim.t.diff_wrap or false
                 vim.wo.list = false
                 vim.wo.relativenumber = false
-
-                -- Disable scrollbar
-                local ok, scrollbar = pcall(require, 'scrollbar.utils')
-                if ok then
-                    scrollbar.hide()
-                end
-            end,
-            view_closed = function()
-                -- Enable scrollbar
-                local ok, scrollbar = pcall(require, 'scrollbar.utils')
-                if ok then
-                    scrollbar.show()
-                end
             end,
         }
     },
     cmd = {
         'DiffviewOpen',
+        'DiffviewToggle',
         'DiffviewClose',
         'DiffviewFileHistory',
         'DiffviewToggleFiles',
-        'DiffviewFocusFiles ',
+        'DiffviewFocusFiles',
         'DiffviewRefresh',
         'DiffviewLog',
     },

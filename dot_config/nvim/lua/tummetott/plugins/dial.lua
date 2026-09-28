@@ -1,4 +1,4 @@
--- Increment and decrement numbers / dates / case / semver etc
+-- Increment and decrement numbers / dates / booleans / semver etc
 return {
     'monaqa/dial.nvim',
     enabled = true,
@@ -10,20 +10,29 @@ return {
                 augend.integer.alias.hex,
                 augend.integer.alias.octal,
                 augend.integer.alias.binary,
-                augend.date.alias['%Y/%m/%d'],
+                augend.date.alias['%d.%m.%Y'],
                 augend.constant.alias.de_weekday,
                 augend.constant.alias.de_weekday_full,
-                augend.constant.alias.bool,
                 augend.semver.alias.semver,
+                -- preserve_case matches any capitalization and carries it over
+                -- to the replacement, so TRUE cycles to FALSE and On to Off
+                augend.constant.new {
+                    elements = { 'true', 'false' },
+                    word = true,
+                    cyclic = true,
+                    preserve_case = true,
+                },
                 augend.constant.new {
                     elements = { 'and', 'or' },
                     word = true,
                     cyclic = true,
+                    preserve_case = true,
                 },
                 augend.constant.new {
                     elements = { 'on', 'off' },
                     word = true,
                     cyclic = true,
+                    preserve_case = true,
                 }
             },
         }
