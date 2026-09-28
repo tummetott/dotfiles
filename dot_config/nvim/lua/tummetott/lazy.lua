@@ -2,9 +2,10 @@ vim.pack.add { "https://github.com/folke/lazy.nvim" }
 
 require('lazy').setup {
     spec = {
-        -- Import non-plugin configuration separately so lazy profiles the
-        -- startup cost of options and autocmds.
+        -- Import non-plugin configuration separately so lazy profiles each
+        -- module's startup cost.
         { import = 'tummetott.options' },
+        { import = 'tummetott.pack' },
         { import = 'tummetott.autocmds' },
         -- Each plugin specification is organized in a separate file. Here we
         -- define the path to the parent directory
