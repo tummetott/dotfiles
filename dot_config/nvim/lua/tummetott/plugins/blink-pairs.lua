@@ -23,14 +23,20 @@ return {
             },
             -- Extend default rules
             pairs = {},
+            -- The default <C-b> and <C-S-b> wrap mappings shadow the readline
+            -- style cursor movement keymaps. I dont use the feature anyways
+            wrap = {
+                ['<C-b>'] = false,
+                ['<C-S-b>'] = false,
+            },
         },
         highlights = {
             enabled = true,
-            -- requires require('vim._extui').enable({}), otherwise has no effect
+            -- needs the plugin's vim._extui integration, absent in nvim 0.12
             cmdline = false,
-            -- Rotating colors by nesting depth (rainbow). These groups are not
-            -- defined by default as I dont use this feature
+            -- Swap in the commented groups to enable rainbow
             groups = {
+                'BlinkPairs',
                 -- 'BlinkPairsOrange',
                 -- 'BlinkPairsPurple',
                 -- 'BlinkPairsBlue',
@@ -52,6 +58,5 @@ return {
     },
     highlights = {
         BlinkPairsUnmatched = { bg = 'red' },
-        BlinkPairsMatchParen = { link = 'MatchParen' },
     }
 }
