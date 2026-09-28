@@ -203,6 +203,11 @@ return {
     cmd = { 'Trouble' },
     keys = {
         {
+            '<Leader>od',
+            function() require('trouble').toggle('diagnostics') end,
+            desc = 'Diagnostics list',
+        },
+        {
             '<Leader>oq',
             function() require('trouble').toggle('quickfix') end,
             desc = 'Quickfix list',

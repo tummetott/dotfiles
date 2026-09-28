@@ -45,9 +45,9 @@ return {
     event = 'VeryLazy',
     keys = {
         {
-            '<Leader>od',
+            '<Leader>oc',
             '<Cmd>TodoTrouble<CR>',
-            desc = 'Todo list',
+            desc = 'Todo comments',
         },
         {
             '<Leader>ft',

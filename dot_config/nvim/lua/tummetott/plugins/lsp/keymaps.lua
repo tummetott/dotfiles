@@ -20,7 +20,7 @@ vim.keymap.set(
     'n',
     'grs',
     function() vim.lsp.buf.signature_help() end,
-    { desc = 'Show signature help' }
+    { desc = 'Signature help' }
 )
 
 -- Auto formatting
@@ -36,9 +36,9 @@ vim.keymap.set(
     'n',
     'grr',
     function()
-        require 'telescope.builtin'.lsp_references()
+        require('trouble').open('lsp_references')
     end,
-    { desc = 'Goto references' }
+    { desc = 'LSP references' }
 )
 
 -- List workspace folders
@@ -141,7 +141,7 @@ M.register_buffer_keymaps = function(client, bufnr)
             'n',
             'gD',
             function()
-                require('trouble').open('lsp_declaration')
+                require('trouble').open('lsp_declarations')
             end,
             { desc = 'Go to declaration', buffer = bufnr }
         )

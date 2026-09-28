@@ -297,6 +297,18 @@ local maps = {
     },
     {
         mode = 'n',
+        lhs = '<leader>oQ',
+        rhs = '<cmd>copen<cr>',
+        opts = { desc = 'Native quickfix list' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>oL',
+        rhs = '<cmd>lopen<cr>',
+        opts = { desc = 'Native location list' }
+    },
+    {
+        mode = 'n',
         lhs = '<leader>oz',
         rhs = '<cmd>Lazy<cr>',
         opts = { desc = 'Lazy' }
