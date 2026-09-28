@@ -81,21 +81,30 @@ return {
             desc = 'Open agent',
         },
         {
+            '<leader>lf',
+            function() require('sidekick.cli').send({ msg = '{file}' }) end,
+            desc = 'Send file',
+        },
+        {
             '<leader>lr',
             function() require('sidekick.cli').send({ msg = '{line}' }) end,
-            mode = { 'x' },
+            mode = { 'n', 'x' },
             desc = 'Send reference',
         },
         {
-            '<leader>lr',
-            function() require('sidekick.cli').send({ msg = '{file}' }) end,
-            desc = 'Send reference',
+            '<leader>lc',
+            function()
+                local line = vim.trim(vim.api.nvim_get_current_line())
+                require('sidekick.cli').send({ text = { { { line } } } })
+            end,
+            mode = { 'n' },
+            desc = 'Send content',
         },
         {
-            '<leader>lt',
+            '<leader>lc',
             function() require('sidekick.cli').send({ msg = '{selection}' }) end,
             mode = { 'x' },
-            desc = 'Send text',
+            desc = 'Send content',
         },
     },
 }
