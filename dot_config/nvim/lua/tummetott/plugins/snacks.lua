@@ -124,6 +124,18 @@ return {
                 },
             },
         },
+        terminal = {
+            enabled = true,
+            win = {
+                position = 'bottom',
+                height = 0.8,
+                -- Snacks names the terminal job in the winbar unless the
+                -- window brings its own, so heirline's is handed over here
+                wo = {
+                    winbar = "%{%v:lua.require'heirline'.eval_winbar()%}",
+                },
+            },
+        },
         -- notifier = { enabled = true },
         -- quickfile = { enabled = true },
         -- scope = { enabled = true },
@@ -145,6 +157,12 @@ return {
                 vim.cmd('redraw!')
             end,
             desc = 'Toggle indent lines',
+        },
+        {
+            '<c-cr>',
+            function() Snacks.terminal.toggle() end,
+            mode = { 'n', 't' },
+            desc = 'Toggle terminal',
         },
     }
 }

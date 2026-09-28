@@ -4,7 +4,13 @@ return {
     keys = {
         {
             '<Leader>+',
-            function() require('duck').hatch() end,
+            function()
+                -- Hatch a duck without winborder
+                local winborder = vim.o.winborder
+                vim.o.winborder = ''
+                require('duck').hatch()
+                vim.o.winborder = winborder
+            end,
             desc = 'More ducks!',
         },
         {
