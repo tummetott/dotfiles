@@ -4,6 +4,8 @@ return {
         'nvim-tree/nvim-web-devicons',
         enabled = vim.g.nerdfonts,
     },
+    -- No lazy loading because the plugin hijacks netrw
+    lazy = false,
     opts = {
         columns = vim.g.nerdfonts and {
             'icon',
@@ -11,6 +13,8 @@ return {
         } or {
             'permissions',
         },
+        delete_to_trash = true,
+        watch_for_changes = true,
         use_default_keymaps = false,
         keymaps = {
             ['g?'] = 'actions.show_help',
@@ -40,5 +44,4 @@ return {
             end,
         }
     },
-    -- No lazy loading because the plugin hijacks netrw
 }

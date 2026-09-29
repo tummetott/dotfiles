@@ -11,7 +11,7 @@ return {
             enable = true,
         },
         renderer = {
-            highlight_git = true,
+            highlight_git = 'name',
             indent_markers = {
                 enable = true,
             },
