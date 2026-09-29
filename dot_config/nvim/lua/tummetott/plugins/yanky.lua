@@ -1,5 +1,3 @@
--- TODO: OSC 52 breaks yanky. Check issue once the following PR is merged
--- https://github.com/gbprod/yanky.nvim/issues/213
 return {
     'gbprod/yanky.nvim',
     enabled = true,
@@ -57,24 +55,24 @@ return {
         {
             'gp',
             '<Plug>(YankyPutAfterFilter)',
-            desc = 'Put below current line and reindent',
+            desc = 'Put below and reindent',
             mode = { 'n', 'x' },
         },
         {
             'gP',
             '<Plug>(YankyPutBeforeFilter)',
-            desc = 'Put above current line and reindent',
+            desc = 'Put above and reindent',
             mode = { 'n', 'x' },
         },
         {
             '<C-n>',
             '<Plug>(YankyCycleForward)',
-            desc = 'Next item in yank ring',
+            desc = 'Next in yank ring',
         },
         {
             '<C-p>',
             '<Plug>(YankyCycleBackward)',
-            desc = 'Previous item in yank ring',
+            desc = 'Previous in yank ring',
         },
         {
             '<leader>fy',
