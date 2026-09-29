@@ -29,6 +29,8 @@ return {
                 cmp       = false,
                 blink     = true,
                 dapui     = false,
+                lualine   = false,
+                snacks    = false,
             },
             use_lazy_specs = true,
             overrides = function(_)
