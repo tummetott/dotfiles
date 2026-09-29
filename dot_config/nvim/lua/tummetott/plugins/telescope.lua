@@ -113,9 +113,6 @@ table.insert(M, {
                         }
                     }
                 },
-                lsp_code_actions = {
-                    theme = 'cursor',
-                }
             },
         }
     end,

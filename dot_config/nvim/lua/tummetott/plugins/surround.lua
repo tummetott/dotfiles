@@ -1,6 +1,9 @@
 return {
     'kylechui/nvim-surround',
     enabled = true,
+    init = function()
+        vim.g.nvim_surround_no_mappings = true
+    end,
     opts = {
         move_cursor = false,
     },
