@@ -1,9 +1,5 @@
 local M = {}
 
--- TODO: integrate incremental selection once merged
--- See: https://github.com/neovim/neovim/pull/36993
--- Use <c-n> <c-p> in visual mode
-
 -- TODO: Consider adding treesitter-locals once plugin is stable
 -- https://github.com/nvim-treesitter/nvim-treesitter-locals
 
@@ -12,12 +8,6 @@ table.insert(M, {
     -- This plugin does not support lazy loading
     lazy = false,
     build = ':TSUpdate',
-    init = function()
-        require('which-key').add {
-            { '[s', group = 'Swap with previous' },
-            { ']s', group = 'Swap with next' },
-        }
-    end,
     -- This plugin does not necessarily need a call to setup
     config = function()
 
@@ -229,7 +219,7 @@ table.insert(M, {
             mode = { 'n', 'x', 'o' },
         },
         {
-            ']c',
+            ']k',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_start('@class.outer', 'textobjects')
@@ -238,7 +228,7 @@ table.insert(M, {
             mode = { 'n', 'x', 'o' },
         },
         {
-            '[c',
+            '[k',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_start('@class.outer', 'textobjects')
@@ -247,7 +237,7 @@ table.insert(M, {
             mode = { 'n', 'x', 'o' },
         },
         {
-            ']C',
+            ']K',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_next_end('@class.outer', 'textobjects')
@@ -256,7 +246,7 @@ table.insert(M, {
             mode = { 'n', 'x', 'o' },
         },
         {
-            '[C',
+            '[K',
             function()
                 require('nvim-treesitter-textobjects.move')
                 .goto_previous_end('@class.outer', 'textobjects')

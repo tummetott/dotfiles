@@ -461,6 +461,21 @@ local maps = {
         rhs = '<esc>',
         opts = { desc = 'Esc passthrough' }
     },
+    -- Neovim's builtin incremental selection lives on the `an` and `in` text
+    -- objects, which stay available to operators. These remap them onto a
+    -- grow/shrink pair for visual mode.
+    {
+        mode = 'x',
+        lhs = '<C-n>',
+        rhs = 'an',
+        opts = { remap = true, desc = 'Increment selection' }
+    },
+    {
+        mode = 'x',
+        lhs = '<C-p>',
+        rhs = 'in',
+        opts = { remap = true, desc = 'Decrement selection' }
+    },
     {
         mode = 'n',
         lhs = '<leader>w',
