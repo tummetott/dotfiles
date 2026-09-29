@@ -8,7 +8,7 @@ table.insert(M, {
     -- This plugin does not support lazy loading
     lazy = false,
     build = ':TSUpdate',
-    -- This plugin does not necessarily need a call to setup
+    -- This plugin does not need a call to setup
     config = function()
 
         -- Note: `tree-sitter` must be installed. However, we do not error
@@ -83,13 +83,12 @@ table.insert(M, {
     enabled = true,
     branch = 'main',
     init = function()
-        -- The README suggests disabling all built-in ftplugin mappings to avoid
-        -- keymap conflicts. However, that also disables mappings from plugins I
-        -- want to keep, such as matchit. For now, I am not setting
-        -- `g:no_plugin_maps`. If built-in ftplugin mappings override my
-        -- Treesitter mappings, I will switch the Treesitter mappings to
-        -- buffer-local mappings in a FileType autocmd so they take precedence.
-        -- vim.g.no_plugin_maps = true
+        -- Builtin ftplugins for python, vim, rust, markdown and ruby define
+        -- buffer local motions on ]], ]m and friends, which take precedence
+        -- over the global treesitter ones below. Suppressing them keeps a
+        -- single set of motions that understands the syntax tree rather than
+        -- indentation.
+        vim.g.no_plugin_maps = true
     end,
     opts = {
         -- Automatically jump forward to textobj
