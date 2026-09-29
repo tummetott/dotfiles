@@ -115,6 +115,10 @@ vim.opt.foldlevelstart = 99
 -- Don't show the foldcolumn
 vim.opt.foldcolumn = '0'
 
+-- An empty foldtext renders a closed fold as its own line, highlighted and
+-- unwrapped, padded out with the 'fold' entry of 'fillchars'
+vim.opt.foldtext = ''
+
 -- Don't save the current directory when saving a view with :mkview
 vim.opt.viewoptions:remove('curdir')
 
