@@ -16,7 +16,6 @@ return {
                 'DiffviewFileHistory',
                 'qf',
                 'sidekick_terminal',
-                'codecompanion_cli',
                 'Outline',
             },
             condition = function(win)

@@ -58,7 +58,6 @@ return {
                             'snacks_dashboard',
                             'TelescopePrompt',
                             'TelescopeResults',
-                            'codecompanion_cli',
                         },
                         buftype = {
                             'prompt',
