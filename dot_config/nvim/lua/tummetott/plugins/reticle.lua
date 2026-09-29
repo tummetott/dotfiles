@@ -44,7 +44,7 @@ return {
                 reticle.toggle_cursorline()
                 echo_toggle('Cursorline', reticle.has_cursorline())
             end,
-            desc = 'Toggle cursorline',
+            desc = 'Cursorline',
         },
         {
             '<leader><space>u',
@@ -53,16 +53,7 @@ return {
                 reticle.toggle_cursorcolumn()
                 echo_toggle('Cursorcolumn', reticle.has_cursorcolumn())
             end,
-            desc = 'Toggle cursorcolumn',
-        },
-        {
-            '<leader><space>x',
-            function()
-                local reticle = require 'reticle'
-                reticle.toggle_cursorcross()
-                echo_toggle('Cursorcross', reticle.has_cursorcross())
-            end,
-            desc = 'Toggle cursorcross',
+            desc = 'Cursorcolumn',
         },
     }
 }

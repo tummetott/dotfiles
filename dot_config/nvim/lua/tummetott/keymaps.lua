@@ -320,7 +320,7 @@ local maps = {
             vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
             echo_toggle('Diff', vim.o.diff)
         end,
-        opts = { desc = 'diff' }
+        opts = { desc = 'Diff' }
     },
     {
         mode = 'n',
@@ -329,7 +329,7 @@ local maps = {
             vim.o.hlsearch = not vim.o.hlsearch
             echo_toggle('Highlight search', vim.o.hlsearch)
         end,
-        opts = { desc = 'highlight search' }
+        opts = { desc = 'Highlight search' }
     },
     {
         mode = 'n',
@@ -338,7 +338,7 @@ local maps = {
             vim.o.list = not vim.o.list
             echo_toggle('Listchars', vim.o.list)
         end,
-        opts = { desc = 'listchars' }
+        opts = { desc = 'Listchars' }
     },
     {
         mode = 'n',
@@ -347,7 +347,7 @@ local maps = {
             vim.o.number = not vim.o.number
             echo_toggle('Line numbers', vim.o.number)
         end,
-        opts = { desc = 'line numbers' }
+        opts = { desc = 'Line numbers' }
     },
     {
         mode = 'n',
@@ -356,7 +356,7 @@ local maps = {
             vim.o.relativenumber = not vim.o.relativenumber
             echo_toggle('Relative numbers', vim.o.relativenumber)
         end,
-        opts = { desc = 'relative numbers' }
+        opts = { desc = 'Relative numbers' }
     },
     {
         mode = 'n',
@@ -365,7 +365,7 @@ local maps = {
             vim.o.spell = not vim.o.spell
             echo_toggle('Spell check', vim.o.spell)
         end,
-        opts = { desc = 'spell check' }
+        opts = { desc = 'Spell check' }
     },
     {
         mode = 'n',
@@ -374,7 +374,7 @@ local maps = {
             vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
             echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
         end,
-        opts = { desc = 'colorcolumn' }
+        opts = { desc = 'Colorcolumn' }
     },
     {
         mode = 'n',
@@ -385,7 +385,7 @@ local maps = {
             }
             echo_toggle('Virtual text', vim.diagnostic.config().virtual_text)
         end,
-        opts = { desc = 'virtual text' }
+        opts = { desc = 'Virtual text' }
     },
     {
         mode = 'n',
@@ -407,7 +407,7 @@ local maps = {
                 echo_toggle('Wrap', vim.o.wrap)
             end
         end,
-        opts = { desc = 'line wrapping' }
+        opts = { desc = 'Line wrapping' }
     },
     {
         mode = 'n',

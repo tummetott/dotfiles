@@ -151,12 +151,12 @@ return {
     },
     keys = {
         {
-            'yoe',
+            '<leader><space>e',
             function()
-                vim.b[0].snacks_indent = not vim.b[0].snacks_indent
+                vim.b[0].snacks_indent = vim.b[0].snacks_indent == false
                 vim.cmd('redraw!')
             end,
-            desc = 'Toggle indent lines',
+            desc = 'Indent lines',
         },
         {
             '<c-cr>',

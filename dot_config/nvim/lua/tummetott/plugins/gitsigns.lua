@@ -98,9 +98,9 @@ return {
             desc = 'Reset selected',
         },
         {
-            'yog',
+            '<leader><space>g',
             function() require 'gitsigns'.toggle_signs() end,
-            desc = 'Toggle gitsigns'
+            desc = 'Gitsigns'
         },
         {
             'ih',
