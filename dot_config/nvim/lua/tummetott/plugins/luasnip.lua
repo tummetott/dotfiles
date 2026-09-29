@@ -21,11 +21,18 @@ return {
 
         -- Config for luasnips
         ls.config.set_config({
-            -- When true, jump back to a snipped even if you moved outside of the selection
-            history = true,
+            -- A root snippet stays active after reaching its last node, more
+            -- than one root is remembered, and adjacent roots are linked, so a
+            -- finished snippet can be jumped back into
+            keep_roots = true,
+            link_roots = true,
+            exit_roots = false,
+            -- A snippet expanded inside another snippet's insert node is
+            -- traversed when that node is visited
+            link_children = true,
             -- Define events when the snippets get updated. We want to have dynamic
             -- snippets so I choose to update them whenever the text changed
-            updateevents = 'TextChanged,TextchangedI',
+            update_events = 'TextChanged,TextChangedI',
         })
 
         -- Load friendly snippets

@@ -10,6 +10,7 @@ return {
             'regex',
         },
         delay = 0,
+        disable_keymaps = true,
         -- Also highlight token under cursor
         under_cursor = true,
         large_file_cutoff = 1000,
