@@ -1,7 +1,6 @@
 return {
     'danymat/neogen',
     enabled = true,
-    dependencies = 'nvim-treesitter/nvim-treesitter',
     init = function()
         require('which-key').add {
             { '<leader>a', group = 'Annotation' },

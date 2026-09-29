@@ -1,5 +1,3 @@
----@diagnostic disable: param-type-mismatch
--- Smooth scolling
 return {
     'karb94/neoscroll.nvim',
     enabled = true,
@@ -15,21 +13,7 @@ return {
         },
         -- When true, turn of syntax highlighting while scrolling
         performance_mode = false,
-        pre_hook = function()
-            vim.cmd('silent! ScrollbarHide')
-            vim.opt.eventignore:append({
-                'WinScrolled',
-                'CursorMoved',
-            })
-        end,
-        post_hook = function()
-            vim.cmd('silent! ScrollbarShow')
-            vim.opt.eventignore:remove({
-                'WinScrolled',
-                'CursorMoved',
-            })
-        end,
-        easing_function = 'sine',
+        easing = 'sine',
     },
     keys = {
         {
