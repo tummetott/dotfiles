@@ -10,18 +10,17 @@ return {
             untracked = { text = '│' },
         },
         signs_staged = {
-            add          = { text = '│' },
-            change       = { text = '│' },
+            add          = { text = '╎' },
+            change       = { text = '╎' },
+            delete       = { text = '╎' },
         },
         -- Show separate gutter signs for changes that have been git-staged
-        -- (index vs HEAD)
-        signs_staged_enable = false,
+        signs_staged_enable = true,
         preview_config = {
             border = 'rounded',
         },
         -- Untracked files are shown by gitsigns
         attach_to_untracked = true,
-        trouble = true,
     },
     init = function()
         require('which-key').add {
@@ -31,36 +30,35 @@ return {
     keys = {
         {
             ']h',
-            function()
-               vim.schedule(function() require 'gitsigns'.next_hunk() end)
-                return '<Ignore>'
-            end,
-            desc = 'Next hunk',
-            expr = true,
+            function() require 'gitsigns'.nav_hunk('next') end,
+            desc = 'Next unstaged hunk',
         },
         {
             '[h',
-            function()
-                vim.schedule(function() require 'gitsigns'.prev_hunk() end)
-                return '<Ignore>'
-            end,
+            function() require 'gitsigns'.nav_hunk('prev') end,
+            desc = 'Previous unstaged hunk',
+        },
+        {
+            ']H',
+            ---@diagnostic disable-next-line: missing-fields
+            function() require 'gitsigns'.nav_hunk('next', { target = 'all' }) end,
+            desc = 'Next hunk',
+        },
+        {
+            '[H',
+            ---@diagnostic disable-next-line: missing-fields
+            function() require 'gitsigns'.nav_hunk('prev', { target = 'all' }) end,
             desc = 'Previous hunk',
-            expr = true,
         },
         {
             '<Leader>gs',
             function() require 'gitsigns'.stage_hunk() end,
-            desc = 'Stage hunk',
+            desc = 'Stage/Unstage hunk',
         },
         {
             '<Leader>gS',
             function() require 'gitsigns'.stage_buffer() end,
             desc = 'Stage buffer'
-        },
-        {
-            '<Leader>gu',
-            function() require 'gitsigns'.undo_stage_hunk() end,
-            desc = 'Undo stage hunk'
         },
         {
             '<Leader>gr',
@@ -95,7 +93,7 @@ return {
         },
         {
             '<Leader>gr',
-            '<Cmd>Gitsigns reset_hunk<CR>',
+            ':Gitsigns reset_hunk<CR>',
             mode = 'v',
             desc = 'Reset selected',
         },
@@ -116,5 +114,9 @@ return {
         GitSignsDelete = { fg = 'red' },
         GitSignsChange = { fg = 'blue' },
         GitSignsUntracked = { fg = 'dark_gray' },
+        -- Staged hunks recede through brightness
+        GitSignsStagedAdd = { fg = { darken = 'green', amount = 0.5 } },
+        GitSignsStagedChange = { fg = { darken = 'blue', amount = 0.5 } },
+        GitSignsStagedDelete = { fg = { darken = 'red', amount = 0.5 } },
     }
 }
