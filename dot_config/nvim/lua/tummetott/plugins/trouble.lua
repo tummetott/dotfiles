@@ -1,13 +1,6 @@
--- A pretty list for showing diagnostics, references, telescope results,
--- quickfix and location lists
 return {
     'folke/trouble.nvim',
     enabled = true,
-    init = function()
-        require('which-key').add {
-            { "<leader>t", group = "Trouble" },
-        }
-    end,
     opts = {
         auto_close = true,    -- auto close when there are no items
         auto_open = false,    -- auto open when there are items
@@ -22,8 +15,7 @@ return {
         pinned = false,       -- When pinned, the opened trouble window will be bound to the current buffer
         win = {
             wo = {
-                -- HACK: Workaround until the following issue is resolved
-                -- https://github.com/folke/trouble.nvim/issues/681
+                -- HACK: Workaround to let heirline label the winbar
                 winbar = "%{%v:lua.require'heirline'.eval_winbar()%}",
             }
         },
