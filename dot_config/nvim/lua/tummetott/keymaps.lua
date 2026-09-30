@@ -499,3 +499,6 @@ local maps = {
 for _, m in ipairs(maps) do
     vim.keymap.set(m.mode, m.lhs, m.rhs, m.opts)
 end
+
+-- An empty spec lets lazy.nvim profile this configuration module.
+return {}

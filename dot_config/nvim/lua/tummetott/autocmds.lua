@@ -3,16 +3,6 @@ local augroup = vim.api.nvim_create_augroup
 
 local group = augroup('CoreGroup', { clear = true })
 
--- Register keymaps after startup so they do not delay the UI.
-autocmd('User', {
-    group = group,
-    pattern = 'VeryLazy',
-    once = true,
-    callback = function()
-        require('tummetott.keymaps')
-    end,
-})
-
 -- Hide the last entered ex command
 autocmd('CmdlineLeave', {
     group = group,

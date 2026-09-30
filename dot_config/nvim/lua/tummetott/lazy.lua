@@ -7,6 +7,7 @@ require('lazy').setup {
         { import = 'tummetott.options' },
         { import = 'tummetott.pack' },
         { import = 'tummetott.autocmds' },
+        { import = 'tummetott.keymaps' },
         { import = 'tummetott.commands' },
         -- Each plugin specification is organized in a separate file. Here we
         -- define the path to the parent directory
