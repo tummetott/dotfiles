@@ -1,5 +1,5 @@
 return {
-    'dlyongemallo/diffview-plus.nvim',
+    'tummetott/diffview-plus.nvim',
     enabled = true,
     init = function()
         require('which-key').add {
