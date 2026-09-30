@@ -1,9 +1,4 @@
-local function echo_toggle(label, enabled)
-    vim.api.nvim_echo({
-        { label .. ' ', 'Normal' },
-        { enabled and 'enabled' or 'disabled', enabled and 'DiagnosticOk' or 'DiagnosticWarn' },
-    }, false, {})
-end
+local utils = require 'tummetott.utils'
 
 return {
     'tummetott/reticle.nvim',
@@ -42,7 +37,7 @@ return {
             function()
                 local reticle = require 'reticle'
                 reticle.toggle_cursorline()
-                echo_toggle('Cursorline', reticle.has_cursorline())
+                utils.echo_toggle('Cursorline', reticle.has_cursorline())
             end,
             desc = 'Cursorline',
         },
@@ -51,7 +46,7 @@ return {
             function()
                 local reticle = require 'reticle'
                 reticle.toggle_cursorcolumn()
-                echo_toggle('Cursorcolumn', reticle.has_cursorcolumn())
+                utils.echo_toggle('Cursorcolumn', reticle.has_cursorcolumn())
             end,
             desc = 'Cursorcolumn',
         },

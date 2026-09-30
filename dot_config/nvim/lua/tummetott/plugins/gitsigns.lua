@@ -82,7 +82,10 @@ return {
         },
         {
             '<Leader>gl',
-            function() require 'gitsigns'.toggle_current_line_blame() end,
+            function()
+                local enabled = require 'gitsigns'.toggle_current_line_blame()
+                require 'tummetott.utils'.echo_toggle('Line blame', enabled)
+            end,
             desc = 'Toggle line blame'
         },
         {
@@ -99,7 +102,10 @@ return {
         },
         {
             '<leader><space>g',
-            function() require 'gitsigns'.toggle_signs() end,
+            function()
+                local enabled = require 'gitsigns'.toggle_signs()
+                require 'tummetott.utils'.echo_toggle('Gitsigns', enabled)
+            end,
             desc = 'Gitsigns'
         },
         {
@@ -118,5 +124,6 @@ return {
         GitSignsStagedAdd = { fg = { darken = 'green', amount = 0.5 } },
         GitSignsStagedChange = { fg = { darken = 'blue', amount = 0.5 } },
         GitSignsStagedDelete = { fg = { darken = 'red', amount = 0.5 } },
+        GitSignsCurrentLineBlame = { fg = 'gray' },
     }
 }

@@ -153,8 +153,10 @@ return {
         {
             '<leader><space>e',
             function()
-                vim.b[0].snacks_indent = vim.b[0].snacks_indent == false
+                local enabled = vim.b[0].snacks_indent == false
+                vim.b[0].snacks_indent = enabled
                 vim.cmd('redraw!')
+                require 'tummetott.utils'.echo_toggle('Indent lines', enabled)
             end,
             desc = 'Indent lines',
         },

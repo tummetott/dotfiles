@@ -1,12 +1,5 @@
 local utils = require 'tummetott.utils'
 
-local function echo_toggle(label, enabled)
-    vim.api.nvim_echo({
-        { label .. ' ', 'Normal' },
-        { enabled and 'enabled' or 'disabled', enabled and 'DiagnosticOk' or 'DiagnosticWarn' },
-    }, false, {})
-end
-
 local maps = {
     {
         mode = 'x',
@@ -318,7 +311,7 @@ local maps = {
         lhs = '<leader><space>d',
         rhs = function()
             vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
-            echo_toggle('Diff', vim.o.diff)
+            utils.echo_toggle('Diff', vim.o.diff)
         end,
         opts = { desc = 'Diff' }
     },
@@ -327,7 +320,7 @@ local maps = {
         lhs = '<leader><space>h',
         rhs = function()
             vim.o.hlsearch = not vim.o.hlsearch
-            echo_toggle('Highlight search', vim.o.hlsearch)
+            utils.echo_toggle('Highlight search', vim.o.hlsearch)
         end,
         opts = { desc = 'Highlight search' }
     },
@@ -336,7 +329,7 @@ local maps = {
         lhs = '<leader><space>l',
         rhs = function()
             vim.o.list = not vim.o.list
-            echo_toggle('Listchars', vim.o.list)
+            utils.echo_toggle('Listchars', vim.o.list)
         end,
         opts = { desc = 'Listchars' }
     },
@@ -345,7 +338,7 @@ local maps = {
         lhs = '<leader><space>n',
         rhs = function()
             vim.o.number = not vim.o.number
-            echo_toggle('Line numbers', vim.o.number)
+            utils.echo_toggle('Line numbers', vim.o.number)
         end,
         opts = { desc = 'Line numbers' }
     },
@@ -354,7 +347,7 @@ local maps = {
         lhs = '<leader><space>r',
         rhs = function()
             vim.o.relativenumber = not vim.o.relativenumber
-            echo_toggle('Relative numbers', vim.o.relativenumber)
+            utils.echo_toggle('Relative numbers', vim.o.relativenumber)
         end,
         opts = { desc = 'Relative numbers' }
     },
@@ -363,7 +356,7 @@ local maps = {
         lhs = '<leader><space>s',
         rhs = function()
             vim.o.spell = not vim.o.spell
-            echo_toggle('Spell check', vim.o.spell)
+            utils.echo_toggle('Spell check', vim.o.spell)
         end,
         opts = { desc = 'Spell check' }
     },
@@ -372,7 +365,7 @@ local maps = {
         lhs = '<leader><space>t',
         rhs = function()
             vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
-            echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
+            utils.echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
         end,
         opts = { desc = 'Colorcolumn' }
     },
@@ -383,7 +376,7 @@ local maps = {
             vim.diagnostic.config {
                 virtual_text = not vim.diagnostic.config().virtual_text,
             }
-            echo_toggle('Virtual text', vim.diagnostic.config().virtual_text)
+            utils.echo_toggle('Virtual text', vim.diagnostic.config().virtual_text)
         end,
         opts = { desc = 'Virtual text' }
     },
@@ -401,10 +394,10 @@ local maps = {
                         vim.wo[win].wrap = vim.t.diff_wrap
                     end
                 end
-                echo_toggle('Wrap', vim.t.diff_wrap)
+                utils.echo_toggle('Line wrap', vim.t.diff_wrap)
             else
                 vim.o.wrap = not vim.wo.wrap
-                echo_toggle('Wrap', vim.o.wrap)
+                utils.echo_toggle('Line wrap', vim.o.wrap)
             end
         end,
         opts = { desc = 'Line wrapping' }
@@ -430,6 +423,7 @@ local maps = {
                 else
                     vim.wo.cursorline = false
                 end
+                utils.echo_toggle('Diff highlights', true)
             else
                 vim.w.diff_highlights_forced_off = true
                 vim.opt_local.winhl:append {
@@ -447,6 +441,7 @@ local maps = {
                 else
                     vim.wo.cursorline = true
                 end
+                utils.echo_toggle('Diff highlights', false)
             end
         end,
         opts = { desc = 'Toggle diff highlights' }
