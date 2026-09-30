@@ -93,7 +93,7 @@ autocmd('FileType', {
             local line = vim.api.nvim_win_get_cursor(0)[1]
             require('tummetott.utils.qflist').delete_qf_entries(line, line)
         end, {
-            buffer = ctx.buf,
+            buf = ctx.buf,
             desc = 'Delete quickfix entry',
         })
 
@@ -103,7 +103,7 @@ autocmd('FileType', {
             local last = vim.api.nvim_win_get_cursor(0)[1]
             require('tummetott.utils.qflist').delete_qf_entries(math.min(first, last), math.max(first, last))
         end, {
-            buffer = ctx.buf,
+            buf = ctx.buf,
             desc = 'Delete qf entries',
         })
     end,
@@ -124,8 +124,9 @@ autocmd({ 'BufWritePre' }, {
 
 -- Disable diff highlights when in visual mode.
 autocmd('ModeChanged', {
+    group = group,
     -- Entering any visual mode (\22 is visual block mode).
-    pattern = '*:[v\22]',
+    pattern = '*:[vV\22]',
     callback = function()
         -- This window local flag is set by a keymap
         if vim.w.diff_highlights_forced_off then
@@ -134,13 +135,15 @@ autocmd('ModeChanged', {
         vim.opt_local.winhl:append {
             DiffAdd = 'None',
             DiffText = 'None',
+            DiffTextAdd = 'None',
             DiffChange = 'None',
         }
     end
 })
 autocmd('ModeChanged', {
+    group = group,
     -- Leaving any visual mode.
-    pattern = '*:[^v\22]',
+    pattern = '[vV\22]:[^vV\22]*',
     callback = function()
         if vim.w.diff_highlights_forced_off then
             return
@@ -148,23 +151,10 @@ autocmd('ModeChanged', {
         vim.opt_local.winhl:remove {
             'DiffAdd',
             'DiffText',
+            'DiffTextAdd',
             'DiffChange',
         }
     end
-})
-
--- FIX: Snacks reuses its dashboard buffer when opening a file (via :edit,
--- Telescope, etc.). Since the buffer already exists, Neovim skips
--- BufRead/BufNewFile events, leaving no filetype. This hook re-detects the
--- filetype for any buffer missing one, restoring syntax highlighting and LSP
--- setup.
-autocmd('BufEnter', {
-    group = group,
-    callback = function()
-        if vim.bo.filetype == '' and vim.fn.expand('%:e') ~= '' then
-            vim.cmd('silent! filetype detect')
-        end
-    end,
 })
 
 -- Prevent accidentally saving a file named '\'.
@@ -178,24 +168,9 @@ autocmd('BufWriteCmd', {
     desc = "Prevent accidentally saving a file named '\\'"
 })
 
--- Disable the command line history window opened by `q:`.
--- Mapping `q:` to <Nop> would introduce a delay when stopping macro
--- recording with `q`, because `q:` makes `q` a keymap prefix and
--- Neovim waits for `timeoutlen` to see if `:` follows.
--- Instead, allow the built-in command to trigger and immediately
--- close the command window via an autocmd, which avoids affecting
--- macro behavior.
--- autocmd("CmdwinEnter", {
---     callback = function()
---         if vim.fn.getcmdwintype() == ":" then
---             vim.cmd("quit")
---         end
---     end,
---     desc = "Disable q: command window",
--- })
-
 -- Disable linenumbers in command windows (search and cmd history)
 autocmd("CmdwinEnter", {
+    group = group,
     callback = function()
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false

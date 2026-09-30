@@ -418,6 +418,7 @@ local maps = {
                 vim.opt_local.winhl:remove {
                     'DiffAdd',
                     'DiffText',
+                    'DiffTextAdd',
                     'DiffChange',
                 }
                 local ok, reticle = pcall(require, 'reticle')
@@ -431,6 +432,7 @@ local maps = {
                 vim.opt_local.winhl:append {
                     DiffAdd = 'None',
                     DiffText = 'None',
+                    DiffTextAdd = 'None',
                     DiffChange = 'None',
                 }
                 -- ISSUE: cursorline still shows an underline even if diff
