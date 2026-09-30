@@ -5,7 +5,7 @@ local keymaps = require("tummetott.plugins.lsp.keymaps")
 
 -- Global options for all diagnostics
 vim.diagnostic.config({
-    virtual_text = true,
+    virtual_text = false,
     underline = false,
     update_in_insert = false,
     severity_sort = true,
