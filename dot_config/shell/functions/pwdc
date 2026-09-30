@@ -1,0 +1,14 @@
+# vim: set ft=bash:
+
+function pwdc {
+    if command -v pbcopy > /dev/null 2>&1; then
+        printf '%s' "$PWD" | pbcopy
+    elif [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy > /dev/null 2>&1; then
+        printf '%s' "$PWD" | wl-copy
+    elif [ -n "${DISPLAY:-}" ] && command -v xclip > /dev/null 2>&1; then
+        printf '%s' "$PWD" | xclip -selection clipboard
+    else
+        printf '%s\n' 'pwdc: no clipboard command available' >&2
+        return 1
+    fi
+}
