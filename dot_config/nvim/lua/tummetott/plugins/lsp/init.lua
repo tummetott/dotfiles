@@ -1,13 +1,11 @@
-M = {}
+local M = {}
 
 -- Loading this module automatically registers all global LSP-related keymaps
 local keymaps = require("tummetott.plugins.lsp.keymaps")
 
-local doc_hl_grp = vim.api.nvim_create_augroup("document_hl", {})
-
 -- Global options for all diagnostics
 vim.diagnostic.config({
-    virtual_text = false,
+    virtual_text = true,
     underline = false,
     update_in_insert = false,
     severity_sort = true,
@@ -86,13 +84,9 @@ table.insert(M, {
     },
 })
 
--- TODO: this errors if dependencies to build are LSP are not satisfied
--- mason-tool-installer.nvim ensures the language servers used by
--- 'vim.lsp.enable' above are installed via Mason. 'sourcekit' is intentionally
--- left out since it isn't managed by Mason.
 table.insert(M, {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    enabled = false,
+    enabled = true,
     dependencies = { 'mason-org/mason.nvim' },
     opts = {
         ensure_installed = {
@@ -105,6 +99,7 @@ table.insert(M, {
             'vtsls', -- typescript
             'gopls',
             'vscode-solidity-server', -- solidity_ls
+            -- sourcekit is preintalled on macOS
         },
     },
 })
@@ -128,12 +123,11 @@ table.insert(M, {
 -- The java language server (jdtls) requires special startup logic and
 -- per-project setup that can’t be handled by the generic LSP API. It manages
 -- its own launch process, workspace folders, and debug/test integrations for
--- Java projects.
+-- Java projects. Its called via the ftplugin
 table.insert(M, {
     'mfussenegger/nvim-jdtls',
     enabled = true,
     ft = 'java',
-    opts = {},
 })
 
 return M
