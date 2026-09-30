@@ -232,46 +232,6 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>i2',
-        rhs = function()
-            -- Don't pullute the jumplist and preserve the cursor position
-            vim.opt_local.tabstop = 2
-            vim.opt_local.expandtab = true
-            local view = vim.fn.winsaveview()
-            vim.cmd('keepjumps normal! gg=G')
-            if view then vim.fn.winrestview(view) end
-        end,
-        opts = { desc = 'Indent with 2 spaces' }
-    },
-    {
-        mode = 'n',
-        lhs = '<leader>i4',
-        rhs = function()
-            vim.opt_local.tabstop = 4
-            vim.opt_local.expandtab = true
-            local view = vim.fn.winsaveview()
-            vim.cmd('keepjumps normal! gg=G')
-            if view then vim.fn.winrestview(view) end
-        end,
-        opts = { desc = 'Indent with 4 spaces' }
-    },
-    {
-        mode = 'n',
-        lhs = '<leader>it',
-        rhs = function()
-            vim.opt_local.expandtab = false
-            local view = vim.fn.winsaveview()
-            -- Replace multiples of tabstop spaces with a single tab. Only replace
-            -- at the beginning of the line to avoid replacing spaces in string literals
-            local pattern = string.format([[\v^( {%d})+]], vim.o.tabstop)
-            local replace = string.format([[\=repeat("\t", len(submatch(0))/%d)]], vim.o.tabstop)
-            vim.cmd('silent! %s:' .. pattern .. ':' .. replace)
-            if view then vim.fn.winrestview(view) end
-        end,
-        opts = { desc = 'Indent with tab' }
-    },
-    {
-        mode = 'n',
         lhs = '<leader>r',
         rhs = '<cmd>restart<cr>',
         opts = { desc = 'Restart neovim' }

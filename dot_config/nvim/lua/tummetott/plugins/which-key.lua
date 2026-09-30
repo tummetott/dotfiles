@@ -128,7 +128,6 @@ return {
             { 'zj', desc = 'Go to next fold' },
             { 'zk', desc = 'Go to previous fold' },
             { 'gQ', hidden = true },
-            { '<leader>i', group = 'Indent' },
             { 'gra', desc = 'Code actions' },
             { 'grn', desc = 'Rename' },
             { 'gri', desc = 'Goto implementation' },
