@@ -478,12 +478,6 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader>w',
-        rhs = '<cmd>%s/\\s\\+$//e<CR>',
-        opts = { desc = 'Trim trailing whitespaces' }
-    },
-    {
-        mode = 'n',
         lhs = '<c-/>',
         rhs = 'gcc',
         opts = { remap = true, desc = 'Comment current line' }
@@ -505,37 +499,3 @@ local maps = {
 for _, m in ipairs(maps) do
     vim.keymap.set(m.mode, m.lhs, m.rhs, m.opts)
 end
-
-vim.api.nvim_create_user_command('DebugKeymaps', function()
-    local function map(lhs, desc)
-        pcall(vim.keymap.set, 'n', lhs, function()
-            vim.print(string.format('Pressed: %s', lhs))
-        end, { desc = desc })
-    end
-
-    local keys = {
-        -- letters and numbers
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        -- punctuation & symbols
-        ';', ',', '.', '/', '-', '=', '[', ']', '`', "'", '~', '_', '+',
-        -- navigation & control
-        'Tab', 'CR', 'Enter', 'Esc', 'Bslash', 'Space',
-        'Up', 'Down', 'Left', 'Right', 'Home', 'End', 'PageUp', 'PageDown',
-    }
-
-    for _, key in ipairs(keys) do
-        map('<' .. key .. '>', key)
-        map('<C-' .. key .. '>', 'Ctrl+' .. key)
-        map('<A-' .. key .. '>', 'Alt+' .. key)
-        map('<C-S-' .. key .. '>', 'Ctrl+Shift+' .. key)
-    end
-    for _, key in ipairs({ 'Tab', 'Left', 'Right', 'Up', 'Down', 'Home', 'End', 'PageUp', 'PageDown' }) do
-        map('<S-' .. key .. '>', 'Shift+' .. key)
-    end
-
-    vim.notify('DebugKeymaps active — press any key to test.')
-end, { desc = 'Register debug mappings for all common keys' })
