@@ -89,6 +89,10 @@ vim.opt.splitkeep = 'topline'
 -- Start diff mode with vertical splits
 vim.opt.diffopt:append('vertical')
 
+-- Highlight intra line changes per word instead of the default per character
+vim.opt.diffopt:remove('inline:char')
+vim.opt.diffopt:append('inline:word')
+
 -- When doing 'cw' on a word, also delete the whitespace after the word
 vim.opt.cpoptions:remove('_')
 

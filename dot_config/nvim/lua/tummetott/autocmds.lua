@@ -49,7 +49,14 @@ autocmd('BufWinEnter', {
                 vim.g._ts_force_sync_parsing = false
             end
         end
+        -- :mkview saves the global 'hlsearch' setting, and no 'viewoptions'
+        -- flag can suppress it. This is bad and collides with my smart-hlsearch
+        -- plugin, which controls that option.
+        -- HACK: the setting written into the view file is ignored by restoring
+        -- the previous value.
+        local hlsearch = vim.o.hlsearch
         vim.cmd('silent! loadview')
+        vim.o.hlsearch = hlsearch
     end,
 })
 
