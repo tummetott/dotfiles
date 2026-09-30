@@ -52,7 +52,7 @@ local maps = {
             if ok then
                 textobj.last_put()
             else
-                vim.cmd([[normal! `[v`]])
+                vim.cmd([=[normal! `[v`] ]=])
             end
         end,
         opts = { desc = 'Select previous pasted text' }
@@ -101,13 +101,13 @@ local maps = {
     },
     {
         mode = 'i',
-        lhs = '<M-b>',
+        lhs = '<M-Left>',
         rhs = function() vim.cmd('normal! b') end,
         opts = { desc = 'Jump to previous word' }
     },
     {
         mode = 'i',
-        lhs = '<M-f>',
+        lhs = '<M-Right>',
         rhs = function() vim.cmd('normal! w') end,
         opts = { desc = 'Jump to next word' }
     },
@@ -242,8 +242,8 @@ local maps = {
         lhs = '<leader>i2',
         rhs = function()
             -- Don't pullute the jumplist and preserve the cursor position
-            vim.opt.tabstop = 2
-            vim.opt.expandtab = true
+            vim.opt_local.tabstop = 2
+            vim.opt_local.expandtab = true
             local view = vim.fn.winsaveview()
             vim.cmd('keepjumps normal! gg=G')
             if view then vim.fn.winrestview(view) end
@@ -254,8 +254,8 @@ local maps = {
         mode = 'n',
         lhs = '<leader>i4',
         rhs = function()
-            vim.opt.tabstop = 4
-            vim.opt.expandtab = true
+            vim.opt_local.tabstop = 4
+            vim.opt_local.expandtab = true
             local view = vim.fn.winsaveview()
             vim.cmd('keepjumps normal! gg=G')
             if view then vim.fn.winrestview(view) end
@@ -266,7 +266,7 @@ local maps = {
         mode = 'n',
         lhs = '<leader>it',
         rhs = function()
-            vim.opt.expandtab = false
+            vim.opt_local.expandtab = false
             local view = vim.fn.winsaveview()
             -- Replace multiples of tabstop spaces with a single tab. Only replace
             -- at the beginning of the line to avoid replacing spaces in string literals
@@ -413,6 +413,9 @@ local maps = {
         mode = 'n',
         lhs = 'zh',
         rhs = function()
+            if not vim.wo.diff then
+                return
+            end
             if vim.w.diff_highlights_forced_off then
                 vim.w.diff_highlights_forced_off = false
                 vim.opt_local.winhl:remove {
