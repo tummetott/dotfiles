@@ -78,10 +78,6 @@ vim.opt.expandtab = true
 -- Copy indent from current line when starting a new line
 vim.opt.autoindent = true
 
--- Indentation is dependending on the programming language. This is probably
--- overwritten by treesitter
-vim.opt.smartindent = true
-
 -- New splits will be right and below instead of left and above
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -93,10 +89,6 @@ vim.opt.splitkeep = 'topline'
 -- Start diff mode with vertical splits
 vim.opt.diffopt:append('vertical')
 
--- This setting significantly improves the diff matching. Why is this no
--- default?
-vim.opt.diffopt:append('linematch:60')
-
 -- When doing 'cw' on a word, also delete the whitespace after the word
 vim.opt.cpoptions:remove('_')
 
@@ -104,7 +96,7 @@ vim.opt.cpoptions:remove('_')
 vim.opt.fillchars = { fold = '⋅', foldopen = '┬', diff = '╱' }
 
 -- Set characters for blanks. Enable them with 'set list'
-vim.opt.listchars = { space = '⋅', tab = '——▸', eol = '↴' }
+vim.opt.listchars = { space = '⋅', tab = '——▸', eol = '↴', nbsp = '+' }
 
 -- Hyphens are part of keywords
 vim.opt.iskeyword:append('-')
