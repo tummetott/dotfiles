@@ -25,6 +25,14 @@ local function ignore_mappings(open, no_ignore)
     end
 end
 
+-- HACK: Workaround for https://github.com/nvim-telescope/telescope.nvim/issues/559
+local function in_normal_mode(action)
+    return function(prompt_bufnr)
+        vim.cmd.stopinsert()
+        vim.schedule(function() action(prompt_bufnr) end)
+    end
+end
+
 -- Lists files in the working directory.
 local function find_files(no_ignore, default_text, cwd)
     require('telescope.builtin').find_files {
@@ -89,8 +97,11 @@ table.insert(M, {
                         ['<Down>'] = actions.preview_scrolling_down,
                         ['<Left>'] = actions.preview_scrolling_left,
                         ['<Right>'] = actions.preview_scrolling_right,
+                        ['<CR>'] = in_normal_mode(actions.select_default),
                         -- I prefer to open a file in a horizontal split with C-s instead of C-x
-                        ['<C-s>'] = actions.select_horizontal,
+                        ['<C-s>'] = in_normal_mode(actions.select_horizontal),
+                        ['<C-v>'] = in_normal_mode(actions.select_vertical),
+                        ['<C-t>'] = in_normal_mode(actions.select_tab),
                         ['<C-x>'] = false,
                         -- Copy fuzzy result to cmdline but don't execute it
                         ['<C-z>'] = actions.edit_command_line,

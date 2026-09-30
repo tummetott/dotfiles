@@ -19,25 +19,13 @@ autocmd('CmdlineLeave', {
     command = 'echo ""',
 })
 
--- Helper function to check if a view should be created or loaded
+-- Whether a view should be created or loaded.
 local view_check = function()
-    -- No special buffers
-    if vim.bo.buftype ~= '' then
-        return false
-    end
-    -- No diff views
-    if vim.wo.diff then
-        return false
-    end
-    -- Buffer must be modifiable
-    if not vim.bo.modifiable then
-        return false
-    end
-    -- File must exist
-    if string.len(vim.fn.glob(vim.fn.expand('%:p'))) == 0 then
-        return false
-    end
-    return true
+    return vim.bo.buftype == ''
+        and vim.bo.modifiable
+        and not vim.wo.diff
+        and vim.wo.foldmethod ~= 'diff'
+        and vim.fn.filereadable(vim.fn.expand('%:p')) == 1
 end
 
 -- Loads a view when opening a new buffer
@@ -45,11 +33,23 @@ autocmd('BufWinEnter', {
     group = group,
     pattern = '?*',
     callback = function()
-        if view_check() then
-            -- HACK: https://github.com/nvim-telescope/telescope.nvim/issues/559
-            vim.cmd('normal! zX')
-            vim.cmd('silent! loadview')
+        if not view_check() then
+            return
         end
+        -- HACK: A view restores folds by line number, so the folds have to
+        -- exist before it is sourced. vim.treesitter.foldexpr() reports level 0
+        -- for every line until its parse finishes, and that parse is
+        -- asynchronous once a buffer exceeds a few thousand lines. Parsing
+        -- synchronously here fills the fold cache first.
+        if vim.wo.foldmethod == 'expr' then
+            local parser = vim.treesitter.get_parser(0)
+            if parser then
+                vim.g._ts_force_sync_parsing = true
+                parser:parse(true)
+                vim.g._ts_force_sync_parsing = false
+            end
+        end
+        vim.cmd('silent! loadview')
     end,
 })
 
@@ -150,20 +150,6 @@ autocmd('ModeChanged', {
             'DiffText',
             'DiffChange',
         }
-    end
-})
-
--- Disable treesitter folding for files > 1.5MB because of performance
-autocmd('BufReadPre', {
-    group = group,
-    callback = function(ctx)
-        local bufname = vim.api.nvim_buf_get_name(ctx.buf)
-        local size = vim.fn.getfsize(bufname)
-        if size < 0 or size > 1.5 * 1024 * 1024 then
-            vim.opt.foldmethod = 'manual'
-        else
-            vim.opt.foldmethod = 'expr'
-        end
     end
 })
 
