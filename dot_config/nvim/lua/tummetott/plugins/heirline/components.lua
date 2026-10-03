@@ -319,7 +319,8 @@ M.search_count = {
         icon = vim.g.nerdfonts and ' ' or 'SEARCH: '
     },
     init = function(self)
-        self.search = vim.fn.searchcount({ maxcount = 999, timeout = 250 })
+        local ok, search = pcall(vim.fn.searchcount, { maxcount = 999, timeout = 250 })
+        self.search = ok and search or {}
     end,
     provider = function(self)
         if vim.tbl_isempty(self.search) or self.search.incomplete == 1 then
