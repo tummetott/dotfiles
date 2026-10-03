@@ -1,5 +1,5 @@
 return {
-    'tummetott/gitlinker.nvim',
+    'linrongbin16/gitlinker.nvim',
     enabled = true,
     opts = {
         -- Disable output on yank
