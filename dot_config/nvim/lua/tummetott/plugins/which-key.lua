@@ -42,8 +42,6 @@ return {
         -- Overwrite some keymap descriptions
         spec = {
             { '&', desc = 'Repeat substitute on current line' },
-            { '%', mode = { 'n', 'x' }, desc = 'Next matching pair' },
-            { 'g%', mode = { 'n', 'x' }, desc = 'Previous matching pair' },
             { 'ib', mode = { 'o', 'x' }, desc = 'inner ()' },
             { 'ab', mode = { 'o', 'x' }, desc = 'outer ()' },
             { 'i(', mode = { 'o', 'x' }, desc = 'inner ()' },
@@ -102,8 +100,6 @@ return {
             { '[(', mode = 'n', desc = 'Previous unmatched (' },
             { ']}', mode = 'n', desc = 'Next unmatched }' },
             { '[{', mode = 'n', desc = 'Previous unmatched {' },
-            { ']%', mode = 'n', desc = 'Next unmatched (under cursor)' },
-            { '[%', mode = 'n', desc = 'Previous unmatched (under cursor)' },
             { ']<c-q>', mode = 'n', desc = 'Next quickfix entry in next file' },
             { '[<c-q>', mode = 'n', desc = 'Previous quickfix entry in previous file' },
             { ']<c-l>', mode = 'n', desc = 'Next loclist entry in next file' },
@@ -136,8 +132,8 @@ return {
             { 'gx', desc = 'Opens URI under cursor with the system handler' },
             { 'g;', desc = 'Previous position in change list' },
             { 'g,', desc = 'Next position in change list' },
-            { 'a%', mode = { 'o', 'x' }, desc = 'outer matching pair' }, -- matchit plugin
             { '<leader><space>', group = 'Toggle option' },
+            -- Disabled because matchit is disabled
             { 'g%', mode = { 'o', 'x' }, hidden = true },
             { '[%', mode = { 'o', 'x' }, hidden = true },
             { ']%', mode = { 'o', 'x' }, hidden = true },

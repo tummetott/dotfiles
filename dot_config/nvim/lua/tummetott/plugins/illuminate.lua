@@ -2,6 +2,9 @@ return {
     'RRethy/vim-illuminate',
     event = 'VeryLazy',
     enabled = true,
+    -- HACK: Workaround for
+    -- https://github.com/RRethy/vim-illuminate/issues/243
+    init = function() vim.g.loaded_illuminate = 1 end,
     opts = {
         providers = {
             'lsp',
@@ -20,6 +23,7 @@ return {
     },
     config = function(_, opts)
         require('illuminate').configure(opts)
+        require('illuminate.engine').start()
         -- Disable at startup
         require('illuminate').invisible_buf()
         -- Disable once cursor moved

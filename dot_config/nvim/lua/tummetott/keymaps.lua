@@ -454,6 +454,25 @@ local maps = {
         rhs = 'gc',
         opts = { remap = true, desc = 'Comment current selection' }
     },
+    -- All native ftplugin mappings are disabled by default. Remap matchit
+    {
+        mode = 'n',
+        lhs = '%',
+        rhs = '<Plug>(MatchitNormalForward)',
+        opts = { desc = 'Jump to matching pair or keyword' }
+    },
+    {
+        mode = 'x',
+        lhs = '%',
+        rhs = '<Plug>(MatchitVisualForward)',
+        opts = { desc = 'Jump to matching pair or keyword' }
+    },
+    {
+        mode = 'o',
+        lhs = '%',
+        rhs = '<Plug>(MatchitOperationForward)',
+        opts = { desc = 'Jump to matching pair or keyword' }
+    },
 }
 
 for _, m in ipairs(maps) do
