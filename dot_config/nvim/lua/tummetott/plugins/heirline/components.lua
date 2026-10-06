@@ -3,6 +3,23 @@ local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
 local spinner = require('tummetott.plugins.heirline.spinner')
 
+-- Runs a whole-buffer scan, caching its result against `b:changedtick`.
+-- Statusline components redraw far more often than the buffer changes, and such
+-- a scan costs O(lines) each time, so the result is recomputed only after an
+-- edit. The cache lives on the buffer and is wiped along with it.
+local function per_buffer(name, compute)
+    local key = 'heirline_' .. name
+    local buf = vim.api.nvim_get_current_buf()
+    local tick = vim.api.nvim_buf_get_changedtick(buf)
+    local cache = vim.b[buf][key]
+    if cache and cache.tick == tick then
+        return cache.value
+    end
+    local value = compute()
+    vim.b[buf][key] = { tick = tick, value = value }
+    return value
+end
+
 M.align = { provider = '%=' }
 
 M.left_moon = {
@@ -191,12 +208,20 @@ M.git_conflict = {
         return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
     end,
     init = function(self)
-        self.conflicts = vim.fn.search('^[<>|]\\{7} \\|=\\{7}$', 'nwc')
+        self.has_conflict = per_buffer('git_conflict', function()
+            return vim.fn.search('^<\\{7,}\\($\\|\\s\\)', 'nwc') ~= 0
+        end)
     end,
     provider = function(self)
-        return self.conflicts > 0 and 'MERGE CONFLICT'
+        return self.has_conflict and 'MERGE CONFLICT'
     end,
-    update = { 'BufReadPost', 'BufWritePost', 'CursorHold' },
+    update = {
+        'BufReadPost',
+        'BufWritePost',
+        'BufEnter',
+        'InsertLeave',
+        'CursorHold',
+    },
     hl = { fg = 'red' }
 }
 
@@ -205,12 +230,21 @@ M.trailing_whitespace = {
         return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
     end,
     init = function(self)
-        self.has_trailing = vim.fn.search('\\s$', 'nwc') ~= 0
+        self.has_trailing = per_buffer(
+            'trailing_whitespace',
+            function() return vim.fn.search('\\s$', 'nwc') ~= 0 end
+        )
     end,
     provider = function(self)
         return self.has_trailing and '  TRAILING WHITESPACE'
     end,
-    update = { 'BufReadPost', 'BufWritePost', 'CursorHold' },
+    update = {
+        'BufReadPost',
+        'BufWritePost',
+        'BufEnter',
+        'InsertLeave',
+        'CursorHold',
+    },
     hl = { fg = 'orange' }
 }
 
@@ -274,32 +308,37 @@ M.encoding = {
 
 M.indent = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile'
+        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
     end,
     static = {
         icon = vim.g.nerdfonts and '󰉶 ' or 'IND: '
     },
     init = function(self)
-        self.spaces = vim.fn.search('^\t* \t*', 'nwc') ~= 0
-        self.tabs = vim.fn.search('^ *\t *', 'nwc') ~= 0
-        self.indent = ''
-        if (self.spaces and self.tabs) then
-            self.indent = 'Mix'
-        elseif self.spaces then
-            self.indent = 'Spaces'
-        elseif self.tabs then
-            self.indent = 'Tabs'
-        end
+        self.indent = per_buffer('indent', function()
+            local spaces = vim.fn.search('^\t* \t*', 'nwc') ~= 0
+            local tabs = vim.fn.search('^ *\t *', 'nwc') ~= 0
+            if spaces and tabs then
+                return 'Mix'
+            elseif spaces then
+                return 'Spaces'
+            elseif tabs then
+                return 'Tabs'
+            end
+        end)
     end,
     provider = function(self)
-        if self.indent ~= '' then
-            return '  ' .. self.icon .. self.indent
-        end
+        return self.indent and '  ' .. self.icon .. self.indent
     end,
     hl = function(self)
         return self.indent == 'Mix' and { fg = 'red' }
     end,
-    update = { 'BufReadPost', 'BufWritePost', 'CursorHold', 'InsertLeave' },
+    update = {
+        'BufReadPost',
+        'BufWritePost',
+        'BufEnter',
+        'InsertLeave',
+        'CursorHold',
+    },
 }
 
 M.progress = {
