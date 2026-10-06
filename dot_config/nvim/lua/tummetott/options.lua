@@ -177,7 +177,7 @@ vim.g.loaded_node_provider = 0
 -- Experimental ui2 renderning
 require('vim._core.ui2').enable {
     enable = true,
-    msg = { targets = "cmd" },
+    msg = { targets = { progress = 'msg' } },
 }
 
 -- An empty spec lets lazy.nvim profile this configuration module.

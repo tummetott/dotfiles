@@ -166,13 +166,32 @@ autocmd('BufWriteCmd', {
 })
 
 -- Disable linenumbers in command windows (search and cmd history)
-autocmd("CmdwinEnter", {
+autocmd('CmdwinEnter', {
     group = group,
     callback = function()
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false
     end,
-    desc = "Disable linenumbers in command windows",
+    desc = 'Disable linenumbers in command windows',
+})
+
+autocmd('LspProgress', {
+    group = group,
+    callback = function(ev)
+        local value = ev.data.params.value
+        local message = value.message or 'done'
+        if vim.fn.strdisplaywidth(message) > 40 then
+            message = vim.fn.strcharpart(message, 0, 39) .. '…'
+        end
+        vim.api.nvim_echo({ { message } }, false, {
+            id = 'lsp.' .. ev.data.params.token,
+            kind = 'progress',
+            source = 'vim.lsp',
+            title = value.title,
+            status = value.kind ~= 'end' and 'running' or 'success',
+            percent = value.percentage,
+        })
+    end,
 })
 
 -- An empty spec lets lazy.nvim profile this configuration module.
