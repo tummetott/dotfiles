@@ -154,13 +154,18 @@ return {
                     'fallback',
                 },
                 ['<Tab>'] = {
+                    'show_and_insert_or_accept_single',
                     'select_next',
                     'fallback',
                 },
                 ['<S-Tab>'] = {
+                    'show_and_insert_or_accept_single',
                     'select_prev',
                     'fallback',
                 },
+                ['<C-space>'] = { 'show', 'fallback' },
+                ['<C-y>'] = { 'select_and_accept', 'fallback' },
+                ['<C-e>'] = { 'cancel', 'fallback' },
             },
             sources = { 'cmdline' },
             completion = {
