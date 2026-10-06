@@ -1,7 +1,7 @@
 local M = {}
 local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
--- local spinner = require('tummetott.plugins.heirline.spinner')
+local spinner = require('tummetott.plugins.heirline.spinner')
 
 -- Runs a whole-buffer scan, caching its result against `b:changedtick`.
 -- Statusline components redraw far more often than the buffer changes, and such
@@ -282,13 +282,13 @@ M.lsp = {
         end,
         update = { 'LspAttach', 'LspDetach' },
     },
-    -- {
-    --     condition = spinner.spinner_active,
-    --     provider = function()
-    --         return ' ' .. require('snacks.util').spinner()
-    --     end,
-    --     update = { 'User', pattern = 'LspSpinner' }
-    -- },
+    {
+        condition = spinner.spinner_active,
+        provider = function()
+            return ' ' .. require('snacks.util').spinner()
+        end,
+        update = { 'User', pattern = 'LspSpinner' }
+    },
 }
 
 M.encoding = {
