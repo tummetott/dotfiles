@@ -97,6 +97,20 @@ return {
                 groups = {
                     { "filename", format = "{file_icon}{filename} {count}" },
                 },
+                -- A line is the unit of navigation, so several locations on one
+                -- line should be one destination. This filter collapses several
+                -- locations in one line
+                filter = function(items)
+                    local seen, out = {}, {}
+                    for _, item in ipairs(items) do
+                        local key = item.filename .. ':' .. item.pos[1]
+                        if not seen[key] then
+                            seen[key] = true
+                            out[#out + 1] = item
+                        end
+                    end
+                    return out
+                end,
             },
             lsp_definitions = {
                 title = false,

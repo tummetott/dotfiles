@@ -41,6 +41,17 @@ vim.keymap.set(
     { desc = 'LSP references' }
 )
 
+-- Goto declaration. Mostly relevant in C/C++, e.g. when a function is declared
+-- in a header file. Not every language server implements this.
+vim.keymap.set(
+    'n',
+    'grd',
+    function()
+        require('trouble').open('lsp_declarations')
+    end,
+    { desc = 'Go to declaration' }
+)
+
 -- List workspace folders
 vim.keymap.set(
     'n',
@@ -118,34 +129,8 @@ vim.keymap.set(
     { desc = 'Remove workspace folder' }
 )
 
--- Some LSP-related keymaps override useful built-in Vim keymaps, so they should
--- only be defined after an LSP client attaches to the current buffer.
-M.register_buffer_keymaps = function(client, bufnr)
-
-    -- Goto definition
-    if client.server_capabilities.definitionProvider then
-        vim.keymap.set(
-            'n',
-            'gd',
-            function()
-                require('trouble').open('lsp_definitions')
-            end,
-            { desc = 'Go to definition', buffer = bufnr }
-        )
-    end
-
-    -- Goto declaration. Mostly relevant in C/C++, e.g. when a function is
-    -- declared in a header file. Not every language server implements this
-    if client.server_capabilities.declarationProvider then
-        vim.keymap.set(
-            'n',
-            'gD',
-            function()
-                require('trouble').open('lsp_declarations')
-            end,
-            { desc = 'Go to declaration', buffer = bufnr }
-        )
-    end
+M.register_buffer_keymaps = function(_, _)
+    -- Placeholder to register something on LspAttach
 
     -- Neovim automatically remaps 'K' to show LSP hover information whenever a
     -- language server attaches, replacing the default :Man behavior. We
