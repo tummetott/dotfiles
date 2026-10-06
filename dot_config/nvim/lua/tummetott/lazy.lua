@@ -66,7 +66,6 @@ require('lazy').setup {
                 'gzip',
                 'netrwPlugin',
                 'tarPlugin',
-                'tohtml',
                 'tutor',
                 'zipPlugin',
                 'matchparen', -- handled by blink.pairs

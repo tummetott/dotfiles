@@ -17,6 +17,7 @@ return {
                 'qf',
                 'sidekick_terminal',
                 'Outline',
+                'nvim-undotree',
             },
             condition = function(win)
                 -- Match cmdwin (search / cmd history)
