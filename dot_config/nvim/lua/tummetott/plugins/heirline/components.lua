@@ -586,6 +586,7 @@ M.special_bufname = {
             ['TelescopePrompt'] = 'TELESCOPE',
             ['lazy'] = 'LAZY',
             ['Outline'] = 'OUTLINE',
+            ['markdown.gh'] = 'GITHUB',
         }
     },
     provider = function(self)
