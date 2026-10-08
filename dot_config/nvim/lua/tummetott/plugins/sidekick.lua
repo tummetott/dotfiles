@@ -81,15 +81,15 @@ return {
             desc = 'Agent',
         },
         {
-            '<leader>lf',
+            '<leader>lR',
             function() require('sidekick.cli').send({ msg = '{file}' }) end,
-            desc = 'Send file',
+            desc = 'Send file reference',
         },
         {
             '<leader>lr',
             function() require('sidekick.cli').send({ msg = '{line}' }) end,
             mode = { 'n', 'x' },
-            desc = 'Send reference',
+            desc = 'Send line reference',
         },
         {
             '<leader>lc',
@@ -98,13 +98,24 @@ return {
                 require('sidekick.cli').send({ text = { { { line } } } })
             end,
             mode = { 'n' },
-            desc = 'Send content',
+            desc = 'Send line content',
         },
         {
             '<leader>lc',
             function() require('sidekick.cli').send({ msg = '{selection}' }) end,
             mode = { 'x' },
             desc = 'Send content',
+        },
+        {
+            '<leader>lC',
+            function()
+                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                require('sidekick.cli').send({
+                    text = vim.tbl_map(function(line) return { { line } } end, lines),
+                })
+            end,
+            mode = { 'n' },
+            desc = 'Send buffer content',
         },
     },
 }
