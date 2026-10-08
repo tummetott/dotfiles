@@ -38,6 +38,13 @@ return {
                 horizontal_rules = presets.horizontal_rules.thin,
                 block_quotes = presets.block_quotes.obsidian,
             },
+            yaml = {
+                properties = {
+                    data_types = {
+                        text = { text = '󰦨 ', hl = 'MarkviewIcon4' },
+                    },
+                },
+            },
         }
     end,
     highlights = {
