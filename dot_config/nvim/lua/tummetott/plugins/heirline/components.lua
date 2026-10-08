@@ -688,6 +688,7 @@ M.special_winbar = {
                 'DiffviewFiles',
                 'DiffviewFileHistory',
                 'qf',
+                'markdown%.gh',
             },
             buftype = {
                 'nofile',
@@ -844,6 +845,24 @@ M.special_winbar = {
                 end,
             },
             {
+                title = function(buf)
+                    return 'ISSUE #' .. vim.b[buf].snacks_gh.number
+                end,
+                match = function(buf)
+                    local gh = vim.b[buf].snacks_gh
+                    return gh and gh.type == 'issue'
+                end,
+            },
+            {
+                title = function(buf)
+                    return 'PULL REQUEST #' .. vim.b[buf].snacks_gh.number
+                end,
+                match = function(buf)
+                    local gh = vim.b[buf].snacks_gh
+                    return gh and gh.type == 'pr'
+                end,
+            },
+            {
                 title = 'TERMINAL',
                 match = function(buf)
                     return vim.bo[buf].buftype == 'terminal'
@@ -866,7 +885,8 @@ M.special_winbar = {
 
             for _, rule in ipairs(self.rules) do
                 if rule.match(buf, win) then
-                    return rule.title
+                    local title = rule.title
+                    return type(title) == 'function' and title(buf, win) or title
                 end
             end
 

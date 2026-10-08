@@ -71,7 +71,7 @@ return {
             desc = 'Reset buffer'
         },
         {
-            '<Leader>gp',
+            '<Leader>gh',
             function() require 'gitsigns'.preview_hunk_inline() end,
             desc = 'Preview hunk'
         },

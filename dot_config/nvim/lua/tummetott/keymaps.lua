@@ -59,7 +59,20 @@ local maps = {
     {
         mode = { 'n', 'x' },
         lhs = '<C-h>',
-        rhs = '<C-w>h',
+        rhs = function()
+            -- Directional window motions skip floating windows, so they can't
+            -- reach Snacks picker previews. Snacks supports buffer-local
+            -- keymaps for its preview scratch buffer, but some previews use
+            -- real buffers instead. Since every preview window is marked with
+            -- `snacks_picker_preview`, this global keymap works for all of
+            -- them.
+            local picker = vim.w.snacks_picker_preview and Snacks.picker.get()[1]
+            if picker then
+                picker:focus('input', { show = true })
+            else
+                vim.cmd.wincmd({ 'h', count = vim.v.count1 })
+            end
+        end,
         opts = { desc = 'Jump to left window' }
     },
     {

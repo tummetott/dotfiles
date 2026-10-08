@@ -28,6 +28,7 @@ return {
                 'snacks_dashboard',
                 'DiffviewFileHistory',
                 'DiffviewFiles',
+                'snacks_picker_input',
             },
         },
     },

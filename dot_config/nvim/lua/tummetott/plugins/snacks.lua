@@ -120,8 +120,21 @@ return {
                 input = {
                     keys = {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+                        ['<c-l>'] = { 'focus_preview', mode = 'i' },
                     },
                 },
+                preview = {
+                    keys = {
+                        ['<c-q>'] = 'toggle_preview',
+                        ['<c-n>'] = 'list_down',
+                        ['<c-p>'] = 'list_up',
+                    },
+                },
+            },
+            layout = {
+                layout = {
+                    backdrop = false,
+                }
             },
         },
         terminal = {
@@ -133,6 +146,45 @@ return {
                 -- window brings its own, so heirline's is handed over here
                 wo = {
                     winbar = "%{%v:lua.require'heirline'.eval_winbar()%}",
+                },
+            },
+        },
+        gh = {
+            enabled = true,
+            keys = {
+                -- HACK: https://github.com/folke/snacks.nvim/issues/2970
+                select = {
+                    '<cr>',
+                    function(item)
+                        local picker = Snacks.picker.get()[1]
+                        if picker then
+                            picker:action('gh_actions')
+                        else
+                            require('snacks.gh.actions').actions.gh_actions
+                                .action(item, { items = { item } })
+                        end
+                    end,
+                    desc = 'Select Action',
+                },
+                list_down = {
+                    '<c-n>',
+                    function()
+                        local picker = Snacks.picker.get()[1]
+                        if picker then
+                            picker.list:move(vim.v.count1)
+                        end
+                    end,
+                    desc = 'Next item',
+                },
+                list_up = {
+                    '<c-p>',
+                    function()
+                        local picker = Snacks.picker.get()[1]
+                        if picker then
+                            picker.list:move(-vim.v.count1)
+                        end
+                    end,
+                    desc = 'Previous item',
                 },
             },
         },
@@ -165,6 +217,26 @@ return {
             function() Snacks.terminal.toggle() end,
             mode = { 'n', 't' },
             desc = 'Toggle terminal',
+        },
+        {
+            '<leader>gi',
+            function() Snacks.picker.gh_issue() end,
+            desc = 'Open GitHub issues',
+        },
+        {
+            '<leader>gI',
+            function() Snacks.picker.gh_issue({ state = 'all' }) end,
+            desc = 'All GitHub issues',
+        },
+        {
+            '<leader>gp',
+            function() Snacks.picker.gh_pr() end,
+            desc = 'Open GitHub pull requests',
+        },
+        {
+            '<leader>gP',
+            function() Snacks.picker.gh_pr({ state = 'all' }) end,
+            desc = 'All GitHub pull requests',
         },
     }
 }
