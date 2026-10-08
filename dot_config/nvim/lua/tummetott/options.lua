@@ -43,8 +43,8 @@ vim.opt.mouse = 'a'
 -- Scrolling should be as fine grain as possible with the mouse
 vim.opt.mousescroll = 'ver:1,hor:1'
 
--- Enable wrapped lines
-vim.opt.wrap = true
+-- Disable wrapped lines
+vim.opt.wrap = false
 
 -- Don't break wrapped lines at the last character that fits on screen but after
 -- whole words

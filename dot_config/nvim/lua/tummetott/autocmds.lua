@@ -71,16 +71,6 @@ autocmd('VimResized', {
     end,
 })
 
--- Wrap and check for spell in text filetypes
-autocmd('FileType', {
-    group = group,
-    pattern = { 'gitcommit', 'markdown' },
-    callback = function()
-        vim.opt_local.wrap = true
-        vim.opt_local.spell = true
-    end,
-})
-
 autocmd('FileType', {
     pattern = 'qf',
     group = group,

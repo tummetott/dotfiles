@@ -24,13 +24,16 @@ table.insert(M, {
                 'html',
                 'java',
                 'json',
+                'latex',
                 'lua',
                 'markdown',
+                'markdown_inline',
                 'nu',
                 'python',
                 'rust',
                 'toml',
                 'typescript',
+                'typst',
                 'yaml',
             })
         else

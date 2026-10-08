@@ -75,5 +75,8 @@ return {
         LazyButton = { bg = 'darkest_gray' },
         LazyButtonActive = { bg = 'gray' },
         LazyH1 = { link = 'LazyButton' },
+
+        -- TODO: add this upstream
+        ['@markup.raw.block.markdown'] = { fg = 'foreground' },
     }
 }
