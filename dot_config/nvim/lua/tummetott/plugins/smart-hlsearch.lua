@@ -14,6 +14,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search forward',
         },
         {
             '?',
@@ -23,6 +24,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search backward',
         },
         -- Make `n` always move to the next match and `N` to the previous one,
         -- independent of whether the search was started with `/` or `?`.
@@ -74,6 +76,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search word under cursor forward',
         },
         {
             '#',
@@ -83,6 +86,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search word under cursor backward',
         },
         {
             'g*',
@@ -92,6 +96,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search partial word under cursor forward',
         },
         {
             'g#',
@@ -101,6 +106,7 @@ return {
             end,
             mode = 'n',
             expr = true,
+            desc = 'Search partial word under cursor backward',
         },
     }
 }

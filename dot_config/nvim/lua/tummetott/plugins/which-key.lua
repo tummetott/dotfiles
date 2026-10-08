@@ -112,8 +112,6 @@ return {
             { ']<', mode = 'n', hidden = true },
             { '[<', mode = 'n', hidden = true },
             { '@', desc = 'Execute macro' },
-            { '*', desc = 'Search forward for word under cursor' },
-            { '#', desc = 'Search backward for word under cursor' },
             { '*', mode = 'x', desc = 'Search forward for current selection' },
             { '#', mode = 'x', desc = 'Search backward for current selection' },
             { '@', mode = 'x', desc = 'Execute linewise macro' },

@@ -41,7 +41,7 @@ vim.opt.modeline = true
 vim.opt.mouse = 'a'
 
 -- Scrolling should be as fine grain as possible with the mouse
-vim.opt.mousescroll = "ver:1,hor:1"
+vim.opt.mousescroll = 'ver:1,hor:1'
 
 -- Enable wrapped lines
 vim.opt.wrap = true
@@ -53,6 +53,9 @@ vim.opt.linebreak = true
 -- Case insensitive search, except when using capital letters
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Show substitution results bundled in a split before executing
+vim.opt.inccommand = 'split'
 
 -- Don't highlight all my matches
 vim.opt.hlsearch = false

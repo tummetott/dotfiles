@@ -41,7 +41,7 @@ local maps = {
         mode = 'n',
         lhs = 'gV',
         rhs = function()
-            local ok, textobj = pcall(require, "yanky.textobj")
+            local ok, textobj = pcall(require, 'yanky.textobj')
             if ok then
                 textobj.last_put()
             else
