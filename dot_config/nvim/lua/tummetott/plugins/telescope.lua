@@ -67,7 +67,7 @@ table.insert(M, {
     },
     init = function()
         require('which-key').add {
-            { "<leader>f", group = "Find" },
+            { '<leader>f', group = 'Find' },
         }
     end,
     config = function()
@@ -84,15 +84,13 @@ table.insert(M, {
                 mappings = {
                     i = {
                         -- Open the preview window
-                        ['<C-o>'] = layout.toggle_preview,
-                        -- Telescope binds C-u, C-d, C-f and C-k to preview
-                        -- scrolling, which shadows my insert mode line editing
-                        -- and cursor movement. The arrow keys scroll the
-                        -- preview instead.
+                        ['<C-l>'] = layout.toggle_preview,
+                        -- Don't shadow readline style keymaps
                         ['<C-u>'] = false,
                         ['<C-d>'] = false,
                         ['<C-f>'] = false,
                         ['<C-k>'] = false,
+                        -- Scroll preview window with arrows
                         ['<Up>'] = actions.preview_scrolling_up,
                         ['<Down>'] = actions.preview_scrolling_down,
                         ['<Left>'] = actions.preview_scrolling_left,
@@ -104,12 +102,13 @@ table.insert(M, {
                         ['<C-t>'] = in_normal_mode(actions.select_tab),
                         ['<C-x>'] = false,
                         -- Copy fuzzy result to cmdline but don't execute it
-                        ['<C-z>'] = actions.edit_command_line,
+                        ['<C-;>'] = actions.edit_command_line,
                         -- Open selected entries in trouble
-                        ['<C-q>'] = require("trouble.sources.telescope").open,
+                        ['<C-o>'] = require("trouble.sources.telescope").open,
                         -- Append selected entries to trouble
                         ['<C-y>'] = require("trouble.sources.telescope").add,
                         ['<esc>'] = actions.close,
+                        ['<c-q>'] = actions.close,
                     },
                 }
             },

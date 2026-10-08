@@ -120,7 +120,9 @@ return {
                 input = {
                     keys = {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+                        ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-l>'] = { 'focus_preview', mode = 'i' },
+                        ['<c-o>'] = { 'qflist', mode = 'i' },
                         -- Don't shadow readline style keymaps
                         ['<c-a>'] = false,
                         ['<c-f>'] = false,
