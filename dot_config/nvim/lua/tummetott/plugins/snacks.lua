@@ -121,6 +121,13 @@ return {
                     keys = {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-l>'] = { 'focus_preview', mode = 'i' },
+                        -- Don't shadow readline style keymaps
+                        ['<c-a>'] = false,
+                        ['<c-f>'] = false,
+                        ['<c-b>'] = false,
+                        ['<c-u>'] = false,
+                        ['<c-k>'] = false,
+                        ['<c-j>'] = false,
                     },
                 },
                 preview = {
@@ -128,6 +135,9 @@ return {
                         ['<c-q>'] = 'toggle_preview',
                         ['<c-n>'] = 'list_down',
                         ['<c-p>'] = 'list_up',
+                        ['<c-k>'] = '<nop>',
+                        ['<c-j>'] = '<nop>',
+                        ['<c-l>'] = '<nop>',
                     },
                 },
             },
