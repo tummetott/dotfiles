@@ -31,11 +31,68 @@ local cat2 = [[
    ((_/`(____,-'
 ]]
 
+local ivy_win = {
+    input = {
+        keys = {
+            ['<c-j>'] = { 'focus_list', mode = 'i' },
+            ['<c-l>'] = { 'focus_preview', mode = 'i' },
+        },
+    },
+    list = {
+        keys = {
+            ['<c-k>'] = 'focus_input',
+            ['<c-l>'] = 'focus_preview',
+        },
+    },
+    preview = {
+        keys = {
+            ['<c-h>'] = 'focus_input',
+        },
+    },
+}
+
+local dropdown_win = {
+    input = {
+        keys = {
+            ['<c-j>'] = { 'focus_list', mode = 'i' },
+            ['<c-k>'] = { 'focus_preview', mode = 'i' },
+        },
+    },
+    list = {
+        keys = {
+            ['<c-k>'] = 'focus_input',
+        },
+    },
+    preview = {
+        keys = {
+            ['<c-j>'] = 'focus_input',
+        },
+    },
+}
+
+local vertical_win = {
+    input = {
+        keys = {
+            ['<c-j>'] = { 'focus_list', mode = 'i' },
+        },
+    },
+    list = {
+        keys = {
+            ['<c-k>'] = 'focus_input',
+        },
+    },
+}
+
 return {
     'folke/snacks.nvim',
     enabled = true,
     priority = 1000,
     lazy = false,
+    init = function()
+        require('which-key').add {
+            { '<leader>f', group = 'Find' },
+        }
+    end,
     opts = {
         bigfile = {
             enabled = true,
@@ -116,29 +173,44 @@ return {
         },
         picker = {
             enabled = true,
+            actions = {
+                trouble_open = function(picker)
+                    require('trouble.sources.snacks').open(picker, { type = 'smart' })
+                end,
+            },
             win = {
                 input = {
                     keys = {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
-                        ['<c-l>'] = { 'focus_preview', mode = 'i' },
-                        ['<c-o>'] = { 'qflist', mode = 'i' },
-                        -- Don't shadow readline style keymaps
+                        ['<c-o>'] = { 'trouble_open', mode = 'i' },
                         ['<c-a>'] = false,
                         ['<c-f>'] = false,
                         ['<c-b>'] = false,
                         ['<c-u>'] = false,
-                        ['<c-k>'] = false,
+                        ['<c-d>'] = false,
+                        ['<c-h>'] = false,
                         ['<c-j>'] = false,
+                        ['<c-k>'] = false,
+                        ['<c-l>'] = false,
                     },
                 },
                 preview = {
                     keys = {
                         ['<c-q>'] = 'toggle_preview',
-                        ['<c-n>'] = 'list_down',
-                        ['<c-p>'] = 'list_up',
-                        ['<c-k>'] = '<nop>',
+                        ['<c-h>'] = '<nop>',
                         ['<c-j>'] = '<nop>',
+                        ['<c-k>'] = '<nop>',
+                        ['<c-l>'] = '<nop>',
+                    },
+                },
+                list = {
+                    keys = {
+                        ['<c-q>'] = 'close',
+                        ['<c-o>'] = 'trouble_open',
+                        ['<c-h>'] = '<nop>',
+                        ['<c-j>'] = '<nop>',
+                        ['<c-k>'] = '<nop>',
                         ['<c-l>'] = '<nop>',
                     },
                 },
@@ -147,6 +219,12 @@ return {
                 layout = {
                     backdrop = false,
                 }
+            },
+        },
+        scratch = {
+            enabled = true,
+            win = {
+                backdrop = false,
             },
         },
         terminal = {
@@ -178,6 +256,18 @@ return {
                     end,
                     desc = 'Select Action',
                 },
+                focus_input = {
+                    '<c-h>',
+                    function()
+                        local picker = Snacks.picker.get()[1]
+                        if picker then
+                            picker:focus('input')
+                        else
+                            vim.cmd.wincmd({ 'h', count = vim.v.count1 })
+                        end
+                    end,
+                    desc = 'Jump to left window',
+                },
                 list_down = {
                     '<c-n>',
                     function()
@@ -208,6 +298,8 @@ return {
         -- words = { enabled = true },
     },
     highlights = {
+        SnacksPickerDir = { fg = 'gray' },
+        SnacksPickerMatch = { fg = 'blue' },
         SnacksDashboardHeader = { fg = 'blue' },
         SnacksDashboardFooter = { fg = 'dark_gray' },
         SnacksIndentScope = { fg = 'dark_gray' },
@@ -231,23 +323,186 @@ return {
             desc = 'Toggle terminal',
         },
         {
+            '<leader>os',
+            function() Snacks.scratch() end,
+            desc = 'Scratch Buffer',
+        },
+        {
+            '<Leader>ff',
+            function()
+                Snacks.picker.files({
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
+            desc = 'File',
+        },
+        {
+            '<Leader>fg',
+            function()
+                Snacks.picker.grep({
+                    layout = {
+                        preset = 'dropdown',
+                        fullscreen = true,
+                    },
+                    win = dropdown_win,
+                })
+            end,
+            desc = 'Grep',
+        },
+        {
+            '<Leader>fd',
+            function()
+                Snacks.picker.files({
+                    cwd = '~/.local/share/chezmoi',
+                    title = 'Dotfiles',
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
+            desc = 'Dotfile',
+        },
+        {
+            '<Leader>fn',
+            function()
+                Snacks.picker.files({
+                    cwd = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Perlite',
+                    title = 'Obsidian Notes',
+                    ft = 'md',
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
+            desc = 'Obsidian Notes',
+        },
+        {
+            '<Leader>fb',
+            function()
+                Snacks.picker.buffers({
+                    layout = {
+                        preset = 'vertical',
+                        hidden = { 'preview' },
+                    },
+                    win = vertical_win,
+                })
+            end,
+            desc = 'Buffer',
+        },
+        {
+            '<Leader>fr',
+            function()
+                Snacks.picker.recent({
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
+            desc = 'Recent',
+        },
+        {
+            '<Leader>gl',
+            function()
+                Snacks.picker.git_log({
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                        hidden = { 'preview' },
+                    },
+                    win = ivy_win,
+                })
+            end,
+            desc = 'Commit log',
+        },
+        {
+            '<Leader>f/',
+            function()
+                Snacks.picker.search_history({
+                    layout = {
+                        preset = 'vertical',
+                        hidden = { 'preview' },
+                    },
+                    win = vertical_win,
+                })
+            end,
+            desc = 'Search history',
+        },
+        {
+            -- When inside cmdline, search the cmdline history with CTRL-/
+            '<Leader>f;',
+            function()
+                Snacks.picker.command_history({
+                    layout = {
+                        preset = 'vertical',
+                        hidden = { 'preview' },
+                    },
+                    win = vertical_win,
+                })
+            end,
+            desc = 'Cmdline history',
+        },
+        {
             '<leader>gi',
-            function() Snacks.picker.gh_issue() end,
+            function()
+                Snacks.picker.gh_issue({
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
             desc = 'Open GitHub issues',
         },
         {
             '<leader>gI',
-            function() Snacks.picker.gh_issue({ state = 'all' }) end,
+            function()
+                Snacks.picker.gh_issue({
+                    state = 'all',
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
             desc = 'All GitHub issues',
         },
         {
             '<leader>gp',
-            function() Snacks.picker.gh_pr() end,
+            function()
+                Snacks.picker.gh_pr({
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
             desc = 'Open GitHub pull requests',
         },
         {
             '<leader>gP',
-            function() Snacks.picker.gh_pr({ state = 'all' }) end,
+            function()
+                Snacks.picker.gh_pr({
+                    state = 'all',
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                    },
+                    win = ivy_win,
+                })
+            end,
             desc = 'All GitHub pull requests',
         },
     }

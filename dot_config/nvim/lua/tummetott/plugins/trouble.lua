@@ -1,5 +1,5 @@
 return {
-    'folke/trouble.nvim',
+    'tummetott/trouble.nvim',
     enabled = true,
     opts = {
         auto_close = true,    -- auto close when there are no items
@@ -39,8 +39,8 @@ return {
             [']]'] = 'next',
             ['{'] = 'prev',
             ['[['] = 'prev',
-            dd = "delete",
-            d = { action = "delete", mode = "v" },
+            dd = 'delete',
+            d = { action = 'delete', mode = 'v' },
             i = 'inspect',
             p = 'preview',
             P = 'toggle_preview',
@@ -49,53 +49,66 @@ return {
         },
         modes = {
             telescope = {
-                sort = { "filename", "pos" },
+                sort = { 'filename', 'pos' },
                 title = false,
                 groups = {
-                    { "filename", format = "{file_icon}{filename} {count}" },
+                    { 'filename', format = '{file_icon}{filename} {count}' },
                 },
             },
             telescope_files = {
-                sort = { "filename", "pos" },
+                sort = { 'filename', 'pos' },
                 title = false,
-                format = "{file_icon}{filename}",
+                format = '{file_icon}{filename}',
+            },
+            snacks = {
+                sort = { 'filename', 'pos' },
+                title = false,
+                groups = {
+                    { 'filename', format = '{file_icon}{filename} {count}' },
+                },
+            },
+            snacks_files = {
+                sort = { 'filename', 'pos' },
+                title = false,
+                groups = {},
+                format = '{file_icon}{filename}',
             },
             quickfix = {
                 warn_no_results = false,
-                sort = { "pos", "filename", "severity", "message" },
+                sort = { 'pos', 'filename', 'severity', 'message' },
                 groups = {
-                    { "filename", format = "{file_icon}{filename} {count}" },
+                    { 'filename', format = '{file_icon}{filename} {count}' },
                 },
-                format = "{text:ts} {pos}",
+                format = '{text:ts} {pos}',
             },
             loclist = {
                 warn_no_results = false,
-                sort = { "pos", "filename", "severity", "message" },
+                sort = { 'pos', 'filename', 'severity', 'message' },
                 groups = {
-                    { "filename", format = "{file_icon}{filename} {count}" },
+                    { 'filename', format = '{file_icon}{filename} {count}' },
                 },
-                format = "{text:ts} {pos}",
+                format = '{text:ts} {pos}',
             },
             todo = {
-                sort = { "pos", "filename", "severity", "message" },
+                sort = { 'pos', 'filename', 'severity', 'message' },
                 groups = {
-                    { "filename", format = "{file_icon}{filename} {count}" },
+                    { 'filename', format = '{file_icon}{filename} {count}' },
                 },
-                format = "{todo_icon}{text} {pos}",
+                format = '{todo_icon}{text} {pos}',
             },
             diagnostics = {
                 groups = {
-                    { "filename", format = "{file_icon}{basename} {count}" },
+                    { 'filename', format = '{file_icon}{basename} {count}' },
                 },
-                sort = { "severity", "filename", "pos", "message" },
-                format = "{severity_icon}{message:md} {item.source} {code} {pos}",
+                sort = { 'severity', 'filename', 'pos', 'message' },
+                format = '{severity_icon}{message:md} {item.source} {code} {pos}',
             },
             -- Base settings for:
             -- lsp_definitions, lsp_references, lsp_implementations
             -- lsp_type_definitions, lsp_declarations, lsp_command
             lsp_base = {
                 groups = {
-                    { "filename", format = "{file_icon}{filename} {count}" },
+                    { 'filename', format = '{file_icon}{filename} {count}' },
                 },
                 -- A line is the unit of navigation, so several locations on one
                 -- line should be one destination. This filter collapses several

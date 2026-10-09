@@ -81,12 +81,12 @@ return {
             desc = 'Blame current line'
         },
         {
-            '<Leader>gl',
+            '<Leader><space>b',
             function()
                 local enabled = require 'gitsigns'.toggle_current_line_blame()
                 require 'tummetott.utils'.echo_toggle('Line blame', enabled)
             end,
-            desc = 'Toggle line blame'
+            desc = 'Line blame'
         },
         {
             '<Leader>gs',
