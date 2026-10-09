@@ -77,9 +77,26 @@ return {
         {
             '<leader>fy',
             function()
-                require('telescope').extensions.yank_history.yank_history {
-                    preview = { hide_on_startup = true },
-                }
+                local items = vim.tbl_map(function(entry)
+                    return {
+                        text = entry.regcontents:gsub('%s+', ' '),
+                        entry = entry,
+                        preview = { text = entry.regcontents, ft = entry.filetype },
+                    }
+                end, require('yanky.history').all())
+                Snacks.picker.pick({
+                    source = 'yank_history',
+                    title = 'Yank ring',
+                    items = items,
+                    format = 'text',
+                    preview = 'preview',
+                    confirm = function(picker, item)
+                        picker:close()
+                        if item then
+                            require('yanky.picker').actions.put('p', false)(item.entry)
+                        end
+                    end,
+                })
             end,
             desc = 'Yank ring',
         },

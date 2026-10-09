@@ -754,6 +754,20 @@ M.special_winbar = {
                 end,
             },
             {
+                title = 'FILE RESULTS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                        and vim.w[win].trouble.mode == 'snacks_files'
+                end,
+            },
+            {
+                title = 'MATCH RESULTS',
+                match = function(_, win)
+                    return vim.w[win].trouble
+                        and vim.w[win].trouble.mode == 'snacks'
+                end,
+            },
+            {
                 title = 'DIAGNOSTICS',
                 match = function(_, win)
                     return vim.w[win].trouble

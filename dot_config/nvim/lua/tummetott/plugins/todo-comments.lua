@@ -1,6 +1,7 @@
 return {
     'folke/todo-comments.nvim',
     enabled = true,
+    dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
         keywords = {
             FIX = {
@@ -44,13 +45,8 @@ return {
     event = 'VeryLazy',
     keys = {
         {
-            '<Leader>oc',
+            '<Leader>ot',
             '<Cmd>TodoTrouble<CR>',
-            desc = 'Todo comments',
-        },
-        {
-            '<Leader>ft',
-            '<Cmd>TodoTelescope keywords=TODO,FIX,PERF<CR>',
             desc = 'Todos',
         },
     },

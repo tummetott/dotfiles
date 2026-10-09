@@ -224,27 +224,27 @@ return {
         {
             '<Leader>od',
             function() require('trouble').toggle('diagnostics') end,
-            desc = 'Diagnostics list',
+            desc = 'Diagnostics',
         },
         {
             '<Leader>oq',
             function() require('trouble').toggle('quickfix') end,
-            desc = 'Quickfix list',
+            desc = 'Quickfix',
+        },
+        {
+            '<Leader>of',
+            function() require('trouble').toggle('snacks_files') end,
+            desc = 'File results',
+        },
+        {
+            '<Leader>om',
+            function() require('trouble').toggle('snacks') end,
+            desc = 'Match results',
         },
         {
             '<Leader>ol',
-            function() require('trouble').toggle('loclist') end,
-            desc = 'Location list',
-        },
-        {
-            '<Leader>ot',
-            function() require('trouble').toggle('telescope') end,
-            desc = 'Telescope list',
-        },
-        {
-            '<Leader>oT',
-            function() require('trouble').toggle('telescope_files') end,
-            desc = 'Telescope files',
+            function() require('trouble').toggle('last') end,
+            desc = 'Last list',
         },
         {
             'gO',

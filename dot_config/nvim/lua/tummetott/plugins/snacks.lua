@@ -1,87 +1,5 @@
-local cat1 = [[
-⠀⡀⠀⠀⠀⢠⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠈⣿⢶⣦⡏⠙⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⢀⣴⣿⣿⣿⣿⣾⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⣿⡿⢛⣿⣿⣿⣿⢿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⢀⣿⣷⣿⣿⣿⣿⠃⣾⣿⣿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠺⠿⠿⣿⣿⣿⣼⣿⣿⣿⣿⣿⣠⣄⡀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣷⣆⠀⠀⠀⠀
-⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⠏⣾⣿⣿⣿⣿⣿⡀⠀⠀⠀
-⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⡟⣰⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀
-⠀⠀⠀⠀⠻⣿⣿⣿⣿⢏⣴⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀
-⠀⠀⠀⠀⠀⠀⠙⠻⣿⣿⣿⣿⣿⢣⣿⡿⢟⣿⣿⣿⠀⠀
-⠀⠀⠀⠀⠀⠀⢹⣷⣽⢻⣿⣿⠃⠞⣫⣴⣿⣿⣿⣿⡟⠀
-⠀⠀⠀⠀⠀⢳⣄⠙⠇⢸⣿⠃⣠⣾⣿⣿⣿⣿⣿⣿⡇⠀
-⠀⠀⠀⠀⠀⠀⢿⣷⣤⣈⠛⠀⢿⣿⣿⣿⣿⣿⣿⠟⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡉⠛⢿⣿⣶⣤⣈⣉⣉⣉⣉⣉⣰⣿⠄
-⠀⠀⠀⠀⠀⠀⠏⢴⣷⡦⠌⠙⠻⢿⡿⠿⠿⠿⠿⠿⠃⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-]]
-
-local cat2 = [[
-   ,_     _
-   |\\_,-~/
-   / _  _ |    ,--.
-  (  @  @ )   / ,-'
-   \  _T_/-._( (
-   /         `. \
-  |         _  \ |
-   \ \ ,  /      |
-    || |-_\__   /
-   ((_/`(____,-'
-]]
-
-local ivy_win = {
-    input = {
-        keys = {
-            ['<c-j>'] = { 'focus_list', mode = 'i' },
-            ['<c-l>'] = { 'focus_preview', mode = 'i' },
-        },
-    },
-    list = {
-        keys = {
-            ['<c-k>'] = 'focus_input',
-            ['<c-l>'] = 'focus_preview',
-        },
-    },
-    preview = {
-        keys = {
-            ['<c-h>'] = 'focus_input',
-        },
-    },
-}
-
-local dropdown_win = {
-    input = {
-        keys = {
-            ['<c-j>'] = { 'focus_list', mode = 'i' },
-            ['<c-k>'] = { 'focus_preview', mode = 'i' },
-        },
-    },
-    list = {
-        keys = {
-            ['<c-k>'] = 'focus_input',
-        },
-    },
-    preview = {
-        keys = {
-            ['<c-j>'] = 'focus_input',
-        },
-    },
-}
-
-local vertical_win = {
-    input = {
-        keys = {
-            ['<c-j>'] = { 'focus_list', mode = 'i' },
-        },
-    },
-    list = {
-        keys = {
-            ['<c-k>'] = 'focus_input',
-        },
-    },
-}
+local cat = require 'tummetott.utils.dashboard'
+local picker_win = require 'tummetott.utils.picker'
 
 return {
     'folke/snacks.nvim',
@@ -103,7 +21,7 @@ return {
             sections = {
                 {
                     text = {
-                        vim.g.nerdfonts and cat1 or cat2,
+                        vim.g.nerdfonts and cat.nerd or cat.ascii,
                         align = 'center',
                         hl = 'SnacksDashboardHeader',
                     }
@@ -175,8 +93,59 @@ return {
             enabled = true,
             actions = {
                 trouble_open = function(picker)
-                    require('trouble.sources.snacks').open(picker, { type = 'smart' })
+                    require('trouble.sources.snacks')
+                        .open(picker, { type = 'smart' })
                 end,
+                trouble_add = function(picker)
+                    require('trouble.sources.snacks')
+                        .open(picker, { type = 'smart', add = true })
+                end,
+            },
+            sources = {
+                files = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
+                grep = {
+                    layout = { preset = 'dropdown', fullscreen = true },
+                    win = picker_win.dropdown,
+                },
+                recent = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
+                git_log = {
+                    layout = {
+                        preset = 'ivy',
+                        fullscreen = true,
+                        hidden = { 'preview' },
+                    },
+                    win = picker_win.ivy,
+                },
+                gh_issue = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
+                gh_pr = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
+                yank_history = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
+                buffers = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_win.vertical,
+                },
+                search_history = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_win.vertical,
+                },
+                command_history = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_win.vertical,
+                },
             },
             win = {
                 input = {
@@ -184,6 +153,7 @@ return {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-o>'] = { 'trouble_open', mode = 'i' },
+                        ['<c-i>'] = { 'trouble_add', mode = 'i' },
                         ['<c-a>'] = false,
                         ['<c-f>'] = false,
                         ['<c-b>'] = false,
@@ -208,6 +178,7 @@ return {
                     keys = {
                         ['<c-q>'] = 'close',
                         ['<c-o>'] = 'trouble_open',
+                        ['<c-i>'] = 'trouble_add',
                         ['<c-h>'] = '<nop>',
                         ['<c-j>'] = '<nop>',
                         ['<c-k>'] = '<nop>',
@@ -330,26 +301,14 @@ return {
         {
             '<Leader>ff',
             function()
-                Snacks.picker.files({
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
-                })
+                Snacks.picker.files()
             end,
             desc = 'File',
         },
         {
             '<Leader>fg',
             function()
-                Snacks.picker.grep({
-                    layout = {
-                        preset = 'dropdown',
-                        fullscreen = true,
-                    },
-                    win = dropdown_win,
-                })
+                Snacks.picker.grep()
             end,
             desc = 'Grep',
         },
@@ -359,27 +318,17 @@ return {
                 Snacks.picker.files({
                     cwd = '~/.local/share/chezmoi',
                     title = 'Dotfiles',
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
                 })
             end,
             desc = 'Dotfile',
         },
         {
-            '<Leader>fn',
+            '<Leader>fo',
             function()
                 Snacks.picker.files({
                     cwd = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Perlite',
-                    title = 'Obsidian Notes',
+                    title = 'Obsidian Note',
                     ft = 'md',
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
                 })
             end,
             desc = 'Obsidian Notes',
@@ -387,80 +336,43 @@ return {
         {
             '<Leader>fb',
             function()
-                Snacks.picker.buffers({
-                    layout = {
-                        preset = 'vertical',
-                        hidden = { 'preview' },
-                    },
-                    win = vertical_win,
-                })
+                Snacks.picker.buffers()
             end,
             desc = 'Buffer',
         },
         {
             '<Leader>fr',
             function()
-                Snacks.picker.recent({
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
-                })
+                Snacks.picker.recent()
             end,
             desc = 'Recent',
         },
         {
             '<Leader>gl',
             function()
-                Snacks.picker.git_log({
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                        hidden = { 'preview' },
-                    },
-                    win = ivy_win,
-                })
+                Snacks.picker.git_log()
             end,
             desc = 'Commit log',
         },
         {
             '<Leader>f/',
             function()
-                Snacks.picker.search_history({
-                    layout = {
-                        preset = 'vertical',
-                        hidden = { 'preview' },
-                    },
-                    win = vertical_win,
-                })
+                Snacks.picker.search_history()
             end,
             desc = 'Search history',
         },
         {
             -- When inside cmdline, search the cmdline history with CTRL-/
-            '<Leader>f;',
+            '<Leader>f:',
             function()
-                Snacks.picker.command_history({
-                    layout = {
-                        preset = 'vertical',
-                        hidden = { 'preview' },
-                    },
-                    win = vertical_win,
-                })
+                Snacks.picker.command_history()
             end,
             desc = 'Cmdline history',
         },
         {
             '<leader>gi',
             function()
-                Snacks.picker.gh_issue({
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
-                })
+                Snacks.picker.gh_issue()
             end,
             desc = 'Open GitHub issues',
         },
@@ -469,11 +381,6 @@ return {
             function()
                 Snacks.picker.gh_issue({
                     state = 'all',
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
                 })
             end,
             desc = 'All GitHub issues',
@@ -481,13 +388,7 @@ return {
         {
             '<leader>gp',
             function()
-                Snacks.picker.gh_pr({
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
-                })
+                Snacks.picker.gh_pr()
             end,
             desc = 'Open GitHub pull requests',
         },
@@ -496,11 +397,6 @@ return {
             function()
                 Snacks.picker.gh_pr({
                     state = 'all',
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                    },
-                    win = ivy_win,
                 })
             end,
             desc = 'All GitHub pull requests',
