@@ -81,7 +81,7 @@ return {
             desc = 'Agent',
         },
         {
-            '<leader>lR',
+            '<leader>lf',
             function() require('sidekick.cli').send({ msg = '{file}' }) end,
             desc = 'Send file reference',
         },

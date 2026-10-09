@@ -237,7 +237,7 @@ table.insert(M, {
 
 table.insert(M, {
     'debugloop/telescope-undo.nvim',
-    enabled = true,
+    enabled = false,
     dependencies = 'nvim-telescope/telescope.nvim',
     keys = {
         {

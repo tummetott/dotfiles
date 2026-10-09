@@ -1,5 +1,6 @@
 local cat = require 'tummetott.utils.dashboard'
 local picker_win = require 'tummetott.utils.picker'
+local previous_colorscheme
 
 return {
     'folke/snacks.nvim',
@@ -134,9 +135,31 @@ return {
                     layout = { preset = 'ivy', fullscreen = true },
                     win = picker_win.ivy,
                 },
+                undo = {
+                    layout = { preset = 'ivy', fullscreen = true },
+                    win = picker_win.ivy,
+                },
                 buffers = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
                     win = picker_win.vertical,
+                },
+                colorschemes = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_win.vertical,
+                    on_change = function(_, item)
+                        if item then
+                            vim.cmd.colorscheme(item.text)
+                        end
+                    end,
+                    confirm = function(picker)
+                        previous_colorscheme = nil
+                        picker:close()
+                    end,
+                    on_close = function()
+                        if previous_colorscheme then
+                            vim.cmd.colorscheme(previous_colorscheme)
+                        end
+                    end,
                 },
                 search_history = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
@@ -168,6 +191,8 @@ return {
                 preview = {
                     keys = {
                         ['<c-q>'] = 'toggle_preview',
+                        ['<c-n>'] = 'list_down',
+                        ['<c-p>'] = 'list_up',
                         ['<c-h>'] = '<nop>',
                         ['<c-j>'] = '<nop>',
                         ['<c-k>'] = '<nop>',
@@ -269,12 +294,17 @@ return {
         -- words = { enabled = true },
     },
     highlights = {
-        SnacksPickerDir = { fg = 'gray' },
+        SnacksPickerDir = { link = 'SnacksPickerFile' },
         SnacksPickerMatch = { fg = 'blue' },
         SnacksDashboardHeader = { fg = 'blue' },
         SnacksDashboardFooter = { fg = 'dark_gray' },
         SnacksIndentScope = { fg = 'dark_gray' },
         SnacksInputBorder = { link = 'FloatBorder' },
+        SnacksDiffContext = { bg = 'background' },
+        SnacksDiffAddLineNr = { link = 'LineNr' },
+        SnacksDiffDeleteLineNr = { link = 'LineNr' },
+        SnacksDiffContextLineNr = { link = 'LineNr' },
+        SnacksDiffConflictLineNr = { link = 'LineNr' },
     },
     keys = {
         {
@@ -334,6 +364,16 @@ return {
             desc = 'Obsidian Notes',
         },
         {
+            '<Leader>fc',
+            function()
+                -- Captured here rather than in `on_show`, which snacks fires
+                -- only after the first list item has already been applied
+                previous_colorscheme = vim.g.colors_name
+                Snacks.picker.colorschemes()
+            end,
+            desc = 'Colorscheme',
+        },
+        {
             '<Leader>fb',
             function()
                 Snacks.picker.buffers()
@@ -346,6 +386,13 @@ return {
                 Snacks.picker.recent()
             end,
             desc = 'Recent',
+        },
+        {
+            '<Leader>fu',
+            function()
+                Snacks.picker.undo()
+            end,
+            desc = 'Undotree',
         },
         {
             '<Leader>gl',
