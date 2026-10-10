@@ -13,6 +13,11 @@ return {
         }
     end,
     opts = {
+        styles = {
+            float = {
+                backdrop = false,
+            },
+        },
         bigfile = {
             enabled = true,
             notify = false,
@@ -215,17 +220,9 @@ return {
                     },
                 },
             },
-            layout = {
-                layout = {
-                    backdrop = false,
-                }
-            },
         },
         scratch = {
             enabled = true,
-            win = {
-                backdrop = false,
-            },
         },
         terminal = {
             enabled = true,
