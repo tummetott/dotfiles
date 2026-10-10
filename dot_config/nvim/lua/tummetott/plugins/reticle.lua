@@ -23,7 +23,6 @@ return {
                 'FTerm',
                 'NvimSeparator',
                 'NvimTree',
-                'TelescopePrompt',
                 'trouble',
                 'snacks_dashboard',
                 'DiffviewFileHistory',

@@ -583,10 +583,11 @@ M.special_bufname = {
     static = {
         bufnames = {
             ['NvimTree'] = 'FILE TREE',
-            ['TelescopePrompt'] = 'TELESCOPE',
             ['lazy'] = 'LAZY',
             ['Outline'] = 'OUTLINE',
             ['markdown.gh'] = 'GITHUB',
+            ['snacks_picker_input'] = 'PICKER',
+            ['snacks_picker_list'] = 'PICKER',
         }
     },
     provider = function(self)
@@ -651,7 +652,7 @@ M.special_statusline = {
         -- Don't show search count and percentage for some special files
         condition = function()
             return not conditions.buffer_matches({
-                filetype = { 'TelescopePrompt' },
+                filetype = { 'snacks_picker_input', 'snacks_picker_list' },
             })
         end,
         M.search_count,
@@ -741,16 +742,6 @@ M.special_winbar = {
                 match = function(_, win)
                     return vim.w[win].trouble
                         and vim.w[win].trouble.mode == 'loclist'
-                end,
-            },
-            {
-                title = 'TELESCOPE',
-                match = function(_, win)
-                    return vim.w[win].trouble
-                        and (
-                            vim.w[win].trouble.mode == 'telescope'
-                            or vim.w[win].trouble.mode == 'telescope_files'
-                        )
                 end,
             },
             {

@@ -19,7 +19,7 @@ return {
             enabled = true,
             cmdline = true,
             disabled_filetypes = {
-                'TelescopePrompt',
+                'snacks_picker_input',
             },
             -- Extend default rules
             pairs = {},

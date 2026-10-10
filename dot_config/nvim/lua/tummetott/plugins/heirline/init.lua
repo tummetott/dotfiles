@@ -56,8 +56,6 @@ return {
                     return require("heirline.conditions").buffer_matches({
                         filetype = {
                             'snacks_dashboard',
-                            'TelescopePrompt',
-                            'TelescopeResults',
                         },
                         buftype = {
                             'prompt',

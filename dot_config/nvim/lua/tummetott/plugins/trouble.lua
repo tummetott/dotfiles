@@ -48,18 +48,6 @@ return {
             ['<c-p>'] = 'prev',
         },
         modes = {
-            telescope = {
-                sort = { 'filename', 'pos' },
-                title = false,
-                groups = {
-                    { 'filename', format = '{file_icon}{filename} {count}' },
-                },
-            },
-            telescope_files = {
-                sort = { 'filename', 'pos' },
-                title = false,
-                format = '{file_icon}{filename}',
-            },
             snacks = {
                 sort = { 'filename', 'pos' },
                 title = false,

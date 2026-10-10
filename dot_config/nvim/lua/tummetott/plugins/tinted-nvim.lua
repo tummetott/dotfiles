@@ -24,7 +24,7 @@ return {
         },
         highlights = {
             integrations = {
-                telescope = true,
+                telescope = false,
                 notify    = false,
                 cmp       = false,
                 blink     = true,
