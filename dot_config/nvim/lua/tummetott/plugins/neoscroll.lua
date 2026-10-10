@@ -1,6 +1,6 @@
 return {
     'karb94/neoscroll.nvim',
-    enabled = true,
+    enabled = false,
     opts = {
         mappings = {
             '<C-u>',
