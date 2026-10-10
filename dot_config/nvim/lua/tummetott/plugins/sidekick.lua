@@ -19,7 +19,6 @@ return {
             enabled = false,
         },
         cli = {
-            picker = 'telescope',
             win = {
                 keys = {
                     prompt = {
@@ -77,7 +76,9 @@ return {
         },
         {
             '<leader>oa',
-            function() require('sidekick.cli').select() end,
+            function()
+                require('sidekick.cli').select { filter = { installed = true } }
+            end,
             desc = 'Agent',
         },
         {

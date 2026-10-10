@@ -43,19 +43,22 @@ M.dropdown = {
     },
 }
 
--- Input on top, list below it. These sources carry no file to jump to, so the
--- trouble keys are dropped
+-- Input on top, list below it. Preview on the bottom
 M.vertical = {
     input = {
         keys = {
             ['<c-j>'] = { 'focus_list', mode = 'i' },
-            ['<c-o>'] = false,
-            ['<c-i>'] = false,
         },
     },
     list = {
         keys = {
             ['<c-k>'] = 'focus_input',
+            ['<c-j>'] = { 'focus_preview' },
+        },
+    },
+    preview = {
+        keys = {
+            ['<c-k>'] = 'focus_list',
         },
     },
 }

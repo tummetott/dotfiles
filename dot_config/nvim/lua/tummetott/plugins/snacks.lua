@@ -104,10 +104,12 @@ return {
             },
             sources = {
                 files = {
+                    hidden = true,
                     layout = { preset = 'ivy', fullscreen = true },
                     win = picker_win.ivy,
                 },
                 grep = {
+                    hidden = true,
                     layout = { preset = 'dropdown', fullscreen = true },
                     win = picker_win.dropdown,
                 },
@@ -176,7 +178,8 @@ return {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-o>'] = { 'trouble_open', mode = 'i' },
-                        ['<c-i>'] = { 'trouble_add', mode = 'i' },
+                        ['<c-y>'] = { 'trouble_add', mode = 'i' },
+                        ['<c-i>'] = { 'toggle_ignored', mode = 'i' },
                         ['<c-a>'] = false,
                         ['<c-f>'] = false,
                         ['<c-b>'] = false,
@@ -203,7 +206,8 @@ return {
                     keys = {
                         ['<c-q>'] = 'close',
                         ['<c-o>'] = 'trouble_open',
-                        ['<c-i>'] = 'trouble_add',
+                        ['<c-y>'] = 'trouble_add',
+                        ['<c-i>'] = 'toggle_ignored',
                         ['<c-h>'] = '<nop>',
                         ['<c-j>'] = '<nop>',
                         ['<c-k>'] = '<nop>',
