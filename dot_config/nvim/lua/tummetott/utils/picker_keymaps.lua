@@ -23,6 +23,29 @@ keymaps.shared = {
         ['<c-q>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
         ['<c-;>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
         ['<c-;>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
+        -- A spec of only string keys merges into the Snacks default, keeping
+        -- its action and mode and relabelling it for which-key. Two conditions
+        -- apply, and missing either silently leaves a mapping without an
+        -- action. The default has to be a table, since a bare string one like
+        -- `<Esc>` is replaced rather than merged. And the key has to be spelled
+        -- as Snacks spells it, which mixes `<c-` and `<C-`, because the merge
+        -- runs on the literal strings
+        ['<CR>'] = { desc = 'Open item' },
+        ['<S-CR>'] = { desc = 'Open in picked window' },
+        ['<Tab>'] = { desc = 'Select and move down' },
+        ['<S-Tab>'] = { desc = 'Select and move up' },
+        ['<Down>'] = { desc = 'Next item' },
+        ['<Up>'] = { desc = 'Previous item' },
+        ['<C-Down>'] = { desc = 'Next query' },
+        ['<C-Up>'] = { desc = 'Previous query' },
+        ['<c-n>'] = { desc = 'Next item' },
+        ['<c-p>'] = { desc = 'Previous item' },
+        ['<c-s>'] = { desc = 'Open in split' },
+        ['<c-t>'] = { desc = 'Open in tab' },
+        ['<c-v>'] = { desc = 'Open in vertical split' },
+        ['<C-c>'] = { desc = 'Cancel' },
+        ['<C-w>'] = { desc = 'Delete word' },
+        ['<a-d>'] = false,
         ['<a-f>'] = false,
         ['<a-h>'] = false,
         ['<a-i>'] = false,
@@ -36,15 +59,14 @@ keymaps.shared = {
         ['<c-d>'] = false,
         ['<c-f>'] = false,
         ['<c-u>'] = false,
-        ['<c-h>'] = false,
         ['<c-j>'] = false,
         ['<c-k>'] = false,
-        ['<c-l>'] = false,
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close picker' },
         ['<c-;>p'] = { 'toggle_preview', desc = 'Preview window' },
         ['<c-;>m'] = { 'toggle_maximize', desc = 'Maximized layout' },
+        ['<a-d>'] = false,
         ['<a-f>'] = false,
         ['<a-h>'] = false,
         ['<a-i>'] = false,
