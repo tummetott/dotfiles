@@ -43,8 +43,6 @@ keymaps.shared = {
         ['<c-s>'] = { desc = 'Open in split' },
         ['<c-t>'] = { desc = 'Open in tab' },
         ['<c-v>'] = { desc = 'Open in vertical split' },
-        ['<C-c>'] = { desc = 'Cancel' },
-        ['<C-w>'] = { desc = 'Delete word' },
         ['<a-d>'] = false,
         ['<a-f>'] = false,
         ['<a-h>'] = false,
@@ -61,6 +59,7 @@ keymaps.shared = {
         ['<c-u>'] = false,
         ['<c-j>'] = false,
         ['<c-k>'] = false,
+        ['<c-/>'] = { '<nop>', mode = { 'n', 'i' } },
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close picker' },
@@ -78,6 +77,7 @@ keymaps.shared = {
         ['<c-j>'] = '<nop>',
         ['<c-k>'] = '<nop>',
         ['<c-l>'] = '<nop>',
+        ['<c-/>'] = '<nop>',
     },
     preview = {
         ['<c-q>'] = { 'toggle_preview', desc = 'Preview window' },
