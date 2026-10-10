@@ -295,6 +295,16 @@ return {
         },
         scope = {
             enabled = true,
+            keys = {
+                textobject = {
+                    ii = { desc = 'Inner scope' },
+                    ai = { desc = 'Full scope' },
+                },
+                jump = {
+                    ['[i'] = { desc = 'Top edge of scope' },
+                    [']i'] = { desc = 'Bottom edge of scope' },
+                },
+            },
         },
         statuscolumn = {
             enabled = true,

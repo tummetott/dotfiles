@@ -256,24 +256,6 @@ table.insert(M, {
             desc = 'Previous class end',
             mode = { 'n', 'x', 'o' },
         },
-        {
-            ']o',
-            function()
-                require('nvim-treesitter-textobjects.move')
-                .goto_next_start('@local.scope', 'locals')
-            end,
-            desc = 'Next scope start',
-            mode = { 'n', 'x', 'o' },
-        },
-        {
-            '[o',
-            function()
-                require('nvim-treesitter-textobjects.move')
-                .goto_previous_start('@local.scope', 'locals')
-            end,
-            desc = 'Previous scope start',
-            mode = { 'n', 'x', 'o' },
-        },
         -- Swap keymaps
         {
             'g>',
