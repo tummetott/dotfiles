@@ -97,6 +97,15 @@ return {
         },
         picker = {
             enabled = true,
+            -- Badges in the picker title, naming each option that is active.
+            toggles = {
+                follow = '+symlinks',
+                hidden = '+hidden',
+                ignored = '+ignored',
+                modified = 'only-modified',
+                regex = { icon = 'no-regex', value = false },
+                state = { icon = '+closed', value = 'all' },
+            },
             actions = {
                 trouble_open = function(picker)
                     require('trouble.sources.snacks')
@@ -105,6 +114,16 @@ return {
                 trouble_add = function(picker)
                     require('trouble.sources.snacks')
                         .open(picker, { type = 'smart', add = true })
+                end,
+                -- Toggles the GitHub pickers between open and all issues / PRs
+                gh_toggle_state = function(picker)
+                    if not picker.opts.source:find('^gh_') then
+                        return
+                    end
+                    picker.opts.state =
+                        picker.opts.state == 'all' and 'open' or 'all'
+                    picker.list:set_target()
+                    picker:find()
                 end,
             },
             sources = {
@@ -179,12 +198,11 @@ return {
             },
             win = {
                 input = {
-                    keys = {
+                    keys = vim.tbl_extend('error', picker_win.toggles('i'), {
                         ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
                         ['<c-o>'] = { 'trouble_open', mode = 'i' },
                         ['<c-y>'] = { 'trouble_add', mode = 'i' },
-                        ['<c-i>'] = { 'toggle_ignored', mode = 'i' },
                         ['<c-a>'] = false,
                         ['<c-f>'] = false,
                         ['<c-b>'] = false,
@@ -194,10 +212,10 @@ return {
                         ['<c-j>'] = false,
                         ['<c-k>'] = false,
                         ['<c-l>'] = false,
-                    },
+                    }),
                 },
                 preview = {
-                    keys = {
+                    keys = vim.tbl_extend('error', picker_win.toggles(), {
                         ['<c-q>'] = 'toggle_preview',
                         ['<c-n>'] = 'list_down',
                         ['<c-p>'] = 'list_up',
@@ -205,19 +223,18 @@ return {
                         ['<c-j>'] = '<nop>',
                         ['<c-k>'] = '<nop>',
                         ['<c-l>'] = '<nop>',
-                    },
+                    }),
                 },
                 list = {
-                    keys = {
+                    keys = vim.tbl_extend('error', picker_win.toggles(), {
                         ['<c-q>'] = 'close',
                         ['<c-o>'] = 'trouble_open',
                         ['<c-y>'] = 'trouble_add',
-                        ['<c-i>'] = 'toggle_ignored',
                         ['<c-h>'] = '<nop>',
                         ['<c-j>'] = '<nop>',
                         ['<c-k>'] = '<nop>',
                         ['<c-l>'] = '<nop>',
-                    },
+                    }),
                 },
             },
         },
@@ -463,29 +480,11 @@ return {
             desc = 'Open GitHub issues',
         },
         {
-            '<leader>gI',
-            function()
-                Snacks.picker.gh_issue({
-                    state = 'all',
-                })
-            end,
-            desc = 'All GitHub issues',
-        },
-        {
             '<leader>gp',
             function()
                 Snacks.picker.gh_pr()
             end,
             desc = 'Open GitHub pull requests',
-        },
-        {
-            '<leader>gP',
-            function()
-                Snacks.picker.gh_pr({
-                    state = 'all',
-                })
-            end,
-            desc = 'All GitHub pull requests',
         },
     }
 }

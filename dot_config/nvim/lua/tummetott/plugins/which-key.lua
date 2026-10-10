@@ -7,6 +7,12 @@ return {
     lazy = false,
     opts = {
         preset = 'classic',
+        -- Auto triggers skip insert mode. Only trigger in insert mode for
+        -- explicit prefixes.
+        triggers = {
+            { '<auto>', mode = 'nxso' },
+            { '<c-;>', mode = 'i' },
+        },
         plugins = {
             marks = true,
             registers = true,
@@ -136,6 +142,7 @@ return {
             { '[%', mode = { 'o', 'x' }, hidden = true },
             { ']%', mode = { 'o', 'x' }, hidden = true },
             { '<leader>o',  group = 'Open' },
+            { '<c-;>', mode = { 'n', 'i' }, group = 'Toggle' },
         },
         show_help = true,
         show_key = true,

@@ -1,6 +1,30 @@
--- Directional focus keys for the snacks picker, one table per layout. Each
--- mirrors where that layout puts the input, list and preview windows.
+-- Window keys for the snacks picker
 local M = {}
+
+local toggles = {
+    i = { 'toggle_ignored', 'Gitignored files' },
+    r = { 'toggle_regex', 'Regex search' },
+    f = { 'toggle_follow', 'Follow symlinks' },
+    c = { 'gh_toggle_state', 'Closed issues and PRs' },
+    h = { 'toggle_hidden', 'Hidden files' },
+    l = { 'toggle_live', 'Live search' },
+    p = { 'toggle_preview', 'Preview window' },
+    m = { 'toggle_maximize', 'Maximized layout' },
+    o = { 'toggle_modified', 'Only modified buffers' },
+}
+
+-- Builds the prefixed toggle mappings for one picker window.
+function M.toggles(mode)
+    local keys = {}
+    for key, toggle in pairs(toggles) do
+        keys['<c-;>' .. key] = {
+            toggle[1],
+            desc = toggle[2],
+            mode = mode,
+        }
+    end
+    return keys
+end
 
 -- Input on top, list below it, preview to the right of the list
 M.ivy = {
