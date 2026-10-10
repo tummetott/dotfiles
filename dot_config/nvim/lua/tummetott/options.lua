@@ -4,9 +4,6 @@ vim.opt.number = true
 -- Use relative numbers
 vim.opt.relativenumber = true
 
--- Show signcolumn when necessary with a column of maximum 1 char
-vim.opt.signcolumn = 'auto:1'
-
 -- Only show tabline if there are at least two tab pages
 vim.opt.showtabline = 1
 
@@ -110,9 +107,6 @@ vim.opt.iskeyword:append('-')
 
 -- By default, all folds are open
 vim.opt.foldlevelstart = 99
-
--- Don't show the foldcolumn
-vim.opt.foldcolumn = '0'
 
 -- An empty foldtext renders a closed fold as its own line, highlighted and
 -- unwrapped, padded out with the 'fold' entry of 'fillchars'
