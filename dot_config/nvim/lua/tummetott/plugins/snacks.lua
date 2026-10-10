@@ -293,11 +293,18 @@ return {
         scroll = {
             enabled = true,
         },
+        scope = {
+            enabled = true,
+        },
+        statuscolumn = {
+            enabled = true,
+        },
+        words = {
+            enabled = true,
+            modes = { 'n' },
+        },
         -- notifier = { enabled = true },
         -- quickfile = { enabled = true },
-        -- scope = { enabled = true },
-        -- statuscolumn = { enabled = true },
-        -- words = { enabled = true },
     },
     highlights = {
         SnacksPickerDir = { link = 'SnacksPickerFile' },
@@ -311,6 +318,11 @@ return {
         SnacksDiffDeleteLineNr = { link = 'LineNr' },
         SnacksDiffContextLineNr = { link = 'LineNr' },
         SnacksDiffConflictLineNr = { link = 'LineNr' },
+        LspReferenceHidden = {},
+        LspReferenceVisible = { bg = 'dark_gray' },
+        LspReferenceText = { link = 'LspReferenceHidden' },
+        LspReferenceRead = { link = 'LspReferenceHidden' },
+        LspReferenceWrite = { link = 'LspReferenceHidden' },
     },
     keys = {
         {
@@ -392,6 +404,20 @@ return {
                 Snacks.picker.recent()
             end,
             desc = 'Recent',
+        },
+        {
+            ']]',
+            function()
+                require('tummetott.utils.words').jump(vim.v.count1)
+            end,
+            desc = 'Next reference under cursor',
+        },
+        {
+            '[[',
+            function()
+                require('tummetott.utils.words').jump(-vim.v.count1)
+            end,
+            desc = 'Previous reference under cursor',
         },
         {
             '<Leader>fu',

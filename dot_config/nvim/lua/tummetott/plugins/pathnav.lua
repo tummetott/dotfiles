@@ -74,7 +74,7 @@ return {
                     })
                 end)
                 if not ok or not result then
-                    require("illuminate").visible_buf()
+                    require('tummetott.utils.words').show()
                 end
             end,
             desc = 'Highlight reference',
