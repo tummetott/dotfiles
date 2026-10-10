@@ -317,7 +317,7 @@ return {
     },
     keys = {
         {
-            '<leader><space>e',
+            '<c-,>e',
             function()
                 local enabled = vim.b[0].snacks_indent == false
                 vim.b[0].snacks_indent = enabled

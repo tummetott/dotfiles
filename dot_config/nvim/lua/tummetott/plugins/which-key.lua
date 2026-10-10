@@ -19,7 +19,7 @@ return {
         -- explicit prefixes.
         triggers = {
             { '<auto>', mode = 'nxso' },
-            { '<c-;>', mode = 'i' },
+            { '<c-,>', mode = 'i' },
         },
         plugins = {
             marks = true,
@@ -138,9 +138,8 @@ return {
             { 'gri', desc = 'Goto implementation' },
             { 'grt', desc = 'Goto type definition' },
 
-            { '<leader><space>', group = 'Toggle option' },
             { '<leader>o', group = 'Open' },
-            { '<c-;>', mode = { 'n', 'i' }, group = 'Toggle' },
+            { '<c-,>', mode = { 'n', 'i' }, group = 'Toggle' },
         },
         show_help = true,
         show_keys = true,

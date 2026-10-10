@@ -101,7 +101,7 @@ return {
             desc = 'Reset selected',
         },
         {
-            '<leader><space>g',
+            '<c-,>g',
             function()
                 local enabled = require 'gitsigns'.toggle_signs()
                 require 'tummetott.utils'.echo_toggle('Gitsigns', enabled)

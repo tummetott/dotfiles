@@ -54,7 +54,7 @@ return {
         hooks = {
             diff_buf_win_enter = function(bufnr, winid, ctx)
                 -- Locally disable list chars and relative numbers. Line wrap
-                -- follows the tab scoped flag that the <leader><space>w keymap
+                -- follows the tab scoped flag that the <c-,>w keymap
                 -- sets, so it stays off unless the user asked for it.
                 vim.wo.foldlevel = 0
                 vim.wo.wrap = vim.t.diff_wrap or false

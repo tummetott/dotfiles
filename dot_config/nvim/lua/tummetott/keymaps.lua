@@ -256,7 +256,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>d',
+        lhs = '<c-,>d',
         rhs = function()
             vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
             utils.echo_toggle('Diff', vim.o.diff)
@@ -265,7 +265,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>h',
+        lhs = '<c-,>h',
         rhs = function()
             vim.o.hlsearch = not vim.o.hlsearch
             utils.echo_toggle('Highlight search', vim.o.hlsearch)
@@ -274,7 +274,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>l',
+        lhs = '<c-,>l',
         rhs = function()
             vim.o.list = not vim.o.list
             utils.echo_toggle('Listchars', vim.o.list)
@@ -283,7 +283,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>n',
+        lhs = '<c-,>n',
         rhs = function()
             vim.o.number = not vim.o.number
             utils.echo_toggle('Line numbers', vim.o.number)
@@ -292,7 +292,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>r',
+        lhs = '<c-,>r',
         rhs = function()
             vim.o.relativenumber = not vim.o.relativenumber
             utils.echo_toggle('Relative numbers', vim.o.relativenumber)
@@ -301,7 +301,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>s',
+        lhs = '<c-,>s',
         rhs = function()
             vim.o.spell = not vim.o.spell
             utils.echo_toggle('Spell check', vim.o.spell)
@@ -310,7 +310,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>t',
+        lhs = '<c-,>t',
         rhs = function()
             vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
             utils.echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
@@ -319,7 +319,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>v',
+        lhs = '<c-,>v',
         rhs = function()
             vim.diagnostic.config {
                 virtual_text = not vim.diagnostic.config().virtual_text,
@@ -330,7 +330,7 @@ local maps = {
     },
     {
         mode = 'n',
-        lhs = '<leader><space>w',
+        lhs = '<c-,>w',
         rhs = function()
             if vim.wo.diff then
                 -- In a diff, wrapping applies to every diff window of the

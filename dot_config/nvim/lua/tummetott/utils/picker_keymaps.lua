@@ -2,8 +2,22 @@
 -- Sources opt into named groups, which compose() merges over the
 -- shared keymaps. Later groups take precedence.
 local M = {}
-
 local keymaps = {}
+local prefix = '<C-,>'
+local ignore = 'which_key_ignore'
+
+-- The list window owns the `<c-,>` namespace while a picker is open, so every
+-- global mapping under that prefix is shadowed per buffer.
+local function clear_namespace(self)
+    for _, map in ipairs(vim.api.nvim_get_keymap('n')) do
+        if #map.lhs > #prefix and vim.startswith(map.lhs, prefix) then
+            vim.keymap.set('n', map.lhs, function() end, {
+                buffer = self.buf,
+                desc = ignore,
+            })
+        end
+    end
+end
 
 -- Helper to define one set of keys for both the input and the list window
 local function input_and_list(keys)
@@ -21,8 +35,8 @@ keymaps.shared = {
     input = {
         ['<Esc>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
         ['<c-q>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
-        ['<c-;>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
-        ['<c-;>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
+        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
+        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
         -- A spec of only string keys merges into the Snacks default, keeping
         -- its action and mode and relabelling it for which-key. Two conditions
         -- apply, and missing either silently leaves a mapping without an
@@ -63,8 +77,8 @@ keymaps.shared = {
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close picker' },
-        ['<c-;>p'] = { 'toggle_preview', desc = 'Preview window' },
-        ['<c-;>m'] = { 'toggle_maximize', desc = 'Maximized layout' },
+        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window' },
+        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout' },
         ['<a-d>'] = false,
         ['<a-f>'] = false,
         ['<a-h>'] = false,
@@ -141,25 +155,25 @@ keymaps.trouble = input_and_list {
 
 -- Toggle keymaps
 keymaps.hidden = input_and_list {
-    ['<c-;>h'] = { 'toggle_hidden', desc = 'Hidden files' },
+    ['<c-,>h'] = { 'toggle_hidden', desc = 'Hidden files' },
 }
 keymaps.ignored = input_and_list {
-    ['<c-;>i'] = { 'toggle_ignored', desc = 'Gitignored files' },
+    ['<c-,>i'] = { 'toggle_ignored', desc = 'Gitignored files' },
 }
 keymaps.follow = input_and_list {
-    ['<c-;>f'] = { 'toggle_follow', desc = 'Follow symlinks' },
+    ['<c-,>f'] = { 'toggle_follow', desc = 'Follow symlinks' },
 }
 keymaps.regex = input_and_list {
-    ['<c-;>r'] = { 'toggle_regex', desc = 'Regex search' },
+    ['<c-,>r'] = { 'toggle_regex', desc = 'Regex search' },
 }
 keymaps.modified = input_and_list {
-    ['<c-;>o'] = { 'toggle_modified', desc = 'Only modified buffers' },
+    ['<c-,>o'] = { 'toggle_modified', desc = 'Only modified buffers' },
 }
 keymaps.state = input_and_list {
-    ['<c-;>c'] = { 'gh_toggle_state', desc = 'Closed issues and PRs' },
+    ['<c-,>c'] = { 'gh_toggle_state', desc = 'Closed issues and PRs' },
 }
 keymaps.live = input_and_list {
-    ['<c-;>l'] = { 'toggle_live', desc = 'Live search' },
+    ['<c-,>l'] = { 'toggle_live', desc = 'Live search' },
 }
 
 function M.compose(names)
@@ -186,6 +200,22 @@ function M.compose(names)
             win[window].keys = vim.tbl_extend('force', win[window].keys, keys)
         end
     end
+
+    for _, config in pairs(win) do
+        for key, spec in pairs(config.keys) do
+            local nop = spec == '<nop>'
+                or (type(spec) == 'table' and spec[1] == '<nop>')
+            if nop then
+                config.keys[key] = {
+                    '<nop>',
+                    desc = ignore,
+                    mode = type(spec) == 'table' and spec.mode or nil,
+                }
+            end
+        end
+    end
+
+    win.list.on_buf = clear_namespace
     return win
 end
 
