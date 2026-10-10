@@ -3,21 +3,9 @@
 -- shared keymaps. Later groups take precedence.
 local M = {}
 local keymaps = {}
-local prefix = '<C-,>'
-local ignore = 'which_key_ignore'
 
--- The list window owns the `<c-,>` namespace while a picker is open, so every
--- global mapping under that prefix is shadowed per buffer.
-local function clear_namespace(self)
-    for _, map in ipairs(vim.api.nvim_get_keymap('n')) do
-        if #map.lhs > #prefix and vim.startswith(map.lhs, prefix) then
-            vim.keymap.set('n', map.lhs, function() end, {
-                buffer = self.buf,
-                desc = ignore,
-            })
-        end
-    end
-end
+-- A key that does nothing.
+local nop = { '<nop>', desc = 'which_key_ignore' }
 
 -- Helper to define one set of keys for both the input and the list window
 local function input_and_list(keys)
@@ -37,13 +25,9 @@ keymaps.shared = {
         ['<c-q>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
         ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
         ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
-        -- A spec of only string keys merges into the Snacks default, keeping
-        -- its action and mode and relabelling it for which-key. Two conditions
-        -- apply, and missing either silently leaves a mapping without an
-        -- action. The default has to be a table, since a bare string one like
-        -- `<Esc>` is replaced rather than merged. And the key has to be spelled
-        -- as Snacks spells it, which mixes `<c-` and `<C-`, because the merge
-        -- runs on the literal strings
+        -- Description-only specs inherit the action and mode from Snacks defaults.
+        -- This requires an existing table spec and an exact key spelling match.
+        -- String defaults are replaced rather than merged.
         ['<CR>'] = { desc = 'Open item' },
         ['<S-CR>'] = { desc = 'Open in picked window' },
         ['<Tab>'] = { desc = 'Select and move down' },
@@ -73,7 +57,7 @@ keymaps.shared = {
         ['<c-u>'] = false,
         ['<c-j>'] = false,
         ['<c-k>'] = false,
-        ['<c-/>'] = { '<nop>', mode = { 'n', 'i' } },
+        ['<c-/>'] = { '<nop>', desc = 'which_key_ignore', mode = { 'n', 'i' } },
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close picker' },
@@ -87,21 +71,33 @@ keymaps.shared = {
         ['<a-p>'] = false,
         ['<a-w>'] = false,
         ['<c-g>'] = false,
-        ['<c-h>'] = '<nop>',
-        ['<c-j>'] = '<nop>',
-        ['<c-k>'] = '<nop>',
-        ['<c-l>'] = '<nop>',
-        ['<c-/>'] = '<nop>',
+        ['<c-h>'] = nop,
+        ['<c-j>'] = nop,
+        ['<c-k>'] = nop,
+        ['<c-l>'] = nop,
+        ['<c-/>'] = nop,
+        -- Option toggles share the `<c-,>` prefix but have no counterpart
+        -- here, so they would act on the list buffer. The letters the picker
+        -- does define shadow the global ones on their own
+        ['<c-,>d'] = nop,
+        ['<c-,>e'] = nop,
+        ['<c-,>g'] = nop,
+        ['<c-,>n'] = nop,
+        ['<c-,>s'] = nop,
+        ['<c-,>t'] = nop,
+        ['<c-,>u'] = nop,
+        ['<c-,>v'] = nop,
+        ['<c-,>w'] = nop,
     },
     preview = {
         ['<c-q>'] = { 'toggle_preview', desc = 'Preview window' },
         ['<c-n>'] = { 'list_down', desc = 'Next item' },
         ['<c-p>'] = { 'list_up', desc = 'Previous item' },
         ['<a-w>'] = false,
-        ['<c-h>'] = '<nop>',
-        ['<c-j>'] = '<nop>',
-        ['<c-k>'] = '<nop>',
-        ['<c-l>'] = '<nop>',
+        ['<c-h>'] = nop,
+        ['<c-j>'] = nop,
+        ['<c-k>'] = nop,
+        ['<c-l>'] = nop,
     },
 }
 
@@ -200,22 +196,6 @@ function M.compose(names)
             win[window].keys = vim.tbl_extend('force', win[window].keys, keys)
         end
     end
-
-    for _, config in pairs(win) do
-        for key, spec in pairs(config.keys) do
-            local nop = spec == '<nop>'
-                or (type(spec) == 'table' and spec[1] == '<nop>')
-            if nop then
-                config.keys[key] = {
-                    '<nop>',
-                    desc = ignore,
-                    mode = type(spec) == 'table' and spec.mode or nil,
-                }
-            end
-        end
-    end
-
-    win.list.on_buf = clear_namespace
     return win
 end
 
