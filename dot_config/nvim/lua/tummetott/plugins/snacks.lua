@@ -1,5 +1,5 @@
 local cat = require 'tummetott.utils.dashboard'
-local picker_win = require 'tummetott.utils.picker'
+local picker_keymaps = require 'tummetott.utils.picker_keymaps'
 local previous_colorscheme
 
 return {
@@ -130,16 +130,21 @@ return {
                 files = {
                     hidden = true,
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose {
+                        'ivy', 'hidden', 'ignored', 'follow', 'live', 'trouble',
+                    },
                 },
                 grep = {
                     hidden = true,
                     layout = { preset = 'dropdown', fullscreen = true },
-                    win = picker_win.dropdown,
+                    win = picker_keymaps.compose {
+                        'dropdown', 'hidden', 'ignored', 'follow', 'regex',
+                        'live', 'trouble',
+                    },
                 },
                 recent = {
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy', 'trouble' },
                 },
                 git_log = {
                     layout = {
@@ -147,31 +152,31 @@ return {
                         fullscreen = true,
                         hidden = { 'preview' },
                     },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy', 'live' },
                 },
                 gh_issue = {
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy', 'state', 'live' },
                 },
                 gh_pr = {
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy', 'state', 'live' },
                 },
                 yank_history = {
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy' },
                 },
                 undo = {
                     layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_win.ivy,
+                    win = picker_keymaps.compose { 'ivy' },
                 },
                 buffers = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
-                    win = picker_win.vertical,
+                    win = picker_keymaps.compose { 'vertical', 'modified', 'trouble' },
                 },
                 colorschemes = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
-                    win = picker_win.vertical,
+                    win = picker_keymaps.compose { 'vertical' },
                     on_change = function(_, item)
                         if item then
                             vim.cmd.colorscheme(item.text)
@@ -189,54 +194,16 @@ return {
                 },
                 search_history = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
-                    win = picker_win.vertical,
+                    win = picker_keymaps.compose { 'vertical' },
                 },
                 command_history = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
-                    win = picker_win.vertical,
+                    win = picker_keymaps.compose { 'vertical' },
                 },
             },
-            win = {
-                input = {
-                    keys = vim.tbl_extend('error', picker_win.toggles('i'), {
-                        ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
-                        ['<c-q>'] = { 'close', mode = { 'n', 'i' } },
-                        ['<c-o>'] = { 'trouble_open', mode = 'i' },
-                        ['<c-y>'] = { 'trouble_add', mode = 'i' },
-                        ['<c-a>'] = false,
-                        ['<c-f>'] = false,
-                        ['<c-b>'] = false,
-                        ['<c-u>'] = false,
-                        ['<c-d>'] = false,
-                        ['<c-h>'] = false,
-                        ['<c-j>'] = false,
-                        ['<c-k>'] = false,
-                        ['<c-l>'] = false,
-                    }),
-                },
-                preview = {
-                    keys = vim.tbl_extend('error', picker_win.toggles(), {
-                        ['<c-q>'] = 'toggle_preview',
-                        ['<c-n>'] = 'list_down',
-                        ['<c-p>'] = 'list_up',
-                        ['<c-h>'] = '<nop>',
-                        ['<c-j>'] = '<nop>',
-                        ['<c-k>'] = '<nop>',
-                        ['<c-l>'] = '<nop>',
-                    }),
-                },
-                list = {
-                    keys = vim.tbl_extend('error', picker_win.toggles(), {
-                        ['<c-q>'] = 'close',
-                        ['<c-o>'] = 'trouble_open',
-                        ['<c-y>'] = 'trouble_add',
-                        ['<c-h>'] = '<nop>',
-                        ['<c-j>'] = '<nop>',
-                        ['<c-k>'] = '<nop>',
-                        ['<c-l>'] = '<nop>',
-                    }),
-                },
-            },
+            -- Named groups carry the shared keys along, so this is what
+            -- reaches the pickers that have no entry above
+            win = picker_keymaps.compose {},
         },
         scratch = {
             enabled = true,
