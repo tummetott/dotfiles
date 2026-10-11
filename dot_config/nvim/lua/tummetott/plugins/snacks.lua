@@ -136,6 +136,16 @@ return {
                 },
                 grep = {
                     hidden = true,
+                    -- Drop the column number from the rendered entry.
+                    format = function(item, picker)
+                        local pos = item.pos
+                        if pos then
+                            item.pos = { pos[1], 0 }
+                        end
+                        local chunks = Snacks.picker.format.file(item, picker)
+                        item.pos = pos
+                        return chunks
+                    end,
                     layout = { preset = 'dropdown', fullscreen = true },
                     win = picker_keymaps.compose {
                         'dropdown', 'hidden', 'ignored', 'follow', 'regex',
