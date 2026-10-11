@@ -121,6 +121,9 @@ vim.g.mapleader = ' '
 -- The width where 'gww' would break the line
 vim.opt.textwidth = 80
 
+-- When closing a tab, jump to the last tab used
+vim.opt.tabclose = 'uselast'
+
 -- I don't want nvim to break my lines automatically at textwidth. This should
 -- be the default, however I make it explicit
 vim.opt.formatoptions:remove('t')
