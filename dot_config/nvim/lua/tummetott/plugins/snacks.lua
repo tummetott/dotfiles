@@ -144,6 +144,13 @@ return {
                         end
                         local chunks = Snacks.picker.format.file(item, picker)
                         item.pos = pos
+                        -- Drop the treesitter highlighting of the grepped line.
+                        -- Its colours compete with the match highlight.
+                        for i = #chunks, 1, -1 do
+                            if chunks[i].hl_group and chunks[i].hl_group ~= 'SnacksPickerMatch' then
+                                table.remove(chunks, i)
+                            end
+                        end
                         return chunks
                     end,
                     layout = { preset = 'dropdown', fullscreen = true },
@@ -315,6 +322,7 @@ return {
     },
     highlights = {
         SnacksPickerDir = { link = 'SnacksPickerFile' },
+        SnacksPickerRow = { link = 'LineNr' },
         SnacksPickerMatch = { fg = 'blue' },
         SnacksDashboardHeader = { fg = 'blue' },
         SnacksDashboardFooter = { fg = 'dark_gray' },
