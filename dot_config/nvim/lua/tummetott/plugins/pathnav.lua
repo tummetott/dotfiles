@@ -10,6 +10,12 @@ return {
             hlgroup = 'PathnavReferenceText',
             clear_events = { 'CursorMoved' },
         },
+        target_tabpage = {
+            order = vim.api.nvim_list_tabpages,
+            exclude = function(tab)
+                return vim.t[tab].diffview_view_initialized ~= nil
+            end,
+        },
         target_window = {
             exclude = {
                 current = false,
@@ -36,16 +42,8 @@ return {
     },
     keys = {
         {
-            'gf',
-            function()
-                require('pathnav').open()
-            end,
-            desc = 'Jump to file under cursor',
-        },
-        {
             '<C-]>',
             function()
-                -- Jump to file if it is readable
                 if require('pathnav').open() then
                     return
                 end
@@ -63,6 +61,15 @@ return {
                 vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
             end,
             desc = 'Jump to path, definition or tag',
+        },
+        {
+            'g<C-]>',
+            function()
+                require('pathnav').open({
+                    target_window = { split = { force = true } },
+                })
+            end,
+            desc = 'Open path in new split',
         },
         {
             '<c-[>',
