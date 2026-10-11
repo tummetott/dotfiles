@@ -19,6 +19,7 @@ return {
             show = true,
         },
         use_icons = vim.g.nerdfonts,
+        wrap_entries = false,
         -- Histogram groups changes into cleaner hunks than the default myers
         -- algorithm, and linematch pairs added with deleted lines inside a
         -- hunk so the intra-line DiffText highlight carries meaning.
