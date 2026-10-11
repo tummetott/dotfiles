@@ -208,6 +208,12 @@ return {
         scratch = {
             enabled = true,
         },
+        zen = {
+            enabled = true,
+        },
+        toggle = {
+            notify = false,
+        },
         terminal = {
             enabled = true,
             win = {
@@ -316,6 +322,11 @@ return {
         LspReferenceWrite = { link = 'LspReferenceHidden' },
     },
     keys = {
+        {
+            '<cr>',
+            function() Snacks.toggle.zoom():toggle() end,
+            desc = 'Zoom window',
+        },
         {
             '<c-,>e',
             function()
