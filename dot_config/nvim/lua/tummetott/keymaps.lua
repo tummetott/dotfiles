@@ -25,6 +25,33 @@ local maps = {
         rhs = '<Left>',
         opts = { desc = 'Move cursor left' }
     },
+    -- C-w should respect '-' and '_' and delete a segment at a time
+    {
+        mode = { 'i', 'c' },
+        lhs = '<C-w>',
+        rhs = function()
+            -- Repeated presses collapse into one restore
+            if vim.b.iskeyword_restore == nil then
+                local buf = vim.api.nvim_get_current_buf()
+                vim.b.iskeyword_restore = vim.bo.iskeyword
+                vim.schedule(function()
+                    if vim.api.nvim_buf_is_valid(buf) then
+                        vim.bo[buf].iskeyword = vim.b[buf].iskeyword_restore
+                        vim.b[buf].iskeyword_restore = nil
+                    end
+                end)
+            end
+            vim.opt_local.iskeyword:remove { '-', '_' }
+            return '<C-S-w>'
+        end,
+        opts = { expr = true, desc = 'Delete word backward' }
+    },
+    {
+        mode = { 'i', 'c' },
+        lhs = '<M-Bs>',
+        rhs = '<C-w>',
+        opts = { remap = true, desc = 'Delete word backward' },
+    },
     {
         mode = 'i',
         lhs = '<C-k>',
@@ -121,12 +148,6 @@ local maps = {
         lhs = '<M-Right>',
         rhs = '<S-Right>',
         opts = { desc = 'Jump word forward' }
-    },
-    {
-        mode = 'c',
-        lhs = '<M-Bs>',
-        rhs = '<C-w>',
-        opts = { desc = 'Delete word backward' },
     },
     {
         mode = { 'n', 't' },
