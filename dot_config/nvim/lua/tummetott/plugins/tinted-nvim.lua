@@ -59,6 +59,7 @@ return {
         FoldColumn = { link = 'LineNr' },
         TabLineFill = {},
         DiffAdd = { bg = { darken = 'blue', amount = 0.7 } },
+        LspSignatureActiveParameter = { bg = 'dark_gray' },
 
         -- Lazy has no explicit plugin spec, so this goes in here
         LazyReasonCmd = { fg = 'dark_gray' },

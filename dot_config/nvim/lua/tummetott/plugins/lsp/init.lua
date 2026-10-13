@@ -1,6 +1,6 @@
 local M = {}
 
--- Loading this module automatically registers all global LSP-related keymaps
+-- Loading global LSP-related keymaps
 local keymaps = require("tummetott.plugins.lsp.keymaps")
 
 -- Global options for all diagnostics
@@ -48,23 +48,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
--- nvim-lspconfig provides the default configurations for most language servers.
--- Neovim merges these defaults with any additional settings defined via the new
--- LSP API 'vim.lsp.config()' and with any files located under the runtime path
--- in 'lsp/<server>.lua'. In short, lspconfig defines the base setup, while the
--- LSP API extend or override parts of that configuration.
+-- nvim-lspconfig is a collection of base configurations for most language
+-- servers. A server's config is the deep merge of, in increasing priority:
+-- - vim.lsp.config("*")
+-- - lsp/<server>.lua
+-- - lspconfig (which is just another lsp/<server>.lua but later in the rtp)
+-- - after/lsp/<server>.lua
+-- - vim.lsp.config("<server>")
 table.insert(M, {
     enabled = true,
     'neovim/nvim-lspconfig',
+    -- No lazy loading. Only config, nothing runs by default
     lazy = false,
-    highlights = {
-        -- Used for document highlight
-        -- TODO: delete once added in tinted-nvim
-        LspReferenceText = { bg = 'dark_gray' },
-        LspReferenceRead = { link = 'LspReferenceText' },
-        LspReferenceWrite = { link = 'LspReferenceText' },
-        LspSignatureActiveParameter = { link = 'LspReferenceText' },
-    },
 })
 
 -- mason.nvim is the plugin manager for language servers
