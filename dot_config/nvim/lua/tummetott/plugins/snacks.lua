@@ -424,6 +424,26 @@ return {
             desc = 'Dotfile',
         },
         {
+            '<Leader>fn',
+            function()
+                Snacks.picker.files({
+                    cwd = '~/.local/share/chezmoi/dot_config/nvim',
+                    title = 'Nvim config',
+                })
+            end,
+            desc = 'Nvim',
+        },
+        {
+            '<Leader>fN',
+            function()
+                Snacks.picker.files({
+                    cwd = '~/.local/share/nvim/lazy',
+                    title = 'Nvim plugins',
+                })
+            end,
+            desc = 'Nvim Plugins',
+        },
+        {
             '<Leader>fo',
             function()
                 Snacks.picker.files({
