@@ -205,7 +205,7 @@ M.diagnostics = {
 
 M.git_conflict = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
+        return vim.bo.filetype ~= 'bigfile'
     end,
     init = function(self)
         self.has_conflict = per_buffer('git_conflict', function()
@@ -227,7 +227,7 @@ M.git_conflict = {
 
 M.trailing_whitespace = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
+        return vim.bo.filetype ~= 'bigfile'
     end,
     init = function(self)
         self.has_trailing = per_buffer(
@@ -308,7 +308,7 @@ M.encoding = {
 
 M.indent = {
     condition = function()
-        return vim.bo.filetype ~= 'bigfile' and vim.bo.buftype ~= 'terminal'
+        return vim.bo.filetype ~= 'bigfile'
     end,
     static = {
         icon = vim.g.nerdfonts and '󰉶 ' or 'IND: '
@@ -632,6 +632,7 @@ M.special_statusline = {
                 'help',
                 'quickfix',
                 'acwrite',
+                'terminal',
             },
         })
     end,
@@ -642,6 +643,7 @@ M.special_statusline = {
         {
             condition = function()
                 return vim.bo.filetype == 'oil'
+                    or vim.bo.buftype == 'terminal'
             end,
             M.mode
         },
