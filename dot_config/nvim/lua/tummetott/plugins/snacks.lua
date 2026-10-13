@@ -14,8 +14,12 @@ return {
     end,
     opts = {
         styles = {
-            float = {
-                backdrop = false,
+            float = { backdrop = false },
+            zoom_indicator = {
+                text = ' 󰊓 Zoom ',
+                row = 0,
+                -- Last column
+                col = function(self) return vim.o.columns - self.opts.width end,
             },
         },
         bigfile = {
