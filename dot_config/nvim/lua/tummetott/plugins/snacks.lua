@@ -298,6 +298,35 @@ return {
                 },
             },
         },
+        gitbrowse = {
+            notify = false,
+            remote_patterns = {
+                { 'ssh%.gitlab%.srlabs%.de'           , 'gitlab.srlabs.de' },
+                -- Upstream defaults, which snacks replaces rather than
+                -- merges as soon as this list is given.
+                { '^(https?://.*)%.git$'              , '%1' },
+                { '^git@(.+):(.+)%.git$'              , 'https://%1/%2' },
+                { '^git@(.+):(.+)$'                   , 'https://%1/%2' },
+                { '^git@(.+)/(.+)$'                   , 'https://%1/%2' },
+                { '^org%-%d+@(.+):(.+)%.git$'         , 'https://%1/%2' },
+                { '^ssh://git@(.*)$'                  , 'https://%1' },
+                { '^ssh://([^:/]+)(:%d+)/(.*)$'       , 'https://%1/%3' },
+                { '^ssh://([^/]+)/(.*)$'              , 'https://%1/%2' },
+                { 'ssh%.dev%.azure%.com/v3/(.*)/(.*)$', 'dev.azure.com/%1/_git/%2' },
+                { '^https://%w*@(.*)'                 , 'https://%1' },
+                { '^git@(.*)'                         , 'https://%1' },
+                { ':%d+'                              , '' },
+                { '%.git$'                            , '' },
+            },
+            url_patterns = {
+                ['gitlab%.srlabs%.de'] = {
+                    branch = '/tree/{branch}',
+                    commit = '/commit/{commit}',
+                    file = '/blob/{branch}/{file}#L{line_start}-L{line_end}',
+                    permalink = '/blob/{commit}/{file}#L{line_start}-L{line_end}',
+                },
+            },
+        },
         scroll = {
             enabled = true,
         },
@@ -492,6 +521,35 @@ return {
                 Snacks.picker.gh_pr()
             end,
             desc = 'Open GitHub pull requests',
+        },
+        {
+            '<leader>gy',
+            function()
+                local from, to = vim.fn.line('v'), vim.fn.line('.')
+                from, to = math.min(from, to), math.max(from, to)
+                -- Visual mode is left before the flash, since the selection
+                -- highlight would otherwise cover it.
+                vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'nx', false)
+                vim.hl.range(0, vim.api.nvim_create_namespace('GitPermalink'),
+                    'YankyYanked', { from - 1, 0 }, { to - 1, 0 },
+                    { regtype = 'V', timeout = 200 })
+                Snacks.gitbrowse {
+                    what = 'permalink',
+                    line_start = from,
+                    line_end = to,
+                    open = function(url) vim.fn.setreg('+', url) end,
+                }
+            end,
+            mode = { 'n', 'v' },
+            desc = 'Yank git permalink',
+        },
+        {
+            '<leader>gY',
+            function()
+                Snacks.gitbrowse { what = 'permalink' }
+            end,
+            mode = { 'n', 'v' },
+            desc = 'Open git permalink',
         },
     }
 }
