@@ -440,6 +440,13 @@ return {
             desc = 'Previous reference under cursor',
         },
         {
+            '<leader><space>',
+            function()
+                require('tummetott.utils.words').show()
+            end,
+            desc = 'Show references',
+        },
+        {
             '<Leader>fu',
             function()
                 Snacks.picker.undo()

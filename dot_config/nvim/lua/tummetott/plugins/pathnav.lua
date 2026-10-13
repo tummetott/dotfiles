@@ -66,25 +66,12 @@ return {
             'g<C-]>',
             function()
                 require('pathnav').open({
+                    jump = false,
+                    highlight = true,
                     target_window = { split = { force = true } },
                 })
             end,
             desc = 'Open path in new split',
-        },
-        {
-            '<c-[>',
-            function()
-                local ok, result = pcall(function()
-                    return require('pathnav').open({
-                        jump = false,
-                        highlight = true,
-                    })
-                end)
-                if not ok or not result then
-                    require('tummetott.utils.words').show()
-                end
-            end,
-            desc = 'Highlight reference',
         },
     },
     highlights = {
