@@ -4,9 +4,6 @@
 local M = {}
 local keymaps = {}
 
--- A key that does nothing.
-local nop = { '<nop>', desc = 'which_key_ignore' }
-
 -- Helper to define one set of keys for both the input and the list window
 local function input_and_list(keys)
     local input = vim.deepcopy(keys)
@@ -25,30 +22,6 @@ keymaps.shared = {
         ['<c-q>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
         ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
         ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
-        -- Description-only specs inherit the action and mode from Snacks defaults.
-        -- This requires an existing table spec and an exact key spelling match.
-        -- String defaults are replaced rather than merged.
-        ['<CR>'] = { desc = 'Open item' },
-        ['<S-CR>'] = { desc = 'Open in picked window' },
-        ['<Tab>'] = { desc = 'Select and move down' },
-        ['<S-Tab>'] = { desc = 'Select and move up' },
-        ['<Down>'] = { desc = 'Next item' },
-        ['<Up>'] = { desc = 'Previous item' },
-        ['<C-Down>'] = { desc = 'Next query' },
-        ['<C-Up>'] = { desc = 'Previous query' },
-        ['<c-n>'] = { desc = 'Next item' },
-        ['<c-p>'] = { desc = 'Previous item' },
-        ['<c-s>'] = { desc = 'Open in split' },
-        ['<c-t>'] = { desc = 'Open in tab' },
-        ['<c-v>'] = { desc = 'Open in vertical split' },
-        ['<a-d>'] = false,
-        ['<a-f>'] = false,
-        ['<a-h>'] = false,
-        ['<a-i>'] = false,
-        ['<a-m>'] = false,
-        ['<a-p>'] = false,
-        ['<a-r>'] = false,
-        ['<a-w>'] = false,
         ['<c-g>'] = false,
         ['<c-a>'] = false,
         ['<c-b>'] = false,
@@ -57,48 +30,42 @@ keymaps.shared = {
         ['<c-u>'] = false,
         ['<c-j>'] = false,
         ['<c-k>'] = false,
-        ['<c-/>'] = { '<nop>', desc = 'which_key_ignore', mode = { 'n', 'i' } },
+        ['<c-/>'] = { '<nop>', mode = 'i' },
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close picker' },
         ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window' },
         ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout' },
-        ['<a-d>'] = false,
-        ['<a-f>'] = false,
-        ['<a-h>'] = false,
-        ['<a-i>'] = false,
-        ['<a-m>'] = false,
-        ['<a-p>'] = false,
-        ['<a-w>'] = false,
         ['<c-g>'] = false,
-        ['<c-h>'] = nop,
-        ['<c-j>'] = nop,
-        ['<c-k>'] = nop,
-        ['<c-l>'] = nop,
-        ['<c-/>'] = nop,
-        -- Option toggles share the `<c-,>` prefix but have no counterpart
-        -- here, so they would act on the list buffer. The letters the picker
-        -- does define shadow the global ones on their own
-        ['<c-,>b'] = nop,
-        ['<c-,>d'] = nop,
-        ['<c-,>e'] = nop,
-        ['<c-,>g'] = nop,
-        ['<c-,>n'] = nop,
-        ['<c-,>s'] = nop,
-        ['<c-,>t'] = nop,
-        ['<c-,>u'] = nop,
-        ['<c-,>v'] = nop,
-        ['<c-,>w'] = nop,
+        -- Consume global keymaps that would act on the list buffer. Presets and
+        -- toggle groups rebind some of these keys.
+        ['<c-h>'] = { '<nop>' },
+        ['<c-j>'] = { '<nop>' },
+        ['<c-k>'] = { '<nop>' },
+        ['<c-l>'] = { '<nop>' },
+        ['<c-/>'] = { '<nop>' },
+        ['<c-,>b'] = { '<nop>' },
+        ['<c-,>d'] = { '<nop>' },
+        ['<c-,>e'] = { '<nop>' },
+        ['<c-,>g'] = { '<nop>' },
+        ['<c-,>h'] = { '<nop>' },
+        ['<c-,>l'] = { '<nop>' },
+        ['<c-,>n'] = { '<nop>' },
+        ['<c-,>r'] = { '<nop>' },
+        ['<c-,>c'] = { '<nop>' },
+        ['<c-,>s'] = { '<nop>' },
+        ['<c-,>t'] = { '<nop>' },
+        ['<c-,>v'] = { '<nop>' },
+        ['<c-,>w'] = { '<nop>' },
     },
     preview = {
         ['<c-q>'] = { 'toggle_preview', desc = 'Preview window' },
         ['<c-n>'] = { 'list_down', desc = 'Next item' },
         ['<c-p>'] = { 'list_up', desc = 'Previous item' },
-        ['<a-w>'] = false,
-        ['<c-h>'] = nop,
-        ['<c-j>'] = nop,
-        ['<c-k>'] = nop,
-        ['<c-l>'] = nop,
+        ['<c-h>'] = { '<nop>' },
+        ['<c-j>'] = { '<nop>' },
+        ['<c-k>'] = { '<nop>' },
+        ['<c-l>'] = { '<nop>' },
     },
 }
 
@@ -196,6 +163,27 @@ function M.compose(names)
             win[window] = win[window] or { keys = {} }
             win[window].keys = vim.tbl_extend('force', win[window].keys, keys)
         end
+    end
+
+    -- Global which-key specs, such as the ones snacks toggles register,
+    -- take precedence over the description of a buffer-local keymap.
+    -- Specs for the list buffer, registered after them, restore the
+    -- picker's own labels and hide the consumed keys.
+    local list_keys = win.list.keys
+    win.list.on_buf = function(self)
+        local specs = {}
+        for lhs, spec in pairs(list_keys) do
+            if spec then
+                specs[#specs + 1] = {
+                    lhs,
+                    buffer = self.buf,
+                    mode = spec.mode or 'n',
+                    desc = spec.desc,
+                    hidden = spec[1] == '<nop>' or nil,
+                }
+            end
+        end
+        require('which-key').add(specs)
     end
     return win
 end

@@ -11,12 +11,12 @@ return {
                 require('duck').hatch()
                 vim.o.winborder = winborder
             end,
-            desc = 'More ducks!',
+            desc = 'which_key_ignore',
         },
         {
             '<Leader>-',
             function() require('duck').cook() end,
-            desc = 'Less ducks!',
+            desc = 'which_key_ignore',
         },
     }
 }

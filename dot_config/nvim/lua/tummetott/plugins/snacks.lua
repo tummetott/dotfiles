@@ -14,6 +14,10 @@ return {
                 group = 'Find',
                 icon = vim.g.nerdfonts and '󰍉' or nil,
             },
+            {
+                '<leader><space>',
+                icon = vim.g.nerdfonts and '󰉄' or nil,
+            },
         }
     end,
     config = function(_, opts)
