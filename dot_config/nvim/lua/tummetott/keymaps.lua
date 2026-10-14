@@ -342,10 +342,30 @@ local maps = {
         rhs = '<Plug>(MatchitOperationForward)',
         opts = { desc = 'Jump to matching pair or keyword' }
     },
+    {
+        mode = 'n',
+        lhs = 'dd',
+        rhs = function()
+            local line = vim.api.nvim_win_get_cursor(0)[1]
+            require('tummetott.utils.qflist').delete_qf_entries(line, line)
+        end,
+        opts = { ft = 'qf', desc = 'Delete quickfix entry' }
+    },
+    {
+        mode = 'x',
+        lhs = 'd',
+        rhs = function()
+            local first = vim.fn.line('v')
+            local last = vim.api.nvim_win_get_cursor(0)[1]
+            require('tummetott.utils.qflist').delete_qf_entries(
+                math.min(first, last), math.max(first, last))
+        end,
+        opts = { ft = 'qf', desc = 'Delete quickfix entries' }
+    },
 }
 
 for _, m in ipairs(maps) do
-    vim.keymap.set(m.mode, m.lhs, m.rhs, m.opts)
+    Snacks.keymap.set(m.mode, m.lhs, m.rhs, m.opts)
 end
 
 Snacks.toggle.option(

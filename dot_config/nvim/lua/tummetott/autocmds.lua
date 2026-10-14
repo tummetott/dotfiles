@@ -100,31 +100,6 @@ autocmd('VimResized', {
     end,
 })
 
-autocmd('FileType', {
-    pattern = 'qf',
-    group = group,
-    callback = function(ctx)
-        -- delete current entry
-        vim.keymap.set('n', 'dd', function()
-            local line = vim.api.nvim_win_get_cursor(0)[1]
-            require('tummetott.utils.qflist').delete_qf_entries(line, line)
-        end, {
-            buf = ctx.buf,
-            desc = 'Delete quickfix entry',
-        })
-
-        -- delete visual selection
-        vim.keymap.set('x', 'd', function()
-            local first = vim.fn.line('v')
-            local last = vim.api.nvim_win_get_cursor(0)[1]
-            require('tummetott.utils.qflist').delete_qf_entries(math.min(first, last), math.max(first, last))
-        end, {
-            buf = ctx.buf,
-            desc = 'Delete qf entries',
-        })
-    end,
-})
-
 -- Auto create dir when saving a file, in case some intermediate directory does
 -- not exist
 autocmd({ 'BufWritePre' }, {
