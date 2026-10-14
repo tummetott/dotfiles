@@ -6,7 +6,12 @@ return {
     event = 'VeryLazy',
     init = function()
         require('which-key').add {
-            { '<leader>l', mode = { 'n', 'x' }, group = 'LLM' },
+            {
+                '<leader>l',
+                mode = { 'n', 'x' },
+                group = 'LLM',
+                icon = vim.g.nerdfonts and '󰚩' or nil,
+            },
         }
     end,
     opts = {

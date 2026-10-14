@@ -3,7 +3,12 @@ return {
     enabled = true,
     init = function()
         require('which-key').add {
-            { '<leader>c', mode = { 'n', 'x' }, group = 'Case' },
+            {
+                '<leader>c',
+                mode = { 'n', 'x' },
+                group = 'Case',
+                icon = vim.g.nerdfonts and '󰬴' or nil,
+            },
         }
     end,
     keys = {

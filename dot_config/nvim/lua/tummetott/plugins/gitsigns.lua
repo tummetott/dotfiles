@@ -24,7 +24,12 @@ return {
     },
     init = function()
         require('which-key').add {
-            { '<leader>g', mode = { 'n', 'x' }, group = 'Git' },
+            {
+                '<leader>g',
+                mode = { 'n', 'x' },
+                group = 'Git',
+                icon = vim.g.nerdfonts and '󰊢' or nil,
+            },
         }
     end,
     config = function(_, opts)

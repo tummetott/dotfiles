@@ -9,7 +9,11 @@ return {
     lazy = false,
     init = function()
         require('which-key').add {
-            { '<leader>f', group = 'Find' },
+            {
+                '<leader>f',
+                group = 'Find',
+                icon = vim.g.nerdfonts and '󰍉' or nil,
+            },
         }
     end,
     config = function(_, opts)

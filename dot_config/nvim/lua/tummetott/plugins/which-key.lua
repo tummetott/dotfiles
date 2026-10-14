@@ -48,7 +48,7 @@ return {
         icons = {
             breadcrumb = vim.g.nerdfonts and '»' or '>>',
             separator = vim.g.nerdfonts and '➜' or '->',
-            group = '+',
+            group = '',
             ellipsis = vim.g.nerdfonts and '…' or '...',
             -- Only mappings with an explicit icon, such as snacks toggles,
             -- show one. Icons derived from descriptions are off.
@@ -67,7 +67,12 @@ return {
             { 'it', mode = { 'o', 'x' }, desc = 'inner tag block' },
             { 'at', mode = { 'o', 'x' }, desc = 'outer tag block' },
 
-            { '<c-w>', mode = { 'n', 'x' }, group = 'window' },
+            {
+                '<c-w>',
+                mode = { 'n', 'x' },
+                group = 'window',
+                icon = vim.g.nerdfonts and '' or nil,
+            },
             { '<c-w>=', mode = { 'n', 'x' }, desc = 'Equally high and wide' },
             { '<c-w>T', mode = { 'n', 'x' }, desc = 'Break out into a new tab' },
             { '<c-w>_', mode = { 'n', 'x' }, desc = 'Max out the height' },
@@ -133,14 +138,27 @@ return {
             { 'gi', desc = 'Go to last insert' },
             { 'gv', desc = 'Last visual selection' },
 
-            { 'gr', group = 'LSP' },
+            {
+                'gr',
+                group = 'LSP',
+                icon = vim.g.nerdfonts and '' or nil,
+            },
             { 'gra', desc = 'Code actions' },
             { 'grn', desc = 'Rename' },
             { 'gri', desc = 'Goto implementation' },
             { 'grt', desc = 'Goto type definition' },
 
-            { '<leader>o', group = 'Open' },
-            { '<c-,>', mode = { 'n', 'i' }, group = 'Toggle' },
+            {
+                '<leader>o',
+                group = 'Open',
+                icon = vim.g.nerdfonts and '󰏌' or nil,
+            },
+            {
+                '<c-,>',
+                mode = { 'n', 'i' },
+                group = 'Toggle',
+                icon = vim.g.nerdfonts and '' or nil,
+            },
         },
         show_help = true,
         show_keys = true,
@@ -148,5 +166,6 @@ return {
     highlights = {
         WhichKeyDesc = { fg = 'bright_blue' },
         WhichKeyGroup = { fg = 'purple' },
+        WhichKeyIcon = { fg = 'orange' },
     }
 }

@@ -5,7 +5,11 @@ return {
     config = true,
     init = function()
         require('which-key').add {
-            { '<leader>p', group = 'Persist' },
+            {
+                '<leader>p',
+                group = 'Persist',
+                icon = vim.g.nerdfonts and '󰆓' or nil,
+            },
         }
     end,
     keys = {

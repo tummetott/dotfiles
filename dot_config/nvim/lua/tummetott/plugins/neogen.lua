@@ -3,7 +3,11 @@ return {
     enabled = true,
     init = function()
         require('which-key').add {
-            { '<leader>a', group = 'Annotation' },
+            {
+                '<leader>a',
+                group = 'Annotation',
+                icon = vim.g.nerdfonts and '' or nil,
+            },
         }
     end,
     opts = {

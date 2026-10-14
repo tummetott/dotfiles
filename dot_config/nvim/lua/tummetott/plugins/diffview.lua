@@ -3,7 +3,11 @@ return {
     enabled = true,
     init = function()
         require('which-key').add {
-            { '<leader>d', group = 'Diff' },
+            {
+                '<leader>d',
+                group = 'Diff',
+                icon = vim.g.nerdfonts and '' or nil,
+            },
         }
     end,
     opts = {
