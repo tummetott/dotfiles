@@ -129,15 +129,4 @@ vim.keymap.set(
     { desc = 'Remove workspace folder' }
 )
 
-M.register_buffer_keymaps = function(_, _)
-    -- Placeholder to register something on LspAttach
-
-    -- Neovim automatically remaps 'K' to show LSP hover information whenever a
-    -- language server attaches, replacing the default :Man behavior. We
-    -- register it here in which-key for proper documentation.
-    require('which-key').add({
-        { 'K', desc = 'LSP hover info' },
-    })
-end
-
 return M

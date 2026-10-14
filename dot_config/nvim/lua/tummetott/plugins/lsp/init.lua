@@ -1,5 +1,9 @@
 local M = {}
 
+-- NOTE: Dont overwrite vim.lsp.config's on_attach, since lspconfig may define
+-- its own on_attach callbacks for certain server.
+-- Use the LspAttach event instead
+
 -- Loading global LSP-related keymaps
 local keymaps = require("tummetott.plugins.lsp.keymaps")
 
@@ -31,21 +35,6 @@ vim.lsp.enable({
     'gopls',
     'sourcekit', -- swift lsp. Preinstalled on macos with xcode
     'solidity_ls', -- vscode-solidity-server
-})
-
--- Use the LspAttach event instead of overwriting vim.lsp.config's on_attach,
--- since lspconfig may define its own on_attach callbacks for certain servers.
--- This ensures those callbacks are extended rather than replaced.
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client then return end
-
-        local bufnr = args.buf
-
-        -- Register buffer-local keymaps
-        keymaps.register_buffer_keymaps(client, bufnr)
-    end,
 })
 
 -- nvim-lspconfig is a collection of base configurations for most language

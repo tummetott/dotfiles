@@ -128,9 +128,6 @@ vim.opt.tabclose = 'uselast'
 -- be the default, however I make it explicit
 vim.opt.formatoptions:remove('t')
 
--- Time until which-key triggers
-vim.opt.timeoutlen = 1000
-
 -- Copy to system clipboard
 vim.opt.clipboard = 'unnamedplus'
 

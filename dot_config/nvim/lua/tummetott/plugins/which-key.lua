@@ -106,6 +106,20 @@ return {
             },
         },
     },
+    keys = {
+        {
+            'g?',
+            function() require('which-key').show() end,
+            mode = { 'n', 'x' },
+            desc = 'Show keymaps',
+        },
+        {
+            '<c-g>?',
+            function() require('which-key').show() end,
+            mode = 'i',
+            desc = 'Show keymaps',
+        },
+    },
     highlights = {
         WhichKeyDesc = { fg = 'bright_blue' },
         WhichKeyGroup = { fg = 'purple' },
