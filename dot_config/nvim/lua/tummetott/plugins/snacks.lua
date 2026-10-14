@@ -15,14 +15,9 @@ return {
     config = function(_, opts)
         require('snacks').setup(opts)
 
-        Snacks.toggle.new({
-            name = 'indent lines',
-            get = function() return vim.b.snacks_indent ~= false end,
-            set = function(state)
-                vim.b.snacks_indent = state
-                vim.cmd('redraw!')
-            end,
-        }):map('<c-,>e')
+        local indent = Snacks.toggle.indent()
+        indent.opts.name = 'indent guides'
+        indent:map('<c-,>e')
     end,
     opts = {
         styles = {
