@@ -1,5 +1,3 @@
-local utils = require 'tummetott.utils'
-
 return {
     'tummetott/reticle.nvim',
     enabled = true,
@@ -32,24 +30,14 @@ return {
             },
         },
     },
-    keys = {
-        {
-            '<c-,>c',
-            function()
-                local reticle = require 'reticle'
-                reticle.toggle_cursorline()
-                utils.echo_toggle('Cursorline', reticle.has_cursorline())
-            end,
-            desc = 'Cursorline',
-        },
-        {
-            '<c-,>u',
-            function()
-                local reticle = require 'reticle'
-                reticle.toggle_cursorcolumn()
-                utils.echo_toggle('Cursorcolumn', reticle.has_cursorcolumn())
-            end,
-            desc = 'Cursorcolumn',
-        },
-    }
+    config = function(_, opts)
+        local reticle = require 'reticle'
+        reticle.setup(opts)
+
+        Snacks.toggle.new({
+            name = 'cursorline',
+            get = reticle.has_cursorline,
+            set = reticle.set_cursorline,
+        }):map('<c-,>c')
+    end,
 }

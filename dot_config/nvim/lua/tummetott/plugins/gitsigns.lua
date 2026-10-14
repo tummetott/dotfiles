@@ -27,6 +27,23 @@ return {
             { '<leader>g', mode = { 'n', 'x' }, group = 'Git' },
         }
     end,
+    config = function(_, opts)
+        local gitsigns = require 'gitsigns'
+        local config = require('gitsigns.config').config
+        gitsigns.setup(opts)
+
+        Snacks.toggle.new({
+            name = 'gitsigns',
+            get = function() return config.signcolumn end,
+            set = gitsigns.toggle_signs,
+        }):map('<c-,>g')
+
+        Snacks.toggle.new({
+            name = 'line blame',
+            get = function() return config.current_line_blame end,
+            set = gitsigns.toggle_current_line_blame,
+        }):map('<c-,>b')
+    end,
     keys = {
         {
             ']h',
@@ -81,14 +98,6 @@ return {
             desc = 'Blame current line'
         },
         {
-            '<Leader><space>b',
-            function()
-                local enabled = require 'gitsigns'.toggle_current_line_blame()
-                require 'tummetott.utils'.echo_toggle('Line blame', enabled)
-            end,
-            desc = 'Line blame'
-        },
-        {
             '<Leader>gs',
             ':Gitsigns stage_hunk<CR>',
             mode = 'v',
@@ -99,14 +108,6 @@ return {
             ':Gitsigns reset_hunk<CR>',
             mode = 'v',
             desc = 'Reset selected',
-        },
-        {
-            '<c-,>g',
-            function()
-                local enabled = require 'gitsigns'.toggle_signs()
-                require 'tummetott.utils'.echo_toggle('Gitsigns', enabled)
-            end,
-            desc = 'Gitsigns'
         },
         {
             'ih',

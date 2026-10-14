@@ -276,146 +276,6 @@ local maps = {
         opts = { desc = 'Lazy' }
     },
     {
-        mode = 'n',
-        lhs = '<c-,>d',
-        rhs = function()
-            vim.cmd(vim.o.diff and 'diffoff' or 'diffthis')
-            utils.echo_toggle('Diff', vim.o.diff)
-        end,
-        opts = { desc = 'Diff' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>h',
-        rhs = function()
-            vim.o.hlsearch = not vim.o.hlsearch
-            utils.echo_toggle('Highlight search', vim.o.hlsearch)
-        end,
-        opts = { desc = 'Highlight search' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>l',
-        rhs = function()
-            vim.o.list = not vim.o.list
-            utils.echo_toggle('Listchars', vim.o.list)
-        end,
-        opts = { desc = 'Listchars' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>n',
-        rhs = function()
-            vim.o.number = not vim.o.number
-            utils.echo_toggle('Line numbers', vim.o.number)
-        end,
-        opts = { desc = 'Line numbers' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>r',
-        rhs = function()
-            vim.o.relativenumber = not vim.o.relativenumber
-            utils.echo_toggle('Relative numbers', vim.o.relativenumber)
-        end,
-        opts = { desc = 'Relative numbers' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>s',
-        rhs = function()
-            vim.o.spell = not vim.o.spell
-            utils.echo_toggle('Spell check', vim.o.spell)
-        end,
-        opts = { desc = 'Spell check' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>t',
-        rhs = function()
-            vim.o.colorcolumn = vim.o.colorcolumn == '' and '+1' or ''
-            utils.echo_toggle('Colorcolumn', vim.o.colorcolumn ~= '')
-        end,
-        opts = { desc = 'Colorcolumn' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>v',
-        rhs = function()
-            vim.diagnostic.config {
-                virtual_text = not vim.diagnostic.config().virtual_text,
-            }
-            utils.echo_toggle('Virtual text', vim.diagnostic.config().virtual_text)
-        end,
-        opts = { desc = 'Virtual text' }
-    },
-    {
-        mode = 'n',
-        lhs = '<c-,>w',
-        rhs = function()
-            if vim.wo.diff then
-                -- In a diff, wrapping applies to every diff window of the
-                -- tabpage. The tab scoped flag is the source of truth, so
-                -- diff windows opened later pick up the same setting.
-                vim.t.diff_wrap = not vim.t.diff_wrap
-                for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-                    if vim.wo[win].diff then
-                        vim.wo[win].wrap = vim.t.diff_wrap
-                    end
-                end
-                utils.echo_toggle('Line wrap', vim.t.diff_wrap)
-            else
-                vim.o.wrap = not vim.wo.wrap
-                utils.echo_toggle('Line wrap', vim.o.wrap)
-            end
-        end,
-        opts = { desc = 'Line wrapping' }
-    },
-    {
-        mode = 'n',
-        lhs = 'zh',
-        rhs = function()
-            if not vim.wo.diff then
-                return
-            end
-            if vim.w.diff_highlights_forced_off then
-                vim.w.diff_highlights_forced_off = false
-                vim.opt_local.winhl:remove {
-                    'DiffAdd',
-                    'DiffText',
-                    'DiffTextAdd',
-                    'DiffChange',
-                }
-                local ok, reticle = pcall(require, 'reticle')
-                if ok then
-                    reticle.set_cursorline(false)
-                else
-                    vim.wo.cursorline = false
-                end
-                utils.echo_toggle('Diff highlights', true)
-            else
-                vim.w.diff_highlights_forced_off = true
-                vim.opt_local.winhl:append {
-                    DiffAdd = 'None',
-                    DiffText = 'None',
-                    DiffTextAdd = 'None',
-                    DiffChange = 'None',
-                }
-                -- ISSUE: cursorline still shows an underline even if diff
-                -- highlights are disabled. See:
-                -- https://github.com/neovim/neovim/issues/9800
-                local ok, reticle = pcall(require, 'reticle')
-                if ok then
-                    reticle.set_cursorline(true)
-                else
-                    vim.wo.cursorline = true
-                end
-                utils.echo_toggle('Diff highlights', false)
-            end
-        end,
-        opts = { desc = 'Toggle diff highlights' }
-    },
-    {
         mode = 't',
         lhs = '<c-[>',
         rhs = '<c-\\><c-n>',
@@ -488,5 +348,99 @@ for _, m in ipairs(maps) do
     vim.keymap.set(m.mode, m.lhs, m.rhs, m.opts)
 end
 
--- An empty spec lets lazy.nvim profile this configuration module.
-return {}
+Snacks.toggle.option(
+    'hlsearch',
+    { name = 'highlight search' }
+):map('<c-,>h')
+
+Snacks.toggle.option(
+    'list',
+    { name = 'listchars' }
+):map('<c-,>l')
+
+Snacks.toggle.option(
+    'number',
+    { name = 'line numbers' }
+):map('<c-,>n')
+
+Snacks.toggle.option(
+    'relativenumber',
+    { name = 'relative numbers' }
+):map('<c-,>r')
+
+Snacks.toggle.option(
+    'spell',
+    { name = 'spell check' }
+):map('<c-,>s')
+
+Snacks.toggle.option('colorcolumn', {
+    name = 'colorcolumn',
+    on = '+1',
+    off = '',
+}):map('<c-,>t')
+
+Snacks.toggle.new({
+    name = 'diff',
+    get = function() return vim.wo.diff end,
+    set = function(state) vim.cmd(state and 'diffthis' or 'diffoff') end,
+}):map('<c-,>d')
+
+Snacks.toggle.new({
+    name = 'virtual text',
+    get = function() return vim.diagnostic.config().virtual_text ~= false end,
+    set = function(state) vim.diagnostic.config { virtual_text = state } end,
+}):map('<c-,>v')
+
+Snacks.toggle.new({
+    name = 'line wrapping',
+    get = function() return vim.wo.wrap end,
+    set = function(state)
+        if not vim.wo.diff then
+            vim.opt_local.wrap = state
+            return
+        end
+        -- In a diff, wrapping applies to every diff window of the tabpage.
+        -- The tab scoped flag is the source of truth, so diff windows opened
+        -- later pick up the same setting.
+        vim.t.diff_wrap = state
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if vim.wo[win].diff then
+                vim.wo[win].wrap = state
+            end
+        end
+    end,
+}):map('<c-,>w')
+
+Snacks.toggle.new({
+    name = 'diff highlights',
+    get = function() return not vim.w.diff_highlights_forced_off end,
+    set = function(state)
+        if not vim.wo.diff then
+            return
+        end
+        vim.w.diff_highlights_forced_off = not state
+        if state then
+            vim.opt_local.winhl:remove {
+                'DiffAdd',
+                'DiffText',
+                'DiffTextAdd',
+                'DiffChange',
+            }
+        else
+            vim.opt_local.winhl:append {
+                DiffAdd = 'None',
+                DiffText = 'None',
+                DiffTextAdd = 'None',
+                DiffChange = 'None',
+            }
+        end
+        -- ISSUE: cursorline still shows an underline even if diff highlights
+        -- are disabled. See: https://github.com/neovim/neovim/issues/9800
+        local ok, reticle = pcall(require, 'reticle')
+        if ok then
+            reticle.set_cursorline(not state)
+        else
+            vim.wo.cursorline = not state
+        end
+    end,
+}):map('zh')

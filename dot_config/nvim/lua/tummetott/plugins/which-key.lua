@@ -50,8 +50,9 @@ return {
             separator = vim.g.nerdfonts and '➜' or '->',
             group = '+',
             ellipsis = vim.g.nerdfonts and '…' or '...',
-            -- Disable icons on the rhs of mappings
-            mappings = false,
+            -- Only mappings with an explicit icon, such as snacks toggles,
+            -- show one. Icons derived from descriptions are off.
+            rules = false,
         },
         spec = {
             { '&', desc = 'Repeat substitute on current line' },

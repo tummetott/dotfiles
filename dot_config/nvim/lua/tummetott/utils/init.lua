@@ -17,16 +17,6 @@ function M.is_loaded(plugin)
         lazy_config.plugins[plugin]._.loaded ~= nil
 end
 
---- Reports the new state of a toggled option in the cmdline.
----@param label string Name of the option, as shown to the user
----@param enabled boolean Whether the option is now on
-function M.echo_toggle(label, enabled)
-    vim.api.nvim_echo({
-        { label .. ' ', 'Normal' },
-        { enabled and 'enabled' or 'disabled', enabled and 'DiagnosticOk' or 'DiagnosticWarn' },
-    }, false, {})
-end
-
 --- Closes floating windows attached to a base window.
 ---@param base_win_id integer
 ---@return boolean closed Whether a window was closed

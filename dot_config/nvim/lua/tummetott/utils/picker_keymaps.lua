@@ -79,6 +79,7 @@ keymaps.shared = {
         -- Option toggles share the `<c-,>` prefix but have no counterpart
         -- here, so they would act on the list buffer. The letters the picker
         -- does define shadow the global ones on their own
+        ['<c-,>b'] = nop,
         ['<c-,>d'] = nop,
         ['<c-,>e'] = nop,
         ['<c-,>g'] = nop,

@@ -12,6 +12,18 @@ return {
             { '<leader>f', group = 'Find' },
         }
     end,
+    config = function(_, opts)
+        require('snacks').setup(opts)
+
+        Snacks.toggle.new({
+            name = 'indent lines',
+            get = function() return vim.b.snacks_indent ~= false end,
+            set = function(state)
+                vim.b.snacks_indent = state
+                vim.cmd('redraw!')
+            end,
+        }):map('<c-,>e')
+    end,
     opts = {
         styles = {
             float = { backdrop = false },
@@ -377,16 +389,6 @@ return {
             '<cr>',
             function() Snacks.toggle.zoom():toggle() end,
             desc = 'Zoom window',
-        },
-        {
-            '<c-,>e',
-            function()
-                local enabled = vim.b[0].snacks_indent == false
-                vim.b[0].snacks_indent = enabled
-                vim.cmd('redraw!')
-                require 'tummetott.utils'.echo_toggle('Indent lines', enabled)
-            end,
-            desc = 'Indent lines',
         },
         {
             '<c-cr>',
