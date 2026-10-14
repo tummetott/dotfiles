@@ -527,12 +527,26 @@ return {
             desc = 'Search history',
         },
         {
-            -- When inside cmdline, search the cmdline history with CTRL-/
             '<Leader>f:',
             function()
                 Snacks.picker.command_history()
             end,
             desc = 'Cmdline history',
+        },
+        {
+            '<c-/>',
+            function()
+                local cmdtype, line = vim.fn.getcmdtype(), vim.fn.getcmdline()
+                local source = (cmdtype == '/' or cmdtype == '?')
+                    and 'search_history' or 'command_history'
+                vim.schedule(function()
+                    Snacks.picker[source]({ pattern = line })
+                end)
+                return '<c-c>'
+            end,
+            mode = 'c',
+            expr = true,
+            desc = 'Cmdline or search history',
         },
         {
             '<leader>gi',
