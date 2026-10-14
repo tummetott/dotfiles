@@ -58,7 +58,6 @@ return {
                 vim.wo.wrap = vim.t.diff_wrap or false
                 vim.wo.relativenumber = false
                 -- Render the fold line only with padding
-                vim.wo.foldtext = "''"
                 vim.wo.foldlevel = 0
             end,
         }

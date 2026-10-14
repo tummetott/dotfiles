@@ -61,6 +61,25 @@ autocmd({ 'BufWritePre', 'BufWinLeave' }, {
     end,
 })
 
+-- In diffs, render a folded line as only fill chars.
+-- Otherwise use the default renderer
+local function sync_diff_foldtext()
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        vim.wo[win].foldtext = vim.wo[win].diff and "''" or ''
+    end
+end
+
+autocmd('DiffUpdated', {
+    group = group,
+    callback = sync_diff_foldtext,
+})
+
+autocmd('OptionSet', {
+    group = group,
+    pattern = 'diff',
+    callback = sync_diff_foldtext,
+})
+
 -- Resize splits if window got resized
 autocmd('VimResized', {
     group = group,
