@@ -16,6 +16,7 @@ return {
             },
             {
                 '<leader><space>',
+                desc = 'Show references',
                 icon = vim.g.nerdfonts and '󰉄' or nil,
             },
         }
