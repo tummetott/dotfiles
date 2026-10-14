@@ -23,9 +23,7 @@ return {
         plugins = {
             marks = true,
             registers = true,
-            spelling = {
-                enabled = true,
-            },
+            spelling = { enabled = false },
             presets = {
                 operators = true,
                 motions = false,

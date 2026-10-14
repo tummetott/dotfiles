@@ -237,6 +237,10 @@ return {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
                     win = picker_keymaps.compose { 'vertical' },
                 },
+                spelling = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_keymaps.compose { 'vertical' },
+                },
             },
             -- Named groups carry the shared keys along, so this is what
             -- reaches the pickers that have no entry above
@@ -407,16 +411,12 @@ return {
         },
         {
             '<Leader>ff',
-            function()
-                Snacks.picker.files()
-            end,
+            function() Snacks.picker.files() end,
             desc = 'File',
         },
         {
             '<Leader>fg',
-            function()
-                Snacks.picker.grep()
-            end,
+            function() Snacks.picker.grep() end,
             desc = 'Grep',
         },
         {
@@ -437,7 +437,7 @@ return {
                     title = 'Nvim config',
                 })
             end,
-            desc = 'Nvim',
+            desc = 'Nvim config',
         },
         {
             '<Leader>fN',
@@ -447,7 +447,7 @@ return {
                     title = 'Nvim plugins',
                 })
             end,
-            desc = 'Nvim Plugins',
+            desc = 'Nvim plugins',
         },
         {
             '<Leader>fo',
@@ -472,16 +472,12 @@ return {
         },
         {
             '<Leader>fb',
-            function()
-                Snacks.picker.buffers()
-            end,
+            function() Snacks.picker.buffers() end,
             desc = 'Buffer',
         },
         {
             '<Leader>fr',
-            function()
-                Snacks.picker.recent()
-            end,
+            function() Snacks.picker.recent() end,
             desc = 'Recent',
         },
         {
@@ -507,30 +503,22 @@ return {
         },
         {
             '<Leader>fu',
-            function()
-                Snacks.picker.undo()
-            end,
+            function() Snacks.picker.undo() end,
             desc = 'Undotree',
         },
         {
             '<Leader>gl',
-            function()
-                Snacks.picker.git_log()
-            end,
+            function() Snacks.picker.git_log() end,
             desc = 'Commit log',
         },
         {
             '<Leader>f/',
-            function()
-                Snacks.picker.search_history()
-            end,
+            function() Snacks.picker.search_history() end,
             desc = 'Search history',
         },
         {
             '<Leader>f:',
-            function()
-                Snacks.picker.command_history()
-            end,
+            function() Snacks.picker.command_history() end,
             desc = 'Cmdline history',
         },
         {
@@ -549,17 +537,18 @@ return {
             desc = 'Cmdline or search history',
         },
         {
+            'z=',
+            function() Snacks.picker.spelling() end,
+            desc = 'Spelling suggestions',
+        },
+        {
             '<leader>gi',
-            function()
-                Snacks.picker.gh_issue()
-            end,
+            function() Snacks.picker.gh_issue() end,
             desc = 'Open GitHub issues',
         },
         {
             '<leader>gp',
-            function()
-                Snacks.picker.gh_pr()
-            end,
+            function() Snacks.picker.gh_pr() end,
             desc = 'Open GitHub pull requests',
         },
         {
@@ -585,9 +574,7 @@ return {
         },
         {
             '<leader>gY',
-            function()
-                Snacks.gitbrowse { what = 'permalink' }
-            end,
+            function() Snacks.gitbrowse { what = 'permalink' } end,
             mode = { 'n', 'v' },
             desc = 'Open git permalink',
         },
