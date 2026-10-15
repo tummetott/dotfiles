@@ -53,6 +53,7 @@ keymaps.shared = {
         ['<c-,>n'] = { '<nop>' },
         ['<c-,>r'] = { '<nop>' },
         ['<c-,>c'] = { '<nop>' },
+        ['<c-,>f'] = { '<nop>' },
         ['<c-,>s'] = { '<nop>' },
         ['<c-,>t'] = { '<nop>' },
         ['<c-,>v'] = { '<nop>' },
@@ -112,6 +113,29 @@ keymaps.vertical = {
     },
 }
 
+-- Preset sidebar: Input on top, list below it. Only used for the explorer
+keymaps.sidebar = {
+    input = {
+        ['<c-j>'] = { 'focus_list', desc = 'Focus list', mode = 'i' },
+        ['<c-l>'] = {
+            function()
+                vim.cmd.stopinsert()
+                vim.cmd.wincmd('l')
+            end,
+            desc = 'Jump to right window',
+            mode = 'i',
+        },
+        ['<c-s>'] = { 'close', desc = 'Close file tree', mode = 'i' },
+    },
+    list = {
+        ['<c-k>'] = { 'focus_input', desc = 'Focus input' },
+        ['<c-s>'] = { 'close', desc = 'Close file tree' },
+        ['<c-h>'] = { '<nop>' },
+        ['<c-j>'] = { '<nop>' },
+        ['<c-l>'] = false,
+    },
+}
+
 keymaps.trouble = input_and_list {
     ['<c-o>'] = { 'trouble_open', desc = 'Open in trouble' },
     ['<c-y>'] = { 'trouble_add', desc = 'Add to trouble' },
@@ -124,8 +148,8 @@ keymaps.hidden = input_and_list {
 keymaps.ignored = input_and_list {
     ['<c-,>i'] = { 'toggle_ignored', desc = 'Gitignored files' },
 }
-keymaps.follow = input_and_list {
-    ['<c-,>f'] = { 'toggle_follow', desc = 'Follow symlinks' },
+keymaps.symlinks = input_and_list {
+    ['<c-,>s'] = { 'toggle_follow', desc = 'Symlinks' },
 }
 keymaps.regex = input_and_list {
     ['<c-,>r'] = { 'toggle_regex', desc = 'Regex search' },
@@ -148,7 +172,12 @@ function M.compose(names)
         if not keymaps[name] then
             error('unknown picker keymaps: ' .. name)
         end
-        if vim.tbl_contains({ 'ivy', 'dropdown', 'vertical' }, name) then
+        if vim.tbl_contains({
+            'ivy',
+            'dropdown',
+            'vertical',
+            'sidebar',
+        }, name) then
             if preset then
                 error(('picker names two presets: %s and %s')
                     :format(preset, name))

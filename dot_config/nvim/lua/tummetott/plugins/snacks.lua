@@ -86,7 +86,6 @@ return {
                 }
             },
         },
-        -- explorer = { enabled = true },
         indent = {
             enabled = true,
             animate = {
@@ -151,7 +150,7 @@ return {
                     hidden = true,
                     layout = { preset = 'ivy', fullscreen = true },
                     win = picker_keymaps.compose {
-                        'ivy', 'hidden', 'ignored', 'follow', 'live', 'trouble',
+                        'ivy', 'hidden', 'ignored', 'symlinks', 'live', 'trouble',
                     },
                 },
                 grep = {
@@ -175,7 +174,7 @@ return {
                     end,
                     layout = { preset = 'dropdown', fullscreen = true },
                     win = picker_keymaps.compose {
-                        'dropdown', 'hidden', 'ignored', 'follow', 'regex',
+                        'dropdown', 'hidden', 'ignored', 'symlinks', 'regex',
                         'live', 'trouble',
                     },
                 },
@@ -240,6 +239,14 @@ return {
                 spelling = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
                     win = picker_keymaps.compose { 'vertical' },
+                },
+                explorer = {
+                    hidden = true,
+                    diagnostics = false,
+                    formatters = { file = { git_status_hl = false } },
+                    win = picker_keymaps.compose {
+                        'sidebar', 'hidden', 'ignored', 'live',
+                    },
                 },
             },
             -- Named groups carry the shared keys along, so this is what
@@ -375,8 +382,16 @@ return {
     },
     highlights = {
         SnacksPickerDir = { link = 'SnacksPickerFile' },
+        -- SnacksPickerDirectory = { fg = 'purple' },
         SnacksPickerRow = { link = 'LineNr' },
-        SnacksPickerMatch = { fg = 'blue' },
+        SnacksPickerMatch = { fg = 'yellow' },
+        SnacksPickerToggle = { fg = 'gray' },
+        SnacksPickerPathHidden = { link = 'SnacksPickerFile' },
+        SnacksPickerPathIgnored = { fg = 'gray' },
+        SnacksPickerGitStatusIgnored = { fg = 'gray' },
+        SnacksPickerGitStatusModified = { fg = 'orange' },
+        SnacksPickerGitStatusUntracked = { fg = 'dark_gray' },
+        SnacksPickerGitStatusStaged = { fg = 'green' },
         SnacksDashboardHeader = { fg = 'blue' },
         SnacksDashboardFooter = { fg = 'dark_gray' },
         SnacksIndentScope = { fg = 'dark_gray' },
@@ -403,6 +418,11 @@ return {
             function() Snacks.terminal.toggle() end,
             mode = { 'n', 't' },
             desc = 'Toggle terminal',
+        },
+        {
+            '<c-s>',
+            function() Snacks.explorer() end,
+            desc = 'File tree',
         },
         {
             '<leader>os',
