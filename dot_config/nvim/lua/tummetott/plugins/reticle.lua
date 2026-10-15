@@ -20,7 +20,6 @@ return {
             cursorline = {
                 'FTerm',
                 'NvimSeparator',
-                'NvimTree',
                 'trouble',
                 'snacks_dashboard',
                 'DiffviewFileHistory',

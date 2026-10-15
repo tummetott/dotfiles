@@ -582,7 +582,6 @@ M.man_bufname = {
 M.special_bufname = {
     static = {
         bufnames = {
-            ['NvimTree'] = 'FILE TREE',
             ['lazy'] = 'LAZY',
             ['Outline'] = 'OUTLINE',
             ['markdown.gh'] = 'GITHUB',
@@ -592,6 +591,15 @@ M.special_bufname = {
     },
     provider = function(self)
         local ft = vim.bo.filetype
+        -- The explorer shares the generic picker filetypes, so it is told
+        -- apart by the picker that owns the buffer.
+        if ft == 'snacks_picker_input' or ft == 'snacks_picker_list' then
+            local explorer = Snacks.picker.get({ source = 'explorer' })[1]
+            local buf = vim.api.nvim_get_current_buf()
+            if explorer and (explorer.input.win.buf == buf or explorer.list.win.buf == buf) then
+                return 'FILE TREE'
+            end
+        end
         return self.bufnames[ft]
     end,
     hl = { fg = 'blue', bold = true }
@@ -687,7 +695,6 @@ M.special_winbar = {
             filetype = {
                 'trouble',
                 'help',
-                'NvimTree',
                 'man',
                 'DiffviewFiles',
                 'DiffviewFileHistory',
@@ -820,12 +827,6 @@ M.special_winbar = {
                 title = 'DIFFVIEW FILES',
                 match = function(buf)
                     return vim.bo[buf].filetype == 'DiffviewFiles'
-                end,
-            },
-            {
-                title = 'FILE TREE',
-                match = function(buf)
-                    return vim.bo[buf].filetype == 'NvimTree'
                 end,
             },
             {

@@ -10,7 +10,7 @@ return {
             filetypes = {
                 'trouble',
                 'help',
-                'NvimTree',
+                'snacks_layout_box',
                 'man',
                 'DiffviewFiles',
                 'DiffviewFileHistory',
