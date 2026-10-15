@@ -568,6 +568,11 @@ return {
             desc = 'Jumplist',
         },
         {
+            '<leader>fp',
+            function() Snacks.picker.projects() end,
+            desc = 'Project',
+        },
+        {
             '<leader>gi',
             function() Snacks.picker.gh_issue() end,
             desc = 'Open GitHub issues',
