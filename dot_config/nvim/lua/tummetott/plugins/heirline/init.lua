@@ -45,14 +45,11 @@ return {
                     if win == -1 then
                         return false
                     end
-
-                    -- 1. disable for floating windows
-                    local cfg = vim.api.nvim_win_get_config(win)
-                    if cfg.relative ~= '' then
+                    if Snacks.util.is_float(win) then
                         return true
                     end
 
-                    -- 2. disable for specific buffers entirely
+                    -- Disable for specific buffers entirely
                     return require("heirline.conditions").buffer_matches({
                         filetype = {
                             'snacks_dashboard',

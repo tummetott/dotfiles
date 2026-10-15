@@ -255,8 +255,8 @@ M.filetype = {
     init = function(self)
         self.ft = vim.bo.filetype
         if vim.g.nerdfonts then
-            self.icon = require('nvim-web-devicons')
-                .get_icon_by_filetype(self.ft, { default = true }) .. ' '
+            local icon = Snacks.util.icon(self.ft, 'filetype')
+            self.icon = vim.trim(icon) .. ' '
         end
     end,
     provider = function(self)
@@ -287,7 +287,6 @@ M.lsp = {
         provider = function()
             return ' ' .. require('snacks.util').spinner()
         end,
-        update = { 'User', pattern = 'LspSpinner' }
     },
 }
 
