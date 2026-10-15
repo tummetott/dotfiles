@@ -10,13 +10,19 @@ M.prompts = {
 local last_agent_tab
 local back_tab
 
-local function has_agent(tab)
+function M.is_agent_tab(tab)
     for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
         if vim.w[win].sidekick_session_id then
             return true
         end
     end
     return false
+end
+
+function M.back_tab()
+    if back_tab and vim.api.nvim_tabpage_is_valid(back_tab) then
+        return back_tab
+    end
 end
 
 -- Sidekick opens agents in a split or a float. This opens each in a tab page of
@@ -35,7 +41,8 @@ function M.open()
             end
 
             local origin = vim.api.nvim_get_current_tabpage()
-            if not has_agent(origin) then
+            if not M.is_agent_tab(origin)
+                and vim.t[origin].diffview_view_initialized == nil then
                 back_tab = origin
             end
 
@@ -71,7 +78,7 @@ function M.toggle()
     local current = vim.api.nvim_get_current_tabpage()
 
     -- Remember which agent is being left, so the next toggle returns to it.
-    if has_agent(current) then
+    if M.is_agent_tab(current) then
         last_agent_tab = current
         if back_tab and back_tab ~= current
             and vim.api.nvim_tabpage_is_valid(back_tab) then
@@ -82,11 +89,13 @@ function M.toggle()
         return
     end
 
-    back_tab = current
+    if vim.t[current].diffview_view_initialized == nil then
+        back_tab = current
+    end
 
     -- Returning to a valid agent, or opening the picker
     if last_agent_tab and vim.api.nvim_tabpage_is_valid(last_agent_tab)
-        and has_agent(last_agent_tab) then
+        and M.is_agent_tab(last_agent_tab) then
         vim.api.nvim_set_current_tabpage(last_agent_tab)
     else
         M.open()

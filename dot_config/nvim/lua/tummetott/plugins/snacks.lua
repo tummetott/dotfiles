@@ -229,6 +229,18 @@ return {
                 state = { icon = '+closed', value = 'all' },
             },
             actions = {
+                confirm = 'jump',
+                -- Don't use a sidekick tab as jump target
+                jump = function(picker, item, action)
+                    local agent = require 'tummetott.utils.agent'
+                    if agent.is_agent_tab(vim.api.nvim_win_get_tabpage(picker.main)) then
+                        local tab = agent.back_tab()
+                        if tab then
+                            picker.main = vim.api.nvim_tabpage_get_win(tab)
+                        end
+                    end
+                    require('snacks.picker.actions').jump(picker, item, action)
+                end,
                 trouble_open = function(picker)
                     require('trouble.sources.snacks')
                         .open(picker, { type = 'smart' })
