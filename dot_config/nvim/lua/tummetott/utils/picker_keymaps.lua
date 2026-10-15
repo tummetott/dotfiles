@@ -30,6 +30,7 @@ keymaps.shared = {
         ['<c-u>'] = false,
         ['<c-j>'] = false,
         ['<c-k>'] = false,
+        ['<c-l>'] = false,
         ['<c-/>'] = { '<nop>', mode = 'i' },
     },
     list = {
@@ -84,6 +85,9 @@ keymaps.ivy = {
         ['<c-h>'] = { 'focus_input', desc = 'Focus input' },
     },
 }
+
+-- Preset default: It arranges the windows like ivy, so it shares the same keys.
+keymaps.default = keymaps.ivy
 
 -- Preset dropdown: Preview on top, input below it, list at the bottom
 keymaps.dropdown = {
@@ -174,6 +178,7 @@ function M.compose(names)
         end
         if vim.tbl_contains({
             'ivy',
+            'default',
             'dropdown',
             'vertical',
             'sidebar',

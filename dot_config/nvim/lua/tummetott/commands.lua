@@ -98,5 +98,21 @@ vim.api.nvim_create_user_command('DebugKeymaps', function()
     vim.notify('DebugKeymaps active — press any key to test.')
 end, { desc = 'Register debug mappings for all common keys' })
 
+-- Opens the snacks picker for the given source. Without a source it opens the
+-- list of all pickers.
+vim.api.nvim_create_user_command('Picker', function(ctx)
+    Snacks.picker(ctx.args ~= '' and ctx.args or nil)
+end, {
+    nargs = '?',
+    complete = function(lead)
+        local sources = vim.tbl_keys(Snacks.picker.config.get().sources)
+        table.sort(sources)
+        return vim.tbl_filter(function(name)
+            return name:find(lead, 1, true) == 1
+        end, sources)
+    end,
+    desc = 'Open a snacks picker',
+})
+
 -- An empty spec lets lazy.nvim profile this configuration module.
 return {}

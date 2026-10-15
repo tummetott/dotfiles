@@ -116,39 +116,17 @@ return {
         },
         picker = {
             enabled = true,
-            -- Badges in the picker title, naming each option that is active.
-            toggles = {
-                follow = '+symlinks',
-                hidden = '+hidden',
-                ignored = '+ignored',
-                modified = 'only-modified',
-                regex = { icon = 'no-regex', value = false },
-                state = { icon = '+closed', value = 'all' },
-            },
-            actions = {
-                trouble_open = function(picker)
-                    require('trouble.sources.snacks')
-                        .open(picker, { type = 'smart' })
-                end,
-                trouble_add = function(picker)
-                    require('trouble.sources.snacks')
-                        .open(picker, { type = 'smart', add = true })
-                end,
-                -- Toggles the GitHub pickers between open and all issues / PRs
-                gh_toggle_state = function(picker)
-                    if not picker.opts.source:find('^gh_') then
-                        return
-                    end
-                    picker.opts.state =
-                        picker.opts.state == 'all' and 'open' or 'all'
-                    picker.list:set_target()
-                    picker:find()
-                end,
-            },
+            -- Sources without a layout of their own open in ivy
+            layout = { preset = 'ivy' },
+            -- Default layout is ivy, so the default win needs ivy keymaps
+            win = picker_keymaps.compose { 'ivy' },
+            -- Ivy always opens fullscreen. Set on the preset, since fullscreen in the
+            -- fallback layout would also reach sources that bring their own preset.
+            layouts = { ivy = { fullscreen = true } },
             sources = {
                 files = {
                     hidden = true,
-                    layout = { preset = 'ivy', fullscreen = true },
+                    layout = { preset = 'ivy' },
                     win = picker_keymaps.compose {
                         'ivy', 'hidden', 'ignored', 'symlinks', 'live', 'trouble',
                     },
@@ -179,32 +157,20 @@ return {
                     },
                 },
                 recent = {
-                    layout = { preset = 'ivy', fullscreen = true },
+                    layout = { preset = 'ivy' },
                     win = picker_keymaps.compose { 'ivy', 'trouble' },
                 },
                 git_log = {
-                    layout = {
-                        preset = 'ivy',
-                        fullscreen = true,
-                        hidden = { 'preview' },
-                    },
+                    layout = { preset = 'ivy', hidden = { 'preview' } },
                     win = picker_keymaps.compose { 'ivy', 'live' },
                 },
                 gh_issue = {
-                    layout = { preset = 'ivy', fullscreen = true },
+                    layout = { preset = 'ivy' },
                     win = picker_keymaps.compose { 'ivy', 'state', 'live' },
                 },
                 gh_pr = {
-                    layout = { preset = 'ivy', fullscreen = true },
+                    layout = { preset = 'ivy' },
                     win = picker_keymaps.compose { 'ivy', 'state', 'live' },
-                },
-                yank_history = {
-                    layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_keymaps.compose { 'ivy' },
-                },
-                undo = {
-                    layout = { preset = 'ivy', fullscreen = true },
-                    win = picker_keymaps.compose { 'ivy' },
                 },
                 buffers = {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
@@ -240,6 +206,10 @@ return {
                     layout = { preset = 'vertical', hidden = { 'preview' } },
                     win = picker_keymaps.compose { 'vertical' },
                 },
+                icons = {
+                    layout = { preset = 'vertical', hidden = { 'preview' } },
+                    win = picker_keymaps.compose { 'vertical' },
+                },
                 explorer = {
                     hidden = true,
                     diagnostics = false,
@@ -249,9 +219,35 @@ return {
                     },
                 },
             },
-            -- Named groups carry the shared keys along, so this is what
-            -- reaches the pickers that have no entry above
-            win = picker_keymaps.compose {},
+            -- Badges in the picker title, naming each option that is active.
+            toggles = {
+                follow = '+symlinks',
+                hidden = '+hidden',
+                ignored = '+ignored',
+                modified = 'only-modified',
+                regex = { icon = 'no-regex', value = false },
+                state = { icon = '+closed', value = 'all' },
+            },
+            actions = {
+                trouble_open = function(picker)
+                    require('trouble.sources.snacks')
+                        .open(picker, { type = 'smart' })
+                end,
+                trouble_add = function(picker)
+                    require('trouble.sources.snacks')
+                        .open(picker, { type = 'smart', add = true })
+                end,
+                -- Toggles the GitHub pickers between open and all issues / PRs
+                gh_toggle_state = function(picker)
+                    if not picker.opts.source:find('^gh_') then
+                        return
+                    end
+                    picker.opts.state =
+                        picker.opts.state == 'all' and 'open' or 'all'
+                    picker.list:set_target()
+                    picker:find()
+                end,
+            },
         },
         scratch = {
             enabled = true,
@@ -560,6 +556,16 @@ return {
             'z=',
             function() Snacks.picker.spelling() end,
             desc = 'Spelling suggestions',
+        },
+        {
+            '<leader>fi',
+            function() Snacks.picker.icons() end,
+            desc = 'Icon',
+        },
+        {
+            '<leader>fj',
+            function() Snacks.picker.jumps() end,
+            desc = 'Jumplist',
         },
         {
             '<leader>gi',
