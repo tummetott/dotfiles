@@ -263,6 +263,30 @@ return {
         },
         scratch = {
             enabled = true,
+            win = {
+                on_win = function(win)
+                    -- Close scratch float when not focused
+                    vim.api.nvim_create_autocmd('WinLeave', {
+                        group = win.augroup,
+                        callback = function()
+                            vim.schedule(function()
+                                if win:valid()
+                                    and vim.api.nvim_get_current_win() ~= win.win then
+                                    win:hide()
+                                end
+                            end)
+                        end,
+                        once = true,
+                    })
+                    -- Don't zoom scratch buffers
+                    if vim.bo[win.buf].filetype ~= 'lua' then
+                        vim.keymap.set('n', '<cr>', '<cr>', {
+                            buffer = win.buf,
+                            remap = false,
+                        })
+                    end
+                end,
+            },
         },
         zen = {
             enabled = true,
