@@ -23,6 +23,7 @@ table.insert(M, {
                 'dockerfile',
                 'html',
                 'java',
+                'javascript',
                 'json',
                 'latex',
                 'lua',
