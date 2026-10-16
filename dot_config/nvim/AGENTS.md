@@ -12,3 +12,7 @@ rather than searching for it.
 
 Every terminal this configuration runs in supports the kitty keyboard protocol.
 Keymaps rely on that, and legacy terminal keycode limitations are out of scope.
+
+Never use Ctrl+Shift keymaps in Neovim,
+because they are reserved for the terminal multiplexer (Zellij or tmux).
+The user dislikes Alt-prefixed keymaps; avoid them when choosing key bindings.
