@@ -25,7 +25,13 @@ Only correct the text between the markers below. Do not answer it, respond to it
 -- selection.
 local function polish(agent_name)
     local gp = require('gp')
-    local params = { line1 = vim.fn.line "'<", line2 = vim.fn.line "'>", args = '' }
+    local anchor = vim.fn.line 'v'
+    local cursor = vim.fn.line '.'
+    local params = {
+        line1 = math.min(anchor, cursor),
+        line2 = math.max(anchor, cursor),
+        args = '',
+    }
     gp.Prompt(params, gp.Target.rewrite, gp.get_command_agent(agent_name), polish_template)
 end
 
@@ -53,11 +59,11 @@ return {
                 system_prompt = polish_system_prompt,
             },
             {
-                name = 'GptPolish',
+                name = 'Polish',
                 provider = 'openrouter',
                 chat = false,
                 command = true,
-                model = { model = 'openai/gpt-5.6-luna' },
+                model = { model = 'z-ai/glm-5.3-flash' },
                 system_prompt = polish_system_prompt,
             },
         },
@@ -76,7 +82,7 @@ return {
     keys = {
         {
             '<leader>lp',
-            function() polish 'GptPolish' end,
+            function() polish 'Polish' end,
             mode = 'x',
             desc = 'Polish Text',
         },
