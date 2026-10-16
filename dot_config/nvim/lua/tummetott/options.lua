@@ -176,6 +176,3 @@ require('vim._core.ui2').enable {
     enable = true,
     msg = { targets = 'cmd' },
 }
-
--- An empty spec lets lazy.nvim profile this configuration module.
-return {}

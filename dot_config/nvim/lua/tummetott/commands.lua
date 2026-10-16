@@ -113,6 +113,3 @@ end, {
     end,
     desc = 'Open a snacks picker',
 })
-
--- An empty spec lets lazy.nvim profile this configuration module.
-return {}

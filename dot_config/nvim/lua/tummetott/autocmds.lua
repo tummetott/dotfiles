@@ -168,6 +168,3 @@ autocmd('CmdwinEnter', {
     end,
     desc = 'Disable linenumbers in command windows',
 })
-
--- An empty spec lets lazy.nvim profile this configuration module.
-return {}
