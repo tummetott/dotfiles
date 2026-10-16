@@ -19,6 +19,11 @@ return {
             enabled = false,
         },
         cli = {
+            tools = {
+                cline = {
+                    cmd = { 'cline', '--tui' },
+                },
+            },
             win = {
                 keys = {
                     prompt = {
