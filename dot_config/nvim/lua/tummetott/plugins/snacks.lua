@@ -442,7 +442,11 @@ return {
     keys = {
         {
             '<cr>',
-            function() Snacks.toggle.zoom():toggle() end,
+            function()
+                if vim.fn.winnr('$') > 1 then
+                    Snacks.toggle.zoom():toggle()
+                end
+            end,
             desc = 'Zoom window',
         },
         {
