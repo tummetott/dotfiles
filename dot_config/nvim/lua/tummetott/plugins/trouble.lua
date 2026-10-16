@@ -91,10 +91,12 @@ return {
                 sort = { 'severity', 'filename', 'pos', 'message' },
                 format = '{severity_icon}{message:md} {item.source} {code} {pos}',
             },
-            -- Base settings for:
+            -- Base settings for LSP location and call hierarchy modes:
             -- lsp_definitions, lsp_references, lsp_implementations
             -- lsp_type_definitions, lsp_declarations, lsp_command
+            -- lsp_incoming_calls, lsp_outgoing_calls
             lsp_base = {
+                auto_refresh = false,
                 groups = {
                     { 'filename', format = '{file_icon}{filename} {count}' },
                 },
@@ -121,8 +123,10 @@ return {
             },
             lsp_references = {
                 title = false,
+                auto_jump = false,
                 params = {
-                    include_declaration = false,
+                    include_declaration = true,
+                    include_current = true,
                 },
             },
             lsp_implementations = {
@@ -207,6 +211,37 @@ return {
             },
         },
     },
+    config = function(_, opts)
+        require('trouble').setup(opts)
+
+        -- HACK: Default neovim handlers push to tagstack. Trouble does not.
+        -- https://github.com/folke/trouble.nvim/issues/632
+        local View = require('trouble.view')
+        local jump = View.jump
+        local tagstack_modes = {
+            lsp_definitions = true,
+            lsp_declarations = true,
+            lsp_type_definitions = true,
+            lsp_implementations = true,
+        }
+
+        -- Symbol destination jumps use the tag stack so <C-t> returns to the source.
+        function View:jump(item, jump_opts)
+            local tag
+            if tagstack_modes[self.opts.mode] then
+                tag = vim.api.nvim_win_call(self:main().win, function()
+                    local from = vim.fn.getpos('.')
+                    from[1] = vim.api.nvim_get_current_buf()
+                    return { tagname = vim.fn.expand('<cword>'), from = from }
+                end)
+            end
+            local result = jump(self, item, jump_opts)
+            if result and tag then
+                vim.fn.settagstack(0, { items = { tag } }, 't')
+            end
+            return result
+        end
+    end,
     cmd = { 'Trouble' },
     keys = {
         {

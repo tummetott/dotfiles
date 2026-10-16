@@ -97,6 +97,12 @@ table.insert(M, {
     enabled = true,
     ft = 'lua',
     opts = {
+        -- Disables root_dir detection. This is done manually in
+        -- `after/lsp/lua_ls.lua` because it would otherwise add
+        -- chezmoi's source AND target space.
+        integrations = {
+            lspconfig = false,
+        },
         library = {
             -- Load luvit types when the `vim.uv` word is found
             { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
