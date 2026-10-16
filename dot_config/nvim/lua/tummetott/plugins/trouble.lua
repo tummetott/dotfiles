@@ -230,7 +230,7 @@ return {
             desc = 'Match results',
         },
         {
-            '<Leader>ol',
+            '<Leader>oo',
             function() require('trouble').toggle('last') end,
             desc = 'Last list',
         },

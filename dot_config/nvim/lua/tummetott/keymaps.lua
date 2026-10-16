@@ -362,6 +362,26 @@ local maps = {
         end,
         opts = { ft = 'qf', desc = 'Delete quickfix entries' }
     },
+    {
+        mode = 'n',
+        lhs = '<leader>yf',
+        rhs = function()
+            vim.fn.setreg('+', vim.fn.expand('%:p:~'))
+        end,
+        opts = { desc = 'File path' }
+    },
+    {
+        mode = 'n',
+        lhs = '<leader>yb',
+        rhs = function()
+            local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+            vim.fn.setreg('+', lines, 'V')
+            vim.hl.range(0, vim.api.nvim_create_namespace('YankBuffer'),
+                'YankyYanked', { 0, 0 }, { #lines - 1, 0 },
+                { regtype = 'V', timeout = 200 })
+        end,
+        opts = { desc = 'Buffer content' }
+    }
 }
 
 for _, m in ipairs(maps) do

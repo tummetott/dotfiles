@@ -88,8 +88,15 @@ return {
             },
             {
                 '<leader>o',
+                mode = { 'n', 'x' },
                 group = 'Open',
                 icon = vim.g.nerdfonts and '󰏌' or nil,
+            },
+            {
+                '<leader>y',
+                mode = { 'n', 'x' },
+                group = 'Yank',
+                icon = vim.g.nerdfonts and '' or nil,
             },
             {
                 '<c-,>',

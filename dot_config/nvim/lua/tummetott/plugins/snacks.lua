@@ -535,9 +535,9 @@ return {
             desc = 'Undotree',
         },
         {
-            '<Leader>gl',
+            '<Leader>ol',
             function() Snacks.picker.git_log() end,
-            desc = 'Commit log',
+            desc = 'Git log',
         },
         {
             '<Leader>f/',
@@ -585,17 +585,17 @@ return {
             desc = 'Project',
         },
         {
-            '<leader>gi',
+            '<leader>oi',
             function() Snacks.picker.gh_issue() end,
-            desc = 'Open GitHub issues',
+            desc = 'Git issues',
         },
         {
-            '<leader>gp',
+            '<leader>op',
             function() Snacks.picker.gh_pr() end,
-            desc = 'Open GitHub pull requests',
+            desc = 'Git PRs',
         },
         {
-            '<leader>gy',
+            '<leader>yp',
             function()
                 local from, to = vim.fn.line('v'), vim.fn.line('.')
                 from, to = math.min(from, to), math.max(from, to)
@@ -613,13 +613,13 @@ return {
                 }
             end,
             mode = { 'n', 'v' },
-            desc = 'Yank git permalink',
+            desc = 'Permalink',
         },
         {
-            '<leader>gY',
+            '<leader>ob',
             function() Snacks.gitbrowse { what = 'permalink' } end,
             mode = { 'n', 'v' },
-            desc = 'Open git permalink',
+            desc = 'Permalink in browser',
         },
     }
 }

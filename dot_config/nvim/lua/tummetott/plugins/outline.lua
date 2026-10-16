@@ -20,9 +20,9 @@ return {
     cmd = { 'Outline', 'OutlineOpen' },
     keys = {
         {
-            '<leader>oo',
+            '<leader>ox',
             '<cmd>Outline!<cr>',
-            desc = 'Outline',
+            desc = 'Symbol tree',
         }
     }
 }
