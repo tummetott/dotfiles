@@ -16,17 +16,17 @@ return {
         {
             'ss',
             '<Plug>(nvim-surround-normal-cur)',
-            desc = 'Surround current line',
+            desc = 'Surround Current Line',
         },
         {
             'S',
             '<Plug>(nvim-surround-normal-line)',
-            desc = 'Surround on new lines',
+            desc = 'Surround on New Lines',
         },
         {
             'SS',
             '<Plug>(nvim-surround-normal-cur-line)',
-            desc = 'Surround current line on new lines',
+            desc = 'Surround Current Line on New Lines',
         },
         {
             's',
@@ -38,22 +38,22 @@ return {
             'S',
             '<Plug>(nvim-surround-visual-line)',
             mode = 'x',
-            desc = 'Surround on new lines',
+            desc = 'Surround on New Lines',
         },
         {
             'ds',
             '<Plug>(nvim-surround-delete)',
-            desc = 'Delete surround',
+            desc = 'Delete Surround',
         },
         {
             'cs',
             '<Plug>(nvim-surround-change)',
-            desc = 'Change surround',
+            desc = 'Change Surround',
         },
         {
             'cS',
             '<Plug>(nvim-surround-change-line)',
-            desc = 'Change surround on new lines',
+            desc = 'Change Surround on New Lines',
         }
     }
 }

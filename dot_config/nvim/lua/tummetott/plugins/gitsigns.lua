@@ -53,72 +53,72 @@ return {
         {
             ']h',
             function() require 'gitsigns'.nav_hunk('next') end,
-            desc = 'Next unstaged hunk',
+            desc = 'Next Unstaged Hunk',
         },
         {
             '[h',
             function() require 'gitsigns'.nav_hunk('prev') end,
-            desc = 'Previous unstaged hunk',
+            desc = 'Previous Unstaged Hunk',
         },
         {
             ']H',
             ---@diagnostic disable-next-line: missing-fields
             function() require 'gitsigns'.nav_hunk('next', { target = 'all' }) end,
-            desc = 'Next hunk',
+            desc = 'Next Hunk',
         },
         {
             '[H',
             ---@diagnostic disable-next-line: missing-fields
             function() require 'gitsigns'.nav_hunk('prev', { target = 'all' }) end,
-            desc = 'Previous hunk',
+            desc = 'Previous Hunk',
         },
         {
             '<Leader>gs',
             function() require 'gitsigns'.stage_hunk() end,
-            desc = 'Stage/Unstage hunk',
+            desc = 'Stage/Unstage Hunk',
         },
         {
             '<Leader>gS',
             function() require 'gitsigns'.stage_buffer() end,
-            desc = 'Stage buffer'
+            desc = 'Stage Buffer'
         },
         {
             '<Leader>gr',
             function() require 'gitsigns'.reset_hunk() end,
-            desc = 'Reset hunk'
+            desc = 'Reset Hunk'
         },
         {
             '<Leader>gR',
             function() require 'gitsigns'.reset_buffer() end,
-            desc = 'Reset buffer'
+            desc = 'Reset Buffer'
         },
         {
             '<Leader>gh',
             function() require 'gitsigns'.preview_hunk_inline() end,
-            desc = 'Preview hunk'
+            desc = 'Preview Hunk'
         },
         {
             '<Leader>gb',
             function() require 'gitsigns'.blame_line() end,
-            desc = 'Blame current line'
+            desc = 'Blame Current Line'
         },
         {
             '<Leader>gs',
             ':Gitsigns stage_hunk<CR>',
             mode = 'v',
-            desc = 'Stage selected',
+            desc = 'Stage Selected',
         },
         {
             '<Leader>gr',
             ':Gitsigns reset_hunk<CR>',
             mode = 'v',
-            desc = 'Reset selected',
+            desc = 'Reset Selected',
         },
         {
             'ih',
             ':<C-u>Gitsigns select_hunk<CR>',
             mode = { 'o', 'x' },
-            desc = 'inner hunk',
+            desc = 'Inner Hunk',
         }
     },
     highlights = {

@@ -30,7 +30,7 @@ return {
                         '<c-;>',
                         agent.send_prompt,
                         mode = 't',
-                        desc = 'insert prompt',
+                        desc = 'Insert Prompt',
                     },
                     stopinsert = false,
                     hide_ctrl_dot = false,
@@ -57,13 +57,13 @@ return {
         {
             '<leader>lf',
             function() require('sidekick.cli').send({ msg = '{file}' }) end,
-            desc = 'Send file reference',
+            desc = 'Send File Reference',
         },
         {
             '<leader>lr',
             function() require('sidekick.cli').send({ msg = '{line}' }) end,
             mode = { 'n', 'x' },
-            desc = 'Send line reference',
+            desc = 'Send Line Reference',
         },
         {
             '<leader>lc',
@@ -72,13 +72,13 @@ return {
                 require('sidekick.cli').send({ text = { { { line } } } })
             end,
             mode = { 'n' },
-            desc = 'Send line content',
+            desc = 'Send Line Content',
         },
         {
             '<leader>lc',
             function() require('sidekick.cli').send({ msg = '{selection}' }) end,
             mode = { 'x' },
-            desc = 'Send content',
+            desc = 'Send Content',
         },
         {
             '<leader>lC',
@@ -89,7 +89,7 @@ return {
                 })
             end,
             mode = { 'n' },
-            desc = 'Send buffer content',
+            desc = 'Send Buffer Content',
         },
     },
 }

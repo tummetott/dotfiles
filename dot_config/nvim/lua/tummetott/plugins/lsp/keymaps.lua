@@ -6,13 +6,13 @@ vim.keymap.set(
     'n',
     ']d',
     function() vim.diagnostic.jump({ count = 1, float = true }) end,
-    { desc = 'Next diagnostic' }
+    { desc = 'Next Diagnostic' }
 )
 vim.keymap.set(
     'n',
     '[d',
     function() vim.diagnostic.jump({ count = -1, float = true }) end,
-    { desc = 'Previous diagnostic' }
+    { desc = 'Previous Diagnostic' }
 )
 
 -- Show signature help
@@ -20,7 +20,7 @@ vim.keymap.set(
     'n',
     'grs',
     function() vim.lsp.buf.signature_help() end,
-    { desc = 'Signature help' }
+    { desc = 'Signature Help' }
 )
 
 -- Auto formatting
@@ -28,7 +28,7 @@ vim.keymap.set(
     'n',
     'grf',
     function() vim.lsp.buf.format { async = true } end,
-    { desc = 'Auto formatting' }
+    { desc = 'Auto Formatting' }
 )
 
 -- LSP references
@@ -38,7 +38,7 @@ vim.keymap.set(
     function()
         require('trouble').open('lsp_references')
     end,
-    { desc = 'LSP references' }
+    { desc = 'LSP References' }
 )
 
 -- Goto declaration. Mostly relevant in C/C++, e.g. when a function is declared
@@ -49,7 +49,7 @@ vim.keymap.set(
     function()
         require('trouble').open('lsp_declarations')
     end,
-    { desc = 'Go to declaration' }
+    { desc = 'Go to Declaration' }
 )
 
 -- List workspace folders
@@ -61,7 +61,7 @@ vim.keymap.set(
         table.sort(folders)
         vim.print(vim.fn.uniq(folders))
     end,
-    { desc = 'List workspace folders' }
+    { desc = 'List Workspace Folders' }
 )
 
 local function default_workspace_folder()
@@ -94,7 +94,7 @@ vim.keymap.set(
             vim.lsp.buf.add_workspace_folder(vim.fs.normalize(input))
         end)
     end,
-    { desc = 'Add workspace folder' }
+    { desc = 'Add Workspace Folder' }
 )
 
 -- Remove workspace folder
@@ -126,7 +126,7 @@ vim.keymap.set(
             vim.notify('Worspace folder removed', vim.log.levels.INFO)
         end)
     end,
-    { desc = 'Remove workspace folder' }
+    { desc = 'Remove Workspace Folder' }
 )
 
 return M

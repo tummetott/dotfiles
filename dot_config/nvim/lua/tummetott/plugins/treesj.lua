@@ -14,7 +14,7 @@ return {
         {
             'gs',
             '<Cmd>TSJToggle<CR>',
-            desc = 'Split/Join current code block',
+            desc = 'Split/Join Current Code Block',
         }
     },
 }

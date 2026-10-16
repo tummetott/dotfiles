@@ -59,14 +59,14 @@ return {
             function()
                 require('dial.map').manipulate('increment', 'gnormal')
             end,
-            desc = 'Sequential increment',
+            desc = 'Sequential Increment',
         },
         {
             'g<C-x>',
             function()
                 require('dial.map').manipulate('decrement', 'gnormal')
             end,
-            desc = 'Sequential decrement',
+            desc = 'Sequential Decrement',
         },
         {
             '<C-a>',
@@ -90,7 +90,7 @@ return {
                 require('dial.map').manipulate('increment', 'gvisual')
             end,
             mode = 'x',
-            desc = 'Sequential increment',
+            desc = 'Sequential Increment',
         },
         {
             'g<C-x>',
@@ -98,7 +98,7 @@ return {
                 require('dial.map').manipulate('decrement', 'gvisual')
             end,
             mode = 'x',
-            desc = 'Sequential decrement',
+            desc = 'Sequential Decrement',
         },
     }
 }

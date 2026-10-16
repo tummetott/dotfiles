@@ -40,13 +40,13 @@ return {
             'r',
             function() require('flash').treesitter_search() end,
             mode = { 'o', 'x' },
-            desc = 'Remote flash',
+            desc = 'Remote Flash',
         },
         {
             '<c-j>',
             function() require('flash').toggle() end,
             mode = { 'c' },
-            desc = 'Toggle flash search',
+            desc = 'Toggle Flash Search',
         },
     },
     highlights = {

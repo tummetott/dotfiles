@@ -16,7 +16,7 @@ return {
             },
             {
                 '<leader><space>',
-                desc = 'Show references',
+                desc = 'Show References',
                 icon = vim.g.nerdfonts and '󰉄' or nil,
             },
         }
@@ -333,7 +333,7 @@ return {
                             vim.cmd.wincmd({ 'h', count = vim.v.count1 })
                         end
                     end,
-                    desc = 'Jump to left window',
+                    desc = 'Jump to Left Window',
                 },
                 list_down = {
                     '<c-n>',
@@ -343,7 +343,7 @@ return {
                             picker.list:move(vim.v.count1)
                         end
                     end,
-                    desc = 'Next item',
+                    desc = 'Next Item',
                 },
                 list_up = {
                     '<c-p>',
@@ -353,7 +353,7 @@ return {
                             picker.list:move(-vim.v.count1)
                         end
                     end,
-                    desc = 'Previous item',
+                    desc = 'Previous Item',
                 },
             },
         },
@@ -393,12 +393,12 @@ return {
             enabled = true,
             keys = {
                 textobject = {
-                    ii = { desc = 'Inner scope' },
-                    ai = { desc = 'Full scope' },
+                    ii = { desc = 'Inner Scope' },
+                    ai = { desc = 'Full Scope' },
                 },
                 jump = {
-                    ['[i'] = { desc = 'Top edge of scope' },
-                    [']i'] = { desc = 'Bottom edge of scope' },
+                    ['[i'] = { desc = 'Top Edge of Scope' },
+                    [']i'] = { desc = 'Bottom Edge of Scope' },
                 },
             },
         },
@@ -447,18 +447,18 @@ return {
                     Snacks.toggle.zoom():toggle()
                 end
             end,
-            desc = 'Zoom window',
+            desc = 'Zoom Window',
         },
         {
             '<c-cr>',
             function() Snacks.terminal.toggle() end,
             mode = { 'n', 't' },
-            desc = 'Toggle terminal',
+            desc = 'Toggle Terminal',
         },
         {
             '<c-s>',
             function() Snacks.explorer() end,
-            desc = 'File tree',
+            desc = 'File Tree',
         },
         {
             '<leader>os',
@@ -493,7 +493,7 @@ return {
                     title = 'Nvim config',
                 })
             end,
-            desc = 'Nvim config',
+            desc = 'Nvim Config',
         },
         {
             '<Leader>fN',
@@ -503,7 +503,7 @@ return {
                     title = 'Nvim plugins',
                 })
             end,
-            desc = 'Nvim plugins',
+            desc = 'Nvim Plugins',
         },
         {
             '<Leader>fo',
@@ -541,21 +541,21 @@ return {
             function()
                 require('tummetott.utils.words').jump(vim.v.count1)
             end,
-            desc = 'Next reference under cursor',
+            desc = 'Next Reference Under Cursor',
         },
         {
             '[[',
             function()
                 require('tummetott.utils.words').jump(-vim.v.count1)
             end,
-            desc = 'Previous reference under cursor',
+            desc = 'Previous Reference Under Cursor',
         },
         {
             '<leader><space>',
             function()
                 require('tummetott.utils.words').show()
             end,
-            desc = 'Show references',
+            desc = 'Show References',
         },
         {
             '<Leader>fu',
@@ -565,17 +565,17 @@ return {
         {
             '<Leader>ol',
             function() Snacks.picker.git_log() end,
-            desc = 'Git log',
+            desc = 'Git Log',
         },
         {
             '<Leader>f/',
             function() Snacks.picker.search_history() end,
-            desc = 'Search history',
+            desc = 'Search History',
         },
         {
             '<Leader>f:',
             function() Snacks.picker.command_history() end,
-            desc = 'Cmdline history',
+            desc = 'Cmdline History',
         },
         {
             '<c-/>',
@@ -590,12 +590,12 @@ return {
             end,
             mode = 'c',
             expr = true,
-            desc = 'Cmdline or search history',
+            desc = 'Cmdline or Search History',
         },
         {
             'z=',
             function() Snacks.picker.spelling() end,
-            desc = 'Spelling suggestions',
+            desc = 'Spelling Suggestions',
         },
         {
             '<leader>fi',
@@ -615,7 +615,7 @@ return {
         {
             '<leader>oi',
             function() Snacks.picker.gh_issue() end,
-            desc = 'Git issues',
+            desc = 'Git Issues',
         },
         {
             '<leader>op',
@@ -647,7 +647,7 @@ return {
             '<leader>ob',
             function() Snacks.gitbrowse { what = 'permalink' } end,
             mode = { 'n', 'v' },
-            desc = 'Permalink in browser',
+            desc = 'Permalink in Browser',
         },
     }
 }

@@ -18,10 +18,10 @@ end
 -- to take effect. `<nop>` explicitly consumes the key instead.
 keymaps.shared = {
     input = {
-        ['<Esc>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
-        ['<c-q>'] = { 'close', desc = 'Close picker', mode = { 'n', 'i' } },
-        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window', mode = 'i' },
-        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout', mode = 'i' },
+        ['<Esc>'] = { 'close', desc = 'Close Picker', mode = { 'n', 'i' } },
+        ['<c-q>'] = { 'close', desc = 'Close Picker', mode = { 'n', 'i' } },
+        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview Window', mode = 'i' },
+        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized Layout', mode = 'i' },
         ['<c-g>'] = false,
         ['<c-a>'] = false,
         ['<c-b>'] = false,
@@ -34,9 +34,9 @@ keymaps.shared = {
         ['<c-/>'] = { '<nop>', mode = 'i' },
     },
     list = {
-        ['<c-q>'] = { 'close', desc = 'Close picker' },
-        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview window' },
-        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized layout' },
+        ['<c-q>'] = { 'close', desc = 'Close Picker' },
+        ['<c-,>p'] = { 'toggle_preview', desc = 'Preview Window' },
+        ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized Layout' },
         ['<c-g>'] = false,
         -- Consume global keymaps that would act on the list buffer. Presets and
         -- toggle groups rebind some of these keys.
@@ -61,9 +61,9 @@ keymaps.shared = {
         ['<c-,>w'] = { '<nop>' },
     },
     preview = {
-        ['<c-q>'] = { 'toggle_preview', desc = 'Preview window' },
-        ['<c-n>'] = { 'list_down', desc = 'Next item' },
-        ['<c-p>'] = { 'list_up', desc = 'Previous item' },
+        ['<c-q>'] = { 'toggle_preview', desc = 'Preview Window' },
+        ['<c-n>'] = { 'list_down', desc = 'Next Item' },
+        ['<c-p>'] = { 'list_up', desc = 'Previous Item' },
         ['<c-h>'] = { '<nop>' },
         ['<c-j>'] = { '<nop>' },
         ['<c-k>'] = { '<nop>' },
@@ -74,15 +74,15 @@ keymaps.shared = {
 -- Preset ivy: Input on top, list below it, preview to the right of the list
 keymaps.ivy = {
     input = {
-        ['<c-j>'] = { 'focus_list', desc = 'Focus list', mode = 'i' },
-        ['<c-l>'] = { 'focus_preview', desc = 'Focus preview', mode = 'i' },
+        ['<c-j>'] = { 'focus_list', desc = 'Focus List', mode = 'i' },
+        ['<c-l>'] = { 'focus_preview', desc = 'Focus Preview', mode = 'i' },
     },
     list = {
-        ['<c-k>'] = { 'focus_input', desc = 'Focus input' },
-        ['<c-l>'] = { 'focus_preview', desc = 'Focus preview' },
+        ['<c-k>'] = { 'focus_input', desc = 'Focus Input' },
+        ['<c-l>'] = { 'focus_preview', desc = 'Focus Preview' },
     },
     preview = {
-        ['<c-h>'] = { 'focus_input', desc = 'Focus input' },
+        ['<c-h>'] = { 'focus_input', desc = 'Focus Input' },
     },
 }
 
@@ -92,48 +92,48 @@ keymaps.default = keymaps.ivy
 -- Preset dropdown: Preview on top, input below it, list at the bottom
 keymaps.dropdown = {
     input = {
-        ['<c-j>'] = { 'focus_list', desc = 'Focus list', mode = 'i' },
-        ['<c-k>'] = { 'focus_preview', desc = 'Focus preview', mode = 'i' },
+        ['<c-j>'] = { 'focus_list', desc = 'Focus List', mode = 'i' },
+        ['<c-k>'] = { 'focus_preview', desc = 'Focus Preview', mode = 'i' },
     },
     list = {
-        ['<c-k>'] = { 'focus_input', desc = 'Focus input' },
+        ['<c-k>'] = { 'focus_input', desc = 'Focus Input' },
     },
     preview = {
-        ['<c-j>'] = { 'focus_input', desc = 'Focus input' },
+        ['<c-j>'] = { 'focus_input', desc = 'Focus Input' },
     },
 }
 
 -- Preset vertical: Input on top, list below it, preview at the bottom
 keymaps.vertical = {
     input = {
-        ['<c-j>'] = { 'focus_list', desc = 'Focus list', mode = 'i' },
+        ['<c-j>'] = { 'focus_list', desc = 'Focus List', mode = 'i' },
     },
     list = {
-        ['<c-k>'] = { 'focus_input', desc = 'Focus input' },
-        ['<c-j>'] = { 'focus_preview', desc = 'Focus preview' },
+        ['<c-k>'] = { 'focus_input', desc = 'Focus Input' },
+        ['<c-j>'] = { 'focus_preview', desc = 'Focus Preview' },
     },
     preview = {
-        ['<c-k>'] = { 'focus_list', desc = 'Focus list' },
+        ['<c-k>'] = { 'focus_list', desc = 'Focus List' },
     },
 }
 
 -- Preset sidebar: Input on top, list below it. Only used for the explorer
 keymaps.sidebar = {
     input = {
-        ['<c-j>'] = { 'focus_list', desc = 'Focus list', mode = 'i' },
+        ['<c-j>'] = { 'focus_list', desc = 'Focus List', mode = 'i' },
         ['<c-l>'] = {
             function()
                 vim.cmd.stopinsert()
                 vim.cmd.wincmd('l')
             end,
-            desc = 'Jump to right window',
+            desc = 'Jump to Right Window',
             mode = 'i',
         },
-        ['<c-s>'] = { 'close', desc = 'Close file tree', mode = 'i' },
+        ['<c-s>'] = { 'close', desc = 'Close File Tree', mode = 'i' },
     },
     list = {
-        ['<c-k>'] = { 'focus_input', desc = 'Focus input' },
-        ['<c-s>'] = { 'close', desc = 'Close file tree' },
+        ['<c-k>'] = { 'focus_input', desc = 'Focus Input' },
+        ['<c-s>'] = { 'close', desc = 'Close File Tree' },
         ['<c-h>'] = { '<nop>' },
         ['<c-j>'] = { '<nop>' },
         ['<c-l>'] = false,
@@ -141,31 +141,31 @@ keymaps.sidebar = {
 }
 
 keymaps.trouble = input_and_list {
-    ['<c-o>'] = { 'trouble_open', desc = 'Open in trouble' },
-    ['<c-y>'] = { 'trouble_add', desc = 'Add to trouble' },
+    ['<c-o>'] = { 'trouble_open', desc = 'Open in Trouble' },
+    ['<c-y>'] = { 'trouble_add', desc = 'Add to Trouble' },
 }
 
 -- Toggle keymaps
 keymaps.hidden = input_and_list {
-    ['<c-,>h'] = { 'toggle_hidden', desc = 'Hidden files' },
+    ['<c-,>h'] = { 'toggle_hidden', desc = 'Hidden Files' },
 }
 keymaps.ignored = input_and_list {
-    ['<c-,>i'] = { 'toggle_ignored', desc = 'Gitignored files' },
+    ['<c-,>i'] = { 'toggle_ignored', desc = 'Gitignored Files' },
 }
 keymaps.symlinks = input_and_list {
     ['<c-,>s'] = { 'toggle_follow', desc = 'Symlinks' },
 }
 keymaps.regex = input_and_list {
-    ['<c-,>r'] = { 'toggle_regex', desc = 'Regex search' },
+    ['<c-,>r'] = { 'toggle_regex', desc = 'Regex Search' },
 }
 keymaps.modified = input_and_list {
-    ['<c-,>o'] = { 'toggle_modified', desc = 'Only modified buffers' },
+    ['<c-,>o'] = { 'toggle_modified', desc = 'Only Modified Buffers' },
 }
 keymaps.state = input_and_list {
-    ['<c-,>c'] = { 'gh_toggle_state', desc = 'Closed issues and PRs' },
+    ['<c-,>c'] = { 'gh_toggle_state', desc = 'Closed Issues and PRs' },
 }
 keymaps.live = input_and_list {
-    ['<c-,>l'] = { 'toggle_live', desc = 'Live search' },
+    ['<c-,>l'] = { 'toggle_live', desc = 'Live Search' },
 }
 
 function M.compose(names)

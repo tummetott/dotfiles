@@ -19,34 +19,34 @@ return {
         {
             '<C-f>',
             mode = { 'n', 'x' },
-            desc = 'Scroll page down',
+            desc = 'Scroll Page Down',
         },
         {
             '<C-b>',
             mode = { 'n', 'x' },
-            desc = 'Scroll page up',
+            desc = 'Scroll Page Up',
         },
         {
             '<C-d>',
             mode = { 'n', 'x' },
-            desc = 'Scroll half page down',
+            desc = 'Scroll Half Page Down',
         },
         {
             '<C-u>',
             mode = { 'n', 'x' },
-            desc = 'Scroll half page up',
+            desc = 'Scroll Half Page Up',
         },
         {
             'zt',
-            desc = 'Top this line',
+            desc = 'Top This Line',
         },
         {
             'zz',
-            desc = 'Center this line',
+            desc = 'Center This Line',
         },
         {
             'zb',
-            desc = 'Bottom this line',
+            desc = 'Bottom This Line',
         },
     },
 }

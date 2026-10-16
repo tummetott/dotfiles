@@ -80,32 +80,32 @@ return {
         {
             '<Leader>di',
             '<Cmd>DiffviewOpen --selected-file=%<CR>',
-            desc = 'LOCAL against INDEX',
+            desc = 'LOCAL vs INDEX',
         },
         {
             '<Leader>dh',
             '<Cmd>DiffviewOpen HEAD --selected-file=%<CR>',
-            desc = 'LOCAL against HEAD',
+            desc = 'LOCAL vs HEAD',
         },
         {
             '<Leader>ds',
             '<Cmd>DiffviewOpen HEAD --staged --selected-file=%<CR>',
-            desc = 'INDEX against HEAD',
+            desc = 'INDEX vs HEAD',
         },
         {
             '<Leader>da',
             '<Cmd>DiffviewFileHistory<CR>',
-            desc = 'History all files',
+            desc = 'All Files Log',
         },
         {
             '<Leader>dc',
             '<Cmd>DiffviewFileHistory %<CR>',
-            desc = 'History current file',
+            desc = 'Current File Log',
         },
         {
             '<Leader>dl',
             '<Cmd>DiffviewFileHistory --pin-local %<CR>',
-            desc = 'LOCAL against history',
+            desc = 'LOCAL vs History',
         },
         {
             '<Leader>dp',
@@ -160,7 +160,7 @@ return {
                     vim.cmd('DiffviewOpen origin/' .. default_branch .. '...' .. branch)
                 end)
             end,
-            desc = 'PR against TARGET',
+            desc = 'PR vs TARGET',
         },
     },
 }

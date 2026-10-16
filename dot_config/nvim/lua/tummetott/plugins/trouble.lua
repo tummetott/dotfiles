@@ -222,22 +222,22 @@ return {
         {
             '<Leader>of',
             function() require('trouble').toggle('snacks_files') end,
-            desc = 'File results',
+            desc = 'File Results',
         },
         {
             '<Leader>om',
             function() require('trouble').toggle('snacks') end,
-            desc = 'Match results',
+            desc = 'Match Results',
         },
         {
             '<Leader>oo',
             function() require('trouble').toggle('last') end,
-            desc = 'Last list',
+            desc = 'Last List',
         },
         {
             'gO',
             function() require('trouble').toggle('lsp_document_symbols') end,
-            desc = 'Document symbols',
+            desc = 'Document Symbols',
         },
         {
             '<tab>',
@@ -247,7 +247,7 @@ return {
                     trouble.next({ jump = true })
                 end
             end,
-            desc = 'Next Trouble entry',
+            desc = 'Next Trouble Entry',
         },
         {
             '<s-tab>',
@@ -257,7 +257,7 @@ return {
                     trouble.prev({ jump = true })
                 end
             end,
-            desc = 'Previous Trouble entry',
+            desc = 'Previous Trouble Entry',
         },
         {
             '[q',
@@ -269,7 +269,7 @@ return {
                     vim.cmd('silent! cprevious')
                 end
             end,
-            desc = 'Previous quickfix entry',
+            desc = 'Previous Quickfix Entry',
         },
         {
             ']q',
@@ -281,7 +281,7 @@ return {
                     vim.cmd('silent! cnext')
                 end
             end,
-            desc = 'Next quickfix entry',
+            desc = 'Next Quickfix Entry',
         },
         {
             '[Q',
@@ -293,7 +293,7 @@ return {
                     vim.cmd('silent! cfirst')
                 end
             end,
-            desc = 'First quickfix entry',
+            desc = 'First Quickfix Entry',
         },
         {
             ']Q',
@@ -305,7 +305,7 @@ return {
                     vim.cmd('silent! clast')
                 end
             end,
-            desc = 'Last quickfix entry',
+            desc = 'Last Quickfix Entry',
         },
     },
     highlights = {

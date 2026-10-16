@@ -60,7 +60,7 @@ return {
                 -- and ctags.
                 vim.api.nvim_feedkeys(vim.keycode('<C-]>'), 'n', false)
             end,
-            desc = 'Jump to path, definition or tag',
+            desc = 'Jump to Path, Definition or Tag',
         },
         {
             'g<C-]>',
@@ -71,7 +71,7 @@ return {
                     target_window = { split = { force = true } },
                 })
             end,
-            desc = 'Open path in new split',
+            desc = 'Open Path in New Split',
         },
     },
     highlights = {

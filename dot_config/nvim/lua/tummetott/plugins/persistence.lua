@@ -18,28 +18,28 @@ return {
             function()
                 require'persistence'.load()
             end,
-            desc = 'Load current session',
+            desc = 'Load Current Session',
         },
         {
             '<leader>pl',
             function()
                 require'persistence'.load({ last = true })
             end,
-            desc = 'Load last session',
+            desc = 'Load Last Session',
         },
         {
             '<leader>pq',
             function()
                 require'persistence'.stop()
             end,
-            desc = 'Stop session recording',
+            desc = 'Stop Session Recording',
         },
         {
             '<leader>ps',
             function()
                 require("persistence").select()
             end,
-            desc = 'Load selected session',
+            desc = 'Load Selected Session',
         }
     }
 }

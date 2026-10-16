@@ -5,25 +5,25 @@ local maps = {
         mode = 'x',
         lhs = 'J',
         rhs = [[:<C-u>exe "'<,'>move '>+".v:count1<CR>gv=gv]],
-        opts = { desc = 'Move selection [count] lines down' }
+        opts = { desc = 'Move Selection [count] Lines Down' }
     },
     {
         mode = 'x',
         lhs = 'K',
         rhs = [[:<C-u>exe "'<,'>move '<--".v:count1<CR>gv=gv]],
-        opts = { desc = 'Move selection [count] lines up' }
+        opts = { desc = 'Move Selection [count] Lines Up' }
     },
     {
         mode = { 'i', 'c', 's' },
         lhs = '<C-f>',
         rhs = '<Right>',
-        opts = { desc = 'Move cursor right' }
+        opts = { desc = 'Move Cursor Right' }
     },
     {
         mode = { 'i', 'c', 's' },
         lhs = '<C-b>',
         rhs = '<Left>',
-        opts = { desc = 'Move cursor left' }
+        opts = { desc = 'Move Cursor Left' }
     },
     -- C-w should respect '-' and '_' and delete a segment at a time
     {
@@ -44,13 +44,13 @@ local maps = {
             vim.opt_local.iskeyword:remove { '-', '_' }
             return '<C-S-w>'
         end,
-        opts = { expr = true, desc = 'Delete word backward' }
+        opts = { expr = true, desc = 'Delete Word Backward' }
     },
     {
         mode = { 'i', 'c' },
         lhs = '<M-Bs>',
         rhs = '<C-w>',
-        opts = { remap = true, desc = 'Delete word backward' },
+        opts = { remap = true, desc = 'Delete Word Backward' },
     },
     {
         mode = 'i',
@@ -62,7 +62,7 @@ local maps = {
                 vim.api.nvim_win_set_cursor(0, cursor) -- Restore cursor position
             end
         end,
-        opts = { desc = 'Delete to end of line' }
+        opts = { desc = 'Delete to End of Line' }
     },
     {
         mode = 'n',
@@ -75,91 +75,91 @@ local maps = {
                 vim.cmd([=[normal! `[v`] ]=])
             end
         end,
-        opts = { desc = 'Select previous pasted text' }
+        opts = { desc = 'Select Previous Pasted Text' }
     },
     {
         mode = 'n',
         lhs = '<bs>',
         rhs = 'ciw',
-        opts = { desc = 'Change word' }
+        opts = { desc = 'Change Word' }
     },
     {
         mode = { 'n', 'x' },
         lhs = '<C-h>',
         rhs = '<C-w>h',
-        opts = { desc = 'Jump to left window' }
+        opts = { desc = 'Jump to Left Window' }
     },
     {
         mode = { 'n', 'x' },
         lhs = '<C-j>',
         rhs = '<C-w>j',
-        opts = { desc = 'Jump to below window' }
+        opts = { desc = 'Jump to Below Window' }
     },
     {
         mode = { 'n', 'x' },
         lhs = '<C-k>',
         rhs = '<C-w>k',
-        opts = { desc = 'Jump to above window' }
+        opts = { desc = 'Jump to Above Window' }
     },
     {
         mode = { 'n', 'x' },
         lhs = '<C-l>',
         rhs = '<C-w>l',
-        opts = { desc = 'Jump to right window' }
+        opts = { desc = 'Jump to Right Window' }
     },
     {
         mode = 'i',
         lhs = '<C-e>',
         rhs = '<End>',
-        opts = { desc = 'Jump to end of line' }
+        opts = { desc = 'Jump to End of Line' }
     },
     {
         mode = 'i',
         lhs = '<C-a>',
         rhs = '<Home>',
-        opts = { desc = 'Jump to start of line' }
+        opts = { desc = 'Jump to Start of Line' }
     },
     {
         mode = 'i',
         lhs = '<M-Left>',
         rhs = function() vim.cmd('normal! b') end,
-        opts = { desc = 'Jump to previous word' }
+        opts = { desc = 'Jump to Previous Word' }
     },
     {
         mode = 'i',
         lhs = '<M-Right>',
         rhs = function() vim.cmd('normal! w') end,
-        opts = { desc = 'Jump to next word' }
+        opts = { desc = 'Jump to Next Word' }
     },
     {
         mode = 'c',
         lhs = '<C-a>',
         rhs = '<C-b>',
-        opts = { desc = 'Jump to start of line' }
+        opts = { desc = 'Jump to Start of Line' }
     },
     {
         mode = 'c',
         lhs = '<M-Left>',
         rhs = '<S-Left>',
-        opts = { desc = 'Jump word backward' }
+        opts = { desc = 'Jump Word Backward' }
     },
     {
         mode = 'c',
         lhs = '<M-Right>',
         rhs = '<S-Right>',
-        opts = { desc = 'Jump word forward' }
+        opts = { desc = 'Jump Word Forward' }
     },
     {
         mode = { 'n', 't' },
         lhs = '<c-=>',
         rhs = require('tummetott.utils.winsize').expand,
-        opts = { desc = 'Expand window' },
+        opts = { desc = 'Expand Window' },
     },
     {
         mode = { 'n', 't' },
         lhs = '<c-->',
         rhs = require('tummetott.utils.winsize').contract,
-        opts = { desc = 'Contract window' },
+        opts = { desc = 'Contract Window' },
     },
     {
         mode = 'n',
@@ -177,7 +177,7 @@ local maps = {
             local win = vim.api.nvim_get_current_win()
             utils.close_attached_floats(win)
         end,
-        opts = { desc = 'Clear search highlights, cmdline and close floats' }
+        opts = { desc = 'Clear Search Highlights, Cmdline and Close Floats' }
     },
     {
         mode = 'n',
@@ -189,13 +189,13 @@ local maps = {
         mode = 'n',
         lhs = ']w',
         rhs = function() vim.fn.search('\\s\\+$', 'w') end,
-        opts = { desc = 'Next trailing whitespace' }
+        opts = { desc = 'Next Trailing Whitespace' }
     },
     {
         mode = 'n',
         lhs = '[w',
         rhs = function() vim.fn.search('\\s\\+$', 'bw') end,
-        opts = { desc = 'Previous trailing whitespace' }
+        opts = { desc = 'Previous Trailing Whitespace' }
     },
     {
         mode = 'n',
@@ -204,7 +204,7 @@ local maps = {
             vim.cmd('silent! move --' .. vim.v.count1)
             vim.cmd.normal '=='
         end,
-        opts = { desc = 'Exchange above' }
+        opts = { desc = 'Exchange Above' }
     },
     {
         mode = 'n',
@@ -213,13 +213,13 @@ local maps = {
             vim.cmd('silent! move +' .. vim.v.count1)
             vim.cmd.normal '=='
         end,
-        opts = { desc = 'Exchange below' }
+        opts = { desc = 'Exchange Below' }
     },
     {
         mode = 'n',
         lhs = 'x',
         rhs = '"_x', -- Don't pollute register
-        opts = { desc = 'Delete char under cursor' }
+        opts = { desc = 'Delete Char Under Cursor' }
     },
     -- <Tab> and <C-i> share a legacy keycode. Mapping only one key collapses
     -- both to the same action. I therefore map <C-i> to itself to preserve
@@ -228,7 +228,7 @@ local maps = {
         mode = 'n',
         lhs = '<C-i>',
         rhs = '<C-i>',
-        opts = { desc = 'Newer position in jump list' }
+        opts = { desc = 'Newer Position in Jump List' }
     },
     -- Navigate command line history (prefix sensitive). When a completion menu
     -- is open, <C-n>/<C-p> are used by completion; otherwise they move through
@@ -237,37 +237,37 @@ local maps = {
         mode = 'c',
         lhs = '<C-n>',
         rhs = '<down>',
-        opts = { desc = 'Next command' }
+        opts = { desc = 'Next Command' }
     },
     {
         mode = 'c',
         lhs = '<C-p>',
         rhs = '<up>',
-        opts = { desc = 'Previous command' }
+        opts = { desc = 'Previous Command' }
     },
     {
         mode = 'n',
         lhs = '<c-w>t',
         rhs = '<cmd>tabc<cr>',
-        opts = { desc = 'Tab close' }
+        opts = { desc = 'Tab Close' }
     },
     {
         mode = 'n',
         lhs = '<leader>r',
         rhs = '<cmd>restart<cr>',
-        opts = { desc = 'Restart neovim' }
+        opts = { desc = 'Restart Neovim' }
     },
     {
         mode = 'x',
         lhs = 'gn',
         rhs = '<esc>ngn',
-        opts = { desc = 'Search forwards and select' }
+        opts = { desc = 'Search Forwards and Select' }
     },
     {
         mode = 'x',
         lhs = 'Q',
         rhs = ':norm Q<CR>',
-        opts = { desc = 'Repeat macro on each line' }
+        opts = { desc = 'Repeat Macro on Each Line' }
     },
     {
         mode = 'n',
@@ -279,7 +279,7 @@ local maps = {
         mode = 't',
         lhs = '<c-[>',
         rhs = '<c-\\><c-n>',
-        opts = { desc = 'Exit terminal insert mode' }
+        opts = { desc = 'Exit Terminal Insert Mode' }
     },
     -- <esc> and <c-[> share a legacy keycode. Mapping only one key
     -- collapses both to the same action. I therefore map <esc> to itself to
@@ -288,7 +288,7 @@ local maps = {
         mode = 't',
         lhs = '<esc>',
         rhs = '<esc>',
-        opts = { desc = 'Esc passthrough' }
+        opts = { desc = 'Esc Passthrough' }
     },
     -- Neovim's builtin incremental selection lives on the `an` and `in` text
     -- objects, which stay available to operators. These remap them onto a
@@ -297,50 +297,50 @@ local maps = {
         mode = 'x',
         lhs = '<C-n>',
         rhs = 'an',
-        opts = { remap = true, desc = 'Increment selection' }
+        opts = { remap = true, desc = 'Increment Selection' }
     },
     {
         mode = 'x',
         lhs = '<C-p>',
         rhs = 'in',
-        opts = { remap = true, desc = 'Decrement selection' }
+        opts = { remap = true, desc = 'Decrement Selection' }
     },
     {
         mode = 'n',
         lhs = '<c-/>',
         rhs = 'gcc',
-        opts = { remap = true, desc = 'Comment current line' }
+        opts = { remap = true, desc = 'Comment Current Line' }
     },
     {
         mode = 'i',
         lhs = '<c-/>',
         rhs = '<c-o>gcc',
-        opts = { remap = true, desc = 'Comment current line' }
+        opts = { remap = true, desc = 'Comment Current Line' }
     },
     {
         mode = 'x',
         lhs = '<c-/>',
         rhs = 'gc',
-        opts = { remap = true, desc = 'Comment current selection' }
+        opts = { remap = true, desc = 'Comment Current Selection' }
     },
     -- All native ftplugin mappings are disabled by default. Remap matchit
     {
         mode = 'n',
         lhs = '%',
         rhs = '<Plug>(MatchitNormalForward)',
-        opts = { desc = 'Jump to matching pair or keyword' }
+        opts = { desc = 'Jump to Matching Pair or Keyword' }
     },
     {
         mode = 'x',
         lhs = '%',
         rhs = '<Plug>(MatchitVisualForward)',
-        opts = { desc = 'Jump to matching pair or keyword' }
+        opts = { desc = 'Jump to Matching Pair or Keyword' }
     },
     {
         mode = 'o',
         lhs = '%',
         rhs = '<Plug>(MatchitOperationForward)',
-        opts = { desc = 'Jump to matching pair or keyword' }
+        opts = { desc = 'Jump to Matching Pair or Keyword' }
     },
     {
         mode = 'n',
@@ -349,7 +349,7 @@ local maps = {
             local line = vim.api.nvim_win_get_cursor(0)[1]
             require('tummetott.utils.qflist').delete_qf_entries(line, line)
         end,
-        opts = { ft = 'qf', desc = 'Delete quickfix entry' }
+        opts = { ft = 'qf', desc = 'Delete Quickfix Entry' }
     },
     {
         mode = 'x',
@@ -360,7 +360,7 @@ local maps = {
             require('tummetott.utils.qflist').delete_qf_entries(
                 math.min(first, last), math.max(first, last))
         end,
-        opts = { ft = 'qf', desc = 'Delete quickfix entries' }
+        opts = { ft = 'qf', desc = 'Delete Quickfix Entries' }
     },
     {
         mode = 'n',
@@ -368,7 +368,7 @@ local maps = {
         rhs = function()
             vim.fn.setreg('+', vim.fn.expand('%:p:~'))
         end,
-        opts = { desc = 'File path' }
+        opts = { desc = 'File Path' }
     },
     {
         mode = 'n',
@@ -380,7 +380,7 @@ local maps = {
                 'YankyYanked', { 0, 0 }, { #lines - 1, 0 },
                 { regtype = 'V', timeout = 200 })
         end,
-        opts = { desc = 'Buffer content' }
+        opts = { desc = 'Buffer Content' }
     }
 }
 

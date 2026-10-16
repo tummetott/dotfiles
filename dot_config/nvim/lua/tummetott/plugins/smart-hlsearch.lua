@@ -14,7 +14,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search forward',
+            desc = 'Search Forward',
         },
         {
             '?',
@@ -24,7 +24,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search backward',
+            desc = 'Search Backward',
         },
         -- Make `n` always move to the next match and `N` to the previous one,
         -- independent of whether the search was started with `/` or `?`.
@@ -36,7 +36,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Next search match'
+            desc = 'Next Search Match'
         },
         {
             'N',
@@ -46,7 +46,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Previous search match'
+            desc = 'Previous Search Match'
         },
         {
             'n',
@@ -56,7 +56,7 @@ return {
             end,
             mode = { 'x', 'o' },
             expr = true,
-            desc = 'Next search result',
+            desc = 'Next Search Result',
         },
         {
             'N',
@@ -66,7 +66,7 @@ return {
             end,
             mode = { 'x', 'o' },
             expr = true,
-            desc = 'Prev search result',
+            desc = 'Prev Search Result',
         },
         {
             '*',
@@ -76,7 +76,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search word under cursor forward',
+            desc = 'Search Word Under Cursor Forward',
         },
         {
             '#',
@@ -86,7 +86,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search word under cursor backward',
+            desc = 'Search Word Under Cursor Backward',
         },
         {
             'g*',
@@ -96,7 +96,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search partial word under cursor forward',
+            desc = 'Search Partial Word Under Cursor Forward',
         },
         {
             'g#',
@@ -106,7 +106,7 @@ return {
             end,
             mode = 'n',
             expr = true,
-            desc = 'Search partial word under cursor backward',
+            desc = 'Search Partial Word Under Cursor Backward',
         },
     }
 }

@@ -32,7 +32,7 @@ return {
         {
             'p',
             '<Plug>(YankyPutAfter)',
-            desc = 'Put after',
+            desc = 'Put After',
         },
         -- In visual mode, 'YankyPutBefore' behaves similarly to
         -- 'YankyPutAfter,' with the distinction that it doesn't include the
@@ -41,13 +41,13 @@ return {
             'p',
             '<Plug>(YankyPutBefore)',
             mode = 'x',
-            desc = 'Put without copying replaced text',
+            desc = 'Put without Copying Replaced Text',
         },
         {
             'P',
             '<Plug>(YankyPutBefore)',
             mode = { 'n', 'x' },
-            desc = 'Put before',
+            desc = 'Put Before',
         },
         -- I don't see any benefit in vims default `gp` and `gP` behaviour but
         -- the keys are easy to reach, so I'm redefining them to linewise paste
@@ -55,24 +55,24 @@ return {
         {
             'gp',
             '<Plug>(YankyPutAfterFilter)',
-            desc = 'Put below and reindent',
+            desc = 'Put Below and Reindent',
             mode = { 'n', 'x' },
         },
         {
             'gP',
             '<Plug>(YankyPutBeforeFilter)',
-            desc = 'Put above and reindent',
+            desc = 'Put Above and Reindent',
             mode = { 'n', 'x' },
         },
         {
             '<C-n>',
             '<Plug>(YankyCycleForward)',
-            desc = 'Next in yank ring',
+            desc = 'Next in Yank Ring',
         },
         {
             '<C-p>',
             '<Plug>(YankyCycleBackward)',
-            desc = 'Previous in yank ring',
+            desc = 'Previous in Yank Ring',
         },
         {
             '<leader>fy',
@@ -98,11 +98,11 @@ return {
                     end,
                 })
             end,
-            desc = 'Yank ring',
+            desc = 'Yank Ring',
         },
         -- This keymap is set here because yanky must be loaded in order to
         -- highlight the yanked text.
-        { 'Y', 'y$', desc = 'Yank to end of line' },
+        { 'Y', 'y$', desc = 'Yank to End of Line' },
     },
     highlights = {
         YankyYanked = { bg = 'dark_gray' },

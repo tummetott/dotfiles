@@ -78,13 +78,13 @@ return {
             '<leader>lp',
             function() polish 'GptPolish' end,
             mode = 'x',
-            desc = 'Polish text',
+            desc = 'Polish Text',
         },
         {
             '<leader>lP',
             function() polish 'OnDevicePolish' end,
             mode = 'x',
-            desc = 'Polish text (on-device-model)',
+            desc = 'Polish Text with On-Device Model',
         },
     },
 }

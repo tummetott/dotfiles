@@ -22,7 +22,7 @@ return {
         {
             '<leader>ox',
             '<cmd>Outline!<cr>',
-            desc = 'Symbol tree',
+            desc = 'Symbol Tree',
         }
     }
 }

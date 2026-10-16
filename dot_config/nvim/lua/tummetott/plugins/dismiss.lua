@@ -35,7 +35,7 @@ return {
                 require('dismiss').dismiss()
             end,
             mode = { 'n', 't' },
-            desc = 'Dismiss window',
+            desc = 'Dismiss Window',
         },
         {
             'g<c-q>',
@@ -43,7 +43,7 @@ return {
                 require('dismiss').pick()
             end,
             mode = { 'n' },
-            desc = 'Pick window to close',
+            desc = 'Pick Window to Close',
         },
     },
 }
