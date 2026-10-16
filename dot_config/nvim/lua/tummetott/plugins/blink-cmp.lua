@@ -194,9 +194,8 @@ return {
                 'label',     -- Tertiary sort: by label if still tied
             },
         },
-        -- Signatures are triggerd with the `lsp-overloads` plugin
         signature = {
-            enabled = false,
+            enabled = true,
             window = { show_documentation = true },
         },
         snippets = {
@@ -204,4 +203,8 @@ return {
         },
     },
     opts_extend = { 'sources.default' },
+    highlights = {
+        BlinkCmpSignatureHelpBorder = { link = 'FloatBorder' },
+        BlinkCmpDocBorder = { link = 'BlinkCmpSignatureHelpBorder' },
+    }
 }
