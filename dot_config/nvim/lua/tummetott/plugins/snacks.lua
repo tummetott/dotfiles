@@ -24,6 +24,15 @@ return {
     config = function(_, opts)
         require('snacks').setup(opts)
 
+        -- HACK: Hides the framed hunk context above each hunk in diff
+        -- previews. The picker forwards no options to the diff renderer.
+        local diff = require('snacks.picker.util.diff')
+        local render = diff.render
+        diff.render = function(buf, ns, lines, render_opts)
+            render_opts = vim.tbl_extend('force', render_opts or {}, { hunk_header = false })
+            return render(buf, ns, lines, render_opts)
+        end
+
         local indent = Snacks.toggle.indent()
         indent.opts.name = 'indent guides'
         indent:map('<c-,>e')
