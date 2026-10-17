@@ -10,7 +10,7 @@ local heading = {
 
 return {
     'OXY2DEV/markview.nvim',
-    enabled = true,
+    enabled = false,
     lazy = false,
     opts = function()
         local presets = require('markview.presets')
