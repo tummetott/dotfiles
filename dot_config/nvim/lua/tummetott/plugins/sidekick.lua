@@ -25,6 +25,7 @@ return {
                 },
             },
             win = {
+                config = agent.open_in_tab,
                 keys = {
                     prompt = {
                         '<c-;>',
@@ -51,7 +52,9 @@ return {
         },
         {
             '<leader>oa',
-            agent.open,
+            function() require('sidekick.cli').select({
+                filter = { installed = true },
+            }) end,
             desc = 'Agent',
         },
         {

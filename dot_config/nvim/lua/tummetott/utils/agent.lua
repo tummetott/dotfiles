@@ -7,9 +7,18 @@ M.prompts = {
     conversation = "Don't do any changes. We're just having a conversation.",
 }
 
-local last_agent_tab
-local back_tab
+---@type { agent?: integer, back?: integer }
+local tabs = {}
 
+---@param tab? integer
+---@return integer?
+local function valid(tab)
+    return tab and vim.api.nvim_tabpage_is_valid(tab) and tab or nil
+end
+
+--- Whether the tab page shows a sidekick agent.
+---@param tab integer
+---@return boolean
 function M.is_agent_tab(tab)
     for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
         if vim.w[win].sidekick_session_id then
@@ -19,89 +28,72 @@ function M.is_agent_tab(tab)
     return false
 end
 
-function M.back_tab()
-    if back_tab and vim.api.nvim_tabpage_is_valid(back_tab) then
-        return back_tab
+--- The tab page an agent returns to.
+---@return integer?
+function M.get_back_tab()
+    return valid(tabs.back)
+end
+
+-- Every tab switch records the tab being left: an agent tab as the agent to
+-- return to, any other tab as the place an agent returns to. Diffview tabs
+-- are never a place to return to.
+vim.api.nvim_create_autocmd('TabLeave', {
+    group = vim.api.nvim_create_augroup('AgentTabTracking', { clear = true }),
+    callback = function()
+        local tab = vim.api.nvim_get_current_tabpage()
+        if M.is_agent_tab(tab) then
+            tabs.agent = tab
+        elseif vim.t[tab].diffview_view_initialized == nil then
+            tabs.back = tab
+        end
+    end,
+})
+
+--- Hook for sidekick's `cli.win.config`, which runs for each new terminal.
+--- Sidekick opens every agent window through `open_win`, whether from the
+--- picker, from sending text, or from its own commands. Wrapping it places
+--- each agent in a tab page of its own.
+---@param terminal sidekick.cli.Terminal
+function M.open_in_tab(terminal)
+    local open_win = terminal.open_win
+    function terminal:open_win()
+        if self:is_open() or not self.buf then
+            return
+        end
+        vim.cmd.tabnew()
+        local placeholder = vim.api.nvim_get_current_win()
+        vim.bo.bufhidden = 'wipe'
+        open_win(self)
+        vim.api.nvim_win_close(placeholder, true)
     end
 end
 
--- Sidekick opens agents in a split or a float. This opens each in a tab page of
--- its own, and switches to one that is already showing rather than reopening
--- it.
-function M.open()
-    require('sidekick.cli').select {
-        filter = { installed = true },
-        -- Overwrite the default callback that runs after the picker selects an
-        -- agent. `focus` executes `startinsert`. This is desired for new agents,
-        -- but not for existing ones, in order to preserve the viewport. An
-        -- existing agent is therefore reached directly, without attaching.
-        cb = function(state)
-            if not state then
-                return
-            end
-
-            local origin = vim.api.nvim_get_current_tabpage()
-            if not M.is_agent_tab(origin)
-                and vim.t[origin].diffview_view_initialized == nil then
-                back_tab = origin
-            end
-
-            local running = state.terminal and state.terminal.win
-                and vim.api.nvim_win_is_valid(state.terminal.win)
-            if running then
-                -- If that agent is already running, switch to it.
-                vim.api.nvim_set_current_win(state.terminal.win)
-            else
-                -- Otherwise, open a new tabpage, attach a new agent to it
-                -- and make the new window that is created the only one.
-                vim.cmd.tabnew()
-                state = require('sidekick.cli.state').attach(state, {
-                    show = true,
-                    focus = true,
-                })
-                if not (state.terminal and state.terminal:is_open()) then
-                    vim.cmd.tabclose()
-                    return
-                end
-                vim.cmd.only()
-            end
-
-            last_agent_tab = vim.api.nvim_get_current_tabpage()
-        end,
-    }
-end
-
--- Jumps between an agent and the tab page it was reached from. With several
--- agents running, it returns to the one left last, and falls back to the
--- picker when none is reachable.
+--- Jumps between an agent and the tab page it was reached from. With several
+--- agents running, it returns to the one left last, and falls back to the
+--- picker when none is reachable.
 function M.toggle()
     local current = vim.api.nvim_get_current_tabpage()
 
-    -- Remember which agent is being left, so the next toggle returns to it.
     if M.is_agent_tab(current) then
-        last_agent_tab = current
-        if back_tab and back_tab ~= current
-            and vim.api.nvim_tabpage_is_valid(back_tab) then
-            vim.api.nvim_set_current_tabpage(back_tab)
+        local tab = M.get_back_tab()
+        if tab and tab ~= current then
+            vim.api.nvim_set_current_tabpage(tab)
         else
             vim.cmd.tabprevious()
         end
         return
     end
 
-    if vim.t[current].diffview_view_initialized == nil then
-        back_tab = current
-    end
-
-    -- Returning to a valid agent, or opening the picker
-    if last_agent_tab and vim.api.nvim_tabpage_is_valid(last_agent_tab)
-        and M.is_agent_tab(last_agent_tab) then
-        vim.api.nvim_set_current_tabpage(last_agent_tab)
+    local agent = valid(tabs.agent)
+    if agent and M.is_agent_tab(agent) then
+        vim.api.nvim_set_current_tabpage(agent)
     else
-        M.open()
+        require('sidekick.cli').select { filter = { installed = true } }
     end
 end
 
+--- Picks one of `M.prompts` and sends it to the agent of the terminal.
+---@param terminal sidekick.cli.Terminal
 function M.send_prompt(terminal)
     local opts = { prompt = 'CLI prompt' }
     local names = vim.tbl_keys(M.prompts)

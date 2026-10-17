@@ -243,7 +243,7 @@ return {
                 jump = function(picker, item, action)
                     local agent = require 'tummetott.utils.agent'
                     if agent.is_agent_tab(vim.api.nvim_win_get_tabpage(picker.main)) then
-                        local tab = agent.back_tab()
+                        local tab = agent.get_back_tab()
                         if tab then
                             picker.main = vim.api.nvim_tabpage_get_win(tab)
                         end
