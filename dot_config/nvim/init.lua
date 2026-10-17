@@ -8,7 +8,7 @@ end
 vim.g.nerdfonts = vim.env.NO_NERDFONTS == nil
 
 require('tummetott.options')
-require('tummetott.pack')
 require('tummetott.autocmds')
 require('tummetott.commands')
 require('tummetott.lazy')
+require('tummetott.pack') -- Must load after lazy
