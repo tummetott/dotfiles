@@ -172,12 +172,19 @@ local maps = {
             -- Clear pending highlights
             vim.lsp.buf.clear_references()
             pcall(function() require('pathnav.highlight').clear() end)
-            pcall(function() require('illuminate').invisible_buf() end)
             -- Close attached floats
             local win = vim.api.nvim_get_current_win()
             utils.close_attached_floats(win)
         end,
         opts = { desc = 'Clear Search Highlights, Cmdline and Close Floats' }
+    },
+    {
+        mode = { 'n', 't', 'x' },
+        lhs = '<s-bs>',
+        rhs = function()
+            vim.cmd('echo ""')
+        end,
+        opts = { desc = 'Clear Cmdline' }
     },
     {
         mode = 'n',
