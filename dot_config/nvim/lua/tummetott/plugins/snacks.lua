@@ -388,12 +388,6 @@ return {
         },
         scroll = {
             enabled = true,
-            -- Enable smooth scrolling in terminal buffers, which Snacks excludes
-            -- by default. Incoming terminal output cancels ongoing scroll animations.
-            filter = function(buf)
-                return vim.g.snacks_scroll ~= false
-                    and vim.b[buf].snacks_scroll ~= false
-            end,
         },
         scope = {
             enabled = true,
