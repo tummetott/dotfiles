@@ -61,8 +61,11 @@ return {
                 -- diff_wrap sync the wrap of all diff windows
                 vim.wo.wrap = vim.t.diff_wrap or false
                 vim.wo.relativenumber = false
-                -- Render the fold line only with padding
-                vim.wo.foldlevel = 0
+                -- In a diffview, a fold always hides unchanged code. Diffview makes
+                -- an exception for added or deleted files and keeps the buffer's own
+                -- folds there. Forcing diff folding keeps that meaning everywhere, so
+                -- a file without a counterpart stays fully open.
+                vim.wo.foldmethod = 'diff'
             end,
         }
     },
