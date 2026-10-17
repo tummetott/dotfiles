@@ -180,7 +180,7 @@ local maps = {
     },
     {
         mode = { 'n', 't', 'x' },
-        lhs = '<s-bs>',
+        lhs = '<c-bs>',
         rhs = function()
             vim.cmd('echo ""')
         end,
