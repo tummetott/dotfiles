@@ -6,3 +6,8 @@ model_reasoning_effort = "medium"
 name = "Openrouter backend"
 base_url = "https://openrouter.ai/api/v1"
 env_key = "OPENROUTER_API_KEY"
+
+[tui]
+screen_reader_detection_done = true
+fullscreen_transcript = false
+vim_mode_default = true
