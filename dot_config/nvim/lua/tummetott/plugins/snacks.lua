@@ -170,7 +170,7 @@ return {
                     win = picker_keymaps.compose { 'ivy', 'trouble' },
                 },
                 git_log = {
-                    layout = { preset = 'ivy', hidden = { 'preview' } },
+                    layout = { preset = 'ivy' },
                     win = picker_keymaps.compose { 'ivy', 'live' },
                 },
                 gh_issue = {
