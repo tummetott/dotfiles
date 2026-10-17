@@ -617,10 +617,18 @@ return {
             function() Snacks.picker.gh_issue() end,
             desc = 'Git Issues',
         },
+        -- GitHub only. Previews each PR and offers actions such as checkout,
+        -- review, comment, and merge.
         {
             '<leader>op',
             function() Snacks.picker.gh_pr() end,
             desc = 'Git PRs',
+        },
+        -- GitHub and GitLab. Checks out the selected PR directly.
+        {
+            '<leader>gp',
+            function() require('tummetott.utils.pr').checkout() end,
+            desc = 'Checkout PR',
         },
         {
             '<leader>yp',
