@@ -24,15 +24,7 @@ return {
             marks = true,
             registers = true,
             spelling = { enabled = false },
-            presets = {
-                operators = true,
-                motions = false,
-                text_objects = true,
-                windows = true,
-                nav = true,
-                z = true,
-                g = true,
-            }
+            presets = false,
         },
         win = {
             border = 'rounded',

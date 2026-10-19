@@ -32,11 +32,24 @@ keymaps.shared = {
         ['<c-k>'] = false,
         ['<c-l>'] = false,
         ['<c-/>'] = { '<nop>', mode = 'i' },
+        ['<a-d>'] = false,
+        ['<a-f>'] = false,
+        ['<a-h>'] = false,
+        ['<a-i>'] = false,
+        ['<a-r>'] = false,
+        ['<a-m>'] = false,
+        ['<a-p>'] = false,
+        ['<a-w>'] = false,
     },
     list = {
         ['<c-q>'] = { 'close', desc = 'Close Picker' },
         ['<c-,>p'] = { 'toggle_preview', desc = 'Preview Window' },
         ['<c-,>m'] = { 'toggle_maximize', desc = 'Maximized Layout' },
+        -- Only show local keymaps in the which-key window
+        ['g?'] = {
+            function() require('which-key').show({ global = false, expand = false }) end,
+            desc = 'Show Keymaps',
+        },
         ['<c-g>'] = false,
         -- Consume global keymaps that would act on the list buffer. Presets and
         -- toggle groups rebind some of these keys.
@@ -59,6 +72,14 @@ keymaps.shared = {
         ['<c-,>t'] = { '<nop>' },
         ['<c-,>v'] = { '<nop>' },
         ['<c-,>w'] = { '<nop>' },
+        -- Alt defaults, the <c-,> toggles cover them
+        ['<a-d>'] = false,
+        ['<a-f>'] = false,
+        ['<a-h>'] = false,
+        ['<a-i>'] = false,
+        ['<a-m>'] = false,
+        ['<a-p>'] = false,
+        ['<a-w>'] = false,
     },
     preview = {
         ['<c-q>'] = { 'toggle_preview', desc = 'Preview Window' },
@@ -68,6 +89,7 @@ keymaps.shared = {
         ['<c-j>'] = { '<nop>' },
         ['<c-k>'] = { '<nop>' },
         ['<c-l>'] = { '<nop>' },
+        ['<a-w>'] = false,
     },
 }
 
@@ -137,6 +159,10 @@ keymaps.sidebar = {
         ['<c-h>'] = { '<nop>' },
         ['<c-j>'] = { '<nop>' },
         ['<c-l>'] = false,
+        -- Explorer defaults, the <c-,> toggles cover them
+        ['H'] = false,
+        ['I'] = false,
+        ['P'] = false,
     },
 }
 
