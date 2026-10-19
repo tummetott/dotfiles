@@ -135,6 +135,7 @@ return {
             sources = {
                 files = {
                     hidden = true,
+                    exclude = { '.DS_Store' },
                     layout = { preset = 'ivy' },
                     win = picker_keymaps.compose {
                         'ivy', 'hidden', 'ignored', 'symlinks', 'live', 'trouble',
@@ -221,6 +222,7 @@ return {
                 },
                 explorer = {
                     hidden = true,
+                    exclude = { '.DS_Store' },
                     diagnostics = false,
                     formatters = { file = { git_status_hl = false } },
                     win = picker_keymaps.compose {
