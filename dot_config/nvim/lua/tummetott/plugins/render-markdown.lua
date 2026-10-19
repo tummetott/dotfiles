@@ -17,6 +17,10 @@ return {
         },
         code = {
             sign = false,
+            position = 'right',
+            right_pad = 0.999, -- hack to right align to the screen
+            -- One colour for every language label, whatever the icon provider sets
+            highlight_language = 'RenderMarkdownCodeFallback',
         },
         pipe_table = {
             alignment_indicator = '─',
@@ -24,6 +28,7 @@ return {
     },
     highlights = {
         RenderMarkdownCode = { bg = 'darkest_gray' },
+        RenderMarkdownCodeFallback = { fg = 'bright_gray' },
         RenderMarkdownH1 = { fg = 'blue' },
         RenderMarkdownH1Bg = { fg = 'blue', bg = 'darkest_gray' },
     },
