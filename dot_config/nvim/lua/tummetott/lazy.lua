@@ -42,7 +42,7 @@ require('lazy').setup {
     },
     dev = {
         -- Directory where you store your local plugin projects
-        path = '~/projects',
+        path = '~/nvim-plugins',
         -- Plugins that match these patterns will use your local versions
         -- instead of being fetched from GitHub
         patterns = { 'tummetott' },
