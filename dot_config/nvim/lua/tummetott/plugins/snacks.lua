@@ -95,6 +95,11 @@ return {
                 }
             },
         },
+        image = {
+            -- ISSUE: currently not supported in zellij.
+            -- https://github.com/zellij-org/zellij/issues/5530
+            enabled = true,
+        },
         indent = {
             enabled = true,
             animate = {
