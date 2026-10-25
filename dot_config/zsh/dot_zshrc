@@ -79,12 +79,6 @@ bindkey '^[[1;3C' forward-word
 
 bindkey '^U' backward-kill-line
 
-# Set cursor style to steady bar
-function zle-line-init() {
-    echo -ne '\e[6 q'
-}
-zle -N zle-line-init
-
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification
 unsetopt HIST_VERIFY
@@ -149,3 +143,32 @@ fi
 # Must be sourced after 'starship init'
 [[ -s "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme" ]] \
     && source "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme"
+
+# Set cursor style to steady bar
+function zle-line-init() {
+    echo -ne '\e[6 q'
+}
+zle -N zle-line-init
+
+# OSC 133 semantic prompt marks. Skipped where Ghostty's shell integration
+# already sends them.
+if (( ! ${+_ghostty_state} )); then
+    _osc133_line_init() {
+        print -n '\e]133;B\a'
+    }
+    autoload -Uz add-zle-hook-widget
+    add-zle-hook-widget line-init _osc133_line_init
+
+    _osc133_precmd() {
+        local command_status=$?
+        (( _osc133_command_running )) && print -n "\e]133;D;$command_status\a"
+        _osc133_command_running=0
+        print -n '\e]133;A\a'
+    }
+    _osc133_preexec() {
+        _osc133_command_running=1
+        print -n '\e]133;C\a'
+    }
+    precmd_functions+=(_osc133_precmd)
+    preexec_functions+=(_osc133_preexec)
+fi
