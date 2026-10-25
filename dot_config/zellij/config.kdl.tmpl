@@ -32,6 +32,7 @@ keybinds clear-defaults=true {
         }
         bind "Shift Ctrl x" { Clear; Write 12; } // 12 is byte value for Ctrl l
         bind "Shift Ctrl z" { ToggleFocusFullscreen; } // Mnemonic: zoom
+        bind "Shift Ctrl f" { ToggleHostFullscreen; } // Mnemonic: fullscreen session
         bind "Shift Ctrl o" {
             LaunchOrFocusPlugin "session-manager" { // Mnemonic: open session
                 floating true
@@ -44,9 +45,8 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl i" { BreakPane; } // Mnemonic: isolate
         bind "Shift Ctrl -" { Resize "Decrease"; }
         bind "Shift Ctrl =" { Resize "Increase"; }
-        // Currently duplicates of n / p
-        bind "Shift Ctrl [" { GoToPreviousTab; }
-        bind "Shift Ctrl ]" { GoToNextTab; }
+        bind "Shift Ctrl [" { FocusHostSession; }
+        bind "Shift Ctrl ]" { FocusGuestSession; }
 
         // They dont work in alacritty
         bind "Super 1" { GoToTab 1; }
@@ -263,6 +263,13 @@ mouse_hover_effects false
 //   - detach (Default)
 //   - quit
 on_force_close "detach"
+
+// Choose how to handle a nested Zellij session detected running inside a pane
+// Options:
+//   - ask (Default - prompt with a modal to zoom in or control on focus)
+//   - fullscreen (always zoom into the nested session)
+//   - descend (always control the nested session on focus)
+nested_session_handling "fullscreen"
 
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
