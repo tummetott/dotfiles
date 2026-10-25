@@ -13,9 +13,12 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl k" { MoveFocus "up"; }
         bind "Shift Ctrl p" { GoToPreviousTab; }
         bind "Shift Ctrl n" { GoToNextTab; }
-        // ISSUE: case sensitivity is enabled, however not when typing text
-        bind "Shift Ctrl f" "Shift Ctrl /" {
+        bind "Shift Ctrl /" {
             SwitchToMode "entersearch";
+            // HACK: Pane frames show the search query, so they are visible only
+            // while searching.
+            SetPaneFrameStyle "full";
+            // ISSUE: case sensitivity is enabled, however not when typing text
             SearchToggleOption "CaseSensitivity";
             SearchInput 0;
         }
@@ -100,14 +103,17 @@ keybinds clear-defaults=true {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "w" { SearchToggleOption "Wrap"; }
         bind "o" { SearchToggleOption "WholeWord"; }
-        bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "e" { EditScrollback; SwitchToMode "normal"; }
+        bind "/" "Shift Ctrl /" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "k" "up" { ScrollUp; }
         bind "j" "down" { ScrollDown; }
         bind "h" "Ctrl b" "left" "PageUp" { PageScrollUp; }
         bind "l" "Ctrl f" "right" "PageDown" { PageScrollDown; }
-        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
-        bind "Esc" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "enter" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
+        bind "Esc" "Ctrl c" {
+            SetPaneFrameStyle "none";
+            ScrollToBottom;
+            SwitchToMode "normal";
+        }
         bind "d" "Ctrl d" { HalfPageScrollDown; }
         bind "u" "Ctrl u" { HalfPageScrollUp; }
     }
@@ -121,13 +127,16 @@ keybinds clear-defaults=true {
         bind "Ctrl c" { UndoRenamePane; SwitchToMode "normal"; }
     }
     entersearch {
-        // ISSUE: Can't clear the line with CTRL-u
+        bind "Ctrl u" { SearchInput 0; }
+        bind "Ctrl g" { Search "down"; }
+        bind "Ctrl t" { Search "up"; }
         bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
+        bind "Esc" "Ctrl c" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
     }
-    shared_except "entersearch" "normal" {
+    shared_except "entersearch" "search" "normal" {
         bind "enter" { SwitchToMode "normal"; }
     }
-    shared_except "search" "renametab" "renamepane" "normal" {
+    shared_except "entersearch" "search" "renametab" "renamepane" "normal" {
         bind "Esc" { SwitchToMode "normal"; }
         bind "Ctrl c" { SwitchToMode "normal"; }
     }
@@ -186,7 +195,6 @@ plugins {
         format_precedence "lrc"
         format_right "{mode}  #[fg=$darkest_grey,bg=$background]#[bg=$darkest_grey] {pipe_prog}{command_hostname}{datetime}#[fg=$bright_grey,bg=$darkest_grey]󰄷 {session}#[bg=$darkest_grey] #[fg=$darkest_grey,bg=$background]"
         format_space ""
-        hide_frame_except_for_search true
         pipe_prog_format "#[fg=$bright_grey,bg=$darkest_grey] {output}  "
         pipe_prog_rendermode "static"
         tab_active "#[fg=$darkest_grey,bg=$background]#[fg=$blue,bg=$darkest_grey] {name}{floating_indicator}{fullscreen_indicator}{sync_indicator} #[fg=$darkest_grey,bg=$background]"
@@ -203,15 +211,12 @@ plugins {
         mode_session       "#[fg=$dark_grey]p ➜ #[fg=$grey]plugins  #[fg=$dark_grey]s ➜ #[fg=$grey]sessions  #[fg=$dark_grey]w ➜ #[fg=$grey]web-sessions  #[fg=$dark_grey]l ➜ #[fg=$grey]layouts"
         mode_move          "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]move-pane  #[fg=$dark_grey][/] ➜ #[fg=$grey]move-tap  #[fg=$dark_grey]n/p ➜ #[fg=$grey]swap-layout"
 
-        // Currently unused modes
         mode_prompt        "#[fg=$purple,bold]PROMPT"
         mode_scroll        "#[fg=$blue,bold]SCROLL"
         mode_rename_pane   "#[fg=$blue,bold]RENAME PANE"
-
-        // Shown by frame boarders
-        // mode_enter_search  "#[fg=$cyan,bold]ENTER SEARCH"
-        // mode_search        "#[fg=$cyan,bold]SEARCH"
-        // mode_rename_tab    "#[fg=$blue,bold]RENAME TAB"
+        mode_enter_search  "#[fg=$cyan,bold]ENTER SEARCH"
+        mode_search        "#[fg=$cyan,bold]SEARCH"
+        mode_rename_tab    "#[fg=$blue,bold]RENAME TAB"
     }
 }
 
@@ -239,8 +244,8 @@ default_mode "normal"
 // The name of the default layout to load on startup
 default_layout "tile"
 
-// Toggle having pane frames around the panes
-pane_frames false
+pane_frames true
+pane_frame_style "none"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -265,6 +270,9 @@ on_force_close "detach"
 // (Requires restart)
 // Valid values: positive integers
 scroll_buffer_size 10000
+
+// Whether scrolling up in a focused pane automatically enters scroll mode
+scroll_mode_sync false
 
 // Provide a command to execute when copying text. The text will be piped to
 // the stdin of the program to perform the copy. This can be used with
