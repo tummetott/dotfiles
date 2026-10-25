@@ -31,5 +31,6 @@ return {
         RenderMarkdownCodeFallback = { fg = 'bright_gray' },
         RenderMarkdownH1 = { fg = 'blue' },
         RenderMarkdownH1Bg = { fg = 'blue', bg = 'darkest_gray' },
+        RenderMarkdownTableHead = { link = 'RenderMarkdownTableRow' },
     },
 }
