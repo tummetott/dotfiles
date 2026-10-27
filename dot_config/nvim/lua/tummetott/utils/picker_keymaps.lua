@@ -152,6 +152,16 @@ keymaps.sidebar = {
             mode = 'i',
         },
         ['<c-s>'] = { 'close', desc = 'Close File Tree', mode = 'i' },
+        ['<c-=>'] = {
+            function() require('tummetott.utils.winsize').expand() end,
+            desc = 'Expand Window',
+            mode = 'i',
+        },
+        ['<c-->'] = {
+            function() require('tummetott.utils.winsize').contract() end,
+            desc = 'Contract Window',
+            mode = 'i',
+        },
     },
     list = {
         ['<c-k>'] = { 'focus_input', desc = 'Focus Input' },
