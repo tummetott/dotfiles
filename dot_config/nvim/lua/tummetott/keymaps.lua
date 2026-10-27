@@ -167,8 +167,6 @@ local maps = {
         rhs = function()
             -- Disable highlights temporarily (until next search)
             vim.cmd('nohlsearch')
-            -- Clear the cmdline
-            vim.cmd('echo ""')
             -- Clear pending highlights
             vim.lsp.buf.clear_references()
             pcall(function() require('pathnav.highlight').clear() end)
@@ -176,7 +174,7 @@ local maps = {
             local win = vim.api.nvim_get_current_win()
             utils.close_attached_floats(win)
         end,
-        opts = { desc = 'Clear Search Highlights, Cmdline and Close Floats' }
+        opts = { desc = 'Clear Search Highlights and Close Floats' }
     },
     {
         mode = { 'n', 't', 'x' },
