@@ -76,12 +76,6 @@ return {
                     action = '<CMD>enew <BAR> startinsert <CR>',
                     hidden = true
                 },
-                -- ISSUE: https://github.com/folke/snacks.nvim/issues/1678
-                {
-                    key = '<cr>',
-                    action = '<CMD>enew<CR>',
-                    hidden = true
-                },
                 {
                     key = '<c-q>',
                     action = function()
