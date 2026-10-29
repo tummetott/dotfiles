@@ -1,0 +1,6 @@
+# Follow sourced files that shellcheck can resolve, without needing -x
+external-sources=true
+# Look for sourced files next to the script being checked
+source-path=SCRIPTDIR
+# Hide warnings for sourced files that only exist at runtime
+disable=SC1090,SC1091
