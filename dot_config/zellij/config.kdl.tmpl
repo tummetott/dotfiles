@@ -100,8 +100,8 @@ keybinds clear-defaults=true {
         bind "]" "Shift Ctrl ]" { MoveTab "right"; }
     }
     search {
-        bind "n" { Search "down"; }
-        bind "p" "N" { Search "up"; }
+        bind "n" "enter" { Search "down"; }
+        bind "N" "Shift enter" { Search "up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "w" { SearchToggleOption "Wrap"; }
         bind "o" { SearchToggleOption "WholeWord"; }
@@ -110,8 +110,8 @@ keybinds clear-defaults=true {
         bind "j" "down" { ScrollDown; }
         bind "h" "Ctrl b" "left" "PageUp" { PageScrollUp; }
         bind "l" "Ctrl f" "right" "PageDown" { PageScrollDown; }
-        bind "enter" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
-        bind "Esc" "Ctrl c" {
+        bind "Esc" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
+        bind "Ctrl c" {
             SetPaneFrameStyle "none";
             ScrollToBottom;
             SwitchToMode "normal";
@@ -133,7 +133,12 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { Search "down"; }
         bind "Ctrl t" { Search "up"; }
         bind "enter" { SwitchToMode "search"; SearchToggleOption "CaseSensitivity"; }
-        bind "Esc" "Ctrl c" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
+        bind "Esc" { SetPaneFrameStyle "none"; SwitchToMode "normal"; }
+        bind "Ctrl c" {
+            SetPaneFrameStyle "none";
+            ScrollToBottom;
+            SwitchToMode "normal";
+        }
     }
     shared_except "entersearch" "search" "normal" {
         bind "enter" { SwitchToMode "normal"; }
