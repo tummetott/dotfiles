@@ -1,9 +1,7 @@
 return {
     'tummetott/pathnav.nvim',
     enabled = true,
-    -- ISSUE: Currently not lazy loaded because of
-    -- https://github.com/folke/lazy.nvim/issues/2136
-    lazy = false,
+    lazy = true,
     ---@type pathnav.ConfigOptions
     opts = {
         highlight = {

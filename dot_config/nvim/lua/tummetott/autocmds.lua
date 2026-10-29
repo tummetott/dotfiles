@@ -36,11 +36,10 @@ autocmd('BufWinEnter', {
         if not view_check() then
             return
         end
-        -- HACK: A view restores folds by line number, so the folds have to
-        -- exist before it is sourced. vim.treesitter.foldexpr() reports level 0
-        -- for every line until its parse finishes, and that parse is
-        -- asynchronous once a buffer exceeds a few thousand lines. Parsing
-        -- synchronously here fills the fold cache first.
+        -- HACK: Treesitter folds must be ready before we restore the view.
+        -- Treesitter computes folds asynchronously for buffers larger than a
+        -- few thousand lines. Force synchronous parsing here to populate the
+        -- fold cache first.
         if vim.wo.foldmethod == 'expr' then
             local parser = vim.treesitter.get_parser(0)
             if parser then
