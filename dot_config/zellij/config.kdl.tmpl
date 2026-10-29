@@ -50,16 +50,15 @@ keybinds clear-defaults=true {
         bind "Shift Ctrl [" { ScrollToPreviousPrompt; }
         bind "Shift Ctrl ]" { ScrollToNextPrompt; }
 
-        // They dont work in alacritty
-        bind "Super 1" { GoToTab 1; }
-        bind "Super 2" { GoToTab 2; }
-        bind "Super 3" { GoToTab 3; }
-        bind "Super 4" { GoToTab 4; }
-        bind "Super 5" { GoToTab 5; }
-        bind "Super 6" { GoToTab 6; }
-        bind "Super 7" { GoToTab 7; }
-        bind "Super 8" { GoToTab 8; }
-        bind "Super 9" { GoToTab 9; }
+        bind "Shift Ctrl 1" { GoToTab 1; }
+        bind "Shift Ctrl 2" { GoToTab 2; }
+        bind "Shift Ctrl 3" { GoToTab 3; }
+        bind "Shift Ctrl 4" { GoToTab 4; }
+        bind "Shift Ctrl 5" { GoToTab 5; }
+        bind "Shift Ctrl 6" { GoToTab 6; }
+        bind "Shift Ctrl 7" { GoToTab 7; }
+        bind "Shift Ctrl 8" { GoToTab 8; }
+        bind "Shift Ctrl 9" { GoToTab 9; }
     }
     session {
         bind "q" "Shift Ctrl q" { Quit; }
@@ -216,7 +215,7 @@ plugins {
 
         mode_resize        "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]resize-pane  #[fg=$dark_grey]-/+ #[fg=$grey]resize-pain"
         mode_session       "#[fg=$dark_grey]p ➜ #[fg=$grey]plugins  #[fg=$dark_grey]s ➜ #[fg=$grey]sessions  #[fg=$dark_grey]w ➜ #[fg=$grey]web-sessions  #[fg=$dark_grey]l ➜ #[fg=$grey]layouts"
-        mode_move          "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]move-pane  #[fg=$dark_grey][/] ➜ #[fg=$grey]move-tap  #[fg=$dark_grey]n/p ➜ #[fg=$grey]swap-layout"
+        mode_move          "#[fg=$dark_grey]h/j/k/l ➜ #[fg=$grey]move-pane  #[fg=$dark_grey][/] ➜ #[fg=$grey]move-tab  #[fg=$dark_grey]n/p ➜ #[fg=$grey]swap-layout"
 
         mode_prompt        "#[fg=$purple,bold]PROMPT"
         mode_scroll        "#[fg=$blue,bold]SCROLL"

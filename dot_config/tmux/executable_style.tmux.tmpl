@@ -34,10 +34,15 @@ tmux setw -g copy-mode-current-match-style "fg=${background},bg=${orange}"
 tmux setw -g copy-mode-match-style "fg=${background},bg=${bright_grey}"
 
 # Sets the color of tmux messages
-tmux setw -g message-style "fg=${blue},bg=${background}"
+tmux setw -g message-style "fg=${blue},bg=${background},fill=${background}"
 
 tmux set -g pane-border-style fg="${dark_grey}",bg="${background}"
 tmux set -g pane-active-border-style fg="${dark_grey}",bg="${background}"
+
+# Popups use the same background as panes, and their border the pane border color
+tmux set -g popup-style default
+tmux set -g popup-border-style fg="${dark_grey}",bg="${background}"
+tmux set -g popup-border-lines rounded
 
 # Syntax explanation:
 #   #I = window number
@@ -49,24 +54,29 @@ tmux set -g pane-active-border-style fg="${dark_grey}",bg="${background}"
 # Set default colors for the line
 tmux set -g status-style "fg=${bright_grey},bg=${background}"
 
+# The current window tab is marked by color only, without tmux's default
+# underline
+tmux setw -g window-status-current-style default
+
 {{- if .platform.nerdfonts }}
 
 # All window tabs but the current
 tmux setw -g window-status-format "#[\
     bg=${background},fg=${darkest_grey}]#[\
-    bg=${darkest_grey},fg=${bright_grey},bold] #I #W #[\
+    bg=${darkest_grey},fg=${bright_grey}] #I #W #[\
     bg=${background},fg=${darkest_grey}]";
 
 # Current window tab
 tmux setw -g window-status-current-format "#[\
     bg=${background},fg=${darkest_grey}]#[\
-    bg=${darkest_grey},fg=${blue},bold] #I #W #[\
+    bg=${darkest_grey},fg=${blue}] #I #W #[\
     bg=${background},fg=${darkest_grey}]";
 
 # Right side shows the executed command, the hostname, the time and the session
 tmux set -g status-right "#[\
-    bg=${background},fg=${red}]#{?#{!=:#{selection_present},}, im COPY MODE ,}#[\
-    bg=${background},fg=${cyan}]#{?window_zoomed_flag, 󰍉 ZOOM ENABLED ,}#[\
+    bg=${background},fg=${red}]#{?#{!=:#{selection_present},},SCROLL  ,}#[\
+    bg=${background},fg=${dark_grey}]#{?#{==:#{client_key_table},move-pane},h/j/k/l ➜ #[fg=${grey}]move-pane  #[fg=${dark_grey}][/] ➜ #[fg=${grey}]move-tab  #[fg=${dark_grey}]n/p ➜ #[fg=${grey}]swap-layout  ,}#[\
+    bg=${background},fg=${cyan}]#{?window_zoomed_flag,ZOOM  ,}#[\
     bg=${background},fg=${darkest_grey}]#[\
 {{- if eq .chezmoi.os "darwin" }}
     bg=${darkest_grey},fg=${bright_grey}]  #W   #(scutil --get ComputerName)   %H:%M  󰄷 #S #[\
@@ -78,15 +88,16 @@ tmux set -g status-right "#[\
 {{- else }}
 
 # All window tabs but the current
-tmux setw -g window-status-format "#[bg=${darkest_grey},fg=${bright_grey},bold]  #I  ";
+tmux setw -g window-status-format "#[bg=${darkest_grey},fg=${bright_grey}]  #I  ";
 
 # Current window tab
-tmux setw -g window-status-current-format "#[bg=${darkest_grey},fg=${blue},bold]  #I  ";
+tmux setw -g window-status-current-format "#[bg=${darkest_grey},fg=${blue}]  #I  ";
 
 # Right side shows the executed command, the hostname, the time and the session
 tmux set -g status-right "#[\
-    bg=${background},fg=${red}]#{?#{!=:#{selection_present},}, Vim COPY MODE ,}#[\
-    bg=${background},fg=${cyan}]#{?window_zoomed_flag, ZOOM ENABLED ,}#[\
+    bg=${background},fg=${red}]#{?#{!=:#{selection_present},},SCROLL  ,}#[\
+    bg=${background},fg=${dark_grey}]#{?#{==:#{client_key_table},move-pane},h/j/k/l ➜ #[fg=${grey}]move-pane  #[fg=${dark_grey}][/] ➜ #[fg=${grey}]move-tab  #[fg=${dark_grey}]n/p ➜ #[fg=${grey}]swap-layout  ,}#[\
+    bg=${background},fg=${cyan}]#{?window_zoomed_flag,ZOOM  ,}#[\
 {{- if eq .chezmoi.os "darwin" }}
     bg=${darkest_grey},fg=${bright_grey}]  CMD: #W  HOST: #(scutil --get ComputerName)  TIME: %H:%M  SESSION: #S  ";
 {{- else }}
