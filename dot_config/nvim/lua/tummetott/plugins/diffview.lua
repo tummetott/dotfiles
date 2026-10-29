@@ -12,7 +12,7 @@ return {
     end,
     opts = {
         file_panel = {
-            show = false,
+            show = true,
             listing_style = 'list',
             win_config = {
                 position = 'bottom',
@@ -52,6 +52,9 @@ return {
             },
         },
         view = {
+            default = {
+                focus_diff = true,
+            },
             merge_tool = {
                 winbar_info = false,
             },
