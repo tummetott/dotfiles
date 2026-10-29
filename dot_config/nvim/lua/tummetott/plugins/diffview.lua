@@ -61,6 +61,8 @@ return {
         },
         hooks = {
             diff_buf_win_enter = function(bufnr, winid, ctx)
+                -- Save revision information. Consumed by winbar plugin
+                vim.w[winid].diffview_ctx = ctx
                 -- diff_wrap sync the wrap of all diff windows
                 vim.wo.wrap = vim.t.diff_wrap or false
                 vim.wo.relativenumber = false

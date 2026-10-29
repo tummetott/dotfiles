@@ -390,55 +390,68 @@ M.venv = {
     update = { 'VimEnter' },
 }
 
+local stage_labels = {
+    [0] = 'INDEX',
+    [1] = 'MERGE COMMON ANCESTOR',
+    [2] = 'MERGE OURS',
+    [3] = 'MERGE THEIRS',
+}
+
+---Runs git in `cwd` and returns its trimmed stdout, or nil when it fails.
+local function git(cwd, args)
+    local result = vim.system(vim.list_extend({ 'git' }, args), {
+        cwd = cwd,
+        text = true,
+    }):wait()
+    return result.code == 0 and vim.trim(result.stdout) or nil
+end
+
+---Names a commit: HEAD, the pull request whose branch points at it, or its
+---abbreviated hash.
+---@param ctx DiffviewDiffBufCtx
+local function commit_label(ctx)
+    local rev = ctx.rev
+    if rev.tracks_head then
+        return 'HEAD'
+    end
+    local short_hash = rev.commit:sub(1, 7)
+    if ctx.adapter ~= 'git' then
+        return short_hash
+    end
+    if git(ctx.toplevel, { 'rev-parse', 'HEAD' }) == rev.commit then
+        return 'HEAD'
+    end
+    local branches = git(ctx.toplevel, {
+        'branch', '--points-at', rev.commit, '--format=%(refname:short)',
+    }) or ''
+    -- Local branches named `pr-<number>` hold checked-out pull requests.
+    local pr_id = branches:match('pr%-(%d+)')
+    return pr_id and 'PR #' .. pr_id or short_hash
+end
+
+-- Labels per `ctx.rev.type`. Content outside any VCS has no entry and gets no
+-- label.
+local revision_labels = {
+    LOCAL = function() return 'LOCAL' end,
+    STAGE = function(ctx) return stage_labels[ctx.rev.stage] end,
+    COMMIT = commit_label,
+}
+
 M.revision = {
     condition = function()
-        return require 'tummetott.utils'.is_loaded('diffview-plus.nvim') and
-            require 'diffview.lib'.get_current_view()
+        local ctx = vim.w.diffview_ctx
+        return ctx and revision_labels[ctx.rev.type] ~= nil
     end,
     static = {
         icon = vim.g.nerdfonts and '󱞳' or '@'
     },
     provider = function(self)
-        local view = require('diffview.lib').get_current_view()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local rev_label = ''
-        for _, file in ipairs(view.cur_entry and view.cur_entry.layout:files() or {}) do
-            if file:is_valid() and file.bufnr == bufnr then
-                local rev = file.rev
-                if rev.type == 1 then
-                    rev_label = 'LOCAL'
-                elseif rev.type == 2 then
-                    local head = vim.trim(vim.fn.system(
-                        { 'git', 'rev-parse', '--revs-only', 'HEAD' }))
-                    if head == rev.commit then
-                        rev_label = 'HEAD'
-                    else
-                        local branches = vim.fn.system({
-                            'git', 'branch', '--points-at', rev.commit,
-                            '--format=%(refname:short)',
-                        })
-                        local pr_id = branches:match('pr%-(%d+)')
-                        if pr_id then
-                            rev_label = 'PR #' .. pr_id
-                        else
-                            rev_label = string.format('%s', rev.commit:sub(1, 7))
-                        end
-                    end
-                elseif rev.type == 3 then
-                    rev_label = ({
-                        [0] = 'INDEX',
-                        [1] = 'MERGE COMMON ANCESTOR',
-                        [2] = 'MERGE OURS',
-                        [3] = 'MERGE THEIRS',
-                    })[rev.stage] or ''
-                end
-            end
-        end
-        return string.format(' %s %s', self.icon, rev_label)
+        local ctx = vim.w.diffview_ctx
+        return string.format(' %s %s', self.icon, revision_labels[ctx.rev.type](ctx))
     end,
     update = {
         'User',
-        pattern = 'DiffviewDiffBufWinEnter'
+        pattern = 'DiffviewDiffBufWinEnter',
     }
 }
 
