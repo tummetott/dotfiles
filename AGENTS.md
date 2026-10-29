@@ -14,6 +14,8 @@ Make durable changes there,
 because `chezmoi apply` overwrites the target state.
 
 Treat `chezmoi apply` as an explicit deployment step and never run it automatically.
+The user deploys changes themselves and knows when that is needed,
+so responses leave out reminders to run `chezmoi apply`.
 
 # Repository Structure
 
