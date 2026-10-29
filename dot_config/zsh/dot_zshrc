@@ -79,6 +79,18 @@ bindkey '^[[1;3C' forward-word
 
 bindkey '^U' backward-kill-line
 
+# OMZ's zle-line-init enables keypad transmit mode, and the transient prompt
+# plugin replaces the zle-line-finish that disables it again. Removing the
+# widget keeps keypad mode off.
+zle -D zle-line-init 2>/dev/null
+
+# Set cursor style to steady bar.
+_cursor_line_init() {
+    echo -ne '\e[6 q'
+}
+autoload -Uz add-zle-hook-widget
+add-zle-hook-widget line-init _cursor_line_init
+
 # zsh wants you to verify history expansion. I want to type 'sudo !!' without
 # further verification
 unsetopt HIST_VERIFY
@@ -140,35 +152,38 @@ if (( $+commands[starship] )); then
     eval "$(starship init zsh)"
 fi
 
-# Must be sourced after 'starship init'
-[[ -s "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme" ]] \
-    && source "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme"
-
-# Set cursor style to steady bar
-function zle-line-init() {
-    echo -ne '\e[6 q'
-}
-zle -N zle-line-init
-
 # OSC 133 semantic prompt marks. Skipped where Ghostty's shell integration
 # already sends them.
 if (( ! ${+_ghostty_state} )); then
+    # OSC 133 A - Prompt start
+    PROMPT=$'%{\e]133;A\a%}'$PROMPT
+    (( ${+TRANSIENT_PROMPT_TRANSIENT_PROMPT} )) \
+        && TRANSIENT_PROMPT_TRANSIENT_PROMPT=$'%{\e]133;A\a%}'$TRANSIENT_PROMPT_TRANSIENT_PROMPT
+
+    # OSC 133 B - Prompt end
     _osc133_line_init() {
         print -n '\e]133;B\a'
     }
     autoload -Uz add-zle-hook-widget
     add-zle-hook-widget line-init _osc133_line_init
 
-    _osc133_precmd() {
-        local command_status=$?
-        (( _osc133_command_running )) && print -n "\e]133;D;$command_status\a"
-        _osc133_command_running=0
-        print -n '\e]133;A\a'
-    }
+    # OSC 133 C - Command output start
     _osc133_preexec() {
         _osc133_command_running=1
         print -n '\e]133;C\a'
     }
     precmd_functions+=(_osc133_precmd)
     preexec_functions+=(_osc133_preexec)
+
+    # OSC 133 D - Command finished
+    _osc133_precmd() {
+        local command_status=$?
+        (( _osc133_command_running )) && print -n "\e]133;D;$command_status\a"
+        _osc133_command_running=0
+    }
 fi
+
+# Must be sourced after 'starship init' and the OSC 133 marks, because the
+# plugin copies PROMPT on load
+[[ -s "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme" ]] \
+    && source "$XDG_DATA_HOME/zsh/zsh-transient-prompt/transient-prompt.zsh-theme"
