@@ -1,26 +1,29 @@
-# vim: set ft=ini:
+# vim: set ft=gitconfig:
 
-{{ if eq .chezmoi.hostname "Catch" -}}
-# Catch defaults to the SRLabs identity
 [include]
+{{- if has .chezmoi.hostname (list "Catch" "big-fuzz" "fuzzy-bear") }}
     path = ~/.config/git/config-srlabs
+{{- else }}
+    path = ~/.config/git/config-tummetott
+{{- end }}
 
-# Tummetott repositories use the private profile
-[includeIf "hasconfig:remote.*.url:git@github.com:tummetott/**"]
+[includeIf "hasconfig:remote.*.url:git@github.com:[tT]ummetott/**"]
+    path = ~/.config/git/config-tummetott
+[includeIf "hasconfig:remote.*.url:https://github.com/[tT]ummetott/**"]
     path = ~/.config/git/config-tummetott
 
-# Switch this repository's Git identity and SSH key on demand.
+[url "git@github-private:tummetott/"]
+    insteadOf = git@github.com:tummetott/
+    insteadOf = git@github.com:Tummetott/
+    pushInsteadOf = https://github.com/tummetott/
+    pushInsteadOf = https://github.com/Tummetott/
+
+# Switch this repository's commit identity on demand.
 # To update the author of the latest commit after switching:
 # git commit --amend --no-edit --reset-author
 [alias]
     use-private = "!git config --local include.path ~/.config/git/config-tummetott"
     use-work = "!git config --local include.path ~/.config/git/config-srlabs"
-
-{{- else }}
-# Other machines use the Tummetott identity
-[include]
-    path = ~/.config/git/config-tummetott
-{{- end }}
 
 [pull]
     rebase = false
