@@ -1,0 +1,7 @@
+# vim: set ft=zsh:
+{{- if eq .chezmoi.os "darwin" }}
+
+# Load the keys stored in the macOS keychain into the agent, so they can be
+# forwarded before they have been used locally.
+ssh-add --apple-load-keychain -q 2>/dev/null
+{{- end }}
