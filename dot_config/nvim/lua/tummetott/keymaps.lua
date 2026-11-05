@@ -257,12 +257,6 @@ local maps = {
         opts = { desc = 'Tab Close' }
     },
     {
-        mode = 'n',
-        lhs = '<leader>r',
-        rhs = '<cmd>restart<cr>',
-        opts = { desc = 'Restart Neovim' }
-    },
-    {
         mode = 'x',
         lhs = 'gn',
         rhs = '<esc>ngn',

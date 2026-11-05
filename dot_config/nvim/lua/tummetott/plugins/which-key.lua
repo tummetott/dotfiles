@@ -74,11 +74,6 @@ return {
                 icon = vim.g.nerdfonts and '' or nil,
             },
             {
-                '<leader>r',
-                desc = 'Restart Neovim',
-                icon = vim.g.nerdfonts and '󰜉' or nil,
-            },
-            {
                 '<leader>o',
                 mode = { 'n', 'x' },
                 group = 'Open',
