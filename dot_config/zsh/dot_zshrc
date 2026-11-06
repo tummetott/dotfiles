@@ -142,8 +142,9 @@ if (( $+commands[mise] )); then
     eval "$(mise activate zsh)"
 fi
 
-# Auto-start Zellij only if installed, not in SSH
-if (( $+commands[zellij] )) && [[ -z "$SSH_TTY" ]] && [[ -z "$TMUX" ]]; then
+# Auto-start Zellij only if installed, not in SSH, tmux or Rex
+if (( $+commands[zellij] )) \
+    && [[ -z $SSH_TTY && -z $TMUX && -z $REX_SESSION ]]; then
     eval "$(zellij setup --generate-auto-start zsh)"
 fi
 
