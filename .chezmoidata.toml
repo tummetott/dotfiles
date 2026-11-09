@@ -48,6 +48,7 @@ ruby = false
 rust = false
 sd = false
 shellcheck = false
+sshfs = false
 starship = false
 tinty = false
 tldr = false

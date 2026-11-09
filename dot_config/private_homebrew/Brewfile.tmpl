@@ -67,6 +67,10 @@ brew "sd"
 brew "shellcheck"
 {{- end }}
 
+{{- if and .install.sshfs (eq .chezmoi.os "linux") }}
+brew "sshfs"
+{{- end }}
+
 {{- if .install.starship }}
 brew "starship"
 {{- end }}
@@ -146,6 +150,11 @@ cask "karabiner-elements"
 
 {{- if .install.kitty }}
 cask "kitty"
+{{- end }}
+
+{{- if .install.sshfs }}
+tap "macos-fuse-t/homebrew-cask"
+cask "macos-fuse-t/homebrew-cask/fuse-t-sshfs", trusted: true
 {{- end }}
 
 {{- if .install.wezterm }}
