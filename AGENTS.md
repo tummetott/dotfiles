@@ -139,7 +139,7 @@ use a similar existing capability as a guide and update the corresponding files.
 
 # Checking Rendered Changes
 
-Run `chezmoi diff` only after changing:
+Run `chezmoi diff --use-builtin-diff --no-pager` only after changing:
 
 * `.tmpl` files
 * `.chezmoidata.toml` or `.chezmoiexternal.toml`
