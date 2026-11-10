@@ -16,6 +16,10 @@ gnome-tweaks
 iproute2
 {{- end }}
 
+{{- if .install.mdk4 }}
+mdk4
+{{- end }}
+
 {{- if .install.wireguard }}
 wireguard
 {{- end }}
