@@ -60,6 +60,7 @@ format = '[$output]($style) '
 style = 'blue'
 
 [custom.ssh]
+shell = ['sh']
 when = 'test -n "$SSH_CONNECTION"'
 symbol = ''
 style = 'purple'
