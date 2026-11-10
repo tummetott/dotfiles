@@ -23,18 +23,10 @@ vim.diagnostic.config({
     } or true,
 })
 
--- Enable language servers
--- NOTE: They must all be installed with Mason
+-- Servers installed with Mason are enabled by mason-lspconfig. Only servers
+-- outside Mason are enabled here.
 vim.lsp.enable({
-    'lua_ls',
-    'pyright',
-    'clangd',
-    'rust_analyzer',
-    'efm', -- Also install 'shellcheck'
-    'vtsls', -- typescript
-    'gopls',
-    'sourcekit', -- swift lsp. Preinstalled on macos with xcode
-    'solidity_ls', -- vscode-solidity-server
+    'sourcekit' -- swift lsp. Preinstalled on macos with xcode
 })
 
 -- nvim-lspconfig is a collection of base configurations for most language
@@ -68,23 +60,58 @@ table.insert(M, {
     },
 })
 
+-- mason-lspconfig enables every language server installed with Mason,
+-- including ones installed by hand through :Mason
+table.insert(M, {
+    'mason-org/mason-lspconfig.nvim',
+    enabled = true,
+    dependencies = {
+        'mason-org/mason.nvim',
+        'neovim/nvim-lspconfig',
+    },
+    opts = {
+        automatic_enable = {
+            -- nvim-jdtls starts jdtls from after/ftplugin/java.lua
+            exclude = { 'jdtls' },
+        },
+    },
+})
+
+-- Mason packages to install automatically. `toolchain` names an executable
+-- the package needs to build or run; machines without it skip the package.
+local tools = {
+    { 'lua-language-server' },
+    { 'pyright', toolchain = 'npm' },
+    { 'clangd' },
+    { 'rust-analyzer', toolchain = 'cargo' },
+    { 'efm' },
+    { 'shellcheck' }, -- used by efm
+    { 'vtsls', toolchain = 'npm' }, -- typescript
+    { 'gopls', toolchain = 'go' },
+    { 'vscode-solidity-server', toolchain = 'npm' },
+}
+
+--- Installs a tool only where Mason ships a build for this platform and its
+--- toolchain exists, so unsupported machines start without install errors.
+---@param tool { [1]: string, toolchain?: string }
+local function ensure(tool)
+    return {
+        tool[1],
+        condition = function()
+            if tool.toolchain and vim.fn.executable(tool.toolchain) == 0 then
+                return false
+            end
+            return require('mason-registry').get_package(tool[1]):is_installable()
+        end,
+    }
+end
+
 table.insert(M, {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     enabled = true,
     dependencies = { 'mason-org/mason.nvim' },
     opts = {
-        ensure_installed = {
-            'lua-language-server', -- lua_ls
-            'pyright',
-            'clangd',
-            'rust-analyzer', -- rust_analyzer
-            'efm',
-            'shellcheck', -- used by efm
-            'vtsls', -- typescript
-            'gopls',
-            'vscode-solidity-server', -- solidity_ls
-            -- sourcekit is preintalled on macOS
-        },
+        ensure_installed = vim.tbl_map(ensure, tools),
     },
 })
 
