@@ -20,6 +20,7 @@ Otherwise omit both.
 # Questions and Discussion
 
 Treat questions as requests for discussion.
+NEVER change something when you're asked a question.
 Change persistent state only when I clearly request action.
 If intent is ambiguous, clarify before making changes.
 The marker ?/ makes a request discussion only; read-only inspection is allowed.
