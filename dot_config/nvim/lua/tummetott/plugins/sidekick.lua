@@ -1,7 +1,7 @@
 local agent = require 'tummetott.utils.agent'
 
 return {
-    'folke/sidekick.nvim',
+    'tummetott/sidekick.nvim',
     enabled = true,
     event = 'VeryLazy',
     init = function()
@@ -19,6 +19,12 @@ return {
             enabled = false,
         },
         cli = {
+            -- Enable this to run agents in zellij tabs
+            mux = {
+                enabled = false,
+                backend = 'zellij',
+                create = 'window',
+            },
             tools = {
                 cline = {
                     cmd = { 'cline', '--tui' },
