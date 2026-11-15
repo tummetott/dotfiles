@@ -1,5 +1,6 @@
 return {
     'tummetott/diffview-plus.nvim',
+    branch = 'feat/diff-buf-ctx',
     enabled = true,
     init = function()
         require('which-key').add {
