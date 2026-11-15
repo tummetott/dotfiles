@@ -3,6 +3,7 @@ local agent = require 'tummetott.utils.agent'
 return {
     'tummetott/sidekick.nvim',
     enabled = true,
+    branch = 'feat/zellij-external-panes',
     event = 'VeryLazy',
     init = function()
         require('which-key').add {
