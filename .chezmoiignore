@@ -46,7 +46,7 @@ Library/
 .ssh/id_ed25519_srlabs
 {{ end }}
 
-{{ if not (has .chezmoi.hostname (list "Catch" "Void" "big-fuzz" "fuzzy-bear")) }}
+{{ if not (has .chezmoi.hostname (list "Catch" "Void" "big-fuzz" "fuzzy-bear" "Snipe")) }}
 .ssh/id_ed25519.pub
 {{ end }}
 
