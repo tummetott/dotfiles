@@ -107,12 +107,19 @@ return {
         -- be run.
         keymap = { -- all insert mode mappings
             preset = 'default',
+            ['<C-k>'] = false,
+            ['<C-s>'] = {
+                'show_signature',
+                'hide_signature',
+                'fallback',
+            },
             ['<CR>'] = {
                 'accept', -- returns false if comp menu is not selected
                 'fallback',
             },
             ['<c-e>'] = {
                 'cancel',
+                'hide_signature',
                 'fallback',
             },
             ['<Tab>'] = {
