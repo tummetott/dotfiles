@@ -3,6 +3,10 @@
 [include]
 {{- if has .chezmoi.hostname (list "Catch" "big-fuzz" "fuzzy-bear") }}
     path = ~/.config/git/config-srlabs
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+    path = ~/.config/git/config-srlabs-gh
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = ~/.config/git/config-srlabs-gh
 {{- else }}
     path = ~/.config/git/config-tummetott
 {{- end }}
